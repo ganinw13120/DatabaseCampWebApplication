@@ -2,7 +2,7 @@
 > Web Application part of project.
 
 Database Camp is a education platforms, about database design. This project is for eduction purpose.
-# Installation
+## Installation
 
 ```sh
 npm install
