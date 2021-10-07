@@ -6,28 +6,20 @@ export interface AuthComponentProps {
 }
 
 export interface AuthComponentState {
-  emailQuery: string;
-  passwordQuery: string;
-  isSignInButtonVisible: boolean;
-  isSignOutButtonVisible: boolean;
-
-  isShowError: boolean;
-  errorMessage: string;
-
-  authStatus: string;
-  isAuthStatusPositive: boolean;
+  something : string,
 }
 
 export default class LandingPage extends React.Component<AuthComponentProps, AuthComponentState>
   implements BaseView {
   public constructor(props: AuthComponentProps) {
     super(props);
+
   }
   
   public onViewModelChanged(): void {
     
   }
-
+  
   public render(): JSX.Element {
     return (
       <>
