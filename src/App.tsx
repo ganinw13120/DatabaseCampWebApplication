@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
 import './App.css';
+import LandingPage from "./presentation/view/landing-page/LandingPage";
+import {
+  BrowserRouter as Router,
+  Route,
+} from "react-router-dom";
 
 export default class App extends Component {
   render() : JSX.Element  {
     return (
-      <div className="App">
-        <header className="App-header">
-          <p className="title">
-            COMING SOON
-          </p>
-          <p className="description">
-            DatabaseCamp.io
-          </p>
-        </header>
-      </div>
+      <Router>
+        <Route path="/" exact component={LandingPage} />
+      </Router>
     );
   }
 }
