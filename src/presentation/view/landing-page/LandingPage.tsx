@@ -13,13 +13,13 @@ export default class LandingPage extends React.Component<AuthComponentProps, Aut
   implements BaseView {
   public constructor(props: AuthComponentProps) {
     super(props);
-
+    
   }
   
   public onViewModelChanged(): void {
     
   }
-  
+
   public render(): JSX.Element {
     return (
       <>
