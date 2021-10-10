@@ -44,12 +44,20 @@ export default class LoginPage extends React.Component<LoginComponentProps, Logi
                 <span>กรุณากรอกข้อมูลเพื่อเข้าสู่ระบบ</span>
               </div>
               <div className='text-base text-darkPrimary font-normal tracking-wider pt-16'>
-                <span >อีเมล :</span>
-                <Input className='mt-5 h-14 w-3/6' size="large" placeholder="  อีเมล" prefix={<UserOutlined />} />
+                <div>
+                  <span >อีเมล :</span>
+                </div>
+                <div>
+                  <Input className='mt-5 h-14 w-full' size="large" placeholder="  อีเมล" prefix={<UserOutlined />} />
+                </div>
               </div>
               <div className='text-base font-normal tracking-wider pt-10'>
-                <span >รหัสผ่าน :</span>
-                <Input.Password iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} className='mt-5 h-14 w-3/6' size="large" placeholder="  รหัสผ่าน" prefix={<KeyOutlined />}  />
+                <div>
+                  <span >รหัสผ่าน :</span>
+                </div>
+                <div>
+                  <Input.Password iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} className='mt-5 h-14 ' size="large" placeholder="  รหัสผ่าน" prefix={<KeyOutlined />}  />
+                </div>
               </div>
               <div className="bg-primary mt-16 h-14 rounded-xl">
                 <Button className='w-full h-24 bg-primary' style={{height: '100%'}} ghost size='large'><span className='text-base text-white font-light tracking-wider '>เข้าสู่ระบบ</span></Button>
