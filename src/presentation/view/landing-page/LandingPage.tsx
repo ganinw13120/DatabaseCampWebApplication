@@ -6,7 +6,7 @@ export interface AuthComponentProps {
 }
 
 export interface AuthComponentState {
-  something : string,
+
 }
 
 export default class LandingPage extends React.Component<AuthComponentProps, AuthComponentState>
@@ -15,7 +15,7 @@ export default class LandingPage extends React.Component<AuthComponentProps, Aut
     super(props);
     
   }
-  
+
   public onViewModelChanged(): void {
     
   }
@@ -28,7 +28,7 @@ export default class LandingPage extends React.Component<AuthComponentProps, Aut
             <p className="title">
               COMING SOON
             </p>
-            <p className="description">
+            <p className="description font-extralight">
               DatabaseCamp.io
             </p>
           </header>
