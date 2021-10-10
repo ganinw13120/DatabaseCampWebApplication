@@ -1,17 +1,17 @@
 import React from 'react';
 import BaseView from '../BaseView';
 
-export interface AuthComponentProps {
+export interface LandingComponentProps {
 
 }
 
-export interface AuthComponentState {
+export interface LandingComponentState {
 
 }
 
-export default class LandingPage extends React.Component<AuthComponentProps, AuthComponentState>
+export default class LandingPage extends React.Component<LandingComponentProps, LandingComponentState>
   implements BaseView {
-  public constructor(props: AuthComponentProps) {
+  public constructor(props: LandingComponentState) {
     super(props);
     
   }
