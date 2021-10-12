@@ -10,7 +10,7 @@ Staging : https://staging.databasecamp.io
 Develop : https://dev.databasecamp.io
 
 
-Database Camp is a education platforms, about database design. This project is for eduction purpose.
+Database Camp is a education platforms, about database design. This project is for eduction purpose. Deployment and CI/CD is done by Google Cloud Platform.
 ## Installation
 
 ```sh
