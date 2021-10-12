@@ -15,7 +15,7 @@ export default class LoginPage extends React.Component<any, LoginComponentState>
   
   private authViewModel: AuthViewModel;
   
-  public constructor(props: LoginComponentState) {
+  public constructor(props: any) {
     super(props);
     const authViewModel = new AuthViewModel();
     this.authViewModel = authViewModel;
