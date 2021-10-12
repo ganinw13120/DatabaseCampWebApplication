@@ -2,6 +2,7 @@ import { Component } from 'react';
 import './App.css';
 import LandingPage from "./presentation/view/landing-page";
 import LoginPage from "./presentation/view/login";
+import OverviewPage from './presentation/view/overview';
 import {
   BrowserRouter as Router,
   Route,
@@ -27,6 +28,7 @@ export default class App extends Component {
         <Router>
           <Route path="/" exact component={LandingPage} />
           <Route path="/login" exact component={LoginPage} />
+          <Route path="/overview" exact component={OverviewPage} />
         </Router>
       </Provider>
     );
