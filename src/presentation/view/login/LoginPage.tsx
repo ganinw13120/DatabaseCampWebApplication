@@ -53,10 +53,10 @@ export default class LoginPage extends React.Component<any, LoginComponentState>
           autoComplete="off"
         >
             <div className="grid  md:grid-cols-2 h-screen font-prompt bg-bg">
-              <div className='md:flex hidden flex bg-primary h-full  text-white text-center align-middle justify-center ' style={{boxShadow:'0 4px 4px #000'}}>
+              <div className='md:flex hidden flex bg-primary text-white text-center align-middle justify-center ' style={{boxShadow:'0 4px 4px #000'}}>
                 <img src={FullLogo} alt="Logo" className='w-3/6 mx-auto my-auto text-center' />
               </div>
-              <div className='h-full text-center align-middle justify-center pt-32'>
+              <div className='text-center align-middle justify-center pt-32'>
                 <div className="w-5/6 md:w-4/6 lg:w-3/6 text-left mx-auto my-auto">
                   <div className='flex space-x-4'>
                     <div className='text-3xl text-darkPrimary font-semibold tracking-wider'>
