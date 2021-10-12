@@ -9,13 +9,26 @@ import {
 import 'antd/dist/antd.css';
 import './index.css';
 
+import { Provider } from 'mobx-react';
+
+import RootStore  from '../src/domain/entity/state/Rootstore';
+
+const _RootStore = new RootStore();
+
+const store = {
+	rootStore: _RootStore, 
+};
+
 export default class App extends Component {
+
   render(): JSX.Element  {
     return (
-      <Router>
-        <Route path="/" exact component={LandingPage} />
-        <Route path="/login" exact component={LoginPage} />
-      </Router>
+      <Provider {...store}>
+        <Router>
+          <Route path="/" exact component={LandingPage} />
+          <Route path="/login" exact component={LoginPage} />
+        </Router>
+      </Provider>
     );
   }
 }

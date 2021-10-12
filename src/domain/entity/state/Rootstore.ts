@@ -1,4 +1,4 @@
-export class RootStore {
+export default class RootStore {
 
   
 
