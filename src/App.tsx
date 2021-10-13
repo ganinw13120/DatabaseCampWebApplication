@@ -6,9 +6,13 @@ import OverviewPage from './presentation/view/overview';
 import {
   BrowserRouter as Router,
   Route,
+  Switch
 } from "react-router-dom";
 import 'antd/dist/antd.css';
 import './index.css';
+
+import PreLogged from './presentation/view/middleware/PreLogged';
+import LoggedMiddleware from './presentation/view/middleware/LoggedMiddleware';
 
 import { Provider } from 'mobx-react';
 
@@ -27,9 +31,21 @@ export default class App extends Component {
     return (
       <Provider {...store}>
         <Router>
-          <Route path="/" exact component={LandingPage} />
-          <Route path="/login" exact component={LoginPage} />
-          <Route path="/overview" exact component={OverviewPage} />
+          <Switch>
+            <Route path="/" exact>
+              <LandingPage/>
+            </Route>
+            <Route path="/login" exact>
+              <PreLogged>
+                <LoginPage/>
+              </PreLogged>
+            </Route>
+            <Route path="/overview" exact>
+              <LoggedMiddleware>
+                <OverviewPage/>
+              </LoggedMiddleware>
+            </Route>
+          </Switch>
         </Router>
       </Provider>
     );

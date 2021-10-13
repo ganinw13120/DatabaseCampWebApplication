@@ -35,7 +35,7 @@ export default class AuthViewModel implements IAuthViewModel {
     this.displayText = message as string;
     this.baseView?.onViewModelChanged();
     if (issuccess) {
-      this.baseView?.props.history.push('/overview');
+      this.baseView?.props?.history?.push('/overview');
     }
   }
 }

@@ -4,7 +4,13 @@ import RootStore from '../Rootstore';
 
 export class AuthStore{
   rootStore; // contains the root of store (outest mobx)
-  constructor(rootStore:RootStore){
+  constructor(rootStore: RootStore) {
+    const token = window.localStorage.getItem('token');
+    
+    if (token) {
+      this.isAuthenticated = true; // Mock ที่จริงต้อง Verify ก่อนนะจ๊ะ
+    }
+
     this.rootStore = rootStore;
     makeAutoObservable(this);
   }
@@ -17,6 +23,7 @@ export class AuthStore{
   // ────────────────────────────────────────────────────────────────────────────────
 
   Login(data: any) {
+    this.isAuthenticated = true;
     window.localStorage.setItem('token', data.access_token)
   }
 

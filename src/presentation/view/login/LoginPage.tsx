@@ -6,6 +6,7 @@ import { Form, Input, Button  } from 'antd';
 import { KeyOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { inject, observer } from 'mobx-react';
 import LoginUseCase from '../../../domain/interactors/auth/LoginUseCase';
+import { withRouter } from 'react-router-dom';
 import AuthRepository from '../../../data/repository/auth/AuthRepository';
 
 export interface LoginComponentState {
@@ -15,8 +16,9 @@ export interface LoginComponentState {
 
 @inject('authStore')
   
+
 @observer
-export default class LoginPage extends React.Component<any, LoginComponentState>
+class LoginPage extends React.Component<any, LoginComponentState>
   implements BaseView {
   
   private authViewModel: AuthViewModel;
@@ -117,3 +119,5 @@ export default class LoginPage extends React.Component<any, LoginComponentState>
     );
   }
 }
+
+export default withRouter(LoginPage);
