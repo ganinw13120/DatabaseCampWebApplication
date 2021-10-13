@@ -6,7 +6,7 @@ export default class AuthRepository implements IAuthRepository {
 
   public async Login(data: request): Promise<loginResult> {
     return new Promise((resolve, rejects) => {
-      axios.post('/user/login', data).then(res => {
+      axios.post('https://dev.api.databasecamp.io/user/login', data).then(res => {
         resolve({
           userId: res.data.userId,
           name: res.data.name,
