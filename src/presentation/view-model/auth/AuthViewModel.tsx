@@ -13,11 +13,11 @@ export default class AuthViewModel implements IAuthViewModel {
   private baseView?: BaseView;
   private loginUseCase?: LoginUseCase;
 
-  public constructor() {
+  public constructor(loginUserCase : LoginUseCase) {
     this.isLoading = false;
     this.displayText = '';
-    this.loginUseCase = new LoginUseCase();
     this.formRef = React.createRef<FormInstance>();
+    this.loginUseCase = loginUserCase;
   }
 
   public attachView = (baseView: BaseView): void => {

@@ -1,6 +1,5 @@
 import { makeAutoObservable } from 'mobx';
 
-import axios from 'axios'
 import RootStore from '../Rootstore';
 
 export class AuthStore{
@@ -18,8 +17,7 @@ export class AuthStore{
   // ────────────────────────────────────────────────────────────────────────────────
 
   Login(data: any) {
-    console.log(data)
-    window.localStorage.setItem('token', data)
+    window.localStorage.setItem('token', data.access_token)
   }
 
 }

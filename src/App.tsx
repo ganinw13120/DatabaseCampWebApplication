@@ -17,7 +17,8 @@ import RootStore  from '../src/domain/entity/state/Rootstore';
 const _RootStore = new RootStore();
 
 const store = {
-	rootStore: _RootStore, 
+  rootStore: _RootStore,
+  authStore : _RootStore.authStore
 };
 
 export default class App extends Component {

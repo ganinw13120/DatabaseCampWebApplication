@@ -1,13 +1,15 @@
 import AuthRepository from '../../../data/repository/auth/AuthRepository';
+import { AuthStore } from '../../entity/state/stores/AuthStore';
 import ILoginUseCase from './ILoginUseCase';
 
 export default class LoginUseCase implements ILoginUseCase {
 
   private authRepository: AuthRepository;
+  private authStore: AuthStore;
 
-  public constructor() {
-    const authRepository = new AuthRepository();
+  public constructor(authRepository: AuthRepository, authStore : AuthStore) {
     this.authRepository = authRepository;
+    this.authStore = authStore;
   }
 
   public async Login(email: string, password: string): Promise<{issuccess : boolean, message? : string}> {
@@ -15,7 +17,7 @@ export default class LoginUseCase implements ILoginUseCase {
       email: email,
       password : password,
     }).then((res) => {
-      console.log(res)
+      this.authStore.Login(res)
       return {
         issuccess: true,
         message : ''
@@ -26,6 +28,7 @@ export default class LoginUseCase implements ILoginUseCase {
         message : err.message
       }
     })
+    // console.log(this.authStore)
     return result
   }
 }

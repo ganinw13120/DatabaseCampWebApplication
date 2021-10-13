@@ -4,12 +4,18 @@ import FullLogo from '../../assets/full-logo.png';
 import AuthViewModel from '../../view-model/auth/AuthViewModel';
 import { Form, Input, Button  } from 'antd';
 import { KeyOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { inject, observer } from 'mobx-react';
+import LoginUseCase from '../../../domain/interactors/auth/LoginUseCase';
+import AuthRepository from '../../../data/repository/auth/AuthRepository';
 
 export interface LoginComponentState {
   isLoading: boolean
   displayText : string
 }
 
+@inject('authStore')
+  
+@observer
 export default class LoginPage extends React.Component<any, LoginComponentState>
   implements BaseView {
   
@@ -17,8 +23,15 @@ export default class LoginPage extends React.Component<any, LoginComponentState>
   
   public constructor(props: any) {
     super(props);
-    const authViewModel = new AuthViewModel();
+
+    const authRepository = new AuthRepository();
+
+    const loginUseCase = new LoginUseCase(authRepository, this.props.authStore);
+
+    const authViewModel = new AuthViewModel(loginUseCase);
+    
     this.authViewModel = authViewModel;
+
     
     this.state = {
       displayText : authViewModel.displayText,
