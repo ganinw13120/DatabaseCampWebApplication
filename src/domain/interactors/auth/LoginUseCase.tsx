@@ -10,16 +10,22 @@ export default class LoginUseCase implements ILoginUseCase {
     this.authRepository = authRepository;
   }
 
-  public async Login(email: string, password: string): Promise<string> {
+  public async Login(email: string, password: string): Promise<{issuccess : boolean, message? : string}> {
     const result = await this.authRepository.Login({
       email: email,
       password : password,
     }).then((res) => {
       console.log(res)
-      return ''
+      return {
+        issuccess: true,
+        message : ''
+      }
     }).catch((err) => {
-      return err.message;
+      return {
+        issuccess: false,
+        message : err.message
+      }
     })
-    return result;
+    return result
   }
 }

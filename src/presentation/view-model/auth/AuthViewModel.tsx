@@ -30,12 +30,12 @@ export default class AuthViewModel implements IAuthViewModel {
   public OnFinish = async (): Promise<void> => {
     this.isLoading = true;
     this.baseView?.onViewModelChanged();
-    const loginResult = await this.loginUseCase?.Login(this.formRef?.current?.getFieldValue("email"), this.formRef?.current?.getFieldValue("password"));
+    const { issuccess, message } = await this.loginUseCase?.Login(this.formRef?.current?.getFieldValue("email"), this.formRef?.current?.getFieldValue("password")) as {issuccess : boolean, message? : string};
     this.isLoading = false;
-    this.displayText = loginResult as string;
-
-    console.log(typeof loginResult)
+    this.displayText = message as string;
     this.baseView?.onViewModelChanged();
-    console.log(loginResult)
+    if (issuccess) {
+      this.baseView?.props.history.push('/overview');
+    }
   }
 }
