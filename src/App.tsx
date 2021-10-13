@@ -11,8 +11,8 @@ import {
 import 'antd/dist/antd.css';
 import './index.css';
 
-import PreLogged from './presentation/view/middleware/PreLogged';
-import LoggedMiddleware from './presentation/view/middleware/LoggedMiddleware';
+import PreLogged from './presentation/middleware/PreLogged';
+import LoggedMiddleware from './presentation/middleware/LoggedMiddleware';
 
 import { Provider } from 'mobx-react';
 
