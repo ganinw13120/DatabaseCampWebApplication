@@ -1,6 +1,7 @@
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { withRouter } from 'react-router-dom';
+import AppLayout from "../view/layout/app/AppLayout";
 
 @inject('authStore')
   
@@ -12,7 +13,9 @@ class PreLogged extends React.Component<any> {
     }
     return (
       <>
-        {this.props.children}
+        <AppLayout>
+          {this.props.children}
+        </AppLayout>
       </>
     )
   }

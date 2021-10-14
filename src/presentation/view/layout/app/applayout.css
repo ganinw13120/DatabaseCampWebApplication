@@ -1,0 +1,27 @@
+.sideitem {
+    padding-left : 10px;
+    font-size : 19px;
+    transition: .2s;
+    color : white;
+    cursor: pointer;
+    font-weight: 400;
+    height : 60px;
+}
+.sideitem:hover  {
+    background: rgb(135,198,255);
+    background: linear-gradient(90deg, rgba(135,198,255,1) 0%, rgba(74,156,232,1) 52%, rgba(0,95,183,1) 100%);
+    transition: .2s;
+    font-size : 20px;
+    font-weight: 500;
+}
+.itemtext {
+    padding-top: 4px;
+}
+.container {
+    transition: .3s;
+    width : 33%;
+}
+.small-container {
+    transition: .3s;
+    width : 10%;
+}
