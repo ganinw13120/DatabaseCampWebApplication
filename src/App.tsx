@@ -2,7 +2,8 @@ import { Component } from 'react';
 import './App.css';
 import LandingPage from "./presentation/view/landing-page";
 import LoginPage from "./presentation/view/login";
-import OverviewPage from './presentation/view/overview';
+import OverviewPage from './presentation/view/Overview';
+import ProfilePage from './presentation/view/ProfilePage';
 import {
   BrowserRouter as Router,
   Route,
