@@ -25,3 +25,14 @@
     transition: .3s;
     width : 10%;
 }
+
+.toggleBtn {
+    cursor: pointer;
+    padding : 20px;
+    position : absolute;
+    right : -30px;
+    border-radius: 10px;
+    box-shadow: 4px 3px 9px -4px rgba(0,0,0,0.56);
+    -webkit-box-shadow: 4px 3px 9px -4px rgba(0,0,0,0.56);
+    -moz-box-shadow: 4px 3px 9px -4px rgba(0,0,0,0.56);
+}

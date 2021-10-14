@@ -1,9 +1,8 @@
 import React from "react";
 import '../app/applayout.css';
-import FullLogo from '../../../assets/full-logo.png';
 import HalfLeftLogo from '../../../assets/halfleftlogo.png';
 import HalfRightLogo from '../../../assets/halfrightlogo.png';
-import { AppstoreOutlined, FileTextOutlined, BarsOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, FileTextOutlined, BarsOutlined, UserOutlined, LogoutOutlined, RightOutlined } from '@ant-design/icons';
 
 interface SidebarState {
   isExpand: boolean
@@ -17,23 +16,32 @@ export default class Sidebar extends React.Component <any, SidebarState>{
     }
   }
   render(): JSX.Element {
-    const { isExpand } = this.state
-    console.log(this)
+    const { isExpand } = this.state;
+    const widthBoxStyle = { width: isExpand ? 320 : 90, transition: "width 1s" };
     return <>
-      <div className='overflow-hidden md:block hidden bg-primary text-white text-center align-middle justify-center block h-screen' style={{ boxShadow: '0 4px 4px #000', width : isExpand ? 280 : 90,transition: "width 1s" }}>
-        <div className={`flex inline h-auto pb-7 mt-7 w-8/12 mx-auto ${isExpand ? '' : 'pl-2'} gap-3`} style={{borderBottom:'0.5px solid #BBBFC0', transition: "all 1s"}}>
+      <div className='flex flex-row md:block hidden bg-primary text-white h-screen' style={{ boxShadow: '0 4px 4px #000', ...widthBoxStyle}}>
+        <div className={`flex flex-none inline h-auto pb-7 mt-7 w-8/12 mx-auto ${isExpand ? '' : 'pl-2'} gap-3`} style={{borderBottom:'0.5px solid #BBBFC0', transition: "all 1s"}}>
           <img src={HalfLeftLogo} alt="Logo" className='w-auto h-14' />
           <img src={HalfRightLogo} alt="Logo" className='w-auto h-14' style={{transition: "all 1s", opacity : isExpand ? 1 : 0}}/>
         </div>
         <div className="pt-5 grid grid-rows-3 gap-5">
-          <SideItem isExpand={isExpand} text='Overview' icon={<AppstoreOutlined style={{ fontSize: 25 }} />} onClick={() => {
-            console.log(this.state)
-            this.setState({
-              isExpand : !isExpand
-            })
-          }} />
+          <SideItem isExpand={isExpand} text='Overview' icon={<AppstoreOutlined style={{ fontSize: 25 }} />} />
           <SideItem isExpand={isExpand} text='Examination'  icon={<FileTextOutlined  style={{fontSize:25}} />} />
           <SideItem  isExpand={isExpand} text='Point Ranking'  icon={<BarsOutlined  style={{fontSize:25}} />} />
+        </div>
+        <div className='absolute bottom-0 mb-8' style={widthBoxStyle}>
+          <div className='w-12 h-24'>
+            <div className='bg-darkPrimary toggleBtn  text-center align-middle justify-center' onClick={() => {
+              console.log(this.state)
+              this.setState({
+                isExpand : !isExpand
+              })
+            }} style={{transition : 'transform .2s ease-in-out', transform: isExpand ? '' : 'rotate(180deg)' }}>
+              <RightOutlined  style={{fontSize:25}} />
+            </div>
+          </div>
+          <SideItem  isExpand={isExpand} text='Gan Mongklakorn' icon={<UserOutlined  style={{fontSize:25}} />} />
+          <SideItem  isExpand={isExpand} text='ออกจากระบบ' icon={<LogoutOutlined  style={{fontSize:25}} />} />
         </div>
       </div>
     </>
