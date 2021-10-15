@@ -4,10 +4,10 @@ export interface loginBody {
 }
 
 export interface loginResult {
-  userId? : number,
+  user_id? : number,
   name?: string,
-  points?: number,
-  token?: string,
+  point?: number,
+  access_token?: string,
   Useremail?: string
 }
 

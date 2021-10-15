@@ -1,25 +1,34 @@
 import AuthRepository from '../../../data/repository/auth/AuthRepository';
+import { AuthStore } from '../../entity/state/stores/AuthStore';
 import ILoginUseCase from './ILoginUseCase';
 
 export default class LoginUseCase implements ILoginUseCase {
 
   private authRepository: AuthRepository;
+  private authStore: AuthStore;
 
-  public constructor() {
-    const authRepository = new AuthRepository();
+  public constructor(authRepository: AuthRepository, authStore : AuthStore) {
     this.authRepository = authRepository;
+    this.authStore = authStore;
   }
 
-  public async Login(email: string, password: string): Promise<string> {
+  public async Login(email: string, password: string): Promise<{issuccess : boolean, message? : string}> {
     const result = await this.authRepository.Login({
       email: email,
       password : password,
     }).then((res) => {
-      console.log(res)
-      return ''
+      this.authStore.Login(res)
+      return {
+        issuccess: true,
+        message : ''
+      }
     }).catch((err) => {
-      return err.message;
+      return {
+        issuccess: false,
+        message : err.message
+      }
     })
-    return result;
+    // console.log(this.authStore)
+    return result
   }
 }
