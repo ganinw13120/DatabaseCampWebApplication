@@ -8,11 +8,12 @@ import hat from '../../assets/hat.png';
 import database_design_badge from '../../assets/database_designer3.png';
 import god_of from '../../assets/god_of_er_model3.png';
 import badgePic from '../../assets/badge.png';
-export interface OverviewComponentState {
+
+export interface ProfileComponentState {
 
 }
 
-export default class OverviewPage extends React.Component<any, OverviewComponentState>
+export default class ProfilePage extends React.Component<any, ProfileComponentState>
   implements BaseView {
   
   public constructor(props: any) {
@@ -32,7 +33,7 @@ export default class OverviewPage extends React.Component<any, OverviewComponent
   public render(): JSX.Element {
     return (
       <>
-         <div className="font-prompt bg-bg w-screen h-screen">
+        <div className="font-prompt bg-bg w-screen h-screen">
           <div className='h-full text-white text-center align-middle justify-center '>
                 <img src={Profilehead} alt="Logo2" className='object-none pt-20 mx-auto my-auto text-center' />
                 <div className='text-5xl text-darkPrimary font-normal tracking-wider pt-6'>
@@ -47,7 +48,7 @@ export default class OverviewPage extends React.Component<any, OverviewComponent
                       </div>
                       <br></br><br></br>
                       
-                      <div className = 'rounded-none outline-none drop-shadow-shadowProfile h-20 w-2/4 sm mx-auto text-left filter bg-bluePrimary'> 
+                      <div className = 'rounded-lg outline-blackProfile drop-shadow-shadowProfile h-20 w-2/4 sm mx-auto text-left filter bg-white'> 
                      <div>
                       <img src={star} alt="Logo4" className='object-none mx-auto my-auto  inline text-left pl-2 py-5'/>
                       <div className=' text-lg text-darkSecondary font-normal tracking-wider inline px-2 '>
@@ -98,7 +99,9 @@ export default class OverviewPage extends React.Component<any, OverviewComponent
                         
                         
               </div>
-            </div>
+             
+        </div>
+        
       </>
     );
   }

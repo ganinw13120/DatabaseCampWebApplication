@@ -6,6 +6,9 @@ module.exports = {
     colors : {
       primary : '#005FB7',
       darkPrimary : '#364655',
+      darkSecondary : '#2F4057',
+      grayPrimary : '#5A5A5A',
+      bluePrimary :'#007EF3',
       bg : '#FEFCF4',
       gray : '#BBBFC0',
       red: colors.rose,
@@ -19,7 +22,14 @@ module.exports = {
      'header': [ 'Roboto', 'sans-serif'],
      'prompt': [ 'Prompt', 'sans-serif'],
     },
-    extend: {},
+    extend: {
+      dropShadow: {
+        'shadowProfile': '2.7px 2.7px 1px rgba(0, 0, 0, 0.1)',
+      },
+      outline: {
+        blackProfile: ['0.1px solid #E7E5DE', '1px'],
+      }
+    },
   },
   variants: {
     extend: {},
