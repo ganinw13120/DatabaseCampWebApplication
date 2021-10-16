@@ -2,6 +2,7 @@ import { Component } from 'react';
 import './App.css';
 import LandingPage from "./presentation/view/landing-page";
 import LoginPage from "./presentation/view/login";
+import RegisterPage from "./presentation/view/register";
 import OverviewPage from './presentation/view/overview';
 import {
   BrowserRouter as Router,
@@ -39,6 +40,11 @@ export default class App extends Component {
               <PreLogged>
                 <LoginPage/>
               </PreLogged>
+            </Route>
+            <Route path="/register" exact>
+              <RegisterPage>
+                <RegisterPage/>
+              </RegisterPage>
             </Route>
             <Route path="/overview" exact>
               <LoggedMiddleware>
