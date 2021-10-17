@@ -40,7 +40,7 @@ export default class Sidebar extends React.Component <any, SidebarState>{
               <RightOutlined  style={{fontSize:25}} />
             </div>
           </div>
-          <SideItem  isExpand={isExpand} text='Gan Mongklakorn' icon={<UserOutlined  style={{fontSize:25}} />} />
+          <SideItem  isExpand={isExpand} text='Gan Mongklakorn...' icon={<UserOutlined  style={{fontSize:25}} />} />
           <SideItem  isExpand={isExpand} text='ออกจากระบบ' icon={<LogoutOutlined  style={{fontSize:25}} />} />
         </div>
       </div>
