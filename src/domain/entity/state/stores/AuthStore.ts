@@ -24,7 +24,7 @@ export class AuthStore{
 
   Login(data: any) {
     this.isAuthenticated = true;
-    window.localStorage.setItem('token', data.access_token)
+    window.localStorage.setItem('token', data.accessToken)
   }
 
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import BaseView from '../BaseView';
 import FullLogo from '../../assets/full-logo.png';
-import AuthViewModel from '../../view-model/auth/AuthViewModel';
+import LoginViewModel from '../../view-model/auth/LoginViewModel';
 import { Form, Input, Button  } from 'antd';
 import { KeyOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { inject, observer } from 'mobx-react';
@@ -21,7 +21,7 @@ export interface LoginComponentState {
 class LoginPage extends React.Component<any, LoginComponentState>
   implements BaseView {
   
-  private authViewModel: AuthViewModel;
+  private authViewModel: LoginViewModel;
   
   public constructor(props: any) {
     super(props);
@@ -30,7 +30,7 @@ class LoginPage extends React.Component<any, LoginComponentState>
 
     const loginUseCase = new LoginUseCase(authRepository, this.props.authStore);
 
-    const authViewModel = new AuthViewModel(loginUseCase);
+    const authViewModel = new LoginViewModel(loginUseCase);
     
     this.authViewModel = authViewModel;
 
