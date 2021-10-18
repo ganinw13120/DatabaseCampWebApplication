@@ -3,7 +3,7 @@ import './App.css';
 import LandingPage from "./presentation/view/landing-page";
 import LoginPage from "./presentation/view/login";
 import OverviewPage from './presentation/view/Overview';
-import ProfilePage from './presentation/view/ProfilePage';
+import ProfilePage from './presentation/view/profile';
 import {
   BrowserRouter as Router,
   Route,
@@ -44,6 +44,11 @@ export default class App extends Component {
             <Route path="/overview" exact>
               <LoggedMiddleware>
                 <OverviewPage/>
+              </LoggedMiddleware>
+            </Route>
+            <Route path="/profile" exact>
+              <LoggedMiddleware>
+                <ProfilePage/>
               </LoggedMiddleware>
             </Route>
           </Switch>
