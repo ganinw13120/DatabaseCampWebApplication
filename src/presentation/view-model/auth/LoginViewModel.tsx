@@ -4,7 +4,7 @@ import BaseView from '../../view/BaseView';
 import { FormInstance } from 'antd/es/form';
 import LoginUseCase from '../../../domain/interactors/auth/LoginUseCase';
 
-export default class AuthViewModel implements IAuthViewModel {
+export default class LoginViewModel implements IAuthViewModel {
 
   public formRef?: React.RefObject<FormInstance<any>>;
   public displayText: string;
