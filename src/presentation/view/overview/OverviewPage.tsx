@@ -33,31 +33,42 @@ export default class OverviewPage extends React.Component<any, OverviewComponent
     return (
       <>
          <div className="font-prompt bg-bg w-screen h-screen">
-          <div className='h-full text-white text-center align-middle justify-center '>
-                <img src={Profilehead} alt="Logo2" className='object-none pt-20 mx-auto my-auto text-center' />
-                <div className='text-5xl text-darkPrimary font-normal tracking-wider pt-6'>
-                    <span>แกน มงคลากร
-                    <img src={ProfilenameEdit} alt="Logo3" className='pl-4 inline object-none mx-auto my-auto text-center' />
-                    </span>
+         <div className='flex space-x-4 -mx-96 '>
+                    <div className='text-3xl text-darkPrimary font-semibold tracking-wider pt-6'>
+                      <span className='w-10 bg-darkPrimary'>..</span>
+                    </div>
+                    <div className='text-3xl text-darkPrimary font-semibold tracking-wider pt-6'>
+                      <span>Overview</span>
+                    </div>
+              
                   </div>
-                  <img src={lineLine} alt="Logo4" className='pl-4 inline object-none mx-auto my-auto text-center' />
-                  <div className='text-base text-grayPrimary font-normal tracking-wider'>
-                    <span>เข้าร่วมเมื่อ 18 ส.ค. 2564
-                      </span>
-                      </div>
-                      <br></br><br></br>
-                      
-                      <div className = 'rounded-none outline-none drop-shadow-shadowProfile h-20 w-2/4 sm mx-auto text-left filter bg-bluePrimary'> 
-                     <div>
-                      <img src={star} alt="Logo4" className='object-none mx-auto my-auto  inline text-left pl-2 py-5'/>
-                      <div className=' text-lg text-darkSecondary font-normal tracking-wider inline px-2 '>
-                        <span>1,324 คะแนน</span>
+                  <br></br><br></br>
+                  <div className='text-base text-darkPrimary font-normal tracking-wider pr-96 -mx-96'>
+                    <span>ยินดีต้อนรับ คุณ Gan Mongklakorn</span>
+                    </div>
+                    <br></br><br></br><br></br>
+                    <div className='h-full text-white text-left align-left justify-left'>
+                      <div className = 'rounded-none outline-none drop-shadow-shadowProfile h-20 w-2/4 align-middle text-center justify-center bg-primary -mx-96'> 
+                     
+                      <div className = 'rounded-none outline-none drop-shadow-shadowProfile h-10 w-1/4 text-center bg-red-500 mx-2 my-48 '>
+                        
                         </div>
                       </div>
+                    </div>
+                         <div className='h-full text-white text-center align-middle justify-center '>
+                         <br></br><br></br>
+                      
+                         <div className = 'rounded-none outline-none drop-shadow-shadowProfile h-20 w-2/4 sm mx-auto text-left filter bg-bluePrimary'> 
+                         <div>
+                           
+                           <div className=' text-lg text-darkSecondary font-normal tracking-wider inline px-2 '>
+                           <span>1,324 คะแนน</span>
+                        </div>
+                        </div>
                         <div className =' inline pl-40 py-5 text-right  w-full h-auto '>
                           <img src={hat} alt="Logo5" className='my-auto inline'/>
                         </div>
-                      </div>
+                           </div>
                       <br></br><br></br><br></br>
                       <div className=' text-lg text-darkPrimary font-prompt font-medium tracking-wider inline px-2 '>
                         <span>My Badge (5)</span>
