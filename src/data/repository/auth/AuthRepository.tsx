@@ -1,12 +1,11 @@
 import IAuthRepository from './IAuthRepository';
-import {loginResult, request} from '../../structure/auth/LoginBody';
 
 import axios from 'axios';
 import { API_BASE_URL } from '../../../constant/constant';
 
 export default class AuthRepository implements IAuthRepository {
 
-  public async Login(data: request): Promise<any> {
+  public async Login(data: any): Promise<any> {
     return new Promise((resolve, rejects) => {
       axios.post(`${API_BASE_URL}/user/login`, data).then(res => {
         resolve({
