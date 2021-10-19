@@ -1,8 +1,7 @@
 import AuthRepository from '../../../data/repository/auth/AuthRepository';
 import { AuthStore } from '../../entity/state/stores/AuthStore';
-import ILoginUseCase from './ILoginUseCase';
 
-export default class LoginUseCase implements ILoginUseCase {
+export default class LoginUseCase {
 
   private authRepository: AuthRepository;
   private authStore: AuthStore;
