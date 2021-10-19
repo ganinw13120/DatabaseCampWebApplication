@@ -9,6 +9,8 @@ module.exports = {
       darkSecondary : '#2F4057',
       grayPrimary : '#5A5A5A',
       bluePrimary :'#007EF3',
+      blueSecondary : '#0777DE',
+      bgProgress : '#C4C4C4',
       bg : '#FEFCF4',
       gray : '#BBBFC0',
       red: colors.rose,
