@@ -5,9 +5,7 @@ import RegisterViewModel from '../../view-model/auth/RegisterViewModel';
 import { Form, Input, Button  } from 'antd';
 import { KeyOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { inject, observer } from 'mobx-react';
-import RegisterUseCase from '../../../domain/interactors/auth/RegisterUseCase';
 import { withRouter } from 'react-router-dom';
-import AuthRepository from '../../../data/repository/auth/AuthRepository';
 
 export interface RegisterComponentState {
   isLoading: boolean
@@ -26,11 +24,7 @@ class RegisterPage extends React.Component<any, RegisterComponentState>
   public constructor(props: any) {
     super(props);
 
-    const authRepository = new AuthRepository();
-
-    const registerUseCase = new RegisterUseCase(authRepository, this.props.authStore);
-
-    const viewModel = new RegisterViewModel(registerUseCase);
+    const viewModel = new RegisterViewModel();
     
     this.viewModel = viewModel;
 

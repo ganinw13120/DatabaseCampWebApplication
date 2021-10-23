@@ -2,7 +2,6 @@ import React from 'react';
 import IAuthViewModel from './IAuthViewModel';
 import BaseView from '../../view/BaseView';
 import { FormInstance } from 'antd/es/form';
-import RegisterUseCase from '../../../domain/interactors/auth/RegisterUseCase';
 
 
 export default class RegisterViewModel implements IAuthViewModel {
@@ -12,13 +11,11 @@ export default class RegisterViewModel implements IAuthViewModel {
     public isLoading: boolean;
 
     private baseView?: BaseView;
-    private registerUseCase?: RegisterUseCase;
 
-    public constructor(registerUseCase: RegisterUseCase) {
+    public constructor() {
         this.isLoading = false;
         this.displayText = '';
         this.formRef = React.createRef<FormInstance>();
-        this.registerUseCase = registerUseCase;
     }
 
     public attachView = (baseView: BaseView): void => {
@@ -31,17 +28,20 @@ export default class RegisterViewModel implements IAuthViewModel {
     public OnFinish = async (): Promise<void> => {
         this.isLoading = true;
         this.baseView?.onViewModelChanged();
-        const { issuccess, message } = await this.registerUseCase?.Register(
+        
+        await this.baseView?.props.authStore.Register(
             this.formRef?.current?.getFieldValue("name"),
             this.formRef?.current?.getFieldValue("email"),
-            this.formRef?.current?.getFieldValue("password")
-        ) as { issuccess: boolean, message?: string };
-        this.isLoading = false;
-        this.displayText = message as string;
-        this.baseView?.onViewModelChanged();
-        if (issuccess) {
-            this.baseView?.props?.history?.push('/overview');
-        }
+            this.formRef?.current?.getFieldValue("password"),
+            (res: { issuccess: boolean, message: string }) => {
+                this.isLoading = false;
+                this.displayText = res.message;
+                this.baseView?.onViewModelChanged();
+                if (res.issuccess) {
+                    this.baseView?.props?.history?.push('/overview');
+                }
+            }
+        )
     }
     public onClickLoginButton = (): void => {
         this.baseView?.props?.history?.push('/login');
