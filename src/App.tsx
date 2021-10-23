@@ -3,7 +3,7 @@ import './App.css';
 import LandingPage from "./presentation/view/landing-page";
 import LoginPage from "./presentation/view/login";
 import RegisterPage from "./presentation/view/register";
-import OverviewPage from './presentation/view/overview';
+import OverviewPage from './presentation/view/Overview';
 import ProfilePage from './presentation/view/profile';
 import {
   BrowserRouter as Router,
