@@ -11,6 +11,7 @@ module.exports = {
       bluePrimary :'#007EF3',
       blueSecondary : '#0777DE',
       bgProgress : '#C4C4C4',
+      'bg-dark' : '#E7E5DE',
       bg : '#FEFCF4',
       gray : '#BBBFC0',
       red: colors.rose,
