@@ -5,6 +5,7 @@ import LoginPage from "./presentation/view/login";
 import RegisterPage from "./presentation/view/register";
 import OverviewPage from './presentation/view/Overview';
 import ProfilePage from './presentation/view/profile';
+import MatchingTest from './presentation/view/matching';
 import {
   BrowserRouter as Router,
   Route,
@@ -55,6 +56,11 @@ export default class App extends Component {
             <Route path="/profile" exact>
               <LoggedMiddleware>
                 <ProfilePage/>
+              </LoggedMiddleware>
+            </Route>
+            <Route path="/matching" exact>
+              <LoggedMiddleware>
+                <MatchingTest/>
               </LoggedMiddleware>
             </Route>
           </Switch>
