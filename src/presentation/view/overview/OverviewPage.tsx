@@ -55,7 +55,7 @@ export default class OverviewPage extends React.Component<any, OverviewComponent
               <div className='flex-none w-auto xl:w-2/6 text-xl text-right my-auto mr-8 text-white tracking-widest hidden lg:flex h-full'>
                 <div className='hidden xl:flex flex-grow mr-10 my-auto align-middle'>
                   <div className='mt-5 w-full'>
-                  <Progress percent={30} color='green' size='small'/>
+                  <Progress percent={30} color='green' size='tiny'/>
                   </div>
                 </div>
                 <div className='flex-grow xl:flex-none my-auto'>
@@ -86,7 +86,7 @@ export default class OverviewPage extends React.Component<any, OverviewComponent
               <div className='flex-none w-auto xl:w-2/6 text-xl text-right my-auto mr-8 text-white tracking-widest hidden lg:flex h-full'>
                 <div className='hidden xl:flex flex-grow mr-10 my-auto align-middle'>
                   <div className='mt-5 w-full'>
-                  <Progress percent={30} color='green' size='small'/>
+                  <Progress percent={30} color='green' size='tiny'/>
                   </div>
                 </div>
                 <div className='flex-grow xl:flex-none my-auto'>
@@ -104,7 +104,7 @@ export default class OverviewPage extends React.Component<any, OverviewComponent
                 <div className='flex-none w-auto xl:w-1/6 text-xl text-right my-auto mr-8 text-white tracking-widest hidden lg:flex h-full'>
                 <div className='hidden xl:flex flex-grow mr-10 my-auto align-middle'>
                   <div className='mt-5 w-full'>
-                  <Progress percent={100} color='green' size='small'/>
+                  <Progress percent={100} color='green' size='tiny'/>
                   </div>
                 </div>
                 <div className='flex-grow xl:flex-none my-auto text-darkPrimary font-medium'>
@@ -127,7 +127,7 @@ export default class OverviewPage extends React.Component<any, OverviewComponent
                 <div className='flex-none w-auto xl:w-1/6 text-xl text-right my-auto mr-8 text-white tracking-widest hidden lg:flex h-full'>
                 <div className='hidden xl:flex flex-grow mr-10 my-auto align-middle'>
                   <div className='mt-5 w-full'>
-                  <Progress percent={30} color='green' size='small'/>
+                  <Progress percent={30} color='green' size='tiny'/>
                   </div>
                 </div>
                 <div className='flex-grow xl:flex-none my-auto text-darkPrimary font-medium'>
@@ -145,7 +145,7 @@ export default class OverviewPage extends React.Component<any, OverviewComponent
                 <div className='flex-none w-auto xl:w-1/6 text-xl text-right my-auto mr-8 text-white tracking-widest hidden lg:flex h-full'>
                 <div className='hidden xl:flex flex-grow mr-10 my-auto align-middle'>
                   <div className='mt-5 w-full'>
-                  <Progress percent={0} color='green' size='small'/>
+                  <Progress percent={0} color='green' size='tiny'/>
                   </div>
                 </div>
                 <div className='flex-grow xl:flex-none my-auto text-darkPrimary font-medium'>
@@ -163,7 +163,7 @@ export default class OverviewPage extends React.Component<any, OverviewComponent
                 <div className='flex-none w-auto xl:w-1/6 text-xl text-right my-auto mr-8 text-white tracking-widest hidden lg:flex h-full'>
                 <div className='hidden xl:flex flex-grow mr-10 my-auto align-middle'>
                   <div className='mt-5 w-full'>
-                  <Progress percent={0} color='green' size='small'/>
+                  <Progress percent={0} color='green' size='tiny'/>
                   </div>
                 </div>
                 <div className='flex-grow xl:flex-none my-auto text-darkPrimary font-medium'>
@@ -181,7 +181,7 @@ export default class OverviewPage extends React.Component<any, OverviewComponent
                 <div className='flex-none w-auto xl:w-1/6 text-xl text-right my-auto mr-8 text-white tracking-widest hidden lg:flex h-full'>
                 <div className='hidden xl:flex flex-grow mr-10 my-auto align-middle'>
                   <div className='mt-5 w-full'>
-                  <Progress percent={0} color='green' size='small'/>
+                  <Progress percent={0} color='green' size='tiny'/>
                   </div>
                 </div>
                 <div className='flex-grow xl:flex-none my-auto text-darkPrimary font-medium'>
@@ -211,7 +211,7 @@ export default class OverviewPage extends React.Component<any, OverviewComponent
               <div className='flex-none w-auto xl:w-2/6 text-xl text-right my-auto mr-8 text-white tracking-widest hidden lg:flex h-full'>
                 <div className='hidden xl:flex flex-grow mr-10 my-auto align-middle'>
                   <div className='mt-5 w-full'>
-                  <Progress percent={30} color='green' size='small'/>
+                  <Progress percent={30} color='green' size='tiny'/>
                   </div>
                 </div>
                 <div className='flex-grow xl:flex-none my-auto'>
@@ -229,7 +229,7 @@ export default class OverviewPage extends React.Component<any, OverviewComponent
                 <div className='flex-none w-auto xl:w-1/6 text-xl text-right my-auto mr-8 text-white tracking-widest hidden lg:flex h-full'>
                 <div className='hidden xl:flex flex-grow mr-10 my-auto align-middle'>
                   <div className='mt-5 w-full'>
-                  <Progress percent={100} color='green' size='small'/>
+                  <Progress percent={100} color='green' size='tiny'/>
                   </div>
                 </div>
                 <div className='flex-grow xl:flex-none my-auto text-darkPrimary font-medium'>
@@ -252,7 +252,7 @@ export default class OverviewPage extends React.Component<any, OverviewComponent
                 <div className='flex-none w-auto xl:w-1/6 text-xl text-right my-auto mr-8 text-white tracking-widest hidden lg:flex h-full'>
                 <div className='hidden xl:flex flex-grow mr-10 my-auto align-middle'>
                   <div className='mt-5 w-full'>
-                  <Progress percent={30} color='green' size='small'/>
+                  <Progress percent={30} color='green' size='tiny'/>
                   </div>
                 </div>
                 <div className='flex-grow xl:flex-none my-auto text-darkPrimary font-medium'>
@@ -270,7 +270,7 @@ export default class OverviewPage extends React.Component<any, OverviewComponent
                 <div className='flex-none w-auto xl:w-1/6 text-xl text-right my-auto mr-8 text-white tracking-widest hidden lg:flex h-full'>
                 <div className='hidden xl:flex flex-grow mr-10 my-auto align-middle'>
                   <div className='mt-5 w-full'>
-                  <Progress percent={0} color='green' size='small'/>
+                  <Progress percent={0} color='green' size='tiny'/>
                   </div>
                 </div>
                 <div className='flex-grow xl:flex-none my-auto text-darkPrimary font-medium'>
@@ -288,7 +288,7 @@ export default class OverviewPage extends React.Component<any, OverviewComponent
                 <div className='flex-none w-auto xl:w-1/6 text-xl text-right my-auto mr-8 text-white tracking-widest hidden lg:flex h-full'>
                 <div className='hidden xl:flex flex-grow mr-10 my-auto align-middle'>
                   <div className='mt-5 w-full'>
-                  <Progress percent={0} color='green' size='small'/>
+                  <Progress percent={0} color='green' size='tiny'/>
                   </div>
                 </div>
                 <div className='flex-grow xl:flex-none my-auto text-darkPrimary font-medium'>
@@ -306,7 +306,7 @@ export default class OverviewPage extends React.Component<any, OverviewComponent
                 <div className='flex-none w-auto xl:w-1/6 text-xl text-right my-auto mr-8 text-white tracking-widest hidden lg:flex h-full'>
                 <div className='hidden xl:flex flex-grow mr-10 my-auto align-middle'>
                   <div className='mt-5 w-full'>
-                  <Progress percent={0} color='green' size='small'/>
+                  <Progress percent={0} color='green' size='tiny'/>
                   </div>
                 </div>
                 <div className='flex-grow xl:flex-none my-auto text-darkPrimary font-medium'>
