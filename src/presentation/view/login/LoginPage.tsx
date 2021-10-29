@@ -5,9 +5,7 @@ import LoginViewModel from '../../view-model/auth/LoginViewModel';
 import { Form, Input, Button  } from 'antd';
 import { KeyOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { inject, observer } from 'mobx-react';
-import LoginUseCase from '../../../domain/interactors/auth/LoginUseCase';
 import { withRouter } from 'react-router-dom';
-import AuthRepository from '../../../data/repository/auth/AuthRepository';
 
 export interface LoginComponentState {
   isLoading: boolean
@@ -21,34 +19,31 @@ export interface LoginComponentState {
 class LoginPage extends React.Component<any, LoginComponentState>
   implements BaseView {
   
-  private authViewModel: LoginViewModel;
+  private loginViewModel: LoginViewModel;
   
   public constructor(props: any) {
     super(props);
 
-    const authRepository = new AuthRepository();
 
-    const loginUseCase = new LoginUseCase(authRepository, this.props.authStore);
-
-    const authViewModel = new LoginViewModel(loginUseCase);
+    const loginViewModel = new LoginViewModel();
     
-    this.authViewModel = authViewModel;
+    this.loginViewModel = loginViewModel;
 
     
     this.state = {
-      displayText : authViewModel.displayText,
-      isLoading : authViewModel.isLoading
+      displayText : loginViewModel.displayText,
+      isLoading : loginViewModel.isLoading
     }
   }
   
   public componentDidMount(): void {
-    this.authViewModel.attachView(this);
+    this.loginViewModel.attachView(this);
   }
 
   public onViewModelChanged(): void {
     this.setState({
-      displayText : this.authViewModel.displayText,
-      isLoading : this.authViewModel.isLoading
+      displayText : this.loginViewModel.displayText,
+      isLoading : this.loginViewModel.isLoading
     })
   }
 
@@ -61,9 +56,9 @@ class LoginPage extends React.Component<any, LoginComponentState>
     return (
       <>
         <Form
-          ref={this.authViewModel.formRef}
+          ref={this.loginViewModel.formRef}
           name="basic"
-          onFinish={this.authViewModel.OnFinish}
+          onFinish={this.loginViewModel.OnFinish}
           onFinishFailed={this.onFinishFailed}
           autoComplete="off"
         >
@@ -71,7 +66,7 @@ class LoginPage extends React.Component<any, LoginComponentState>
               <div className='md:flex hidden flex bg-primary text-white text-center align-middle justify-center ' style={{boxShadow:'0 4px 4px #000'}}>
                 <img src={FullLogo} alt="Logo" className='w-3/6 mx-auto my-auto text-center' />
               </div>
-              <div className='text-center align-middle justify-center pt-32'>
+              <div className='text-center align-middle justify-center my-auto'>
                 <div className="w-5/6 md:w-4/6 lg:w-3/6 text-left mx-auto my-auto">
                   <div className='flex space-x-4'>
                     <div className='text-3xl text-darkPrimary font-semibold tracking-wider'>
@@ -90,7 +85,7 @@ class LoginPage extends React.Component<any, LoginComponentState>
                     </div>
                     <div>
                       <Form.Item name="email" rules={[{ required: true, message: 'กรุณากรอกอีเมล'}]}>
-                        <Input className='mt-5 h-14 w-full' size="large" placeholder="  อีเมล" prefix={<UserOutlined />} />
+                        <Input className='mt-3 h-12 w-full' size="large" placeholder="อีเมล" prefix={<UserOutlined  className='mr-3'/>} />
                       </Form.Item>
                     </div>
                   </div>
@@ -100,7 +95,7 @@ class LoginPage extends React.Component<any, LoginComponentState>
                     </div>
                     <div className='w-full'>
                       <Form.Item name="password" rules={[{ required: true, message: 'กรุณากรอกรหัสผ่าน' }]} className='w-full'>
-                        <Input.Password iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} className='mt-5 h-14 ' size="large" placeholder="  รหัสผ่าน" prefix={<KeyOutlined />}  />
+                        <Input.Password iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} className='mt-3 h-12 ' size="large" placeholder="รหัสผ่าน" prefix={<KeyOutlined  className='mr-3'/>}  />
                       </Form.Item>
                     </div>
                 </div>
@@ -108,7 +103,7 @@ class LoginPage extends React.Component<any, LoginComponentState>
                   <div className={`bg-${isLoading ? 'gray' : 'primary'} h-14 rounded-xl mt-4`}>
                     <Button disabled={isLoading} htmlType="submit" className='w-full h-24 bg-primary' style={{height: '100%'}} ghost size='large'><span className='text-base text-white font-light tracking-wider '>เข้าสู่ระบบ</span></Button>
                   </div>
-                  <div className="mt-5 h-14 text-center">
+                  <div className="mt-5 h-14 text-center cursor-pointer" onClick={this.loginViewModel.OnClickRegister}>
                     <span className='text-base text-darkPrimary font-light tracking-wider '>สมัครสมาชิก</span>
                   </div>
                 </div>

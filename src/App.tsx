@@ -1,11 +1,14 @@
-import { Component } from 'react';
+import { Component, ReactElement } from 'react';
 import './App.css';
 import LandingPage from "./presentation/view/landing-page";
 import LoginPage from "./presentation/view/login";
 import RegisterPage from "./presentation/view/register";
-import OverviewPage from './presentation/view/Overview';
+
+import OverviewPage from './presentation/view/overview';
 import ProfilePage from './presentation/view/profile';
-import MatchingTest from './presentation/view/matching';
+import MatchingPage from './presentation/view/matching';
+import PointRankingPage from './presentation/view/pointRanking';
+
 import {
   BrowserRouter as Router,
   Route,
@@ -28,9 +31,43 @@ const store = {
   authStore : _RootStore.authStore
 };
 
+interface route {
+  url: string,
+  page : ReactElement,
+}
+
+const appRouteList : route[] = [
+  {
+    url: '/overview',
+    page : <OverviewPage/>
+  },
+  {
+    url: '/profile',
+    page : <ProfilePage/>
+  },
+  {
+    url: '/activity/matching',
+    page : <MatchingPage/>
+  },
+  {
+    url: '/pointranking',
+    page : <PointRankingPage/>
+  },
+];
+
 export default class App extends Component {
 
   render(): JSX.Element  {
+    const appRouterendered : ReactElement[] = [];
+    appRouteList.forEach(e => {
+      appRouterendered.push(
+        <Route path={e.url} exact>
+          <LoggedMiddleware>
+            {e.page}
+          </LoggedMiddleware>
+        </Route>
+      )
+    })
     return (
       <Provider {...store}>
         <Router>
@@ -48,21 +85,7 @@ export default class App extends Component {
                 <RegisterPage/>
               </RegisterPage>
             </Route>
-            <Route path="/overview" exact>
-              <LoggedMiddleware>
-                <OverviewPage/>
-              </LoggedMiddleware>
-            </Route>
-            <Route path="/profile" exact>
-              <LoggedMiddleware>
-                <ProfilePage/>
-              </LoggedMiddleware>
-            </Route>
-            <Route path="/matching" exact>
-              <LoggedMiddleware>
-                <MatchingTest/>
-              </LoggedMiddleware>
-            </Route>
+            {appRouterendered}
           </Switch>
         </Router>
       </Provider>
