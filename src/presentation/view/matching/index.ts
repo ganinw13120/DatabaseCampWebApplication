@@ -1,1 +1,1 @@
-export { default } from './MatchingPage';
+export {default} from "./MatchingPage"

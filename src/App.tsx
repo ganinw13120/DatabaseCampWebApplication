@@ -8,6 +8,7 @@ import OverviewPage from './presentation/view/overview';
 import ProfilePage from './presentation/view/profile';
 import MatchingPage from './presentation/view/matching';
 import LecturePage from './presentation/view/lecture';
+import PointRankingPage from './presentation/view/lecture';
 
 import {
   BrowserRouter as Router,
@@ -51,7 +52,11 @@ const appRouteList : route[] = [
   },
   {
     url: '/activity/lecture',
-    page : <LecturePage/>
+    page: <LecturePage />
+  },
+  {
+    url: '/pointranking',
+    page : <PointRankingPage/>
   },
 ];
 

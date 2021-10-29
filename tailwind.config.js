@@ -10,6 +10,9 @@ module.exports = {
       grayPrimary : '#5A5A5A',
       bluePrimary :'#007EF3',
       blueSecondary : '#0777DE',
+      Orange : '#F2AE2E',
+      Redwrong: '#D5393B', 
+      Green : '#53BF06',
       bgProgress : '#C4C4C4',
       'bg-dark' : '#E7E5DE',
       bg : '#FEFCF4',
@@ -24,6 +27,7 @@ module.exports = {
     fontFamily: {
      'header': [ 'Roboto', 'sans-serif'],
      'prompt': [ 'Prompt', 'sans-serif'],
+     'sarabun': [ 'Sarabun', 'sans-serif'],
     },
     extend: {
       dropShadow: {
