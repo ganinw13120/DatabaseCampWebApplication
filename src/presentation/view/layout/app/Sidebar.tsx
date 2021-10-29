@@ -3,17 +3,29 @@ import '../app/applayout.css';
 import HalfLeftLogo from '../../../assets/halfleftlogo.png';
 import HalfRightLogo from '../../../assets/halfrightlogo.png';
 import { AppstoreOutlined, FileTextOutlined, BarsOutlined, UserOutlined, LogoutOutlined, RightOutlined } from '@ant-design/icons';
+import { inject, observer } from 'mobx-react';
+import { withRouter } from 'react-router-dom';
+import Skeleton from '@mui/material/Skeleton';
 
 interface SidebarState {
   isExpand: boolean
 }
 
-export default class Sidebar extends React.Component <any, SidebarState>{
+@inject('authStore')
+  
+
+@observer
+class Sidebar extends React.Component <any, SidebarState>{
   constructor(props : any) {
     super(props)
     this.state = {
       isExpand : true,
     }
+  }
+  onLogout() {
+    console.log(this.props);
+    this.props.authStore.Logout();
+    this.props.history.push('/login');
   }
   render(): JSX.Element {
     const { isExpand } = this.state;
@@ -25,7 +37,7 @@ export default class Sidebar extends React.Component <any, SidebarState>{
           <img src={HalfRightLogo} alt="Logo" className='w-auto h-14' style={{transition: "all 1s", opacity : isExpand ? 1 : 0}}/>
         </div>
         <div className="pt-5 grid grid-rows-3 gap-5">
-          <SideItem isExpand={isExpand} text='Overview' icon={<AppstoreOutlined style={{ fontSize: 25 }} />} />
+          <SideItem isExpand={isExpand} text='Overview' icon={<AppstoreOutlined style={{ fontSize: 25 }} />}  />
           <SideItem isExpand={isExpand} text='Examination'  icon={<FileTextOutlined  style={{fontSize:25}} />} />
           <SideItem  isExpand={isExpand} text='Point Ranking'  icon={<BarsOutlined  style={{fontSize:25}} />} />
         </div>
@@ -40,21 +52,24 @@ export default class Sidebar extends React.Component <any, SidebarState>{
               <RightOutlined  style={{fontSize:25}} />
             </div>
           </div>
-          <SideItem  isExpand={isExpand} text='Gan Mongklakorn...' icon={<UserOutlined  style={{fontSize:25}} />} />
-          <SideItem  isExpand={isExpand} text='ออกจากระบบ' icon={<LogoutOutlined  style={{fontSize:25}} />} />
+          <SideItem className='z-10' isExpand={isExpand} text='Gan Mongklakorn...' icon={<UserOutlined  style={{fontSize:25}} />} />
+          <SideItem className='z-10' isExpand={isExpand} text='ออกจากระบบ' icon={<LogoutOutlined style={{ fontSize: 25 }}/>}  onClick={() => { this.onLogout();}} />
         </div>
       </div>
     </>
   }
 }
 
+export default withRouter(Sidebar);
+
 class SideItem extends React.Component<any>{
   render(): JSX.Element {
-    const {isExpand, icon, text} = this.props
+    const { isExpand, icon, text, onClick, className } = this.props;
     return (
       <>
-        <div className=' truncate flex w-full mx-auto sideitem h-auto py-3  text-center align-middle justify-center ' onClick={this.props.onClick}>
+        <div className={`truncate flex w-full mx-auto sideitem h-auto py-3  text-center align-middle justify-center ${className}`} onClick={() => { if (onClick) onClick();}}>
           <div className={` flex pl-${isExpand ? '0' : '3'} w-9/12 text-left h-full text-center`} style={{ transition: 'padding 1s' }}>
+            {/* <Skeleton variant="text" className='w-full' /> */}
             <div>
                 {icon}
             </div>

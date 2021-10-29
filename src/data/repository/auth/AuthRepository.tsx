@@ -5,6 +5,19 @@ import { API_BASE_URL } from '../../../constant/constant';
 
 export default class AuthRepository implements IAuthRepository {
 
+  public async VerifyToken(token: any) : Promise<any> {
+    return new Promise((resolve, reject) => {
+      axios.get(`${API_BASE_URL}/user/info`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      }).then(res => {
+        resolve({})
+        console.log(res)
+      })
+    })
+  }
+
   public async Login(data: any): Promise<any> {
     return new Promise((resolve, rejects) => {
       axios.post(`${API_BASE_URL}/user/login`, data).then(res => {

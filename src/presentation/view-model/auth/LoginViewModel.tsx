@@ -22,7 +22,7 @@ export default class LoginViewModel implements IAuthViewModel {
   };
 
   public detachView = (): void => {
-    this.baseView = undefined;
+    // this.baseView = undefined;
   };
   public OnFinish = async (): Promise<void> => {
     this.isLoading = true;
@@ -30,12 +30,15 @@ export default class LoginViewModel implements IAuthViewModel {
     await this.baseView?.props.authStore.Login(
       this.formRef?.current?.getFieldValue("email"),
       this.formRef?.current?.getFieldValue("password"),
-      (res: { issuccess: boolean, message: string }) => {
-        this.isLoading = false;
-        this.displayText = res.message;
-        this.baseView?.onViewModelChanged();
+      async (res: { issuccess: boolean, message: string }) => {
         if (res.issuccess) {
+          console.log(this.baseView)
           this.baseView?.props?.history?.push('/overview');
+        } else {
+          console.log(res)
+          this.isLoading = false;
+          this.displayText = res.message;
+          this.baseView?.onViewModelChanged();
         }
       }
     )

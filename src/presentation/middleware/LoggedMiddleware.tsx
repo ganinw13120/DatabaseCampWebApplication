@@ -6,11 +6,16 @@ import AppLayout from "../view/layout/app/AppLayout";
 @inject('authStore')
   
 @observer
-class PreLogged extends React.Component<any> {
-  render(): JSX.Element {
+class LoggedMiddleware extends React.Component<any> {
+  constructor(props : any) {
+    super(props);
+  }
+  componentDidMount() {
     if (!this.props.authStore.isAuthenticated) {
       this.props.history?.push('/login');
     }
+  }
+  render(): JSX.Element {
     return (
       <>
         <AppLayout>
@@ -21,4 +26,4 @@ class PreLogged extends React.Component<any> {
   }
 }
 
-export default withRouter(PreLogged);
+export default withRouter(LoggedMiddleware);

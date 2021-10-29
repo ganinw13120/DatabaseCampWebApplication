@@ -7,6 +7,7 @@ import RegisterPage from "./presentation/view/register";
 import OverviewPage from './presentation/view/overview';
 import ProfilePage from './presentation/view/profile';
 import MatchingPage from './presentation/view/matching';
+import LecturePage from './presentation/view/lecture';
 
 import {
   BrowserRouter as Router,
@@ -47,6 +48,10 @@ const appRouteList : route[] = [
   {
     url: '/activity/matching',
     page : <MatchingPage/>
+  },
+  {
+    url: '/activity/lecture',
+    page : <LecturePage/>
   },
 ];
 

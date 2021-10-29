@@ -24,7 +24,6 @@ class LoginPage extends React.Component<any, LoginComponentState>
   public constructor(props: any) {
     super(props);
 
-
     const loginViewModel = new LoginViewModel();
     
     this.loginViewModel = loginViewModel;
@@ -63,7 +62,7 @@ class LoginPage extends React.Component<any, LoginComponentState>
           autoComplete="off"
         >
             <div className="grid  md:grid-cols-2 h-screen font-prompt bg-bg">
-              <div className='md:flex hidden flex bg-primary text-white text-center align-middle justify-center ' style={{boxShadow:'0 4px 4px #000'}}>
+              <div className='md:flex hidden flex bg-primary text-white text-center align-middle justify-center ' style={{boxShadow:'0 0px 4px #000'}}>
                 <img src={FullLogo} alt="Logo" className='w-3/6 mx-auto my-auto text-center' />
               </div>
               <div className='text-center align-middle justify-center my-auto'>
