@@ -32,10 +32,8 @@ export default class LoginViewModel implements IAuthViewModel {
       this.formRef?.current?.getFieldValue("password"),
       async (res: { issuccess: boolean, message: string }) => {
         if (res.issuccess) {
-          console.log(this.baseView)
           this.baseView?.props?.history?.push('/overview');
         } else {
-          console.log(res)
           this.isLoading = false;
           this.displayText = res.message;
           this.baseView?.onViewModelChanged();

@@ -64,9 +64,9 @@ export default class App extends Component {
 
   render(): JSX.Element  {
     const appRouterendered : ReactElement[] = [];
-    appRouteList.forEach(e => {
+    appRouteList.forEach((e, key) => {
       appRouterendered.push(
-        <Route path={e.url} exact>
+        <Route path={e.url} exact key={key}>
           <LoggedMiddleware>
             {e.page}
           </LoggedMiddleware>
