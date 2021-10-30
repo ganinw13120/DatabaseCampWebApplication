@@ -1,6 +1,13 @@
 import React from 'react';
 import BaseView from '../BaseView';
 
+import './landing.css';
+
+import Navbar from './components/Navbar';
+import Title from './components/Title';
+import About from './components/About';
+
+
 export interface LandingComponentProps {
 
 }
@@ -23,16 +30,11 @@ export default class LandingPage extends React.Component<LandingComponentProps, 
   public render(): JSX.Element {
     return (
       <>
-        <div className="App">
-          <header className="App-header">
-            <p className="title">
-              COMING SOON
-            </p>
-            <p className="description font-extralight">
-              DatabaseCamp.io
-            </p>
-          </header>
+        <div className='h-screen'>
+          <Navbar />
+          <Title />
         </div>
+        <About />
       </>
     );
   }
