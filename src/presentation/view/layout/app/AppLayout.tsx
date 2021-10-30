@@ -3,6 +3,9 @@ import '../app/applayout.css';
 import Sidebar from "./Sidebar";
 
 export default class AppLayout extends React.Component {
+  public constructor(props : any) {
+    super(props);
+  }
   render(): JSX.Element {
     return <>
     

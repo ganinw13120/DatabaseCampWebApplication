@@ -1,0 +1,22 @@
+.plyr {
+    height: 100%;
+    width :100%;
+}
+
+.wrapper{
+    display: flex;
+    justify-content:center;
+    width: 60vw;
+}
+
+.plyr__video-wrapper {
+    position: relative;
+}
+
+.plyr__video-wrapper iframe {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}

@@ -1,8 +1,8 @@
 import React from 'react';
 import BaseView from '../BaseView';
-import bulb from '../../assets/bulb.png';
-import bulb2 from '../../assets/bulb2.png';
-import check from '../../assets/check.png';
+// import bulb from '../../assets/bulb.png';
+// import bulb2 from '../../assets/bulb2.png';
+// import check from '../../assets/check.png';
 export interface MatchingComponentState {
 
 }
@@ -72,14 +72,14 @@ export default class MatchingPage extends React.Component<any, MatchingComponent
        <div className='flex-none bg-Orange h-14 w-36 align-center my-auto ml-7 rounded-xl   'style={{marginLeft:250}}>
                 <div className=' font-semibold text-darkPrimary text-center pt-2' style={{marginTop:3}}>
                   คำใบ้
-                  <img src={bulb} alt="Logo4" className='inline -mx-9' style={{marginLeft:3}} />
+                  {/* <img src={bulb} alt="Logo4" className='inline -mx-9' style={{marginLeft:3}} /> */}
                 </div>
                 
               </div>
               <div className='flex-none bg-Green h-14 w-36 align-center my-auto  rounded-xl   'style={{marginLeft:40}}>
                 <div className=' font-semibold text-darkPrimary text-center pt-2' style={{marginTop:3}}>
                   ตรวจคำตอบ
-                  <img src={check} alt="Logo4" className='inline -mx-5' style={{marginLeft:1}} />
+                  {/* <img src={check} alt="Logo4" className='inline -mx-5' style={{marginLeft:1}} /> */}
                 </div>
                 
               </div>
@@ -96,7 +96,7 @@ export default class MatchingPage extends React.Component<any, MatchingComponent
               </div>
               
               <div className='hidden md:flex flex-grow text-left my-auto ml-5 text-white tracking-wider'>
-              <img src={bulb2} alt="Logo4" className='inline -mx-9' style={{marginLeft:3}} />
+              {/* <img src={bulb2} alt="Logo4" className='inline -mx-9' style={{marginLeft:3}} /> */}
               </div>
 
               <div className='flex-none w-auto xl:w-4/6 text-xl text-right my-auto mr-8 text-white tracking-widest hidden lg:flex h-full'>

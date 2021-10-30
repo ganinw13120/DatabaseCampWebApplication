@@ -6,10 +6,12 @@ import { withRouter } from 'react-router-dom';
   
 @observer
 class PreLogged extends React.Component<any> {
-  render(): JSX.Element {
+  componentDidMount() {
     if (this.props.authStore.isAuthenticated) {
       this.props.history?.push('/overview');
     }
+  }
+  render(): JSX.Element {
     return (
       <>
         {this.props.children}
