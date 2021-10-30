@@ -1,8 +1,12 @@
-import { makeAutoObservable, makeObservable, observable, computed, action } from 'mobx';
+import { makeObservable, observable, action } from 'mobx';
 
 import AuthRepository from '../../../../data/repository/auth/AuthRepository';
 
 import RootStore from '../Rootstore';
+
+interface Store {
+  [key : string] : any
+}
 
 export class AuthStore{
   rootStore; // contains the root of store (outest mobx)
@@ -20,27 +24,34 @@ export class AuthStore{
 
     const token = window.localStorage.getItem('token');
     if (token) {
-      this.isAuthenticated = true; // Mock ที่จริงต้อง Verify ก่อนนะจ๊ะ
-      // new Promise(async (resolve, reject) => {
-        // await this.VerifyToken(token).then(() => {
-          // console.log('verify sucuess')
-        // });
-      // })
+      this.setStore({
+        isLoading : true,
+      })
+      this.setStore({isLoading : true, isAuthenticated : false}, true)
+      this.VerifyToken(token);
     }
-    console.log('contructor complete')
   }
 
-  //
-  // ─── INIT VALUE ─────────────────────────────────────────────────────────────────
-  //
-  isAuthenticated = false // not authenticated by default
-  userData = null // null at first => suppose to be an object after the authenticated has set to true (means token was generated)
-  // ────────────────────────────────────────────────────────────────────────────────
+  @observable
+  store : Store = {
+    isAuthenticated: false,
+    isLoading: false,
+    userData : null,
+  }
 
   @action.bound
   async VerifyToken(token : string) {
-    await this.authRepository.VerifyToken(token).then(() => {
-      console.log('verify complete')
+    await this.authRepository.VerifyToken(token).then((res) => {
+      this.setStore({
+        userData: res,
+        isAuthenticated: true,
+        isLoading : false,
+      })
+    }).catch(() => {
+      this.setStore({
+        isAuthenticated: false,
+        isLoading : false
+      })
     })
     return;
   }
@@ -48,8 +59,9 @@ export class AuthStore{
 
   @action.bound
   Logout(cb?: any) {
-    console.log('asd')
-    this.isAuthenticated = false;
+    this.setStore({
+      isAuthenticated : false
+    })
     window.localStorage.removeItem('token');
     cb?.();
   }
@@ -61,8 +73,12 @@ export class AuthStore{
       email: email,
       password : password,
     }).then((res) => {
-      this.isAuthenticated = true;
       window.localStorage.setItem('token', res.accessToken);
+      res.accessToken = null;
+      this.setStore({
+        userData : res,
+        isAuthenticated: true,
+      })
       return {
         issuccess: true,
         message : ''
@@ -84,8 +100,12 @@ export class AuthStore{
       email: email,
       password : password,
     }).then((res) => {
-      this.isAuthenticated = true;
       window.localStorage.setItem('token', res.accessToken);
+      res.accessToken = null;
+      this.setStore({
+        userData : res,
+        isAuthenticated: true,
+      })
       return {
         issuccess: true,
         message : ''
@@ -100,4 +120,19 @@ export class AuthStore{
     cb?.(result)
   }
 
+  @action.bound
+  setStore(data: { [key: string]: any }, merge: boolean = false) {
+    for (let e in data) {
+      const _data = data[e];
+      if (merge) {
+        this.store[e] = {
+          ...this.store[e],
+          ..._data
+        };
+      }
+      else {
+        this.store[e] = _data;
+      }
+    }
+  }
 }
