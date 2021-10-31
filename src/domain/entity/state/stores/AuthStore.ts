@@ -48,10 +48,7 @@ export class AuthStore{
         isLoading : false,
       })
     }).catch(() => {
-      this.setStore({
-        isAuthenticated: false,
-        isLoading : false
-      })
+      this.Logout()
     })
     return;
   }
@@ -60,7 +57,8 @@ export class AuthStore{
   @action.bound
   Logout(cb?: any) {
     this.setStore({
-      isAuthenticated : false
+      isAuthenticated : false,
+      isLoading : false
     })
     window.localStorage.removeItem('token');
     cb?.();
@@ -68,7 +66,6 @@ export class AuthStore{
 
   @action.bound
   async Login(email: string, password: string, cb : any) {
-    console.log(email, password)
     const result = await this.authRepository.Login({
       email: email,
       password : password,
@@ -94,7 +91,6 @@ export class AuthStore{
 
   @action.bound
   async Register(name : string, email: string, password: string, cb : any) {
-    console.log(email, password)
     const result = await this.authRepository.Register({
       name : name,
       email: email,
