@@ -8,6 +8,7 @@ import Title from './components/Title';
 import About from './components/About';
 import Example from './components/Example';
 import Content from './components/Content';
+import Footer from './components/Footer';
 
 
 
@@ -34,12 +35,12 @@ export default class LandingPage extends React.Component<LandingComponentProps, 
     return (
       <>
         <div className=''>
-          {/* <Navbar /> */}
+          <Navbar />
           <Title />
           <About />
           <Example />
           <Content />
-          
+          <Footer />
         </div>
       </>
     );

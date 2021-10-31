@@ -7,7 +7,7 @@ export default class Title extends React.Component<any, any> {
   public render(): JSX.Element {
     return (
       <>
-        <div className='wavediv w-full h-screen overflow-'>
+        <div className='wavediv w-full h-screen -mt-2'>
           <div className=' w-full h-full padding-landing grid grid-cols-1 md:grid-cols-2 font-prompt'>
             <div className='my-auto z-10'>
               <div className=''>

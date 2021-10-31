@@ -6,7 +6,7 @@ export default class LandingPage extends React.Component<any, any> {
   public render(): JSX.Element {
     return (
       <>
-        <nav className="navbar font-prompt padding-landing">
+        <nav className="hidden md:block navbar font-prompt padding-landing">
           <div className='navbar-container h-full w-full flex'  style={{borderBottom:'0.5px solid #BBBFC0'}}>
             <div className='flex-none h-full py-7 w-auto'>
                   <img src={DarkLogo} alt="Logo" className='h-full w-auto' />
