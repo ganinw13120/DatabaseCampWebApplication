@@ -31,10 +31,10 @@ export default class LandingPage extends React.Component<LandingComponentProps, 
     return (
       <>
         <div className='h-screen'>
-          <Navbar />
+          {/* <Navbar /> */}
           <Title />
+          <About />
         </div>
-        <About />
       </>
     );
   }
