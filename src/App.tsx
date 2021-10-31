@@ -7,6 +7,7 @@ import RegisterPage from "./presentation/view/register";
 import OverviewPage from './presentation/view/overview';
 import ProfilePage from './presentation/view/profile';
 import MatchingPage from './presentation/view/matching';
+import MultiplePage from './presentation/view/multiple';
 import LecturePage from './presentation/view/lecture';
 import PointRankingPage from './presentation/view/lecture';
 
@@ -57,6 +58,10 @@ const appRouteList : route[] = [
   {
     url: '/pointranking',
     page : <PointRankingPage/>
+  },
+  {
+    url: '/multiple',
+    page : <MultiplePage/>
   },
 ];
 
