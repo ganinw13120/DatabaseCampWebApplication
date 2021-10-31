@@ -8,8 +8,8 @@ export default class About extends React.Component<any, any> {
   public render(): JSX.Element {
     return (
       <>
-        <div className='font-prompt flip-wavediv w-full -mt-1'>
-          <div className='h-auto w-full md:pt-16 lg:pt-32'>
+        <div className='font-prompt flip-wavediv w-full -mt-1 mb-10'>
+          <div className='h-auto w-full md:pt-16 lg:pt-32 '>
             <div className='w-full text-center' >
               <span className='border-white mx-auto shadow-text text-xl md:text-3xl lg:text-5xl text-white font-semibold tracking-wider'  style={{borderBottom:'0.7px solid #FFFFFF'}}>เกี่ยวกับเรา</span>
             </div>
@@ -46,11 +46,11 @@ export default class About extends React.Component<any, any> {
               </div>
             </div>
           </div>
-          <div className='md:grid md:grid-cols-2 w-screen mt-16 bg-bg-dark'>
+          <div className='md:grid md:grid-cols-2 w-screen mt-16 bg-bg'>
             <div className='md:order-2 landing-container p-4 w-full'>            
               <img src={About2} alt="Logo"/>
             </div>
-            <div className='text-right landing-container p-4 w-full my-auto'>
+            <div className='text-right landing-container p-4 w-full my-auto '>
               <div className='pl-10 pr-20'>
                 <span className='text-2xl md:text-2xl lg:text-4xl text-darkPrimary font-light tracking-wider'>เรียนไปทำไป</span>
               </div>

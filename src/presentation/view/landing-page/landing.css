@@ -73,6 +73,7 @@
 }
 .flip-wavediv  {
     background: url('./../../assets/flip-wave.png') top center no-repeat;
+    background-color : #E7E5DE;
     background-size: contain;
 }
 

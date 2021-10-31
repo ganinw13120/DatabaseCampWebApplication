@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import Title from './components/Title';
 import About from './components/About';
 import Example from './components/Example';
+import Content from './components/Content';
 
 
 
@@ -32,11 +33,13 @@ export default class LandingPage extends React.Component<LandingComponentProps, 
   public render(): JSX.Element {
     return (
       <>
-        <div className='h-screen'>
+        <div className=''>
           {/* <Navbar /> */}
           <Title />
           <About />
           <Example />
+          <Content />
+          
         </div>
       </>
     );
