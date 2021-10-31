@@ -7,6 +7,9 @@ import { KeyOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@an
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 
+import validateEmail from '../../util/validateEmail';
+import validatePassword from '../../util/validatePassword';
+
 export interface RegisterComponentState {
   isLoading: boolean
   displayText : string
@@ -47,7 +50,7 @@ class RegisterPage extends React.Component<any, RegisterComponentState>
   }
 
   onFinishFailed = () => {
-    console.log("onFinishFailed")
+    // console.log("onFinishFailed")
   }
 
  
@@ -95,7 +98,7 @@ class RegisterPage extends React.Component<any, RegisterComponentState>
                       <span >อีเมล :</span>
                     </div>
                     <div>
-                      <Form.Item name="email" rules={[{ required: true, message: 'กรุณากรอกอีเมล'}]}>
+                      <Form.Item name="email" rules={[{validator : validateEmail}]}>
                         <Input className='mt-3 h-12 w-full' size="large" placeholder="อีเมล" prefix={<UserOutlined className='mr-3'/>} />
                       </Form.Item>
                     </div>
@@ -105,7 +108,7 @@ class RegisterPage extends React.Component<any, RegisterComponentState>
                       <span >รหัสผ่าน :</span>
                     </div>
                     <div className='w-full'>
-                      <Form.Item name="password" rules={[{ required: true, message: 'กรุณากรอกรหัสผ่าน' }]} className='w-full'>
+                      <Form.Item name="password" rules={[{validator : validatePassword}]} className='w-full'>
                         <Input.Password iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} className='mt-3 h-12 ' size="large" placeholder="รหัสผ่าน" prefix={<KeyOutlined className='mr-3'/>}  />
                       </Form.Item>
                     </div>
@@ -115,7 +118,7 @@ class RegisterPage extends React.Component<any, RegisterComponentState>
                   <span >ยีนยันรหัสผ่าน :</span>
                 </div>
                 <div className='w-full'>
-                  <Form.Item name="password_comfirmation" rules={[{ required: true, message: 'กรุณากรอกรหัสผ่าน' }]} className='w-full'>
+                  <Form.Item name="password_comfirmation" rules={[{ required: true, message: 'กรุณากรอกรหัสผ่าน' }, {validator : this.viewModel?.matchPassword}]} className='w-full'>
                     <Input.Password iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} className='mt-3 h-12 ' size="large" placeholder="รหัสผ่าน" prefix={<KeyOutlined className='mr-3'/>}  />
                   </Form.Item>
                 </div>

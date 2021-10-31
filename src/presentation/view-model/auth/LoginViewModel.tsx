@@ -3,6 +3,7 @@ import IAuthViewModel from './IAuthViewModel';
 import BaseView from '../../view/BaseView';
 import { FormInstance } from 'antd/es/form';
 
+
 export default class LoginViewModel implements IAuthViewModel {
 
   public formRef?: React.RefObject<FormInstance<any>>;
@@ -22,8 +23,9 @@ export default class LoginViewModel implements IAuthViewModel {
   };
 
   public detachView = (): void => {
-    // this.baseView = undefined;
+    this.baseView = undefined;
   };
+
   public OnFinish = async (): Promise<void> => {
     this.isLoading = true;
     this.baseView?.onViewModelChanged();

@@ -47,24 +47,12 @@ export default class RegisterViewModel implements IAuthViewModel {
         this.baseView?.props?.history?.push('/login');
     }
 
-    public matchPassword = (password_confirmation: String) => {
-        if (password_confirmation === this.formRef?.current?.getFieldValue("password")) {
-            return null;
+    public matchPassword = (_ : any, val : string, callback : any) : void => {
+        if (val === this.formRef?.current?.getFieldValue("password")) {
+            callback();
         } else {
-            return "รหัสผ่านไม่ตรงกัน"
+            callback("รหัสผ่านไม่ตรงกัน")
         }
     }
-
-
-    public validateEmail = (email: String) => {
-        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        let validEmail = re.test(email.toLowerCase());
-        if (!validEmail) {
-            return "กรุณากรอกอีเมลให้ถูกต้อง"
-        } else {
-            return null;
-        }
-    }
-
 
 }
