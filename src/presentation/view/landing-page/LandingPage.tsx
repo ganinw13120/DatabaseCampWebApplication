@@ -6,6 +6,8 @@ import './landing.css';
 import Navbar from './components/Navbar';
 import Title from './components/Title';
 import About from './components/About';
+import Example from './components/Example';
+
 
 
 export interface LandingComponentProps {
@@ -34,6 +36,7 @@ export default class LandingPage extends React.Component<LandingComponentProps, 
           {/* <Navbar /> */}
           <Title />
           <About />
+          <Example />
         </div>
       </>
     );

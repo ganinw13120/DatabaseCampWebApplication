@@ -8,7 +8,7 @@ export default class About extends React.Component<any, any> {
   public render(): JSX.Element {
     return (
       <>
-        <div className=' block font-prompt flip-wavediv w-full h-screen -mt-1'>
+        <div className='font-prompt flip-wavediv w-full -mt-1'>
           <div className='h-auto w-full md:pt-16 lg:pt-32'>
             <div className='w-full text-center' >
               <span className='border-white mx-auto shadow-text text-xl md:text-3xl lg:text-5xl text-white font-semibold tracking-wider'  style={{borderBottom:'0.7px solid #FFFFFF'}}>เกี่ยวกับเรา</span>
