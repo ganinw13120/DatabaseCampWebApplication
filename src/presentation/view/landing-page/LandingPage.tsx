@@ -1,6 +1,17 @@
 import React from 'react';
 import BaseView from '../BaseView';
 
+import './landing.css';
+
+import Navbar from './components/Navbar';
+import Title from './components/Title';
+import About from './components/About';
+import Example from './components/Example';
+import Content from './components/Content';
+import Footer from './components/Footer';
+
+
+
 export interface LandingComponentProps {
 
 }
@@ -13,9 +24,8 @@ export default class LandingPage extends React.Component<LandingComponentProps, 
   implements BaseView {
   public constructor(props: LandingComponentState) {
     super(props);
-    
+    // window.addEventListener("scroll", this.handleScroll);
   }
-
   public onViewModelChanged(): void {
     
   }
@@ -23,15 +33,13 @@ export default class LandingPage extends React.Component<LandingComponentProps, 
   public render(): JSX.Element {
     return (
       <>
-        <div className="App">
-          <header className="App-header">
-            <p className="title">
-              COMING SOON
-            </p>
-            <p className="description font-extralight">
-              DatabaseCamp.io
-            </p>
-          </header>
+        <div className=''>
+          <Navbar />
+          <Title />
+          <About />
+          <Example />
+          <Content />
+          <Footer />
         </div>
       </>
     );
