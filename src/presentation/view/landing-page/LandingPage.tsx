@@ -24,7 +24,6 @@ export default class LandingPage extends React.Component<LandingComponentProps, 
   implements BaseView {
   public constructor(props: LandingComponentState) {
     super(props);
-    // window.addEventListener("scroll", this.handleScroll);
   }
   public onViewModelChanged(): void {
     

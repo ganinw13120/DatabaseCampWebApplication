@@ -1,7 +1,9 @@
 import React from 'react';
 import DarkLogo from '../../../assets/dark-logo.png';
-
-export default class LandingPage extends React.Component<any, any> {
+import { withRouter } from 'react-router-dom';
+import scrollTo from '../../../util/scrollTo';
+ 
+class Navbar extends React.Component<any, any> {
 
   public constructor(props: any) {
     super(props);
@@ -13,6 +15,11 @@ export default class LandingPage extends React.Component<any, any> {
     window.addEventListener("scroll", () => {
       this.setState({ offSetY: window.pageYOffset });
     });
+  }
+
+  loadPage(url: string) {
+    alert(url)
+    this.props.history.push('/login');
   }
   public render(): JSX.Element {
     const { offSetY } = this.state;
@@ -27,18 +34,18 @@ export default class LandingPage extends React.Component<any, any> {
             </div>
             <div className='flex-none my-auto w-auto flex'>
               <div className='item-space '>
-                <span className='cursor-pointer p-2 align-middle text-l text-darkPrimary font-medium tracking-wider'>หน้าหลัก</span>
+                <span className='cursor-pointer p-2 align-middle text-l text-darkPrimary font-medium tracking-wider' onClick={()=>scrollTo('title')}>หน้าหลัก</span>
               </div>
               <div className='item-space'>
-                <span className='cursor-pointer p-2 align-middle text-l text-darkPrimary font-medium tracking-wider'>เกี่ยวกับ</span>
+                <span className='cursor-pointer p-2 align-middle text-l text-darkPrimary font-medium tracking-wider' onClick={()=>scrollTo('about')}>เกี่ยวกับ</span>
               </div>
               <div className='item-space'>
-                <span className='cursor-pointer p-2 align-middle text-l text-darkPrimary font-medium tracking-wider'>เนื้อหา</span>
+                <span className='cursor-pointer p-2 align-middle text-l text-darkPrimary font-medium tracking-wider' onClick={()=>scrollTo('content')}>เนื้อหา</span>
               </div>
             </div>
             <div className='flex-none my-auto w-auto flex'>
               <div className='ml-20 mr-8'>
-                <span className='cursor-pointer p-2 align-middle text-l text-darkPrimary font-medium tracking-wider'>เข้าสู่ระบบ</span>
+                <span className='cursor-pointer p-2 align-middle text-l text-darkPrimary font-medium tracking-wider' onClick={()=>this.loadPage('login')}>เข้าสู่ระบบ</span>
               </div>
             </div>
             <div className='flex-none my-auto w-auto flex'>
@@ -53,3 +60,4 @@ export default class LandingPage extends React.Component<any, any> {
     );
   }
 }
+export default withRouter(Navbar);

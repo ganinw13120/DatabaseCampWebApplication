@@ -20,7 +20,7 @@ export default class About extends React.Component<any, any> {
     const { offSetY } = this.state;
     return (
       <>
-        <div className='font-prompt flip-wavediv w-full -mt-1 mb-10 z-10'>
+        <div id='about' className='font-prompt flip-wavediv w-full -mt-1 mb-10 z-10'>
           <div className='h-auto w-full md:pt-16 lg:pt-32 '>
             <div className='w-full text-center' >
               <span className='border-white mx-auto shadow-text text-3xl md:text-4xl lg:text-5xl text-white font-semibold tracking-wider'  style={{borderBottom:'0.7px solid #FFFFFF'}}>เกี่ยวกับเรา</span>
