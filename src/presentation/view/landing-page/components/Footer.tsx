@@ -3,6 +3,7 @@ import React from 'react';
 import FullLogo from "../../../assets/full-logo.png";
 import Kmutt from "../../../assets/kmutt-logo.svg";
 import { CopyrightOutlined } from '@ant-design/icons';
+import scrollTo from '../../../util/scrollTo';
 
 export default class Footer extends React.Component<any, any> {
 
@@ -17,9 +18,9 @@ export default class Footer extends React.Component<any, any> {
             <div className='col-span-1'>
               <div className='w-3/4 mx-auto  mt-16 md:mt-0'>
                 <p className='w-auto text-xl md:text-3xl text-white font-normal'>Content</p>
-                <p className='mt-5 w-auto text-xl md:text-2xl text-white font-extralight'>หน้าหลัก</p>
-                <p className='w-auto text-xl md:text-2xl text-white font-extralight'>เกี่ยวกับ</p>
-                <p className='w-auto text-xl md:text-2xl text-white font-extralight'>เนื้อหา</p>
+                <p className='mt-5 w-auto text-xl md:text-2xl text-white font-extralight' onClick={()=>scrollTo('title')}>หน้าหลัก</p>
+                <p className='w-auto text-xl md:text-2xl text-white font-extralight' onClick={()=>scrollTo('about')}>เกี่ยวกับ</p>
+                <p className='w-auto text-xl md:text-2xl text-white font-extralight' onClick={()=>scrollTo('content')}>เนื้อหา</p>
               </div>
             </div>
             <div className='col-span-2 pb-16 mt-16 md:mt-0'>
