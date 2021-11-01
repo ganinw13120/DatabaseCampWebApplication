@@ -3,7 +3,7 @@ import BaseView from '../BaseView';
 import { SourceInfo } from 'plyr';
 import Plyr from 'plyr-react'
 import './lecture.css';
-import 'plyr-react/dist/plyr.css'
+import './plyr.css';
 import { Button  } from 'antd';
 
 export interface LectureComponentState {
