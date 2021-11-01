@@ -4,11 +4,17 @@ import 'semantic-ui-css/semantic.min.css'
 import { Progress } from 'semantic-ui-react'
 import './Bar.css'
 import ContentCard from './components/ContentCard';
+import { inject, observer } from 'mobx-react';
+import { withRouter } from 'react-router-dom';
 export interface OverviewComponentState {
 
 }
 
-export default class OverviewPage extends React.Component<any, OverviewComponentState>
+@inject('authStore')
+  
+
+@observer
+class OverviewPage extends React.Component<any, OverviewComponentState>
   implements BaseView {
 
   public constructor(props: any) {
@@ -36,13 +42,12 @@ export default class OverviewPage extends React.Component<any, OverviewComponent
           <HeaderContent />
           <ContentCard />
           <ContentCard />
-          <ContentCard />
-          <ContentCard />
         </div>
       </>
     );
   }
 }
+export default withRouter(OverviewPage);
 
 class HeaderContent extends React.Component{
 
