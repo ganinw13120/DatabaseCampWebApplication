@@ -16,10 +16,8 @@ class Navbar extends React.Component<any, any> {
       this.setState({ offSetY: window.pageYOffset });
     });
   }
-
   loadPage(url: string) {
-    alert(url)
-    this.props.history.push('/login');
+    this.props.history.push('/' + url);
   }
   public render(): JSX.Element {
     const { offSetY } = this.state;
@@ -49,7 +47,7 @@ class Navbar extends React.Component<any, any> {
               </div>
             </div>
             <div className='flex-none my-auto w-auto flex'>
-              <div className='cursor-pointer bg-primary py-3 px-5 rounded-2xl'>
+              <div className='cursor-pointer bg-primary py-3 px-5 rounded-2xl'  onClick={()=>this.loadPage('register')}>
                 <span className='align-middle text-l text-white font-light tracking-wider'>สมัครสมาชิก</span>
               </div>
             </div>

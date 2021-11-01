@@ -25,7 +25,8 @@ export class AuthStore{
     const token = window.localStorage.getItem('token');
     if (token) {
       this.setStore({
-        isLoading : true,
+        isLoading: true,
+        token : token
       })
       this.setStore({isLoading : true, isAuthenticated : false}, true)
       this.VerifyToken(token);
@@ -36,7 +37,8 @@ export class AuthStore{
   store : Store = {
     isAuthenticated: false,
     isLoading: false,
-    userData : null,
+    userData: null,
+    token : null,
   }
 
   @action.bound

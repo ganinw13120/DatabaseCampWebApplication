@@ -6,22 +6,32 @@ import './Bar.css'
 import ContentCard from './components/ContentCard';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
+import OverviewViewModel from '../../view-model/app/OverviewViewModel';
+
 export interface OverviewComponentState {
 
 }
 
-@inject('authStore')
+@inject('overviewStore')
   
 
 @observer
 class OverviewPage extends React.Component<any, OverviewComponentState>
   implements BaseView {
+  private overviewViewModel: OverviewViewModel;
 
   public constructor(props: any) {
     super(props);
-
+    const overviewViewModel = new OverviewViewModel();
+    
+    this.overviewViewModel = overviewViewModel;
   }
+
   public onViewModelChanged(): void {
+  }
+
+  public componentDidMount(): void {
+    this.overviewViewModel.attachView(this);
   }
 
   public render(): JSX.Element {
