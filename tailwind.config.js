@@ -13,6 +13,7 @@ module.exports = {
       Orange : '#F2AE2E',
       Redwrong: '#D5393B', 
       Green : '#53BF06',
+      success : '#38A605',
       bgProgress : '#C4C4C4',
       'bg-dark' : '#E7E5DE',
       bg : '#FEFCF4',

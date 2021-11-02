@@ -18,6 +18,7 @@ export interface OverviewComponentState {
 }
 
 @inject('overviewStore')
+@inject('appStore')
 @observer
 class OverviewPage extends React.Component<any, OverviewComponentState>
   implements BaseView {
@@ -27,6 +28,8 @@ class OverviewPage extends React.Component<any, OverviewComponentState>
     super(props);
     const overviewViewModel = new OverviewViewModel();
     
+    this.props.appStore.setStore({ isExpand: true });
+
     this.overviewViewModel = overviewViewModel;
   }
 
