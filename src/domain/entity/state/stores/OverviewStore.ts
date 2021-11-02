@@ -30,7 +30,6 @@ export class OverviewStore {
   async FetchOverview(): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     await this.overviewRepository.FetchOverview(token).then((res) => {
-      console.log({...res})
       this.setStore({
         data : res,
         isLoading : false
