@@ -10,16 +10,19 @@ class Navbar extends React.Component<any, any> {
     this.state = {
       offsetY : 0
     }
+    this.handleScroll = this.handleScroll.bind(this);
+  }
+  handleScroll () :void {
+    this.setState({ offSetY: window.pageYOffset });
   }
   componentDidMount() {
-    window.addEventListener("scroll", () => {
-      this.setState({ offSetY: window.pageYOffset });
-    });
+    window.addEventListener('scroll', this.handleScroll, false);
   }
-
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll, false);
+  }
   loadPage(url: string) {
-    alert(url)
-    this.props.history.push('/login');
+    this.props.history.push('/' + url);
   }
   public render(): JSX.Element {
     const { offSetY } = this.state;
@@ -49,7 +52,7 @@ class Navbar extends React.Component<any, any> {
               </div>
             </div>
             <div className='flex-none my-auto w-auto flex'>
-              <div className='cursor-pointer bg-primary py-3 px-5 rounded-2xl'>
+              <div className='cursor-pointer bg-primary py-3 px-5 rounded-2xl'  onClick={()=>this.loadPage('register')}>
                 <span className='align-middle text-l text-white font-light tracking-wider'>สมัครสมาชิก</span>
               </div>
             </div>

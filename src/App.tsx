@@ -30,7 +30,8 @@ const _RootStore = new RootStore();
 
 const store = {
   rootStore: _RootStore,
-  authStore : _RootStore.authStore
+  authStore: _RootStore.authStore,
+  overviewStore : _RootStore.overviewStore
 };
 
 interface route {

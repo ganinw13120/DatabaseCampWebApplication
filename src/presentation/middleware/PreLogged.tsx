@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 @observer
 class PreLogged extends React.Component<any> {
   componentDidMount() {
-    if (this.props.authStore.isAuthenticated) {
+    if (this.props.authStore.store.isAuthenticated) {
       this.props.history?.push('/overview');
     }
   }

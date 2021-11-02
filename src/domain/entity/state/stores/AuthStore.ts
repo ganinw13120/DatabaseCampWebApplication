@@ -25,7 +25,8 @@ export class AuthStore{
     const token = window.localStorage.getItem('token');
     if (token) {
       this.setStore({
-        isLoading : true,
+        isLoading: true,
+        token : token
       })
       this.setStore({isLoading : true, isAuthenticated : false}, true)
       this.VerifyToken(token);
@@ -36,7 +37,8 @@ export class AuthStore{
   store : Store = {
     isAuthenticated: false,
     isLoading: false,
-    userData : null,
+    userData: null,
+    token : null,
   }
 
   @action.bound
@@ -58,7 +60,8 @@ export class AuthStore{
   Logout(cb?: any) {
     this.setStore({
       isAuthenticated : false,
-      isLoading : false
+      isLoading : false,
+      token : null
     })
     window.localStorage.removeItem('token');
     cb?.();
@@ -70,11 +73,13 @@ export class AuthStore{
       email: email,
       password : password,
     }).then((res) => {
-      window.localStorage.setItem('token', res.accessToken);
+      const token = res.accessToken;
       res.accessToken = null;
+      window.localStorage.setItem('token', token);
       this.setStore({
         userData : res,
         isAuthenticated: true,
+        token : token
       })
       return {
         issuccess: true,
@@ -96,11 +101,13 @@ export class AuthStore{
       email: email,
       password : password,
     }).then((res) => {
-      window.localStorage.setItem('token', res.accessToken);
+      const token = res.accessToken;
       res.accessToken = null;
+      window.localStorage.setItem('token', token);
       this.setStore({
         userData : res,
         isAuthenticated: true,
+        token : token
       })
       return {
         issuccess: true,
