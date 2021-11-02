@@ -22,17 +22,19 @@ export class OverviewStore {
 
   @observable
   store : Store = {
-      data : null
+      data: null,
+      isLoading : true,
   }
 
   @action.bound
   async FetchOverview(): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     await this.overviewRepository.FetchOverview(token).then((res) => {
+      console.log({...res})
       this.setStore({
-        data : res
+        data : res,
+        isLoading : false
       })
-      // console.log(res)
     }).catch((res) => {
       console.log(res)
     })

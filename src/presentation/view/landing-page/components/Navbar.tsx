@@ -10,11 +10,16 @@ class Navbar extends React.Component<any, any> {
     this.state = {
       offsetY : 0
     }
+    this.handleScroll = this.handleScroll.bind(this);
+  }
+  handleScroll () :void {
+    this.setState({ offSetY: window.pageYOffset });
   }
   componentDidMount() {
-    window.addEventListener("scroll", () => {
-      this.setState({ offSetY: window.pageYOffset });
-    });
+    window.addEventListener('scroll', this.handleScroll, false);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll, false);
   }
   loadPage(url: string) {
     this.props.history.push('/' + url);

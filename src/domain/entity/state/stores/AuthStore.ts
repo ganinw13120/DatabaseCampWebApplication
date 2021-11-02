@@ -60,7 +60,8 @@ export class AuthStore{
   Logout(cb?: any) {
     this.setStore({
       isAuthenticated : false,
-      isLoading : false
+      isLoading : false,
+      token : null
     })
     window.localStorage.removeItem('token');
     cb?.();
@@ -72,11 +73,13 @@ export class AuthStore{
       email: email,
       password : password,
     }).then((res) => {
-      window.localStorage.setItem('token', res.accessToken);
+      const token = res.accessToken;
       res.accessToken = null;
+      window.localStorage.setItem('token', token);
       this.setStore({
         userData : res,
         isAuthenticated: true,
+        token : token
       })
       return {
         issuccess: true,
@@ -98,11 +101,13 @@ export class AuthStore{
       email: email,
       password : password,
     }).then((res) => {
-      window.localStorage.setItem('token', res.accessToken);
+      const token = res.accessToken;
       res.accessToken = null;
+      window.localStorage.setItem('token', token);
       this.setStore({
         userData : res,
         isAuthenticated: true,
+        token : token
       })
       return {
         issuccess: true,
