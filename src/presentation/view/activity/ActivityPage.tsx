@@ -1,20 +1,24 @@
 import React from 'react';
 import BaseView from '../BaseView';
-// import bulb2 from '../../assets/bulb2.png';
-// import check from '../../assets/check.png';
 import './matching.css';
 
 import Hintbox from '../layout/activity/Hintbox';
 import Requirement from '../layout/activity/Requirement';
 
-export default class MatchingPage extends React.Component<any, any>
+import CompletionPage from './CompletionPage';
+
+export interface CompletionPageState {
+  width: number
+}
+
+export default class ActivityPage extends React.Component<any, CompletionPageState>
   implements BaseView {
   public onViewModelChanged(): void {
   }
   public render(): JSX.Element {
     return (
       <>
-        <div className='grid grid-cols-2 w-full h-full bg-bg-dark'>
+        <div className='xl:grid xl:grid-cols-2 w-full h-full bg-bg-dark'>
           <Requirement />
           <div className='py-12'>
             <div className='flex h-auto'>
@@ -26,8 +30,9 @@ export default class MatchingPage extends React.Component<any, any>
               </div>
             </div>
             <div className='text-xl text-black font-sarabun tracking-wider mx-14 my-8'>
-                <span>จงจับคู่คำต่อไปนี้</span>
+                <span>จงเลือกคำมาเติมช่องว่างให้ถูกต้อง</span>
             </div>
+            <CompletionPage />
             <div className='text-xl text-Redwrong font-semibold font-prompt tracking-wider mx-14 my-8'>
                 <span>จงจับคู่คำต่อไปนี้</span>
             </div>
