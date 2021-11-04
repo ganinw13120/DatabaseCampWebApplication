@@ -12,20 +12,18 @@ interface SidebarState {
 }
 
 @inject('authStore')
+@inject('appStore')
 @observer
 class Sidebar extends React.Component <any, SidebarState>{
-  constructor(props : any) {
-    super(props)
-    this.state = {
-      isExpand : true,
-    }
-  }
   onLogout() {
     this.props.authStore.Logout();
     this.props.history.push('/login');
   }
+  onClickPage(url : string): void {
+    this.props.history.push('/' + url);
+  }
   render(): JSX.Element {
-    const { isExpand } = this.state;
+    const { isExpand } = this.props.appStore.store;
     const widthBoxStyle = { width: isExpand ? 320 : 90, transition: "width 1s" };
     const { userData } = this.props.authStore.store;
     return <>
@@ -35,17 +33,15 @@ class Sidebar extends React.Component <any, SidebarState>{
           <img src={HalfRightLogo} alt="Logo" className='w-auto h-14' style={{transition: "all 1s", opacity : isExpand ? 1 : 0}}/>
         </div>
         <div className="pt-5 grid grid-rows-3 gap-5">
-          <SideItem isExpand={isExpand} text='Overview' icon={<AppstoreOutlined style={{ fontSize: 25 }} />}  />
+          <SideItem isExpand={isExpand} text='Overview' icon={<AppstoreOutlined style={{ fontSize: 25 }} />} onClick={() => { this.onClickPage('overview') }} />
           <SideItem isExpand={isExpand} text='Examination'  icon={<FileTextOutlined  style={{fontSize:25}} />} />
           <SideItem  isExpand={isExpand} text='Point Ranking'  icon={<BarsOutlined  style={{fontSize:25}} />} />
         </div>
         <div className='absolute bottom-0 mb-8' style={widthBoxStyle}>
           <div className='w-12 h-24'>
             <div className='bg-darkPrimary toggleBtn  text-center align-middle justify-center' onClick={() => {
-              this.setState({
-                isExpand : !isExpand
-              })
-            }} style={{transition : 'transform .2s ease-in-out', transform: isExpand ? '' : 'rotate(180deg)' }}>
+              this.props.appStore.setStore({ isExpand: !isExpand });
+            }} style={{ transition: 'transform .2s ease-in-out', transform: isExpand ? '' : 'rotate(180deg)' }}>
               <RightOutlined  style={{fontSize:25}} />
             </div>
           </div>

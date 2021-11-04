@@ -1,0 +1,9 @@
+.text-wrap {
+    /* display: table-caption; */
+    overflow-wrap: break-word;
+    /* text-overflow:ellipsis; */
+}
+
+.test:hover {
+    background-color : red;
+}

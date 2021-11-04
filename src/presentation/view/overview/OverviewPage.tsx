@@ -1,12 +1,12 @@
-import React from "react";
-import BaseView from "../BaseView";
-import "semantic-ui-css/semantic.min.css";
-import "./Bar.css";
-import "./overview.css";
-import { inject, observer } from "mobx-react";
-import { withRouter } from "react-router-dom";
-import OverviewViewModel from "../../view-model/app/OverviewViewModel";
-import Skeleton from "@mui/material/Skeleton";
+import React from 'react';
+import BaseView from '../BaseView';
+import 'semantic-ui-css/semantic.min.css'
+import './Bar.css'
+import './overview.css'
+import { inject, observer } from 'mobx-react';
+import { withRouter } from 'react-router-dom';
+import OverviewViewModel from '../../view-model/overview/OverviewViewModel';
+import Skeleton from '@mui/material/Skeleton';
 
 import ContentCard from "./components/ContentGroup";
 import HeaderCard from "./components/HeaderCard";
@@ -15,8 +15,10 @@ import SkeletonCard from "./components/SkeletonCard";
 
 export interface OverviewComponentState {}
 
-@inject("overviewStore")
+@inject('overviewStore')
+@inject('appStore')
 @observer
+
 class OverviewPage
   extends React.Component<any, OverviewComponentState>
   implements BaseView
@@ -26,6 +28,7 @@ class OverviewPage
   public constructor(props: any) {
     super(props);
     const overviewViewModel = new OverviewViewModel();
+    this.props.appStore.setStore({ isExpand: true });
 
     this.overviewViewModel = overviewViewModel;
   }

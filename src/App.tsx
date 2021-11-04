@@ -9,6 +9,7 @@ import OverviewPage from './presentation/view/overview';
 import ProfilePage from './presentation/view/profile';
 import MatchingPage from './presentation/view/matching';
 import MultiplePage from './presentation/view/multiple';
+import Activity from './presentation/view/activity';
 import LecturePage from './presentation/view/lecture';
 import PointRankingPage from './presentation/view/pointRanking';
 
@@ -33,6 +34,7 @@ const store = {
   rootStore: _RootStore,
   authStore: _RootStore.authStore,
   overviewStore : _RootStore.overviewStore,
+  appStore : _RootStore.appStore,
   pointRankingStore: _RootStore.pointRankingStore,
 };
 
@@ -53,6 +55,10 @@ const appRouteList : route[] = [
   {
     url: '/activity/matching',
     page : <MatchingPage/>
+  },
+  {
+    url: '/activity',
+    page : <Activity/>
   },
   {
     url: '/activity/lecture',
