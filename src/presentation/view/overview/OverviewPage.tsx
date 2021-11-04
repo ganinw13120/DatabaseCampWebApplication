@@ -65,7 +65,7 @@ class OverviewPage
               <span>ยินดีต้อนรับ Gan Mongklakorn</span>
             )}
           </div>
-          {isLoading ? <HeaderSkeleton variant="h1" /> : <HeaderCard />}
+          {isLoading  ? <HeaderSkeleton variant="h1" /> : data.lasted_group && <HeaderCard /> }
           {isLoading ? (
             <SkeletonCard />
           ) : (
