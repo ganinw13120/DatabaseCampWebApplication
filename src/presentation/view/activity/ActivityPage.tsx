@@ -5,6 +5,8 @@ import './matching.css';
 import Hintbox from '../layout/activity/Hintbox';
 import Requirement from '../layout/activity/Requirement';
 
+import ActivityViewModel from '../../view-model/activity/ActivityViewModel';
+
 import CompletionPage from './CompletionPage';
 
 export interface CompletionPageState {
@@ -13,6 +15,11 @@ export interface CompletionPageState {
 
 export default class ActivityPage extends React.Component<any, CompletionPageState>
   implements BaseView {
+  private activityViewModel: ActivityViewModel;
+  constructor(props: any) {
+    super(props);
+    this.activityViewModel = new ActivityViewModel();
+  }
   public onViewModelChanged(): void {
   }
   public render(): JSX.Element {

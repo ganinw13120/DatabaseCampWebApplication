@@ -15,6 +15,8 @@ export default class Hintbox extends React.Component <any, any> {
           </div>
         </div>
         <HintText />
+        <HintText />
+        <HintText />
       </div>
       
     </>)
@@ -24,7 +26,7 @@ export default class Hintbox extends React.Component <any, any> {
 class HintText extends React.Component<any, any> {
   public render(): JSX.Element {
     return (<>
-        <div className='font-sarabun text-base text-wrap tracking-wider'>
+        <div className='my-3 font-sarabun text-base text-wrap tracking-wider'>
           <span>- เนื่องจากสมชาย ต้องกาองจากสมชาย ต้องการอย่างโง้น ต้องการอย่างงี้ ทำให้สมย่างงี้ </span>
         </div>
     </>)

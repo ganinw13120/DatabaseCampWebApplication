@@ -5,7 +5,7 @@ import './Bar.css'
 import './overview.css'
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
-import OverviewViewModel from '../../view-model/app/OverviewViewModel';
+import OverviewViewModel from '../../view-model/overview/OverviewViewModel';
 import Skeleton from '@mui/material/Skeleton';
 
 import ContentCard from './components/ContentGroup';
