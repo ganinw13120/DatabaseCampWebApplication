@@ -1,3 +1,4 @@
+import { PointRankingStore } from './domain/entity/state/stores/PointRanking.Store';
 import { Component, ReactElement } from 'react';
 import './App.css';
 import LandingPage from "./presentation/view/landing-page";
@@ -9,7 +10,7 @@ import ProfilePage from './presentation/view/profile';
 import MatchingPage from './presentation/view/matching';
 import MultiplePage from './presentation/view/multiple';
 import LecturePage from './presentation/view/lecture';
-import PointRankingPage from './presentation/view/lecture';
+import PointRankingPage from './presentation/view/pointRanking';
 
 import {
   BrowserRouter as Router,
@@ -31,7 +32,8 @@ const _RootStore = new RootStore();
 const store = {
   rootStore: _RootStore,
   authStore: _RootStore.authStore,
-  overviewStore : _RootStore.overviewStore
+  overviewStore : _RootStore.overviewStore,
+  pointRankingStore: _RootStore.pointRankingStore,
 };
 
 interface route {
