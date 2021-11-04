@@ -9,11 +9,7 @@ import ActivityViewModel from '../../view-model/activity/ActivityViewModel';
 
 import CompletionPage from './CompletionPage';
 
-export interface CompletionPageState {
-  width: number
-}
-
-export default class ActivityPage extends React.Component<any, CompletionPageState>
+export default class ActivityPage extends React.Component<any, any>
   implements BaseView {
   private activityViewModel: ActivityViewModel;
   constructor(props: any) {

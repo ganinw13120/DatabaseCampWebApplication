@@ -4,53 +4,63 @@ import './matching.css';
 
 import Draggable from 'react-draggable';
 
-type Position = {
-  x: number,
-  y : number
+type QuestionBox = {
+  id : number,
+  isFilled: boolean,
+  ref : any,
 }
 
-export default class CompletionPage extends React.Component<any, any>
+interface CompletionPageState {
+  questions: QuestionBox[],
+  hoverQuestion : number | null
+}
+
+export default class CompletionPage extends React.Component<any, CompletionPageState>
   implements BaseView {
-  public constructor (props : any) {
+  public constructor(props: any) {
     super(props);
     this.state = {
-      hoverQuestion : null,
+      hoverQuestion: null,
+      questions: [],
     }
     this.onHoverQuestionEnter = this.onHoverQuestionEnter.bind(this);
     this.onHoverQuestionExit = this.onHoverQuestionExit.bind(this);
     this.snapPos = this.snapPos.bind(this);
+    this.appendRef = this.appendRef.bind(this);
   }
   public onViewModelChanged(): void {
 
   }
-  public onHoverQuestionEnter (quest : Position) : void {
-    this.setState({
-      hoverQuestion : quest
-    })
-    console.log(quest)
+
+  public onHoverQuestionEnter(id: number): void {
+    this.setState({ hoverQuestion: id });
   }
   public onHoverQuestionExit(): void {
-    this.setState({
-      hoverQuestion : null
-    })
+    this.setState({ hoverQuestion: null });
   }
-  public snapPos(): Position | null {
-    const { hoverQuestion } = this.state;
+  public snapPos(): any | null {
+    const { questions, hoverQuestion } = this.state;
     if (hoverQuestion) {
-      return hoverQuestion;
+      return questions.find(e=>e.id===hoverQuestion)?.ref
     }
     return null;
   }
+  public appendRef(quest: QuestionBox): void {
+    this.setState((prev: CompletionPageState) => {
+      prev.questions.push(quest);
+      return prev;
+    })
+  }
   public render(): JSX.Element {
+    const func = { enter: this.onHoverQuestionEnter, exit: this.onHoverQuestionExit, append: this.appendRef }
+    console.log(this.state)
     return (
       <>
         <div className='w-full'>
           <ChoiceBox snapPos={this.snapPos} />
-          <Question onHoverQuestionEnter={this.onHoverQuestionEnter} onHoverQuestionExit={this.onHoverQuestionExit}/>
-          <Question onHoverQuestionEnter={this.onHoverQuestionEnter} onHoverQuestionExit={this.onHoverQuestionExit}/>
-          <Question onHoverQuestionEnter={this.onHoverQuestionEnter} onHoverQuestionExit={this.onHoverQuestionExit}/>
-          <Question onHoverQuestionEnter={this.onHoverQuestionEnter} onHoverQuestionExit={this.onHoverQuestionExit}/>
-          <Question onHoverQuestionEnter={this.onHoverQuestionEnter} onHoverQuestionExit={this.onHoverQuestionExit}/>
+          <Question func={func} id={1}/>
+          <Question func={func} id={2}/>
+          <Question func={func} id={3}/>
         </div>
       </>
     );
@@ -58,24 +68,27 @@ export default class CompletionPage extends React.Component<any, any>
 }
 
 class Question extends React.Component<any, any> {
-  private ref : any;
+  private ref: any;
   constructor(props: any) {
     super(props);
     this.state = {
       isHover: false,
     }
     this.ref = React.createRef<HTMLDivElement>();
+    props.func?.append?.({
+      isFilled: false,
+      ref : this.ref,
+      id : props.id
+    })
   }
   onEnter(): void {
-    const { x, y } = this.ref?.current.getBoundingClientRect();
-    const pos: Position = { x: x, y: y };
-    const { onHoverQuestionEnter } = this.props;
-    onHoverQuestionEnter(pos);
+    const { enter } = this.props.func;
+    enter(this.props.id);
     this.setState({ isHover: true });
   }
   onExit(): void {
-    const { onHoverQuestionExit } = this.props;
-    onHoverQuestionExit();
+    const { exit } = this.props.func;
+    exit();
     this.setState({ isHover: false });
   }
 
@@ -83,21 +96,21 @@ class Question extends React.Component<any, any> {
     const { isHover } = this.state;
     return (<>
       <div className='mx-14 text-base text-darkPrimary font-normal my-6 flex' >
-            <span className='my-auto'>
-              1. สมชายต้องทำสมชายต้
-            </span>
-            <div ref={this.ref} className={`w-32 h-12 py-2 px-12 mx-4 border-b border-gray rounded-lg z-${20 }`} onMouseEnter={() => { this.onEnter() }} onMouseLeave={() => { this.onExit() }} style={{color : isHover ? 'red' : 'blue'}}>
-              {'  '}
-            </div>
-            <span className='my-auto  '>
-              เพื่อที่จะบรรลุเป้าหมายนั้น
-            </span>
-          </div>
+        <span className='my-auto'>
+          1. สมชายต้องทำสมชายต้
+        </span>
+        <div ref={this.ref} className={`w-32 h-12 py-2 px-12 mx-4 border-b border-gray rounded-lg z-${20}`} onMouseEnter={() => { this.onEnter() }} onMouseLeave={() => { this.onExit() }} style={{ color: isHover ? 'red' : 'blue' }}>
+          {'  '}
+        </div>
+        <span className='my-auto  '>
+          เพื่อที่จะบรรลุเป้าหมายนั้น
+        </span>
+      </div>
     </>)
   }
 }
 
-class ChoiceBox extends React.Component <any, any> {
+class ChoiceBox extends React.Component<any, any> {
   public render(): JSX.Element {
     const { snapPos } = this.props;
     return (<>
@@ -107,42 +120,60 @@ class ChoiceBox extends React.Component <any, any> {
       </div>
     </>)
   }
-} 
+}
 
 type ChoiceProps = {
   displayText: string,
-  snapPos : any
+  snapPos: any
 }
 class Choice extends React.Component<ChoiceProps, any> {
-  private ref : any;
+  private ref: any;
+  private originalRef: any;
   constructor(props: any) {
     super(props);
     this.state = {
       isDragging: false,
       posX: 0,
-      // posY: 493-386,
-      posY : 0,
-      tempX: 0,
-      tempY : 0,
+      posY: 0,
+      boxRef: null,
     }
     this.onStartDrag = this.onStartDrag.bind(this);
     this.onStopDrag = this.onStopDrag.bind(this);
     this.ref = React.createRef<HTMLDivElement>();
+    this.originalRef = React.createRef<HTMLDivElement>();
+    this.onWidthChange = this.onWidthChange.bind(this);
   }
-  onStartDrag(e:any, pos:any): void {
-    const { x, y } = this.ref?.current.getBoundingClientRect();
-    console.log(x,y)
-    this.setState({ isDragging: true, tempX : x, tempY : y });
+  componentDidMount() {
+    window.addEventListener('resize', this.onWidthChange);
   }
-  onStopDrag(e: any, pos: any): void {
-    const { tempX, tempY } = this.state;
-    // this.setState({ isDragging: false });
-    const { snapPos } = this.props;
-    const newPos = snapPos();
-    if (newPos) {
-      this.setState({ isDragging: false, posX:  newPos.x - tempX , posY:  newPos.y- tempY });
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onWidthChange);
+  }
+  onWidthChange = () => {
+    const { boxRef } = this.state;
+    if (boxRef) {
+      const { x,y } = this.calculateCoordination(boxRef);
+      this.setState({ posX: x, posY: y });
     }
-    else this.setState({ isDragging: false });
+  }
+  calculateCoordination = (boxRef: any): {x : number , y : number}=> {
+    const { x, y } = this.originalRef?.current.getBoundingClientRect();
+    const { x: newX, y: newY } = boxRef?.current.getBoundingClientRect();
+    return {
+      x: newX - x, y: newY - y
+    }
+  }
+  onStartDrag(): void {
+    this.setState({ isDragging: true });
+  }
+  onStopDrag(): void {
+    const { snapPos } = this.props;
+    const boxRef = snapPos();
+    if (boxRef) {
+      const { x, y } = this.calculateCoordination(boxRef);
+      this.setState({ isDragging: false, posX : x, posY : y, boxRef : boxRef });
+    }
+    else this.setState({ isDragging: false, posX: 0, posY: 0, boxRef : null });
   }
   public render(): JSX.Element {
     const { displayText } = this.props;
@@ -152,11 +183,15 @@ class Choice extends React.Component<ChoiceProps, any> {
       y: posY
     }
     return (
-      <Draggable onStart={this.onStartDrag} onStop={this.onStopDrag} position={pos}>
-        <div ref={this.ref} className={`z-${isDragging ? '0' : '30'} p-4 bg-white w-32 text-center rounded-lg cursor-pointer`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)'}}>
-          {displayText}
+      <>
+        <div ref={this.originalRef} className={`z-${isDragging ? '0' : '30'}`}>
+          <Draggable onStart={this.onStartDrag} onStop={this.onStopDrag} position={pos}>
+            <div ref={this.ref} className={`z-${isDragging ? '0' : '30'} p-4 bg-white w-32 text-center rounded-lg cursor-pointer`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+              {displayText}
+            </div>
+          </Draggable>
         </div>
-      </Draggable>
-    ) 
+      </>
+    )
   }
 }
