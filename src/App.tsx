@@ -36,6 +36,7 @@ const store = {
   overviewStore : _RootStore.overviewStore,
   appStore : _RootStore.appStore,
   pointRankingStore: _RootStore.pointRankingStore,
+  learningStore: _RootStore.learningStore
 };
 
 interface route {
@@ -61,7 +62,7 @@ const appRouteList : route[] = [
     page : <Activity/>
   },
   {
-    url: '/activity/lecture',
+    url: '/content/:id',
     page: <LecturePage />
   },
   {

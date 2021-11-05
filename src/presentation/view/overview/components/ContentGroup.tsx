@@ -59,8 +59,8 @@ export default class ContentGroup extends React.Component<ContentGroupProps, any
               </div>
           </div>
           {(() => {
-            let contentList : any = [];
-            contents.slice().sort((a: any, b: any) => a.cotent_id - b.content_id).forEach((content: any, key: number) => {
+            let contentList: any = [];
+            contents.slice().sort((a: any, b: any) => a.content_id - b.content_id).forEach((content: any, key: number) => {
               contentList.push(<Content name={content.content_name} progress={content.progress} id={content.content_id} is_lasted={content.is_lasted} key={key} />)
             })
             return contentList;

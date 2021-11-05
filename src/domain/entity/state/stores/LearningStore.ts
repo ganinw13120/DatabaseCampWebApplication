@@ -8,7 +8,7 @@ interface Store {
   [key : string] : any
 }
 
-export class OverviewStore {
+export class LearningStore {
   rootStore: RootStore; // contains the root of store (outest mobx)
   private learningRepository: LearningRepository;
 
@@ -22,24 +22,37 @@ export class OverviewStore {
 
   @observable
   store : Store = {
-      data: null,
-      isLoading : true,
+      roadMap: null,
+      activityInfo: null,
+      lectureInfo : null,
   }
 
   @action.bound
-  async FetchOverview(): Promise<any> {
+  public async FetchRoadmap(contentID: number): Promise<any> {
     const { token } = this.rootStore.authStore.store;
-    await this.learningRepository.FetchOverview(token).then((res) => {
+    await this.learningRepository.FetchRoadmap(token, contentID).then((res) => {
       this.setStore({
-        data : res,
-        isLoading : false
+        roadMap : res
       })
+      return res;
     }).catch((res) => {
       console.log(res)
     })
-    return;
   }
 
+  @action.bound
+  public async FetchLecture(contentID: number, cb : any): Promise<any> {
+    const { token } = this.rootStore.authStore.store;
+    const res = await this.learningRepository.FetchLecture(token, contentID).then((res) => {
+      this.setStore({
+        lectureInfo : res
+      })
+      return res;
+    }).catch((res) => {
+      console.log(res)
+    })
+    cb?.(res);
+  }
 
   @action.bound
   setStore(data: { [key: string]: any }, merge: boolean = false) {
