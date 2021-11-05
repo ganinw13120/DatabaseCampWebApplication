@@ -53,7 +53,6 @@ export default class CompletionPage extends React.Component<any, CompletionPageS
   }
   public render(): JSX.Element {
     const func = { enter: this.onHoverQuestionEnter, exit: this.onHoverQuestionExit, append: this.appendRef }
-    console.log(this.state)
     return (
       <>
         <div className='w-full'>

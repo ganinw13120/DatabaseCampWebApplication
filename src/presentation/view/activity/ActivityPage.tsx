@@ -2,28 +2,35 @@ import React from 'react';
 import BaseView from '../BaseView';
 import './matching.css';
 
-import Hintbox from '../layout/activity/Hintbox';
-import Requirement from '../layout/activity/Requirement';
+import Requirement from './Requirement';
+
+import { withRouter } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
 
 import ActivityViewModel from '../../view-model/activity/ActivityViewModel';
 
 import CompletionPage from './CompletionPage';
 
-export default class ActivityPage extends React.Component<any, any>
+@inject('learningStore')
+@observer
+class ActivityPage extends React.Component<any, any>
   implements BaseView {
   private activityViewModel: ActivityViewModel;
   constructor(props: any) {
     super(props);
     this.activityViewModel = new ActivityViewModel();
   }
+  public componentDidMount(): void {
+    this.activityViewModel.attachView(this);
+  }
   public onViewModelChanged(): void {
   }
   public render(): JSX.Element {
     return (
       <>
-        <div className='xl:grid xl:grid-cols-2 w-full h-full bg-bg-dark'>
+        <div className='xl:grid xl:grid-cols-10 w-full h-full bg-bg-dark'>
           <Requirement />
-          <div className='py-12'>
+          <div className='py-12 col-span-6'>
             <div className='flex h-auto'>
               <div className='w-10 text-3xl text-darkPrimary font-semibold tracking-wider p-6 px-10'>
                 <span className='w-full h-full bg-darkPrimary'>..</span>
@@ -36,10 +43,6 @@ export default class ActivityPage extends React.Component<any, any>
                 <span>จงเลือกคำมาเติมช่องว่างให้ถูกต้อง</span>
             </div>
             <CompletionPage />
-            <div className='text-xl text-Redwrong font-semibold font-prompt tracking-wider mx-14 my-8'>
-                <span>จงจับคู่คำต่อไปนี้</span>
-            </div>
-            <Hintbox />
           </div>
         </div>
 
@@ -48,3 +51,5 @@ export default class ActivityPage extends React.Component<any, any>
   }
 }
 
+
+export default withRouter(ActivityPage);
