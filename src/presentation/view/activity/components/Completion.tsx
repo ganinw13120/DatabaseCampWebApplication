@@ -140,8 +140,6 @@ class Dropzone extends React.Component<any, any> {
 
   public render(): JSX.Element {
     const { isHover } = this.state;
-    const { info, id } = this.props;
-    const { first, last } = info;
     return (<>
         <div ref={this.ref} className={`w-32 h-12 py-2 px-12 mx-4 border-b border-gray rounded-lg z-${20}`} onMouseEnter={() => { this.onEnter() }} onMouseLeave={() => { this.onExit() }} style={{ color: isHover ? 'red' : 'blue' }}>
           {'  '}

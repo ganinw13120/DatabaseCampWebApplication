@@ -43,17 +43,18 @@ export default class PointRankingPage
             />
           </div>
 
-          <div className="w-full h-auto text-center align-middle mt-10">
-            {
+          <div className=" w-full h-auto text-center align-middle mt-10">
+            { data &&
               <>
                 {(() => {
                   let list: any = [];
-                  data.leader_board.slice().forEach((item: any, index: any) => {
+                  console.log(data)
+                  data.leader_board.slice().forEach((item: any, index: number) => {
                     list.push(
                       <RankingItem
                         data={item}
                         isLoading={isLoading}
-                        isHighlight={index == 0}
+                        isHighlight={index === 0}
                       />
                     );
                   });

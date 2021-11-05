@@ -1,5 +1,4 @@
 import { Component, ReactElement } from 'react';
-import React from 'react';
 import BaseView from '../../BaseView';
 import Radio from '@mui/material/Radio';
 
@@ -7,7 +6,7 @@ interface MultipleChoiceState {
   selectedChoice : number | null,
 }
 
-export default class MultipleChoice extends React.Component<any, MultipleChoiceState>
+export default class MultipleChoice extends Component<any, MultipleChoiceState>
   implements BaseView {
   public constructor(props: any) {
     super(props);
@@ -41,7 +40,7 @@ export default class MultipleChoice extends React.Component<any, MultipleChoiceS
     );
   }
 }
-class Choice extends React.Component<any, any> {
+class Choice extends Component<any, any> {
   public render () : JSX.Element {
     const { selected, handleSelect, id, displayText } = this.props;
     return (<>

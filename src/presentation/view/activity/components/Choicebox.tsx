@@ -83,7 +83,7 @@ class Choice extends React.Component<ChoiceProps, any> {
   }
   public render(): JSX.Element {
     const { displayText } = this.props;
-    const { isDragging, posX, posY, boxID } = this.state;
+    const { isDragging, posX, posY } = this.state;
     const pos = {
       x: posX,
       y: posY

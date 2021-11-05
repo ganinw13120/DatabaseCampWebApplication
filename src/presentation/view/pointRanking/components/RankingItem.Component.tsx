@@ -21,10 +21,10 @@ export default class RankingItem extends React.Component<Props> {
     const isHighlight = this.props.isHighlight;
     return (
       <>
-        <div className="w-full h-auto text-center align-middle">
+        <div className=" w-full h-auto text-center align-middle">
           <div
             className={`${
-              isHighlight ? "bg-primary" : "bg-white"
+              isHighlight ? "bg-primary" : "contentlist"
             } w-full h-20 mx-auto flex align-middle`}
             style={{ boxShadow: "0 4px 4px rgba(0, 0, 0, 0.25)" }}
           >
