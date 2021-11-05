@@ -40,6 +40,20 @@ export class LearningStore {
     })
   }
 
+  
+  @action.bound
+  public async FetchActivity(activityID: number, cb : any): Promise<any> {
+    const { token } = this.rootStore.authStore.store;
+    const res = await this.learningRepository.FetchActivity(token, activityID).then((res) => {
+      this.setStore({
+        activityInfo : res
+      })
+      return res;
+    }).catch((res) => {
+      console.log(res)
+    })
+    cb?.(res);
+  }
   @action.bound
   public async FetchLecture(contentID: number, cb : any): Promise<any> {
     const { token } = this.rootStore.authStore.store;

@@ -5,7 +5,6 @@ import { inject, observer } from "mobx-react";
 import PointRankingViewModel from "../../view-model/app/PointRanking.ViewModel";
 import RankingItem from "./components/RankingItem.Component";
 import Header from "./components/Header.Component";
-import { distanceAndSkiddingToXY } from "@popperjs/core/lib/modifiers/offset";
 
 export interface PointComponentState {}
 

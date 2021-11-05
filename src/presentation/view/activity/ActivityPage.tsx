@@ -5,11 +5,11 @@ import './matching.css';
 import Requirement from './Requirement';
 
 import { withRouter } from 'react-router-dom';
-import { inject, observer } from 'mobx-react';
 
 import ActivityViewModel from '../../view-model/activity/ActivityViewModel';
 
 import CompletionPage from './CompletionPage';
+import { inject, observer } from 'mobx-react';
 
 @inject('learningStore')
 @observer
@@ -26,6 +26,7 @@ class ActivityPage extends React.Component<any, any>
   public onViewModelChanged(): void {
   }
   public render(): JSX.Element {
+    const { activityInfo } = this.props.learningStore.store;
     return (
       <>
         <div className='xl:grid xl:grid-cols-10 w-full h-full bg-bg-dark'>
@@ -36,13 +37,24 @@ class ActivityPage extends React.Component<any, any>
                 <span className='w-full h-full bg-darkPrimary'>..</span>
               </div>
               <div className='w-96 py-6 -mx-4'>
-                <span className=' text-3xl text-darkPrimary font-semibold tracking-wider'>กิจกรรม (1/5)</span> <span className=' text-lg text-success font-semibold tracking-wider'> + 15 Points</span>
+                <span className=' text-3xl text-darkPrimary font-semibold tracking-wider'>กิจกรรม (1/5)</span> <span className=' text-lg text-success font-semibold tracking-wider'> + {activityInfo ? `${activityInfo.activity.point}` : 'xx'} Points</span>
               </div>
             </div>
-            <div className='text-xl text-black font-sarabun tracking-wider mx-14 my-8'>
-                <span>จงเลือกคำมาเติมช่องว่างให้ถูกต้อง</span>
-            </div>
-            <CompletionPage />
+            {
+              activityInfo ? <> {(() => {
+                const { activity } = activityInfo;
+                const { activity_type_id: type, question } = activity;
+                const act = (type : number) => {
+                  if (type === 3) return <CompletionPage info={activityInfo} />
+                }
+                return <>
+                  <div className='text-xl text-black font-sarabun tracking-wider mx-14 my-8'>
+                      <span>{question}</span>
+                  </div>
+                  {act(type)}
+                </>
+              })()} </> : ''
+            }
           </div>
         </div>
 

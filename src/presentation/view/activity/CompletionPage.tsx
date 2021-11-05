@@ -1,3 +1,4 @@
+import { Component, ReactElement } from 'react';
 import React from 'react';
 import BaseView from '../BaseView';
 import './matching.css';
@@ -8,6 +9,10 @@ type QuestionBox = {
   id : number,
   isFilled: boolean,
   ref : any,
+}
+
+type ChoiceInfo = {
+  key :   number
 }
 
 interface CompletionPageState {
@@ -26,6 +31,7 @@ export default class CompletionPage extends React.Component<any, CompletionPageS
     this.onHoverQuestionEnter = this.onHoverQuestionEnter.bind(this);
     this.onHoverQuestionExit = this.onHoverQuestionExit.bind(this);
     this.snapPos = this.snapPos.bind(this);
+    this.removeSnap = this.removeSnap.bind(this);
     this.appendRef = this.appendRef.bind(this);
   }
   public onViewModelChanged(): void {
@@ -38,12 +44,35 @@ export default class CompletionPage extends React.Component<any, CompletionPageS
   public onHoverQuestionExit(): void {
     this.setState({ hoverQuestion: null });
   }
+  private updateQuestionState(id : number, isFilled : boolean): void {
+    const { questions } = this.state;
+    let temp = [...questions];
+    ((obj) => {
+      if (!obj) return;
+      else obj.isFilled = isFilled
+     })(temp.find(e => e.id === id))
+    return this.setState({
+      questions : temp
+    })
+  }
   public snapPos(): any | null {
     const { questions, hoverQuestion } = this.state;
+    console.log(hoverQuestion)
     if (hoverQuestion) {
-      return questions.find(e=>e.id===hoverQuestion)?.ref
+      const question = questions.find(e => e.id === hoverQuestion && !e.isFilled);
+      if (!question) return null;
+      else {
+        this.updateQuestionState(hoverQuestion, true);
+        return {
+          boxRef: question.ref,
+          boxID : question.id
+        }
+      }
     }
     return null;
+  }
+  public removeSnap(id : number): void {
+    this.updateQuestionState(id, false);
   }
   public appendRef(quest: QuestionBox): void {
     this.setState((prev: CompletionPageState) => {
@@ -52,14 +81,19 @@ export default class CompletionPage extends React.Component<any, CompletionPageS
     })
   }
   public render(): JSX.Element {
-    const func = { enter: this.onHoverQuestionEnter, exit: this.onHoverQuestionExit, append: this.appendRef }
+    const func = { enter: this.onHoverQuestionEnter, exit: this.onHoverQuestionExit, append: this.appendRef };
+    const { info } = this.props;
+    const { choice } = info;
+    let questionList : ReactElement[] = [];
+    choice.questions.forEach((e: any, key: number) => {
+      questionList.push(<Question func={func} id={key + 1} info={{...e}}/>)
+    });
+    console.log(choice)
     return (
       <>
         <div className='w-full'>
-          <ChoiceBox snapPos={this.snapPos} />
-          <Question func={func} id={1}/>
-          <Question func={func} id={2}/>
-          <Question func={func} id={3}/>
+          <ChoiceBox snapPos={this.snapPos} removeSnap={this.removeSnap} list={[...choice.contents]} />
+          {questionList}
         </div>
       </>
     );
@@ -93,16 +127,18 @@ class Question extends React.Component<any, any> {
 
   public render(): JSX.Element {
     const { isHover } = this.state;
+    const { info, id } = this.props;
+    const { first, last } = info;
     return (<>
       <div className='mx-14 text-base text-darkPrimary font-normal my-6 flex' >
         <span className='my-auto'>
-          1. สมชายต้องทำสมชายต้
+          {id}. {first}
         </span>
         <div ref={this.ref} className={`w-32 h-12 py-2 px-12 mx-4 border-b border-gray rounded-lg z-${20}`} onMouseEnter={() => { this.onEnter() }} onMouseLeave={() => { this.onExit() }} style={{ color: isHover ? 'red' : 'blue' }}>
           {'  '}
         </div>
         <span className='my-auto  '>
-          เพื่อที่จะบรรลุเป้าหมายนั้น
+          {last}
         </span>
       </div>
     </>)
@@ -111,11 +147,18 @@ class Question extends React.Component<any, any> {
 
 class ChoiceBox extends React.Component<any, any> {
   public render(): JSX.Element {
-    const { snapPos } = this.props;
+    const { snapPos, removeSnap, list } = this.props;
+    const func = {
+      snapPos: snapPos,
+      removeSnap : removeSnap
+    }
+    let choiceList : ReactElement[] = [];
+    list.forEach((e : any) => {
+      choiceList.push(<Choice displayText={e} func={func} />)
+    })
     return (<>
       <div className='rounded-lg border border-gray bg-white w-5/6 h-auto mx-auto p-6 grid grid-cols-4 gap-y-6 mb-10' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
-        <Choice displayText='คำพูด' snapPos={snapPos} />
-        <Choice displayText='คำจา' snapPos={snapPos} />
+        {choiceList}
       </div>
     </>)
   }
@@ -123,7 +166,7 @@ class ChoiceBox extends React.Component<any, any> {
 
 type ChoiceProps = {
   displayText: string,
-  snapPos: any
+  func: any
 }
 class Choice extends React.Component<ChoiceProps, any> {
   private ref: any;
@@ -135,6 +178,7 @@ class Choice extends React.Component<ChoiceProps, any> {
       posX: 0,
       posY: 0,
       boxRef: null,
+      boxID : null,
     }
     this.onStartDrag = this.onStartDrag.bind(this);
     this.onStopDrag = this.onStopDrag.bind(this);
@@ -166,17 +210,23 @@ class Choice extends React.Component<ChoiceProps, any> {
     this.setState({ isDragging: true });
   }
   onStopDrag(): void {
-    const { snapPos } = this.props;
-    const boxRef = snapPos();
-    if (boxRef) {
+    const { func } = this.props;
+    const {snapPos, removeSnap} = func
+    const { boxID } = this.state;
+    if(boxID) removeSnap(boxID);
+    const res = snapPos();
+    if (res) {
+      const { boxRef, boxID } = res;
       const { x, y } = this.calculateCoordination(boxRef);
-      this.setState({ isDragging: false, posX : x, posY : y, boxRef : boxRef });
+      this.setState({ isDragging: false, posX : x, posY : y, boxRef : boxRef, boxID : boxID });
     }
-    else this.setState({ isDragging: false, posX: 0, posY: 0, boxRef : null });
+    else {
+      this.setState({ isDragging: false, posX: 0, posY: 0, boxRef : null, boxID : null });
+    }
   }
   public render(): JSX.Element {
     const { displayText } = this.props;
-    const { isDragging, posX, posY } = this.state;
+    const { isDragging, posX, posY, boxID } = this.state;
     const pos = {
       x: posX,
       y: posY
