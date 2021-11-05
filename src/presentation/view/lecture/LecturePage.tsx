@@ -4,47 +4,78 @@ import { SourceInfo } from 'plyr';
 import Plyr from 'plyr-react'
 import './lecture.css';
 import './plyr.css';
-import { Button  } from 'antd';
+import { Button ,notification } from 'antd';
+import { inject, observer } from 'mobx-react';
+import { withRouter } from 'react-router-dom';
+import Skeleton from '@mui/material/Skeleton';
+
+import LectureViewModel from '../../view-model/lecture/LectureViewModel';
 
 export interface LectureComponentState {
-
+  lectureInfo : any
 }
 
-export default class LecturePage extends React.Component<any, LectureComponentState>
+@inject('learningStore')
+@observer
+class LecturePage extends React.Component<any, LectureComponentState>
   implements BaseView {
+
+  private lectureViewModel: LectureViewModel;
 
   public constructor(props: any) {
     super(props);
-
+    this.lectureViewModel = new LectureViewModel();
+    // console.log(props.match.params.id)
+    this.state = {
+      lectureInfo : null,
+    }
   }
 
   public componentDidMount(): void {
+    this.lectureViewModel.attachView(this);
   }
 
   public onViewModelChanged(): void {
+    this.setState({
+      lectureInfo: this.lectureViewModel.lectureInfo
+    })
   }
 
   onFinishFailed = () => {
   }
 
+  public openNotification () : void {
+    notification.open({
+      message: 'Notification Title',
+      description:
+        'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+      onClick: () => {
+        console.log('Notification Clicked!');
+      },
+    });
+  };
+
   public render(): JSX.Element {
-    const sourceInfo : SourceInfo = {
+    const { lectureInfo } = this.state;
+    const sourceInfo : SourceInfo | null = lectureInfo ? {
       type: 'video',
       sources: [
         {
-          src : 'https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/test.mp4',
+          src : lectureInfo.video_link,
           provider : 'html5',
         }
       ]
-    }
+    } : null
     return (
       <>
-        <div className='bg-bg w-full'>
+        <div className='bg-bg my-auto w-full'>
           <div className='mt-16'>
             <div className='mx-auto wrapper'>
-                <Plyr
+                {
+                sourceInfo && <Plyr
                   source={sourceInfo}
                 />
+                }
             </div>
           </div>
           <div className="mt-10 mx-auto text-center w-3/4">
@@ -54,13 +85,12 @@ export default class LecturePage extends React.Component<any, LectureComponentSt
                   <span className='w-full bg-darkPrimary'>..</span>
                 </div>
                 <div className='text-3xl text-darkPrimary font-semibold tracking-wider'>
-                  <span>เนื้อหา - Database Entity</span>
+                  <span>{!lectureInfo ?  <Skeleton variant="text" className="w-36" /> : `เนื้อหา - ${lectureInfo.content_name}`}</span>
                 </div>
               </div>
               <div className='flex-grow'>
-
               </div>
-              <div className='flex-none w-1/6 bg-primary rounded-xl h-16'>
+              <div className='nextbtn flex-none w-1/6 bg-primary rounded-xl h-16' onClick={this.lectureViewModel.onClickNext}>
                   <Button className='w-full h-24 bg-primary' style={{height: '100%'}} ghost size='large'><span className='text-base text-white font-light tracking-wider '>ถัดไป</span></Button>
               </div>
             </div>
@@ -70,3 +100,4 @@ export default class LecturePage extends React.Component<any, LectureComponentSt
     );
   }
 }
+export default withRouter(LecturePage);
