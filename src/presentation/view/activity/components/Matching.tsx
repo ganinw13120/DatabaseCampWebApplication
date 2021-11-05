@@ -1,21 +1,21 @@
 import { Component, ReactElement } from 'react';
 import React from 'react';
 import BaseView from '../../BaseView';
-
+import { v4 as uuidv4 } from 'uuid';
 import ChoiceBox from './Choicebox';
-
+import Equal from '../../../assets/equal.svg';
 type QuestionBox = {
-  id : number,
+  id : string,
   isFilled: boolean,
   ref : any,
 }
 
-interface CompletionPageState {
+interface MatchingPageState {
   questions: QuestionBox[],
-  hoverQuestion : number | null
+  hoverQuestion : string | null
 }
 
-export default class Completion extends Component<any, CompletionPageState>
+export default class Matching extends Component<any, MatchingPageState>
   implements BaseView {
   public constructor(props: any) {
     super(props);
@@ -33,13 +33,13 @@ export default class Completion extends Component<any, CompletionPageState>
 
   }
 
-  public onHoverQuestionEnter(id: number): void {
+  public onHoverQuestionEnter(id: string): void {
     this.setState({ hoverQuestion: id });
   }
   public onHoverQuestionExit(): void {
     this.setState({ hoverQuestion: null });
   }
-  private updateQuestionState(id : number, isFilled : boolean): void {
+  private updateQuestionState(id : string, isFilled : boolean): void {
     const { questions } = this.state;
     let temp = [...questions];
     ((obj) => {
@@ -66,11 +66,11 @@ export default class Completion extends Component<any, CompletionPageState>
     }
     return null;
   }
-  public removeSnap(id : number): void {
+  public removeSnap(id : string): void {
     this.updateQuestionState(id, false);
   }
   public appendRef(quest: QuestionBox): void {
-    this.setState((prev: CompletionPageState) => {
+    this.setState((prev: MatchingPageState) => {
       prev.questions.push(quest);
       return prev;
     })
@@ -79,14 +79,17 @@ export default class Completion extends Component<any, CompletionPageState>
     const func = { enter: this.onHoverQuestionEnter, exit: this.onHoverQuestionExit, append: this.appendRef };
     const { info } = this.props;
     const { choice } = info;
-    let questionList : ReactElement[] = [];
-    choice.questions.forEach((e: any, key: number) => {
-      questionList.push(<Question key={key} func={func} id={key + 1} info={{...e}}/>)
-    });
+    let choiceList = [...choice.items_left, ...choice.items_right];
+    let i = 0;
+    let questionList: ReactElement[] = [];
+    while (i < Math.floor(choiceList.length / 2)) {
+      questionList.push(<Question func={func} id={i + 1} />);
+      i++;
+    }
     return (
       <>
         <div className='w-full'>
-          <ChoiceBox snapPos={this.snapPos} removeSnap={this.removeSnap} list={[...choice.contents]} />
+          <ChoiceBox snapPos={this.snapPos} removeSnap={this.removeSnap} list={choiceList} />
           {questionList}
         </div>
       </>
@@ -96,17 +99,15 @@ export default class Completion extends Component<any, CompletionPageState>
 
 class Question extends Component<any, any> {
   public render(): JSX.Element {
-    const { info, id } = this.props;
-    const { first, last } = info;
     return (<>
-      <div className='mx-14 text-base text-darkPrimary font-normal my-6 flex' >
-        <span className='my-auto'>
-          {id}. {first}
-        </span>
+      <div className='mx-auto text-base text-darkPrimary font-normal my-14 flex' >
+        <div className='flex-grow'></div>
         <Dropzone {...this.props} />
-        <span className='my-auto  '>
-          {last}
-        </span>
+        <div className='flex-grow m-auto text-center'>
+          <img src={Equal} alt="Equal to" className='m-auto' />
+        </div>
+        <Dropzone {...this.props} />
+        <div className='flex-grow'></div>
       </div>
     </>)
   }
@@ -114,18 +115,21 @@ class Question extends Component<any, any> {
 
 class Dropzone extends React.Component<any, any> {
   private ref: any;
+  private id: string;
   constructor(props: any) {
     super(props);
+    const id = uuidv4();
+    this.id = id;
     this.ref = React.createRef<HTMLDivElement>();
     props.func?.append?.({
       isFilled: false,
       ref : this.ref,
-      id : props.id
+      id : id
     })
   }
   onEnter(): void {
     const { enter } = this.props.func;
-    enter(this.props.id);
+    enter(this.id);
   }
   onExit(): void {
     const { exit } = this.props.func;

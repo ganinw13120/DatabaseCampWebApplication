@@ -10,8 +10,8 @@ export default class ChoiceBox extends Component<any, any> {
       removeSnap : removeSnap
     }
     let choiceList : ReactElement[] = [];
-    list.forEach((e : any) => {
-      choiceList.push(<Choice displayText={e} func={func} />)
+    list.forEach((e : any, key : number) => {
+      choiceList.push(<Choice key={key} displayText={e} func={func} />)
     })
     return (<>
       <div className='rounded-lg border border-gray bg-white w-5/6 h-auto mx-auto p-6 grid grid-cols-4 gap-y-6 mb-10' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
@@ -90,9 +90,9 @@ class Choice extends React.Component<ChoiceProps, any> {
     }
     return (
       <>
-        <div ref={this.originalRef} className={`z-${isDragging ? '0' : '30'}`}>
+        <div ref={this.originalRef} className={`z-${isDragging ? '10' : '30'}`}>
           <Draggable onStart={this.onStartDrag} onStop={this.onStopDrag} position={pos}>
-            <div ref={this.ref} className={`z-${isDragging ? '0' : '30'} p-4 bg-white w-32 text-center rounded-lg cursor-pointer`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+            <div ref={this.ref} className={`z-${isDragging ? '10' : '30'} p-4 bg-white w-32 text-center rounded-lg cursor-pointer`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
               {displayText}
             </div>
           </Draggable>

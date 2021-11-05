@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom';
 
 import ActivityViewModel from '../../view-model/activity/ActivityViewModel';
 
+import Matching from './components/Matching';
 import Completion from './components/Completion';
 import MultipleChoice from './components/MultipleChoice';
 import { inject, observer } from 'mobx-react';
@@ -27,7 +28,10 @@ class ActivityPage extends React.Component<any, any>
   public onViewModelChanged(): void {
   }
   public render(): JSX.Element {
-    const { activityInfo } = this.props.learningStore.store;
+    let { activityInfo } = this.props.learningStore.store;
+    if (activityInfo?.activity?.activity_id != this.props.match.params.id) {
+      activityInfo = null;
+    }
     return (
       <>
         <div className='xl:grid xl:grid-cols-10 w-full h-full bg-bg-dark'>
@@ -46,7 +50,7 @@ class ActivityPage extends React.Component<any, any>
                 const { activity } = activityInfo;
                 const { activity_type_id: type, question } = activity;
                 const act = (type: number) => {
-                  if (type === 1) return <MultipleChoice info={activityInfo} />
+                  if (type === 1) return <Matching info={activityInfo} />
                   else if (type === 2) return <MultipleChoice info={activityInfo} />
                   else if (type === 3) return <Completion info={activityInfo} />
                 }

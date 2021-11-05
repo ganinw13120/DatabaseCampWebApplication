@@ -42,7 +42,11 @@ export class LearningStore {
 
   
   @action.bound
-  public async FetchActivity(activityID: number, cb : any): Promise<any> {
+  public async FetchActivity(activityID: number, cb: any): Promise<any> {
+    this.setStore({
+      activityInfo: null,
+      lectureInfo : null
+    })
     const { token } = this.rootStore.authStore.store;
     const res = await this.learningRepository.FetchActivity(token, activityID).then((res) => {
       this.setStore({
@@ -56,6 +60,10 @@ export class LearningStore {
   }
   @action.bound
   public async FetchLecture(contentID: number, cb : any): Promise<any> {
+    this.setStore({
+      activityInfo: null,
+      lectureInfo : null
+    })
     const { token } = this.rootStore.authStore.store;
     const res = await this.learningRepository.FetchLecture(token, contentID).then((res) => {
       this.setStore({

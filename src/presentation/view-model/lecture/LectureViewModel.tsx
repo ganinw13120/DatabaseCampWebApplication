@@ -32,6 +32,5 @@ export default class LectureViewModel implements ILectureViewModel {
         },
       });
     }
-    console.log(roadMap.length)
   }
 }

@@ -27,8 +27,8 @@ export default class MultipleChoice extends Component<any, MultipleChoiceState>
     const { selectedChoice } = this.state;
     const {info} = this.props;
     let choiceList: ReactElement[] = [];
-    info.choice.forEach((e:  any) => {
-      choiceList.push(<Choice id={e.multiple_choice_id} displayText={e.content} handleSelect={this.handleSelect} selected={selectedChoice} />)
+    info.choice.forEach((e:  any, key : number) => {
+      choiceList.push(<Choice key={key} id={e.multiple_choice_id} displayText={e.content} handleSelect={this.handleSelect} selected={selectedChoice} />)
     })
     return (
       <>
