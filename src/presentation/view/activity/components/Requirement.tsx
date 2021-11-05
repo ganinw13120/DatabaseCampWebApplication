@@ -1,5 +1,5 @@
 import React from 'react';
-import bulb from '../../assets/bulb.png';
+import bulb from '../../../assets/bulb.png';
 import Hintbox from './Hintbox';
 import Skeleton from '@mui/material/Skeleton';
 

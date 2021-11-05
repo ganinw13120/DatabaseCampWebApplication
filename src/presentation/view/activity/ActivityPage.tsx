@@ -1,14 +1,15 @@
 import React from 'react';
 import BaseView from '../BaseView';
-import './matching.css';
+import './activity.css';
 
-import Requirement from './Requirement';
+import Requirement from './components/Requirement';
 
 import { withRouter } from 'react-router-dom';
 
 import ActivityViewModel from '../../view-model/activity/ActivityViewModel';
 
-import CompletionPage from './CompletionPage';
+import Completion from './components/Completion';
+import MultipleChoice from './components/MultipleChoice';
 import { inject, observer } from 'mobx-react';
 
 @inject('learningStore')
@@ -44,8 +45,10 @@ class ActivityPage extends React.Component<any, any>
               activityInfo ? <> {(() => {
                 const { activity } = activityInfo;
                 const { activity_type_id: type, question } = activity;
-                const act = (type : number) => {
-                  if (type === 3) return <CompletionPage info={activityInfo} />
+                const act = (type: number) => {
+                  if (type === 1) return <MultipleChoice info={activityInfo} />
+                  else if (type === 2) return <MultipleChoice info={activityInfo} />
+                  else if (type === 3) return <Completion info={activityInfo} />
                 }
                 return <>
                   <div className='text-xl text-black font-sarabun tracking-wider mx-14 my-8'>

@@ -1,5 +1,5 @@
 import React from 'react';
-import bulb from '../../assets/bulb.png';
+import bulb from '../../../assets/bulb.png';
 
 export default class Hintbox extends React.Component <any, any> {
   public render(): JSX.Element {
