@@ -1,8 +1,14 @@
 import React from 'react';
 import bulb from '../../../assets/bulb.png';
 
+
+import { inject, observer } from 'mobx-react';
+
+@inject('learningStore')
+@observer
 export default class Hintbox extends React.Component <any, any> {
   public render(): JSX.Element {
+    console.log({...this.props.learningStore.store.activityInfo.hint})
     return (<>
       <div className='border rounded-lg bg-white w-auto h-auto pb-10 px-4 w-10/12 mx-auto bottom-0 mt-auto py-4'  style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)'}}>
         <div className='flex h-auto'>

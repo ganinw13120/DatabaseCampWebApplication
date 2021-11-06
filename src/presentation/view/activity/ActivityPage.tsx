@@ -28,7 +28,7 @@ class ActivityPage extends React.Component<any, any>
   public onViewModelChanged(): void {
   }
   public render(): JSX.Element {
-    let { activityInfo } = this.props.learningStore.store;
+    let { activityInfo, roadMap } = this.props.learningStore.store;
     if (activityInfo?.activity?.activity_id != this.props.match.params.id) {
       activityInfo = null;
     }
@@ -41,8 +41,8 @@ class ActivityPage extends React.Component<any, any>
               <div className='w-10 text-3xl text-darkPrimary font-semibold tracking-wider p-6 px-10'>
                 <span className='w-full h-full bg-darkPrimary'>..</span>
               </div>
-              <div className='w-96 py-6 -mx-4'>
-                <span className=' text-3xl text-darkPrimary font-semibold tracking-wider'>กิจกรรม (1/5)</span> <span className=' text-lg text-success font-semibold tracking-wider'> + {activityInfo ? `${activityInfo.activity.point}` : 'xx'} Points</span>
+              <div className='w-auto py-6 -mx-4'>
+                <span className=' text-3xl text-darkPrimary font-semibold tracking-wider'>กิจกรรม {roadMap && roadMap.items.length !== 0 && activityInfo ? `(${roadMap.items.find((e: any) => e.activity_id === activityInfo?.activity?.activity_id).order}/${roadMap.items.length})`: ''} </span> <span className=' text-lg text-success font-semibold tracking-wider'> + {activityInfo ? `${activityInfo.activity.point}` : 'xx'} Points</span>
               </div>
             </div>
             {

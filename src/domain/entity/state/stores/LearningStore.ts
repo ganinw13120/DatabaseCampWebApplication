@@ -24,7 +24,8 @@ export class LearningStore {
   store : Store = {
       roadMap: null,
       activityInfo: null,
-      lectureInfo : null,
+      lectureInfo: null,
+      histList : null
   }
 
   @action.bound
@@ -49,8 +50,9 @@ export class LearningStore {
     })
     const { token } = this.rootStore.authStore.store;
     const res = await this.learningRepository.FetchActivity(token, activityID).then((res) => {
+      console.log(res)
       this.setStore({
-        activityInfo : res
+        activityInfo : res,
       })
       return res;
     }).catch((res) => {

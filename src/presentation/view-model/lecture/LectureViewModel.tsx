@@ -21,7 +21,7 @@ export default class LectureViewModel implements ILectureViewModel {
   public onClickNext = (): void => {
     const { roadMap } = this.baseView?.props.learningStore.store;
     if (roadMap.length !== 0) {
-      const nextActivity = roadMap.sort((a: any, b: any) => a.order - b.order)[0];
+      const nextActivity = roadMap.items.sort((a: any, b: any) => a.order - b.order)[0];
       this.baseView?.props.history.push('/activity/' + nextActivity.activity_id);
     } else {
       notification['error']({

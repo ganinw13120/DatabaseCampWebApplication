@@ -7,10 +7,10 @@ export default class ActivityViewModel implements IActivityViewModel {
   public attachView = async (baseView: BaseView): Promise<any> => {
     this.baseView = baseView;
     const { id: activityID } = baseView.props.match.params
-    // baseView.props.learningStore.FetchRoadmap(activityID)
     baseView.props.learningStore.FetchActivity(activityID, (res: any) => {
-      // console.log(res)
-      // const {activity_id : activityID}
+      if (!res) return
+      const {content_id : contentId} = res.activity;
+      baseView.props.learningStore.FetchRoadmap(contentId)
       this.lectureInfo = res;
       this.baseView?.onViewModelChanged()
     })
