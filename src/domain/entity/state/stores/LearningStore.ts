@@ -25,7 +25,10 @@ export class LearningStore {
       roadMap: null,
       activityInfo: null,
       lectureInfo: null,
-      histList : null
+      histList: null,
+      result: null,
+      feedback : null,
+      isLoading: false
   }
 
   @action.bound
@@ -50,7 +53,6 @@ export class LearningStore {
     })
     const { token } = this.rootStore.authStore.store;
     const res = await this.learningRepository.FetchActivity(token, activityID).then((res) => {
-      console.log(res)
       this.setStore({
         activityInfo : res,
       })
@@ -60,6 +62,61 @@ export class LearningStore {
     })
     cb?.(res);
   }
+
+  @action.bound
+  public async SubmitActivity(): Promise<any> {
+    const { result, activityInfo } = this.store;
+    if (!result) {
+      this.setStore({
+        feedback : 'กรุณาทำแบบฝึกหัดก่อนตรวจคำตอบ.',
+        isLoading : false
+      })
+      return;
+    } else {
+      this.setStore({
+        isLoading : true
+      })
+    }
+    const { activity } = activityInfo
+    if (activity.activity_type_id === 1) {
+      this.checkCompletion(activity.activity_id, result);
+    } 
+  }
+
+  @action.bound 
+  private async checkCompletion(activityID : number, result : any): Promise<any> {
+    const { token } = this.rootStore.authStore.store;
+    let res : any = [];
+    result.forEach((e: any, key: number) => {
+      if (!e[0] || !e[1]) {
+        this.setStore({
+          isLoading: false,
+          feedback : 'กรุณาทำแบบฝึกหัดให้ครบทุกข้อ'
+        })
+        return;
+      }
+      res.push({
+        item1 : e[0],
+        item2 : e[1]
+      })
+    })
+    this.learningRepository.CheckCompletion(token, activityID, res).then((res : any) => {
+      const {is_correct} = res;
+      if (is_correct) {
+        this.setStore({
+          isLoading: false,
+          feedback : 'ถูกแล้วว'
+        })
+      }
+      else {
+        this.setStore({
+          isLoading: false,
+          feedback : 'ไม่ถูกค้าบ'
+        })
+      }
+    });
+  }
+
   @action.bound
   public async FetchLecture(contentID: number, cb : any): Promise<any> {
     this.setStore({

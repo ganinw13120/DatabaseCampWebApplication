@@ -10,7 +10,7 @@ export default class ChoiceBox extends Component<any, any> {
       removeSnap : removeSnap
     }
     let choiceList : ReactElement[] = [];
-    list.forEach((e : any, key : number) => {
+    list.forEach((e: any, key: number) => {
       choiceList.push(<Choice key={key} displayText={e} func={func} />)
     })
     return (<>
@@ -67,11 +67,11 @@ class Choice extends React.Component<ChoiceProps, any> {
     this.setState({ isDragging: true });
   }
   onStopDrag(): void {
-    const { func } = this.props;
+    const { func, displayText } = this.props;
     const {snapPos, removeSnap} = func
     const { boxID } = this.state;
-    if(boxID) removeSnap(boxID);
-    const res = snapPos();
+    if(boxID) removeSnap(boxID, displayText);
+    const res = snapPos(displayText);
     if (res) {
       const { boxRef, boxID } = res;
       const { x, y } = this.calculateCoordination(boxRef);

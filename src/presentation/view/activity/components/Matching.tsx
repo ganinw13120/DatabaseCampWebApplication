@@ -3,18 +3,24 @@ import React from 'react';
 import BaseView from '../../BaseView';
 import { v4 as uuidv4 } from 'uuid';
 import ChoiceBox from './Choicebox';
+import { inject, observer } from 'mobx-react';
 import Equal from '../../../assets/equal.svg';
 type QuestionBox = {
   id : string,
   isFilled: boolean,
-  ref : any,
+  ref: any,
+  pairId : number
 }
 
 interface MatchingPageState {
   questions: QuestionBox[],
-  hoverQuestion : string | null
+  hoverQuestion: string | null,
+  result: any
 }
 
+
+@inject('learningStore')
+@observer
 export default class Matching extends Component<any, MatchingPageState>
   implements BaseView {
   public constructor(props: any) {
@@ -22,6 +28,7 @@ export default class Matching extends Component<any, MatchingPageState>
     this.state = {
       hoverQuestion: null,
       questions: [],
+      result: []
     }
     this.onHoverQuestionEnter = this.onHoverQuestionEnter.bind(this);
     this.onHoverQuestionExit = this.onHoverQuestionExit.bind(this);
@@ -50,14 +57,22 @@ export default class Matching extends Component<any, MatchingPageState>
       questions : temp
     })
   }
-  public snapPos(): any | null {
+  public snapPos(text : string): any | null {
     const { questions, hoverQuestion } = this.state;
-    console.log(hoverQuestion)
     if (hoverQuestion) {
       const question = questions.find(e => e.id === hoverQuestion && !e.isFilled);
       if (!question) return null;
       else {
         this.updateQuestionState(hoverQuestion, true);
+        const { result } = this.state;
+        let temp = [...result];
+        temp[question.pairId - 1] = [...temp[question.pairId - 1], text];
+        this.setState({
+          result : temp
+        })
+        this.props.learningStore.setStore({
+          result : temp
+        })
         return {
           boxRef: question.ref,
           boxID : question.id
@@ -66,11 +81,23 @@ export default class Matching extends Component<any, MatchingPageState>
     }
     return null;
   }
-  public removeSnap(id : string): void {
+  public removeSnap(id: string, displayText : string): void {
+    const { questions,result } = this.state;
+    let temp = [...result];
+    const question = questions.find(e => e.id === id);
+    if (!question) return;
+    temp[question?.pairId - 1] = temp[question?.pairId - 1].filter((e: any) => e !== displayText);
+    this.setState({
+      result : temp
+    })
+    this.props.learningStore.setStore({
+      result : temp
+    })
     this.updateQuestionState(id, false);
   }
   public appendRef(quest: QuestionBox): void {
     this.setState((prev: MatchingPageState) => {
+      prev.result[quest.pairId - 1] = [];
       prev.questions.push(quest);
       return prev;
     })
@@ -83,7 +110,7 @@ export default class Matching extends Component<any, MatchingPageState>
     let i = 0;
     let questionList: ReactElement[] = [];
     while (i < Math.floor(choiceList.length / 2)) {
-      questionList.push(<Question func={func} id={i + 1} />);
+      questionList.push(<Question func={func} id={i + 1} key={i} />);
       i++;
     }
     return (
@@ -124,7 +151,8 @@ class Dropzone extends React.Component<any, any> {
     props.func?.append?.({
       isFilled: false,
       ref : this.ref,
-      id : id
+      id: id,
+      pairId : props.id
     })
   }
   onEnter(): void {

@@ -25,7 +25,7 @@ export default class Requirement extends React.Component<any, any> {
   }
   public render(): JSX.Element {
     const { width } = this.state;
-    const { activityInfo } = this.props.learningStore.store;
+    const { activityInfo, feedback, isLoading } = this.props.learningStore.store;
     return (<>
       <div className='col-span-4 bg-white py-4 h-auto flex flex-col' style={{ boxShadow: '0 0px 4px rgba(0, 0, 0, 0.25)' }}>
         <div className='text-lg text-darkPrimary w-96 font-semibold tracking-wider pt-4 px-10'>
@@ -46,16 +46,16 @@ export default class Requirement extends React.Component<any, any> {
         </div>
         
         <div className='text-lg text-Redwrong font-semibold font-prompt tracking-wider mx-14 my-8'>
-          {/* <span>มันผิดนะ มันผิด ก็มันผิดอ่ะ</span> */}
+          {feedback ? feedback : null}
         </div>
         <div className='mx-auto flex mb-10'>
-          <div className='mx-4 bg-Orange text-darkPrimary text-lg font-normal py-4 px-10 pr-16 tracking-wider rounded-xl cursor-pointer flex'  style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)'}}>
+          <div className={`mx-4 bg-${isLoading ? 'darkOrange' : 'Orange'} text-darkPrimary text-lg font-normal py-4 px-10 pr-16 tracking-wider rounded-xl cursor-${isLoading ? 'wait' : 'pointer'} flex`}  style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)'}}>
             <span>คำใบ้</span>
             <div>
               <img src={bulb} alt="Logo4" className='h-12 absolute' style={{ marginTop: -7 }} />
             </div>
           </div>
-          <div className='mx-4 bg-primary text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-pointer'  style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)'}}>
+          <div onClick={() => {if(!isLoading)this.props.learningStore.SubmitActivity()}} className={`mx-4 bg-${isLoading ? 'darkPrimary' : 'primary'} text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'wait' : 'pointer'}`}  style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)'}}>
             ตรวจคำตอบ
           </div>
         </div>

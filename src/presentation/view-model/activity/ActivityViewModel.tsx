@@ -9,8 +9,10 @@ export default class ActivityViewModel implements IActivityViewModel {
     const { id: activityID } = baseView.props.match.params
     baseView.props.learningStore.FetchActivity(activityID, (res: any) => {
       if (!res) return
-      const {content_id : contentId} = res.activity;
-      baseView.props.learningStore.FetchRoadmap(contentId)
+      if (!this.baseView?.props.learningStore.store.roadMap) {
+        const {content_id : contentId} = res.activity;
+        baseView.props.learningStore.FetchRoadmap(contentId)
+      }
       this.lectureInfo = res;
       this.baseView?.onViewModelChanged()
     })

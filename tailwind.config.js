@@ -11,6 +11,7 @@ module.exports = {
       bluePrimary :'#007EF3',
       blueSecondary : '#0777DE',
       Orange : '#F2AE2E',
+      darkOrange : '#c6850d',
       Redwrong: '#D5393B', 
       Green : '#53BF06',
       success : '#38A605',
