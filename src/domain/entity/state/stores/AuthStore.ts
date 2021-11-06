@@ -78,8 +78,8 @@ export class AuthStore{
       window.localStorage.setItem('token', token);
       this.setStore({
         userData : res,
+        token : token,
         isAuthenticated: true,
-        token : token
       })
       return {
         issuccess: true,
@@ -106,8 +106,8 @@ export class AuthStore{
       window.localStorage.setItem('token', token);
       this.setStore({
         userData : res,
+        token : token,
         isAuthenticated: true,
-        token : token
       })
       return {
         issuccess: true,

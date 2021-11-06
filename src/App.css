@@ -1,0 +1,8 @@
+.contentlist {
+    transition : all 0.07s;
+    cursor : pointer;
+    background-color :white;
+}
+.contentlist:hover {
+    background-color : #E7E5DE; 
+}

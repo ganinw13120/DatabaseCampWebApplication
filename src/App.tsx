@@ -1,4 +1,3 @@
-import { PointRankingStore } from './domain/entity/state/stores/PointRanking.Store';
 import { Component, ReactElement } from 'react';
 import './App.css';
 import LandingPage from "./presentation/view/landing-page";
@@ -66,7 +65,7 @@ const appRouteList : route[] = [
     page: <LecturePage />
   },
   {
-    url: '/pointranking',
+    url: '/ranking',
     page : <PointRankingPage/>
   },
   {

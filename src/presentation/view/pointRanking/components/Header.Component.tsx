@@ -1,4 +1,3 @@
-import { Skeleton } from "@mui/material";
 import React from "react";
 
 export default class Header extends React.Component {
@@ -10,7 +9,7 @@ export default class Header extends React.Component {
             <span className="w-full bg-darkPrimary">..</span>
           </div>
           <div className="text-3xl text-darkPrimary font-semibold tracking-wider pt-6">
-            <span>Overview</span>
+            <span>Ranking</span>
           </div>
         </div>
       </>
