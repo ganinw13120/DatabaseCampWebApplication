@@ -2,15 +2,17 @@ import React from 'react';
 import bulb from '../../../assets/bulb.png';
 import Hintbox from './Hintbox';
 import Skeleton from '@mui/material/Skeleton';
+import { withRouter } from 'react-router-dom';
 
 import { inject, observer } from 'mobx-react';
 
 @inject('learningStore')
 @observer
-export default class Requirement extends React.Component<any, any> {
+class Requirement extends React.Component<any, any> {
   public constructor(props: any) {
     super(props);
     this.state = { width: 0 };
+    this.onSubmit = this.onSubmit.bind(this);
   }
   componentDidMount() {
     this.getDimensions();
@@ -19,7 +21,21 @@ export default class Requirement extends React.Component<any, any> {
   componentWillUnmount() {
     window.removeEventListener('resize', this.getDimensions);
   }
-
+  onSubmit() : void {
+    const {isLoading} = this.props.learningStore.store;
+    if (isLoading) return;
+    this.props.learningStore.SubmitActivity((res: any) => {
+      if (res) {
+        const nextActivity = this.props.learningStore.getNextActivityId();
+        this.props.learningStore.clearActivity();
+        if (nextActivity) {
+          this.props.history.push(`/activity/${nextActivity}`)
+        } else {
+          this.props.history.push('/overview')
+        }
+      }
+    })
+  }
   getDimensions = () => {
     this.setState({ width: window.innerWidth });
   }
@@ -55,7 +71,7 @@ export default class Requirement extends React.Component<any, any> {
               <img src={bulb} alt="Logo4" className='h-12 absolute' style={{ marginTop: -7 }} />
             </div>
           </div>
-          <div onClick={() => {if(!isLoading)this.props.learningStore.SubmitActivity()}} className={`mx-4 bg-${isLoading ? 'darkPrimary' : 'primary'} text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'wait' : 'pointer'}`}  style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)'}}>
+          <div onClick={this.onSubmit} className={`mx-4 bg-${isLoading ? 'darkPrimary' : 'primary'} text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'wait' : 'pointer'}`}  style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)'}}>
             ตรวจคำตอบ
           </div>
         </div>
@@ -66,3 +82,4 @@ export default class Requirement extends React.Component<any, any> {
     </>)
   }
 }
+export default withRouter(Requirement);

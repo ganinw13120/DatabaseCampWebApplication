@@ -4,6 +4,8 @@ import RootStore from '../Rootstore';
 
 import LearningRepository from '../../../../data/repository/app/LearningRepository';
 
+import { notification } from 'antd';
+
 interface Store {
   [key : string] : any
 }
@@ -25,7 +27,7 @@ export class LearningStore {
       roadMap: null,
       activityInfo: null,
       lectureInfo: null,
-      histList: null,
+      hintList: null,
       result: null,
       feedback : null,
       isLoading: false
@@ -64,13 +66,14 @@ export class LearningStore {
   }
 
   @action.bound
-  public async SubmitActivity(): Promise<any> {
+  public async SubmitActivity(cb : any): Promise<any> {
     const { result, activityInfo } = this.store;
     if (!result) {
       this.setStore({
         feedback : 'กรุณาทำแบบฝึกหัดก่อนตรวจคำตอบ.',
         isLoading : false
       })
+      cb?.(false)
       return;
     } else {
       this.setStore({
@@ -79,12 +82,33 @@ export class LearningStore {
     }
     const { activity } = activityInfo
     if (activity.activity_type_id === 1) {
-      this.checkCompletion(activity.activity_id, result);
+      this.checkCompletion(activity.activity_id, result, cb);
     } 
   }
 
+  @action.bound
+  public getNextActivityId(): number | null {
+    const { roadMap, activityInfo } = this.store;
+    const currentActivityId = activityInfo.activity.activity_id;
+    const currentOrder = roadMap.items.find((e : any) => e.activity_id === currentActivityId).order;
+    const nextActivity = roadMap.items.find((e: any) => e.order === currentOrder + 1);
+    if (!nextActivity) {
+        notification['success']({
+          message: "จบเเล้ว",
+          description:
+            'ไม่มีกิจกรรมเเล้ววว',
+          onClick: () => {
+          },
+        });
+      return null;
+    }
+    else {
+      return nextActivity.activity_id;
+    }
+  }
+
   @action.bound 
-  private async checkCompletion(activityID : number, result : any): Promise<any> {
+  private async checkCompletion(activityID : number, result : any, cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     let res : any = [];
     result.forEach((e: any, key: number) => {
@@ -93,6 +117,7 @@ export class LearningStore {
           isLoading: false,
           feedback : 'กรุณาทำแบบฝึกหัดให้ครบทุกข้อ'
         })
+        cb?.(false)
         return;
       }
       res.push({
@@ -107,14 +132,29 @@ export class LearningStore {
           isLoading: false,
           feedback : 'ถูกแล้วว'
         })
+        cb?.(true)
+        return;
       }
       else {
         this.setStore({
           isLoading: false,
           feedback : 'ไม่ถูกค้าบ'
         })
+        cb?.(false)
+        return;
       }
     });
+  } 
+
+  @action.bound
+  public clearActivity(): void {
+    this.setStore({
+      activityInfo: null,
+      result: null,
+      hintList : null,
+      feedback: null,
+      isLoading : false
+    })
   }
 
   @action.bound

@@ -25,13 +25,17 @@ class ActivityPage extends React.Component<any, any>
   public componentDidMount(): void {
     this.activityViewModel.attachView(this);
   }
+  componentWillUpdate(): void {
+    let { activityInfo } = this.props.learningStore.store;
+    if (activityInfo?.activity?.activity_id.toString() !== this.props.match.params.id) {
+      this.componentDidMount()
+      activityInfo = null;
+    }
+  }
   public onViewModelChanged(): void {
   }
   public render(): JSX.Element {
     let { activityInfo, roadMap } = this.props.learningStore.store;
-    if (activityInfo?.activity?.activity_id != this.props.match.params.id) {
-      activityInfo = null;
-    }
     return (
       <>
         <div className='xl:grid xl:grid-cols-10 w-full h-full bg-bg-dark'>
