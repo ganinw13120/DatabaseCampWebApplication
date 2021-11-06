@@ -4,7 +4,6 @@ import RootStore from '../Rootstore';
 
 import LearningRepository from '../../../../data/repository/app/LearningRepository';
 
-import { notification } from 'antd';
 
 interface Store {
   [key : string] : any
@@ -27,8 +26,7 @@ export class LearningStore {
       roadMap: null,
       activityInfo: null,
       lectureInfo: null,
-      hintList: null,
-      result: null,
+      hintList: [],
       feedback : null,
       isLoading: false
   }
@@ -54,9 +52,10 @@ export class LearningStore {
       lectureInfo : null
     })
     const { token } = this.rootStore.authStore.store;
-    const res = await this.learningRepository.FetchActivity(token, activityID).then((res) => {
+    const res = await this.learningRepository.FetchActivity(token, activityID).then((res : any) => {
       this.setStore({
-        activityInfo : res,
+        activityInfo: res,
+        hint: res.hint.used_hints
       })
       return res;
     }).catch((res) => {
@@ -66,8 +65,8 @@ export class LearningStore {
   }
 
   @action.bound
-  public async SubmitActivity(cb : any): Promise<any> {
-    const { result, activityInfo } = this.store;
+  public async SubmitActivity(result : any, cb : any): Promise<any> {
+    const { activityInfo } = this.store;
     if (!result) {
       this.setStore({
         feedback : 'กรุณาทำแบบฝึกหัดก่อนตรวจคำตอบ.',
@@ -84,27 +83,6 @@ export class LearningStore {
     if (activity.activity_type_id === 1) {
       this.checkCompletion(activity.activity_id, result, cb);
     } 
-  }
-
-  @action.bound
-  public getNextActivityId(): number | null {
-    const { roadMap, activityInfo } = this.store;
-    const currentActivityId = activityInfo.activity.activity_id;
-    const currentOrder = roadMap.items.find((e : any) => e.activity_id === currentActivityId).order;
-    const nextActivity = roadMap.items.find((e: any) => e.order === currentOrder + 1);
-    if (!nextActivity) {
-        notification['success']({
-          message: "จบเเล้ว",
-          description:
-            'ไม่มีกิจกรรมเเล้ววว',
-          onClick: () => {
-          },
-        });
-      return null;
-    }
-    else {
-      return nextActivity.activity_id;
-    }
   }
 
   @action.bound 
@@ -150,11 +128,36 @@ export class LearningStore {
   public clearActivity(): void {
     this.setStore({
       activityInfo: null,
-      result: null,
       hintList : null,
       feedback: null,
       isLoading : false
     })
+  }
+
+  @action.bound
+  public async getHint () : Promise<any> {
+    this.setStore({
+      isLoading: true,
+    })
+    const { activityInfo } = this.store;
+    const { token } = this.rootStore.authStore.store;
+    const activityId = activityInfo.activity.activity_id;
+    const res = await this.learningRepository.GetHint(token, activityId).then((res) => {
+      const { hint } = this.store;
+      let temp = [...hint];
+      temp.push(res);
+      this.setStore({
+        isLoading: false,
+        hint : temp
+      })
+      return null;
+    }).catch((res: any) => {
+      this.setStore({
+        isLoading: false,
+      })
+      return res.message
+    })
+    return res;
   }
 
   @action.bound

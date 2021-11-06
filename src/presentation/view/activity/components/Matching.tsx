@@ -70,9 +70,7 @@ export default class Matching extends Component<any, MatchingPageState>
         this.setState({
           result : temp
         })
-        this.props.learningStore.setStore({
-          result : temp
-        })
+        this.props.updateResult(temp);
         return {
           boxRef: question.ref,
           boxID : question.id
@@ -90,9 +88,7 @@ export default class Matching extends Component<any, MatchingPageState>
     this.setState({
       result : temp
     })
-    this.props.learningStore.setStore({
-      result : temp
-    })
+    this.props.updateResult(temp);
     this.updateQuestionState(id, false);
   }
   public appendRef(quest: QuestionBox): void {

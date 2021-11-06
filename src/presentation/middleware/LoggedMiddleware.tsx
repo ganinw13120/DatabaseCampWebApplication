@@ -1,4 +1,5 @@
-import { inject, observer } from "mobx-react"
+import { inject, observer,   } from "mobx-react"
+import { observe  } from "mobx"
 import React from "react"
 import { withRouter } from 'react-router-dom';
 import AppLayout from "../view/layout/app/AppLayout";
@@ -7,15 +8,19 @@ import AppLayout from "../view/layout/app/AppLayout";
   
 @observer class LoggedMiddleware extends React.Component<any> {
 
-  checkUser(isLoading : boolean, isAuthenticated : boolean) {
+  componentDidMount() {
+    observe(this.props.authStore.store, () => {
+      this.checkUser();
+    })
+  }
+  checkUser() {
+    const { isLoading, isAuthenticated } = this.props.authStore.store;
     if (!isLoading && !isAuthenticated) {
       this.props.history?.push('/login');
     }
   }
 
   render(): JSX.Element {
-    const { isLoading, isAuthenticated } = this.props.authStore.store;
-    this.checkUser(isLoading, isAuthenticated);
     return (
       <>
         <AppLayout>

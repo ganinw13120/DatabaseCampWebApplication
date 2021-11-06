@@ -39,7 +39,7 @@ class ActivityPage extends React.Component<any, any>
     return (
       <>
         <div className='xl:grid xl:grid-cols-10 w-full h-full bg-bg-dark'>
-          <Requirement />
+          <Requirement onHint={this.activityViewModel.onHint} onSubmit={this.activityViewModel.onSubmit} />
           <div className='py-12 col-span-6'>
             <div className='flex h-auto'>
               <div className='w-10 text-3xl text-darkPrimary font-semibold tracking-wider p-6 px-10'>
@@ -54,7 +54,7 @@ class ActivityPage extends React.Component<any, any>
                 const { activity } = activityInfo;
                 const { activity_type_id: type, question } = activity;
                 const act = (type: number) => {
-                  if (type === 1) return <Matching info={activityInfo} />
+                  if (type === 1) return <Matching info={activityInfo} updateResult={this.activityViewModel.updateResult}/>
                   else if (type === 2) return <MultipleChoice info={activityInfo} />
                   else if (type === 3) return <Completion info={activityInfo} />
                 }

@@ -12,7 +12,6 @@ class Requirement extends React.Component<any, any> {
   public constructor(props: any) {
     super(props);
     this.state = { width: 0 };
-    this.onSubmit = this.onSubmit.bind(this);
   }
   componentDidMount() {
     this.getDimensions();
@@ -21,27 +20,13 @@ class Requirement extends React.Component<any, any> {
   componentWillUnmount() {
     window.removeEventListener('resize', this.getDimensions);
   }
-  onSubmit() : void {
-    const {isLoading} = this.props.learningStore.store;
-    if (isLoading) return;
-    this.props.learningStore.SubmitActivity((res: any) => {
-      if (res) {
-        const nextActivity = this.props.learningStore.getNextActivityId();
-        this.props.learningStore.clearActivity();
-        if (nextActivity) {
-          this.props.history.push(`/activity/${nextActivity}`)
-        } else {
-          this.props.history.push('/overview')
-        }
-      }
-    })
-  }
   getDimensions = () => {
     this.setState({ width: window.innerWidth });
   }
   public render(): JSX.Element {
     const { width } = this.state;
-    const { activityInfo, feedback, isLoading } = this.props.learningStore.store;
+    const { onHint, onSubmit } = this.props;
+    const { activityInfo, feedback, isLoading, hint } = this.props.learningStore.store;
     return (<>
       <div className='col-span-4 bg-white py-4 h-auto flex flex-col' style={{ boxShadow: '0 0px 4px rgba(0, 0, 0, 0.25)' }}>
         <div className='text-lg text-darkPrimary w-96 font-semibold tracking-wider pt-4 px-10'>
@@ -65,18 +50,18 @@ class Requirement extends React.Component<any, any> {
           {feedback ? feedback : null}
         </div>
         <div className='mx-auto flex mb-10'>
-          <div className={`mx-4 bg-${isLoading ? 'darkOrange' : 'Orange'} text-darkPrimary text-lg font-normal py-4 px-10 pr-16 tracking-wider rounded-xl cursor-${isLoading ? 'wait' : 'pointer'} flex`}  style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)'}}>
+          <div onClick={onHint} className={`mx-4 bg-${isLoading ? 'darkOrange' : 'Orange'} text-darkPrimary text-lg font-normal py-4 px-10 pr-16 tracking-wider rounded-xl cursor-${isLoading ? 'wait' : 'pointer'} flex`}  style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)'}}>
             <span>คำใบ้</span>
             <div>
               <img src={bulb} alt="Logo4" className='h-12 absolute' style={{ marginTop: -7 }} />
             </div>
           </div>
-          <div onClick={this.onSubmit} className={`mx-4 bg-${isLoading ? 'darkPrimary' : 'primary'} text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'wait' : 'pointer'}`}  style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)'}}>
+          <div onClick={onSubmit} className={`mx-4 bg-${isLoading ? 'darkPrimary' : 'primary'} text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'wait' : 'pointer'}`}  style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)'}}>
             ตรวจคำตอบ
           </div>
         </div>
         <div className='mt-auto'>
-          {activityInfo && activityInfo.hint.used_hints?.length !== 0 ? <Hintbox /> : ''}
+          {activityInfo && hint && hint.length !== 0 ? <Hintbox /> : ''}
         </div>
       </div>
     </>)
