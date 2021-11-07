@@ -11,7 +11,7 @@ import { Progress } from 'semantic-ui-react'
 // }
 class Content extends React.Component<any, any> {
   onSelectContent() {
-    this.props.history.push('/content/' + this.props.id);
+    this.props.history.push('/content?id=' + this.props.id);
   }
   public render(): JSX.Element {
     const { name, progress, is_lasted } = this.props;

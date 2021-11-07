@@ -15,5 +15,7 @@ RUN echo "Asia/Bangkok" >  /etc/timezone
 
 RUN npm install -g serve@11.0.2
 
+RUN npm run-script build
+
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["serve", "-s", "build", "-l", "3000"]

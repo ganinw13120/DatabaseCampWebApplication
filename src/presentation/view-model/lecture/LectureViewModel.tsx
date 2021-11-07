@@ -7,7 +7,9 @@ export default class LectureViewModel implements ILectureViewModel {
   public lectureInfo: any;
   public attachView = async (baseView: BaseView): Promise<any> => {
     this.baseView = baseView;
-    const { id: contentID } = baseView.props.match.params
+    const search = baseView.props.location.search
+    const contentID = new URLSearchParams(search).get('id');
+    if (!contentID) baseView.props.history.push('/overview')
     baseView.props.learningStore.FetchRoadmap(contentID)
     baseView.props.learningStore.FetchLecture(contentID, (res: any) => {
       this.lectureInfo = res;

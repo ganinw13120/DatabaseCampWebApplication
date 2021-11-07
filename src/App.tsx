@@ -61,7 +61,7 @@ const appRouteList : route[] = [
     page : <Activity/>
   },
   {
-    url: '/content/:id',
+    url: '/content',
     page: <LecturePage />
   },
   {

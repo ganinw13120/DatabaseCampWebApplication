@@ -8,7 +8,7 @@ import { Progress } from 'semantic-ui-react'
 class HeaderCard extends React.Component<any, any>{
   private onClickContinue () : void {
     const { content_id } = this.props.overviewStore.store.data?.lasted_group;
-    this.props.history.push('/content/' + content_id);
+    this.props.history.push('/content?id=' + content_id);
   }
   public render(): JSX.Element {
     const { content_name, group_name, progress  } = this.props.overviewStore.store.data?.lasted_group;
