@@ -40,7 +40,7 @@ class Requirement extends React.Component<any, any> {
             <span>ความต้องการของระบบ</span>
           </div>
         </div>
-        <div className='font-sarabun text-xl text-wrap mx-auto mt-10 tracking-wider' style={{ width: width * 0.8 * 0.4 * 0.85 }}>
+        <div className='font-sarabun text-xl text-wrap mx-auto mt-10 tracking-wider' style={{ width: width > 1280 ?  width * 0.8 * 0.4 * 0.85 : width * 0.6 }}>
           <p>
             {activityInfo ? <>{activityInfo.activity.story}</> : <Skeleton variant='text' className='w-full' />}
           </p>

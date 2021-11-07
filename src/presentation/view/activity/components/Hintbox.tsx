@@ -8,7 +8,6 @@ import { inject, observer } from 'mobx-react';
 @observer
 export default class Hintbox extends Component <any, any> {
   public render(): JSX.Element {
-    console.log({ ...this.props.learningStore.store.hint })
     const { hint } = this.props.learningStore.store;
     let HintTextList : ReactElement[] = [];
     hint.forEach((e : any, key : number) => {
@@ -34,9 +33,24 @@ export default class Hintbox extends Component <any, any> {
 }
 
 class HintText extends Component<any, any> {
+  public constructor(props: any) {
+    super(props);
+    this.state = { width: 0 };
+  }
+  componentDidMount() {
+    this.getDimensions();
+    window.addEventListener('resize', this.getDimensions);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.getDimensions);
+  }
+  getDimensions = () => {
+    this.setState({ width: window.innerWidth });
+  }
   public render(): JSX.Element {
+    const { width } = this.state;
     return (<>
-        <div className='my-3 mx-auto font-sarabun text-base text-wrap tracking-wider ' style={{width:'30rem'}}>
+        <div className='my-3 mx-auto font-sarabun text-base text-wrap tracking-wider ' style={{width:width > 1280 ? '25rem' : '40rem'}}>
           <span>- {this.props.text}</span>
         </div>
     </>)

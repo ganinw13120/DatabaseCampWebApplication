@@ -3,7 +3,7 @@ import BaseView from '../BaseView';
 import './activity.css';
 
 import Requirement from './components/Requirement';
-
+import { Modal, Button } from 'antd';
 import { withRouter } from 'react-router-dom';
 
 import ActivityViewModel from '../../view-model/activity/ActivityViewModel';
@@ -20,7 +20,12 @@ class ActivityPage extends React.Component<any, any>
   private activityViewModel: ActivityViewModel;
   constructor(props: any) {
     super(props);
+    this.state = {
+      hintPopup : false
+    }
     this.activityViewModel = new ActivityViewModel();
+    this.showHintPopup = this.showHintPopup.bind(this);
+    this.hideHintPopup = this.hideHintPopup.bind(this);
   }
   public componentDidMount(): void {
     this.activityViewModel.attachView(this);
@@ -34,14 +39,37 @@ class ActivityPage extends React.Component<any, any>
       activityInfo = null;
     }
   }
+  showHintPopup(): void {
+    this.setState({
+      hintPopup : true
+    })
+  }
+  hideHintPopup(): void {
+    this.setState({
+      hintPopup : false
+    })
+  }
   public onViewModelChanged(): void {
   }
   public render(): JSX.Element {
+    const { hintPopup } = this.state;
     let { activityInfo, roadMap } = this.props.learningStore.store;
     return (
       <>
+        <Modal
+          title="ยืนยันการร้องขอคำใบ้"
+          centered
+          visible={hintPopup}
+          onOk={() => {
+            this.hideHintPopup( )
+            this.activityViewModel.onHint()
+          }}
+          onCancel={() => this.hideHintPopup( )}
+        >
+          <p>ท่านต้องการใช้คำใบ้ใช่หรือไม่</p>
+        </Modal>
         <div className='xl:grid xl:grid-cols-10 w-full h-full bg-bg-dark'>
-          <Requirement onHint={this.activityViewModel.onHint} onSubmit={this.activityViewModel.onSubmit} />
+          <Requirement onHint={this.showHintPopup} onSubmit={this.activityViewModel.onSubmit} />
           <div className='py-12 col-span-6'>
             <div className='flex h-auto'>
               <div className='w-10 text-3xl text-darkPrimary font-semibold tracking-wider p-6 px-10'>
