@@ -25,7 +25,6 @@ class LecturePage extends React.Component<any, LectureComponentState>
   public constructor(props: any) {
     super(props);
     this.lectureViewModel = new LectureViewModel();
-    // console.log(props.match.params.id)
     this.state = {
       lectureInfo : null,
     }

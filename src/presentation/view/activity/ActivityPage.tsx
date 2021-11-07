@@ -27,7 +27,9 @@ class ActivityPage extends React.Component<any, any>
   }
   componentWillUpdate(): void {
     let { activityInfo } = this.props.learningStore.store;
-    if (activityInfo?.activity?.activity_id.toString() !== this.props.match.params.id) {
+    const search = this.props.location.search
+    const activityID = new URLSearchParams(search).get('id');
+    if (activityInfo?.activity?.activity_id.toString() !== activityID) {
       this.componentDidMount()
       activityInfo = null;
     }

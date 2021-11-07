@@ -10,7 +10,9 @@ export default class ActivityViewModel implements IActivityViewModel {
 
   public attachView = async (baseView: BaseView): Promise<any> => {
     this.baseView = baseView;
-    const { id: activityID } = baseView.props.match.params
+    const search = baseView.props.location.search
+    const activityID = new URLSearchParams(search).get('id');
+    if (!activityID) baseView.props.history.push('/overview')
     this.result = null;
     baseView.props.learningStore.FetchActivity(activityID, (res: any) => {
       if (!res) return
@@ -31,7 +33,7 @@ export default class ActivityViewModel implements IActivityViewModel {
         const nextActivity = this.getNextActivityId();
         this.baseView?.props.learningStore.clearActivity();
         if (nextActivity) {
-          this.baseView?.props.history.push(`/activity/${nextActivity}`)
+          this.baseView?.props.history.push(`/activity?id=${nextActivity}`)
         } else {
           this.baseView?.props.history.push('/overview')
         }

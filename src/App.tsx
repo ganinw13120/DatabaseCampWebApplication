@@ -57,7 +57,7 @@ const appRouteList : route[] = [
     page : <MatchingPage/>
   },
   {
-    url: '/activity/:id',
+    url: '/activity',
     page : <Activity/>
   },
   {
