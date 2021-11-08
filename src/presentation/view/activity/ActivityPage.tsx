@@ -3,7 +3,7 @@ import BaseView from '../BaseView';
 import './activity.css';
 
 import Requirement from './components/Requirement';
-import { Modal, Button } from 'antd';
+import { Modal } from 'antd';
 import { withRouter } from 'react-router-dom';
 
 import ActivityViewModel from '../../view-model/activity/ActivityViewModel';
