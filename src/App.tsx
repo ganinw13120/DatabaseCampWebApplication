@@ -91,10 +91,10 @@ export default class App extends Component {
     })
     return (
       <Provider {...store}>
+        <Progress />
         <Router>
           <Switch>
             <Route path="/" exact>
-            {/* <Progress percent={30}/> */}
               <LandingPage/>
             </Route>
             <Route path="/login" exact>

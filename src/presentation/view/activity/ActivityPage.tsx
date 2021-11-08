@@ -14,12 +14,14 @@ import MultipleChoice from './components/MultipleChoice';
 import { inject, observer } from 'mobx-react';
 
 @inject('learningStore')
+@inject('appStore')
 @observer
 class ActivityPage extends React.Component<any, any>
   implements BaseView {
   private activityViewModel: ActivityViewModel;
   constructor(props: any) {
     super(props);
+    this.props.appStore?.setPercent(0)
     this.state = {
       hintPopup : false
     }
@@ -28,6 +30,7 @@ class ActivityPage extends React.Component<any, any>
     this.hideHintPopup = this.hideHintPopup.bind(this);
   }
   public componentDidMount(): void {
+    this.props.appStore.setExpand(false)
     this.activityViewModel.attachView(this);
   }
   componentWillUpdate(): void {
@@ -76,7 +79,7 @@ class ActivityPage extends React.Component<any, any>
                 <span className='w-full h-full bg-darkPrimary'>..</span>
               </div>
               <div className='w-auto py-6 -mx-4'>
-                <span className=' text-3xl text-darkPrimary font-semibold tracking-wider'>กิจกรรม {roadMap && roadMap.items.length !== 0 && activityInfo ? `(${roadMap.items.find((e: any) => e.activity_id === activityInfo?.activity?.activity_id).order}/${roadMap.items.length})`: ''} </span> <span className=' text-lg text-success font-semibold tracking-wider'> + {activityInfo ? `${activityInfo.activity.point}` : 'xx'} Points</span>
+                <span className=' text-3xl text-darkPrimary font-semibold tracking-wider'>กิจกรรม {roadMap && roadMap.items.length !== 0 && activityInfo ? `(${roadMap.items.find((e: any) => e.activity_id === activityInfo?.activity?.activity_id).order}/${roadMap.items.length})`: ''} </span> <span className=' text-lg text-success font-semibold tracking-wider'> {activityInfo ? ` + ${activityInfo.activity.point} Points` : ''} </span>
               </div>
             </div>
             {

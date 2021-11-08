@@ -16,6 +16,7 @@ export interface LectureComponentState {
 }
 
 @inject('learningStore')
+@inject("appStore")
 @observer
 class LecturePage extends React.Component<any, LectureComponentState>
   implements BaseView {
@@ -32,6 +33,10 @@ class LecturePage extends React.Component<any, LectureComponentState>
 
   public componentDidMount(): void {
     this.lectureViewModel.attachView(this);
+    const {isExpand} = this.props.appStore.store;
+    if (isExpand) {
+      this.props.appStore.setExpandWithDelay(false)
+    }
   }
 
   public onViewModelChanged(): void {

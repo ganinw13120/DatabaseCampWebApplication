@@ -15,6 +15,7 @@ export interface RegisterComponentState {
   displayText : string
 }
 
+@inject('appStore')
 @inject('authStore')
   
 
@@ -26,6 +27,7 @@ class RegisterPage extends React.Component<any, RegisterComponentState>
   
   public constructor(props: any) {
     super(props);
+    this.props.appStore?.setPercent(0)
 
     const viewModel = new RegisterViewModel();
     
@@ -40,6 +42,7 @@ class RegisterPage extends React.Component<any, RegisterComponentState>
   
   public componentDidMount(): void {
     this.viewModel.attachView(this);
+    this.props.appStore?.setPercent(100)
   }
 
   public onViewModelChanged(): void {
@@ -127,7 +130,7 @@ class RegisterPage extends React.Component<any, RegisterComponentState>
                   <div className={`bg-${isLoading ? 'gray' : 'primary'} h-14 rounded-xl mt-4`}>
                     <Button disabled={isLoading} htmlType="submit" className='w-full h-24 bg-primary' style={{height: '100%'}} ghost size='large'><span className='text-base text-white font-light tracking-wider '>สมัครสมาชิก</span></Button>
                   </div>
-                  <div className="mt-5 h-14 text-center">
+                  <div className="mt-5 h-14 text-center cursor-pointer">
                     <span onClick={this.viewModel.onClickLoginButton} className='text-base text-darkPrimary font-light tracking-wider '>เข้าสู่ระบบ</span>
                   </div>
                 </div>
