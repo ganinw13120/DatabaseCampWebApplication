@@ -5,6 +5,8 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
 ![GitHub stars](https://img.shields.io/github/stars/ganinw13120/DatabaseCampWebApplication)
 
+[![Thai](https://img.shields.io/badge/Language-Thai-blueviolet?style=for-the-badge)](README.ja-JP.md)
+
 URL : https://databasecamp.io
 
 Staging : https://staging.databasecamp.io
