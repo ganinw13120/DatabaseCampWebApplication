@@ -11,6 +11,7 @@ interface SidebarState {
   isExpand: boolean
 }
 
+
 @inject('authStore')
 @inject('appStore')
 @observer
@@ -24,10 +25,10 @@ class Sidebar extends React.Component <any, SidebarState>{
   }
   render(): JSX.Element {
     const { isExpand } = this.props.appStore.store;
-    const widthBoxStyle = { width: isExpand ? 320 : 90, transition: "width 1s" };
+    const widthBoxStyle = { width: isExpand ? 320 : 90 };
     const { userData } = this.props.authStore.store;
     return <>
-      <div className='sticky top-0 flex flex-row md:block hidden bg-primary text-white h-screen' style={{ boxShadow: '0 4px 4px #000', ...widthBoxStyle}}>
+      <div className='sticky top-0 flex flex-row md:block hidden bg-primary text-white h-screen' style={{ boxShadow: '0 4px 4px #000', transition: "width 1s", ...widthBoxStyle}}>
         <div className={`flex flex-none inline h-auto pb-7 mt-7 w-8/12 mx-auto ${isExpand ? '' : 'pl-2'} gap-3`} style={{borderBottom:'0.5px solid #BBBFC0', transition: "all 0.5s"}}>
           <img src={HalfLeftLogo} alt="Logo" className='w-auto h-14' />
           <img src={HalfRightLogo} alt="Logo" className='w-auto h-14' style={{transition: "all 1s", opacity : isExpand ? 1 : 0}}/>
@@ -37,7 +38,7 @@ class Sidebar extends React.Component <any, SidebarState>{
           <SideItem isExpand={isExpand} text='Examination'  icon={<FileTextOutlined  style={{fontSize:25}} />} />
           <SideItem  isExpand={isExpand} text='Point Ranking'  icon={<BarsOutlined  style={{fontSize:25}} />} onClick={() => { this.onClickPage('ranking') }}/>
         </div>
-        <div className='absolute bottom-0 mb-8' style={widthBoxStyle}>
+        <div className='absolute bottom-0 mb-8' style={{...widthBoxStyle, transition: "width 1s"}}>
           <div className='w-12 h-24'>
             <div className='bg-darkPrimary toggleBtn  text-center align-middle justify-center' onClick={() => {
               this.props.appStore.setStore({ isExpand: !isExpand });

@@ -10,8 +10,12 @@ export default class LectureViewModel implements ILectureViewModel {
     const search = baseView.props.location.search
     const contentID = new URLSearchParams(search).get('id');
     if (!contentID) baseView.props.history.push('/overview')
-    baseView.props.learningStore.FetchRoadmap(contentID)
+    baseView?.props.appStore?.setPercent(40)
+    baseView.props.learningStore.FetchRoadmap(contentID).then(()=>{  
+      baseView?.props.appStore?.addPercent(30)
+    })
     baseView.props.learningStore.FetchLecture(contentID, (res: any) => {
+      baseView?.props.appStore?.addPercent(30)
       this.lectureInfo = res;
       this.baseView?.onViewModelChanged()
     })

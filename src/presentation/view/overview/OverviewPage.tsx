@@ -27,8 +27,8 @@ class OverviewPage
 
   public constructor(props: any) {
     super(props);
+    this.props.appStore?.setPercent(0)
     const overviewViewModel = new OverviewViewModel();
-    this.props.appStore.setStore({ isExpand: true });
 
     this.overviewViewModel = overviewViewModel;
   }
@@ -36,6 +36,11 @@ class OverviewPage
   public onViewModelChanged(): void {}
 
   public componentDidMount(): void {
+    const {isExpand} = this.props.appStore.store;
+    if (!isExpand) {
+      this.props.appStore.setExpandWithDelay(true)
+    }
+
     this.overviewViewModel.attachView(this);
   }
 

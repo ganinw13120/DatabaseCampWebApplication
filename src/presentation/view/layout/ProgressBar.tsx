@@ -1,16 +1,27 @@
 import {Component} from "react";
+import { inject, observer } from 'mobx-react';
 
+
+@inject('appStore')
+@observer
 export default class Sidebar extends Component<any, any>{
-  onLogout() {
-    this.props.authStore.Logout();
-    this.props.history.push('/login');
+  constructor (props : any) {
+    super (props)
+    this.state = {
+      isWaiting : true,
+    }
   }
-  onClickPage(url : string): void {
-    this.props.history.push('/' + url);
+  componentDidMount () {
+    setTimeout(() => {
+      this.setState({
+        isWaiting : false
+      })
+    }, 10);
   }
   render(): JSX.Element {
-    const speed = 1;
-    const percent = 90;
+    const speed = 1.2;
+    const { isWaiting} = this.state;
+    const percent = isWaiting ? 0 : this.props.appStore.store.progressPercent
     const hideDelay = 1;
     const height = 3;
     const background = '#005FB7';
@@ -21,7 +32,6 @@ export default class Sidebar extends Component<any, any>{
 	    WebkitTransitionDelay: (percent < 100 ? 0 : hideDelay) + 's',
 	    transitionDelay: (percent < 100 ? 0 : hideDelay) + 's'
 	  };
-
     return (<>
       <div style={containerStyle}>
         <div style={{

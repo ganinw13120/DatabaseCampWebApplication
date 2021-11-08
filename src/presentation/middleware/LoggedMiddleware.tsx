@@ -1,4 +1,4 @@
-import { inject, observer,   } from "mobx-react"
+import { inject, observer  } from "mobx-react"
 import { observe  } from "mobx"
 import React from "react"
 import { withRouter } from 'react-router-dom';

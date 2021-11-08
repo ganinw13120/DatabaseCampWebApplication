@@ -16,6 +16,7 @@ export interface LoginComponentState {
 }
 
 @inject('authStore')
+@inject('appStore')
   
 
 @observer
@@ -26,6 +27,7 @@ class LoginPage extends React.Component<any, LoginComponentState>
   
   public constructor(props: any) {
     super(props);
+    this.props.appStore?.setPercent(0)
 
     const loginViewModel = new LoginViewModel();
     
@@ -40,6 +42,7 @@ class LoginPage extends React.Component<any, LoginComponentState>
   
   public componentDidMount(): void {
     this.loginViewModel.attachView(this);
+    this.props.appStore?.setPercent(100)
   }
 
   public onViewModelChanged(): void {

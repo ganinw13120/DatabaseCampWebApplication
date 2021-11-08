@@ -9,6 +9,7 @@ import Header from "./components/Header.Component";
 export interface PointComponentState {}
 
 @inject("pointRankingStore")
+@inject("appStore")
 @observer
 export default class PointRankingPage
   extends React.Component<any, PointComponentState>
@@ -19,9 +20,14 @@ export default class PointRankingPage
   public constructor(props: any) {
     super(props);
     this.viewModel = new PointRankingViewModel();
+    this.props.appStore.setStore({ isExpand: true });
   }
 
   public componentDidMount(): void {
+    const {isExpand} = this.props.appStore.store;
+    if (!isExpand) {
+      this.props.appStore.setExpandWithDelay(true)
+    }
     this.viewModel.attachView(this);
   }
 
