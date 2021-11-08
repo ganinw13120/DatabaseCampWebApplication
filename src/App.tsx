@@ -27,6 +27,17 @@ import { Provider } from 'mobx-react';
 
 import RootStore  from '../src/domain/entity/state/Rootstore';
 
+import TopBarProgress from "react-topbar-progress-indicator";
+ 
+TopBarProgress.config({
+  barColors: {
+    "0": "#005FB7",
+    "0.5": "#0082FB",
+    "1.0": "#4AA8FF"
+  },
+  shadowBlur: 5
+});
+
 const _RootStore = new RootStore();
 
 const store = {
@@ -82,6 +93,7 @@ export default class App extends Component {
       appRouterendered.push(
         <Route path={e.url} exact key={key}>
           <LoggedMiddleware>
+            <TopBarProgress />
             {e.page}
           </LoggedMiddleware>
         </Route>
@@ -92,15 +104,18 @@ export default class App extends Component {
         <Router>
           <Switch>
             <Route path="/" exact>
+              <TopBarProgress />
               <LandingPage/>
             </Route>
             <Route path="/login" exact>
               <PreLogged>
+                <TopBarProgress />
                 <LoginPage/>
               </PreLogged>
             </Route>
             <Route path="/register" exact>
               <RegisterPage>
+                <TopBarProgress />
                 <RegisterPage/>
               </RegisterPage>
             </Route>
