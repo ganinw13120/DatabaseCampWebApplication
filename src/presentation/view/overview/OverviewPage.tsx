@@ -16,6 +16,7 @@ import SkeletonCard from "./components/SkeletonCard";
 export interface OverviewComponentState {}
 
 @inject('overviewStore')
+@inject('authStore')
 @inject('appStore')
 @observer
 
@@ -46,6 +47,7 @@ class OverviewPage
 
   public render(): JSX.Element {
     const { isLoading, data } = this.props.overviewStore.store;
+    const {userData} = this.props.authStore.store;
     return (
       <>
         <div className="font-prompt w-full p-12 px-10">
@@ -67,7 +69,7 @@ class OverviewPage
             {isLoading ? (
               <Skeleton variant="text" className="w-full" />
             ) : (
-              <span>ยินดีต้อนรับ Gan Mongklakorn</span>
+              <span>ยินดีต้อนรับ {userData.name}</span>
             )}
           </div>
           {isLoading  ? <HeaderSkeleton variant="h1" /> : data.lasted_group && <HeaderCard /> }

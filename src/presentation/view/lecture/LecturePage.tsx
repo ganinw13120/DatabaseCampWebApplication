@@ -4,7 +4,7 @@ import { SourceInfo } from 'plyr';
 import Plyr from 'plyr-react'
 import './lecture.css';
 import './plyr.css';
-import { Button ,notification } from 'antd';
+import { Button } from 'antd';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import Skeleton from '@mui/material/Skeleton';
@@ -47,17 +47,6 @@ class LecturePage extends React.Component<any, LectureComponentState>
 
   onFinishFailed = () => {
   }
-
-  public openNotification () : void {
-    notification.open({
-      message: 'Notification Title',
-      description:
-        'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
-      onClick: () => {
-        console.log('Notification Clicked!');
-      },
-    });
-  };
 
   public render(): JSX.Element {
     const { lectureInfo } = this.state;

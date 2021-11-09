@@ -26,11 +26,14 @@ class Requirement extends React.Component<any, any> {
   public render(): JSX.Element {
     const { width } = this.state;
     const { onHint, onSubmit } = this.props;
-    const { activityInfo, feedback, isLoading, hint } = this.props.learningStore.store;
+    const { activityInfo, feedback, isLoading, hint, roadMap } = this.props.learningStore.store;
     return (<>
       <div className='col-span-4 bg-white py-4 h-auto flex flex-col' style={{ boxShadow: '0 0px 4px rgba(0, 0, 0, 0.25)' }}>
         <div className='text-lg text-darkPrimary w-96 font-semibold tracking-wider pt-4 px-10'>
-          <span>เนื้อหา - Database Entity</span>
+          
+          {roadMap ? <span>เนื้อหา - {roadMap.content_name}</span> : <>
+            <Skeleton variant='text' className='w-full' />
+          </>}
         </div>
         <div className='flex h-auto'>
           <div className='w-10 text-3xl text-darkPrimary font-semibold tracking-wider p-6 px-10'>
@@ -42,7 +45,15 @@ class Requirement extends React.Component<any, any> {
         </div>
         <div className='font-sarabun text-xl text-wrap mx-auto mt-10 tracking-wider' style={{ width: width > 1280 ?  width * 0.8 * 0.4 * 0.85 : width * 0.6 }}>
           <p>
-            {activityInfo ? <>{activityInfo.activity.story}</> : <Skeleton variant='text' className='w-full' />}
+            {activityInfo ? <>{activityInfo.activity.story}</> : <>
+                <Skeleton variant='text' className='w-full' />
+                <Skeleton variant='text' className='w-full' />
+                <Skeleton variant='text' className='w-full' />
+                <Skeleton variant='text' className='w-full' />
+                <Skeleton variant='text' className='w-full' />
+                <Skeleton variant='text' className='w-full' />
+                <Skeleton variant='text' className='w-full' />
+            </>}
           </p>
         </div>
         

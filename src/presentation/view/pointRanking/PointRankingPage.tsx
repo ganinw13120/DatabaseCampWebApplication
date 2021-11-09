@@ -54,7 +54,6 @@ export default class PointRankingPage
               <>
                 {(() => {
                   let list: any = [];
-                  console.log(data)
                   data.leader_board.slice().forEach((item: any, index: number) => {
                     list.push(
                       <RankingItem

@@ -81,12 +81,14 @@ export class LearningStore {
     }
     const { activity } = activityInfo
     if (activity.activity_type_id === 1) {
+      this.checkMatching(activity.activity_id, result, cb);
+    } else if (activity.activity_type_id === 3) {
       this.checkCompletion(activity.activity_id, result, cb);
-    } 
+    }
   }
 
   @action.bound 
-  private async checkCompletion(activityID : number, result : any, cb: any): Promise<any> {
+  private async checkMatching(activityID : number, result : any, cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     let res : any = [];
     result.forEach((e: any, key: number) => {
@@ -103,7 +105,41 @@ export class LearningStore {
         item2 : e[1]
       })
     })
-    this.learningRepository.CheckCompletion(token, activityID, res).then((res : any) => {
+    this.learningRepository.CheckMatching(token, activityID, res).then((res : any) => {
+      const {is_correct} = res;
+      if (is_correct) {
+        this.setStore({
+          isLoading: false,
+          feedback : 'ถูกแล้วว'
+        })
+        cb?.(true)
+        return;
+      }
+      else {
+        this.setStore({
+          isLoading: false,
+          feedback : 'ไม่ถูกค้าบ'
+        })
+        cb?.(false)
+        return;
+      }
+    });
+  } 
+
+  @action.bound 
+  private async checkCompletion(activityID : number, result : any, cb: any): Promise<any> {
+    const { token } = this.rootStore.authStore.store;
+    result.forEach((e: any, key: number) => {
+      if (!e.content) {
+        this.setStore({
+          isLoading: false,
+          feedback : 'กรุณาทำแบบฝึกหัดให้ครบทุกข้อ'
+        })
+        cb?.(false)
+        return;
+      }
+    })
+    this.learningRepository.CheckCompletion(token, activityID, result).then((res : any) => {
       const {is_correct} = res;
       if (is_correct) {
         this.setStore({

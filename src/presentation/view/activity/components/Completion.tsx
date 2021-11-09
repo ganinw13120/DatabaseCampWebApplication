@@ -12,7 +12,8 @@ type QuestionBox = {
 
 interface CompletionPageState {
   questions: QuestionBox[],
-  hoverQuestion : number | null
+  hoverQuestion : number | null,
+  result : any,
 }
 
 export default class Completion extends Component<any, CompletionPageState>
@@ -22,6 +23,7 @@ export default class Completion extends Component<any, CompletionPageState>
     this.state = {
       hoverQuestion: null,
       questions: [],
+      result : []
     }
     this.onHoverQuestionEnter = this.onHoverQuestionEnter.bind(this);
     this.onHoverQuestionExit = this.onHoverQuestionExit.bind(this);
@@ -50,14 +52,20 @@ export default class Completion extends Component<any, CompletionPageState>
       questions : temp
     })
   }
-  public snapPos(): any | null {
+  public snapPos(text : string): any | null {
     const { questions, hoverQuestion } = this.state;
-    console.log(hoverQuestion)
     if (hoverQuestion) {
       const question = questions.find(e => e.id === hoverQuestion && !e.isFilled);
       if (!question) return null;
       else {
         this.updateQuestionState(hoverQuestion, true);
+        const { result } = this.state;
+        let temp = [...result];
+        temp.find(e=>e.completion_choice_id===question.id).content = text;
+        this.setState({
+          result : temp
+        })
+        this.props.updateResult(temp);
         return {
           boxRef: question.ref,
           boxID : question.id
@@ -67,11 +75,24 @@ export default class Completion extends Component<any, CompletionPageState>
     return null;
   }
   public removeSnap(id : number): void {
+    const { questions,result } = this.state;
+    const question = questions.find(e => e.id === id);
+    if (!question) return;
+    let temp = [...result];
+    temp.find(e=>e.completion_choice_id===question.id).content = null;
+    this.setState({
+      result : temp
+    })
+    this.props.updateResult(temp);
     this.updateQuestionState(id, false);
   }
   public appendRef(quest: QuestionBox): void {
     this.setState((prev: CompletionPageState) => {
       prev.questions.push(quest);
+      prev.result.push({
+        completion_choice_id : quest.id,
+        content : null
+      })
       return prev;
     })
   }
@@ -120,12 +141,12 @@ class Dropzone extends React.Component<any, any> {
     props.func?.append?.({
       isFilled: false,
       ref : this.ref,
-      id : props.id
+      id : props.info.id
     })
   }
   onEnter(): void {
     const { enter } = this.props.func;
-    enter(this.props.id);
+    enter(this.props.info.id);
   }
   onExit(): void {
     const { exit } = this.props.func;

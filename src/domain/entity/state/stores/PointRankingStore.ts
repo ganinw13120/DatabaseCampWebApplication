@@ -29,7 +29,6 @@ export class PointRankingStore {
   async fatchRanking(): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     await this.userRepository.fetchPointRanking(token).then((res) => {
-      console.log({...res})
       this.setStore({
         data : res,
         isLoading : false

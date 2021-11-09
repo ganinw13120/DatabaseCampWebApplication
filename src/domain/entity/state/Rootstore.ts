@@ -1,7 +1,7 @@
 import { AuthStore } from "./stores/AuthStore";
 import { AppStore } from "./stores/AppStore";
 import { OverviewStore } from "./stores/OverviewStore";
-import { PointRankingStore } from "./stores/PointRanking.Store";
+import { PointRankingStore } from "./stores/PointRankingStore";
 import { LearningStore } from "./stores/LearningStore";
 
 export default class RootStore {

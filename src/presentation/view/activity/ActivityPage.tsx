@@ -88,8 +88,8 @@ class ActivityPage extends React.Component<any, any>
                 const { activity_type_id: type, question } = activity;
                 const act = (type: number) => {
                   if (type === 1) return <Matching info={activityInfo} updateResult={this.activityViewModel.updateResult}/>
-                  else if (type === 2) return <MultipleChoice info={activityInfo} />
-                  else if (type === 3) return <Completion info={activityInfo} />
+                  else if (type === 2) return <MultipleChoice info={activityInfo} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 3) return <Completion info={activityInfo} updateResult={this.activityViewModel.updateResult} />
                 }
                 return <>
                   <div className='text-xl text-black font-sarabun tracking-wider mx-14 my-8'>
