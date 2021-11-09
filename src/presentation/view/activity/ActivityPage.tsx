@@ -3,7 +3,6 @@ import BaseView from '../BaseView';
 import './activity.css';
 
 import Requirement from './components/Requirement';
-import { Modal } from 'antd';
 import { withRouter } from 'react-router-dom';
 
 import ActivityViewModel from '../../view-model/activity/ActivityViewModel';
@@ -13,21 +12,25 @@ import Completion from './components/Completion';
 import MultipleChoice from './components/MultipleChoice';
 import { inject, observer } from 'mobx-react';
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 @inject('learningStore')
 @inject('appStore')
 @observer
 class ActivityPage extends React.Component<any, any>
   implements BaseView {
   private activityViewModel: ActivityViewModel;
+  private swal : any;
   constructor(props: any) {
     super(props);
     this.props.appStore?.setPercent(0)
     this.state = {
-      hintPopup : false
+      activityInfo : null
     }
     this.activityViewModel = new ActivityViewModel();
     this.showHintPopup = this.showHintPopup.bind(this);
-    this.hideHintPopup = this.hideHintPopup.bind(this);
+    this.swal = withReactContent(Swal);
   }
   public componentDidMount(): void {
     this.props.appStore.setExpand(false)
@@ -47,34 +50,29 @@ class ActivityPage extends React.Component<any, any>
     }
   }
   showHintPopup(): void {
-    this.setState({
-      hintPopup : true
-    })
-  }
-  hideHintPopup(): void {
-    this.setState({
-      hintPopup : false
+    this.swal.fire({
+      title: 'ท่านต้องการขอคำใบ้ใช่หรือไม่?',
+      text: "การขอคำใบ้จะหักเเต้มที่ได้รับในการทำกิจกรรม",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ตกลง',
+      cancelButtonText: 'ยกเลิก',
+    }).then((result:any) => {
+      this.activityViewModel.onHint()
     })
   }
   public onViewModelChanged(): void {
+    this.setState({
+      activityInfo : this.activityViewModel.activityInfo
+    })
   }
   public render(): JSX.Element {
-    const { hintPopup } = this.state;
-    let { activityInfo, roadMap } = this.props.learningStore.store;
+    const { activityInfo } = this.state;
+    const { roadMap } = this.props.learningStore.store;
     return (
       <>
-        <Modal
-          title="ยืนยันการร้องขอคำใบ้"
-          centered
-          visible={hintPopup}
-          onOk={() => {
-            this.hideHintPopup( )
-            this.activityViewModel.onHint()
-          }}
-          onCancel={() => this.hideHintPopup( )}
-        >
-          <p>ท่านต้องการใช้คำใบ้ใช่หรือไม่</p>
-        </Modal>
         <div className='xl:grid xl:grid-cols-10 w-full h-full bg-bg-dark'>
           <Requirement onHint={this.showHintPopup} onSubmit={this.activityViewModel.onSubmit} />
           <div className='py-12 col-span-6'>

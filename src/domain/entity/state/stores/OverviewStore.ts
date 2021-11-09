@@ -4,8 +4,10 @@ import RootStore from '../Rootstore';
 
 import LearningRepository from '../../../../data/repository/app/LearningRepository';
 
+import {Overview} from '../../model/Overview';
+
 interface Store {
-  [key : string] : any
+  data : Overview | null,
 }
 
 export class OverviewStore {
@@ -23,37 +25,18 @@ export class OverviewStore {
   @observable
   store : Store = {
       data: null,
-      isLoading : true,
   }
 
   @action.bound
   async FetchOverview(): Promise<any> {
     const { token } = this.rootStore.authStore.store;
-    await this.learningRepository.FetchOverview(token).then((res) => {
-      this.setStore({
+    await this.learningRepository.fetchOverview(token).then((res) => {
+      this.store = {
         data : res,
-        isLoading : false
-      })
+      }
     }).catch((res) => {
       console.log(res)
     })
     return;
-  }
-
-
-  @action.bound
-  setStore(data: { [key: string]: any }, merge: boolean = false) {
-    for (let e in data) {
-      const _data = data[e];
-      if (merge) {
-        this.store[e] = {
-          ...this.store[e],
-          ..._data
-        };
-      }
-      else {
-        this.store[e] = _data;
-      }
-    }
   }
 }

@@ -4,9 +4,14 @@ import AuthRepository from '../../../../data/repository/auth/AuthRepository';
 
 import RootStore from '../Rootstore';
 
+import {User, AuthUser} from '../../model/User';
+
 interface Store {
-  [key : string] : any
+  userData : User | null,
+  token : string,
+  isLoading : boolean,
 }
+
 
 export class AuthStore{
   rootStore; // contains the root of store (outest mobx)
@@ -24,45 +29,39 @@ export class AuthStore{
 
     const token = window.localStorage.getItem('token');
     if (token) {
-      this.setStore({
-        isLoading: true,
-        token : token
-      })
-      this.setStore({isLoading : true, isAuthenticated : false}, true)
+      this.store.isLoading = true;
+      this.store.token = token;
       this.VerifyToken(token);
     }
   }
 
   @observable
   store : Store = {
-    isAuthenticated: false,
     isLoading: false,
     userData: null,
-    token : null,
+    token : '',
   }
 
   @action.bound
   async VerifyToken(token : string) {
-    await this.authRepository.VerifyToken(token).then((res) => {
-      this.setStore({
-        userData: res,
-        isAuthenticated: true,
-        isLoading : false,
-      })
-    }).catch(() => {
+    await this.authRepository.VerifyToken(token).then(this.onVerifySuccess).catch(() => {
       this.Logout()
     })
     return;
+  }
+  @action.bound
+  onVerifySuccess (res : User) : User {
+    this.store.userData = res;
+    this.store.isLoading = false;
+    return res;
   }
 
 
   @action.bound
   Logout(cb?: any) {
-    this.setStore({
-      isAuthenticated : false,
-      isLoading : false,
-      token : null
-    })
+    this.store.isLoading = false;
+    this.store.token = '';
+    this.store.userData = null;
     window.localStorage.removeItem('token');
     cb?.();
   }
@@ -72,26 +71,26 @@ export class AuthStore{
     const result = await this.authRepository.Login({
       email: email,
       password : password,
-    }).then((res) => {
-      const token = res.accessToken;
-      res.accessToken = null;
-      window.localStorage.setItem('token', token);
-      this.setStore({
-        userData : res,
-        token : token,
-        isAuthenticated: true,
-      })
-      return {
-        issuccess: true,
-        message : ''
-      }
-    }).catch((err) => {
+    }).then(this.onLoginSuccess).catch((err) => {
       return {
         issuccess: false,
         message : err.message
       }
     })
     cb?.(result)
+  }
+
+  @action.bound
+  onLoginSuccess (res : AuthUser) : any {
+    const token = res.access_token;
+    window.localStorage.setItem('token', token);
+    const userData : User = res as User;
+    this.store.userData = userData;
+    this.store.token = token;
+    return {
+      issuccess: true,
+      message : ''
+    }
   }
 
   @action.bound
@@ -100,20 +99,7 @@ export class AuthStore{
       name : name,
       email: email,
       password : password,
-    }).then((res) => {
-      const token = res.accessToken;
-      res.accessToken = null;
-      window.localStorage.setItem('token', token);
-      this.setStore({
-        userData : res,
-        token : token,
-        isAuthenticated: true,
-      })
-      return {
-        issuccess: true,
-        message : ''
-      }
-    }).catch((err) => {
+    }).then(this.onRegisterSuccess).catch((err) => {
       console.log(err)
       return {
         issuccess: false,
@@ -122,20 +108,16 @@ export class AuthStore{
     })
     cb?.(result)
   }
-
   @action.bound
-  setStore(data: { [key: string]: any }, merge: boolean = false) {
-    for (let e in data) {
-      const _data = data[e];
-      if (merge) {
-        this.store[e] = {
-          ...this.store[e],
-          ..._data
-        };
-      }
-      else {
-        this.store[e] = _data;
-      }
+  onRegisterSuccess (res : AuthUser) : any {
+    const token = res.access_token;
+    window.localStorage.setItem('token', token);
+    const userData : User = res as User;
+    this.store.userData = userData;
+    this.store.token = token;
+    return {
+      issuccess: true,
+      message : ''
     }
   }
 }

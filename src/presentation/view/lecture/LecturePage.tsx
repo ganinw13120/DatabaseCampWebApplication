@@ -11,6 +11,8 @@ import Skeleton from '@mui/material/Skeleton';
 
 import LectureViewModel from '../../view-model/lecture/LectureViewModel';
 
+// import {ActivityInfomation} from '../../../domain/entity/model/Activity';
+
 export interface LectureComponentState {
   lectureInfo : any
 }

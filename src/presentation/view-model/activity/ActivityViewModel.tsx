@@ -4,8 +4,7 @@ import BaseView from '../../view/BaseView';
 
 export default class ActivityViewModel implements IActivityViewModel {
   private baseView?: BaseView;
-  public lectureInfo : any;
-
+  public activityInfo : any;
   private result: any;
 
   public attachView = async (baseView: BaseView): Promise<any> => {
@@ -16,6 +15,7 @@ export default class ActivityViewModel implements IActivityViewModel {
     this.result = null;
     baseView?.props.appStore?.setPercent(40)
     baseView.props.learningStore.FetchActivity(activityID, (res: any) => {
+      
       baseView?.props.appStore?.setPercent(70)
       if (!res) return
       if (!this.baseView?.props.learningStore.store.roadMap) {
@@ -26,7 +26,7 @@ export default class ActivityViewModel implements IActivityViewModel {
       } else {
         baseView?.props.appStore?.setPercent(100)
       }
-      this.lectureInfo = res;
+      this.activityInfo = res;
       this.baseView?.onViewModelChanged()
     })
   };

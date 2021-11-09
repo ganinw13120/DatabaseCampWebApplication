@@ -41,7 +41,7 @@ class Sidebar extends React.Component <any, SidebarState>{
         <div className='absolute bottom-0 mb-8' style={{...widthBoxStyle, transition: "width 1s"}}>
           <div className='w-12 h-24'>
             <div className='bg-darkPrimary toggleBtn  text-center align-middle justify-center' onClick={() => {
-              this.props.appStore.setStore({ isExpand: !isExpand });
+              this.props.appStore.setExpand(!isExpand);
             }} style={{ transition: 'transform .2s ease-in-out', transform: isExpand ? '' : 'rotate(180deg)' }}>
               <RightOutlined  style={{fontSize:25}} />
             </div>

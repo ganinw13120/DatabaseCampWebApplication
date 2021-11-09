@@ -14,8 +14,8 @@ import AppLayout from "../view/layout/app/AppLayout";
     })
   }
   checkUser() {
-    const { isLoading, isAuthenticated } = this.props.authStore.store;
-    if (!isLoading && !isAuthenticated) {
+    const { isLoading, userData } = this.props.authStore.store;
+    if (!isLoading && !userData) {
       this.props.history?.push('/login');
     }
   }

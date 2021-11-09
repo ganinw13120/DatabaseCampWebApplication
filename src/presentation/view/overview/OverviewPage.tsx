@@ -4,7 +4,7 @@ import 'semantic-ui-css/semantic.min.css'
 import './Bar.css'
 import './overview.css'
 import { inject, observer } from 'mobx-react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps  } from 'react-router-dom';
 import OverviewViewModel from '../../view-model/overview/OverviewViewModel';
 import Skeleton from '@mui/material/Skeleton';
 
@@ -13,7 +13,17 @@ import HeaderCard from "./components/HeaderCard";
 import HeaderSkeleton from "./components/HeaderSkeleton";
 import SkeletonCard from "./components/SkeletonCard";
 
+import {AppStore} from '../../../domain/entity/state/stores/AppStore';
+import {OverviewStore} from '../../../domain/entity/state/stores/OverviewStore';
+import {AuthStore} from '../../../domain/entity/state/stores/AuthStore';
+
 export interface OverviewComponentState {}
+
+interface OverviewProps extends RouteComponentProps {
+  appStore ?: AppStore,
+  overviewStore ?: OverviewStore,
+  authStore ?: AuthStore,
+}
 
 @inject('overviewStore')
 @inject('authStore')
@@ -21,7 +31,7 @@ export interface OverviewComponentState {}
 @observer
 
 class OverviewPage
-  extends React.Component<any, OverviewComponentState>
+  extends React.Component<OverviewProps, OverviewComponentState>
   implements BaseView
 {
   private overviewViewModel: OverviewViewModel;
@@ -37,22 +47,22 @@ class OverviewPage
   public onViewModelChanged(): void {}
 
   public componentDidMount(): void {
-    const {isExpand} = this.props.appStore.store;
+    const { isExpand } = this.props.appStore!.store ;
     if (!isExpand) {
-      this.props.appStore.setExpandWithDelay(true)
+      this.props.appStore!.setExpandWithDelay(true)
     }
 
     this.overviewViewModel.attachView(this);
   }
 
   public render(): JSX.Element {
-    const { isLoading, data } = this.props.overviewStore.store;
-    const {userData} = this.props.authStore.store;
+    const { data } = this.props.overviewStore!.store;
+    const {userData} = this.props.authStore!.store;
     return (
       <>
         <div className="font-prompt w-full p-12 px-10">
           <div className="flex h-auto space-x-4">
-            {isLoading ? (
+            {!data ? (
               <Skeleton variant="text" className="w-full" />
             ) : (
               <>
@@ -66,14 +76,14 @@ class OverviewPage
             )}
           </div>
           <div className="mt-10">
-            {isLoading ? (
-              <Skeleton variant="text" className="w-full" />
-            ) : (
+            {data && userData ? (
               <span>ยินดีต้อนรับ {userData.name}</span>
+            ) : (
+              <Skeleton variant="text" className="w-full" />
             )}
           </div>
-          {isLoading  ? <HeaderSkeleton variant="h1" /> : data.lasted_group && <HeaderCard /> }
-          {isLoading ? (
+          {!data  ? <HeaderSkeleton variant="h1" /> : data.lasted_group && <HeaderCard /> }
+          {!data ? (
             <SkeletonCard />
           ) : (
             <>
