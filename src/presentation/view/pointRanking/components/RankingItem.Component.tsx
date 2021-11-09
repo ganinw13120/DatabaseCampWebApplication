@@ -1,4 +1,5 @@
 import { Skeleton } from "@mui/material";
+import { withRouter, RouteComponentProps  } from 'react-router-dom';
 import React from "react";
 
 type Ranking = {
@@ -8,23 +9,30 @@ type Ranking = {
   ranking: number;
 };
 
-type Props = {
+interface Props extends RouteComponentProps  {
   data: Ranking;
   isLoading: boolean;
   isHighlight: boolean;
 };
 
-export default class RankingItem extends React.Component<Props> {
+class RankingItem extends React.Component<Props> {
+  constructor (props : any) {
+    super (props);
+    this.onInspectPerson = this.onInspectPerson.bind(this)
+  }
+  onInspectPerson () : void {
+    this.props.history.push('/profile?id=' + this.props.data.user_id)
+  }
   public render(): JSX.Element {
     const data = this.props.data;
     const isLoading = this.props.isLoading;
     const isHighlight = this.props.isHighlight;
     return (
       <>
-        <div className=" w-full h-auto text-center align-middle">
+        <div className=" w-full h-auto text-center align-middle" onClick={this.onInspectPerson}>
           <div
             className={`${
-              isHighlight ? "bg-primary" : "contentlist"
+              isHighlight ? "bg-primary primary-contentlist" : "contentlist"
             } w-full h-20 mx-auto flex align-middle`}
             style={{ boxShadow: "0 4px 4px rgba(0, 0, 0, 0.25)" }}
           >
@@ -87,3 +95,5 @@ export default class RankingItem extends React.Component<Props> {
     );
   }
 }
+
+export default withRouter(RankingItem);

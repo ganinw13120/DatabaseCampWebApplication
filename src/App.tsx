@@ -37,7 +37,8 @@ const store = {
   overviewStore : _RootStore.overviewStore,
   appStore : _RootStore.appStore,
   pointRankingStore: _RootStore.pointRankingStore,
-  learningStore: _RootStore.learningStore
+  learningStore: _RootStore.learningStore,
+  profileStore : _RootStore.profileStore,
 };
 
 interface route {

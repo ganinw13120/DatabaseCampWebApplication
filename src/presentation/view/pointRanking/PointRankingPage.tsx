@@ -57,6 +57,7 @@ export default class PointRankingPage
                   data.leader_board.slice().forEach((item: any, index: number) => {
                     list.push(
                       <RankingItem
+                        key={index}
                         data={item}
                         isLoading={isLoading}
                         isHighlight={index === 0}

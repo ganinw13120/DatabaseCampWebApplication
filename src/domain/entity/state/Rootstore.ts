@@ -3,6 +3,7 @@ import { AppStore } from "./stores/AppStore";
 import { OverviewStore } from "./stores/OverviewStore";
 import { PointRankingStore } from "./stores/PointRankingStore";
 import { LearningStore } from "./stores/LearningStore";
+import { ProfileStore } from "./stores/ProfileStore";
 
 export default class RootStore {
   public authStore = new AuthStore(this);
@@ -10,4 +11,5 @@ export default class RootStore {
   public overviewStore = new OverviewStore(this);
   public pointRankingStore = new PointRankingStore(this);
   public learningStore = new LearningStore(this);
+  public profileStore = new ProfileStore(this);
 }

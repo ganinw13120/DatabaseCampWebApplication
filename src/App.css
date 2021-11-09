@@ -6,3 +6,11 @@
 .contentlist:hover {
     background-color : #E7E5DE; 
 }
+
+.primary-contentlist {
+    transition : all 0.07s;
+    cursor : pointer;
+}
+.primary-contentlist:hover {
+    background-color : #0052a0; 
+}

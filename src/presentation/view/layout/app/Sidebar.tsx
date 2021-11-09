@@ -46,7 +46,7 @@ class Sidebar extends React.Component <any, SidebarState>{
               <RightOutlined  style={{fontSize:25}} />
             </div>
           </div>
-          <SideItem className='z-10' isExpand={isExpand} text={userData?.name} icon={<UserOutlined  style={{fontSize:25}} />} />
+          <SideItem className='z-10' isExpand={isExpand} text={userData?.name} icon={<UserOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('profile?id=' + userData.user_id) }}/>
           <SideItem className='z-10' isExpand={isExpand} text='ออกจากระบบ' icon={<LogoutOutlined style={{ fontSize: 25 }}/>}  onClick={() => { this.onLogout();}} />
         </div>
       </div>

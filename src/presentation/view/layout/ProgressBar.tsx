@@ -23,7 +23,7 @@ export default class Sidebar extends Component<any, any>{
     const { isWaiting} = this.state;
     const percent = isWaiting ? 0 : this.props.appStore.store.progressPercent
     const hideDelay = 1;
-    const height = 3;
+    const height = 5;
     const background = '#005FB7';
 	  const containerStyle = {
 	    opacity: percent < 100 ? 1 : 0,
