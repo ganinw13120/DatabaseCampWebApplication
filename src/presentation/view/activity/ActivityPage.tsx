@@ -32,6 +32,10 @@ class ActivityPage extends React.Component<any, any>
   public componentDidMount(): void {
     this.props.appStore.setExpand(false)
     this.activityViewModel.attachView(this);
+    const {isExpand} = this.props.appStore.store;
+    if (isExpand) {
+      this.props.appStore.setExpandWithDelay(false)
+    }
   }
   componentWillUpdate(): void {
     let { activityInfo } = this.props.learningStore.store;
