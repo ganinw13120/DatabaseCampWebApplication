@@ -3,7 +3,6 @@ import React from 'react';
 import BaseView from '../../BaseView';
 import { v4 as uuidv4 } from 'uuid';
 import ChoiceBox from './Choicebox';
-import { inject, observer } from 'mobx-react';
 import Equal from '../../../assets/equal.svg';
 type QuestionBox = {
   id : string,
@@ -19,8 +18,6 @@ interface MatchingPageState {
 }
 
 
-@inject('learningStore')
-@observer
 export default class Matching extends Component<any, MatchingPageState>
   implements BaseView {
   public constructor(props: any) {
