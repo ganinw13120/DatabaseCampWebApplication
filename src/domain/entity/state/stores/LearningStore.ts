@@ -38,7 +38,7 @@ export class LearningStore {
       lectureInfo: null,
       hint: [],
       feedback : null,
-      isLoading: false
+      isLoading: false,
   }
 
   @action.bound

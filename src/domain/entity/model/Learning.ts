@@ -64,3 +64,23 @@ export type CompletionAnswer = {
 }
 
 export type Answer = CompletionAnswer[] | string[][] | number
+
+export interface ExaminationOverview {
+    pre_exam : Exam,
+    mini_exam : Exam[],
+    final_exam : Exam
+}
+
+export type Exam = {
+    exam_id : number,
+    exam_type : string,
+    results : ExamResult[] | null,
+    content_group_id ?: number,
+    content_group_name ?: string,
+}
+
+export type ExamResult = {
+    created_timestamp : string,
+    score : number,
+    is_passed : boolean
+}

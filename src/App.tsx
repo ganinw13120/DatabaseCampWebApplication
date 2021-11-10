@@ -5,6 +5,7 @@ import LoginPage from "./presentation/view/login";
 import RegisterPage from "./presentation/view/register";
 
 import OverviewPage from './presentation/view/overview';
+import ExamOverviewPage from './presentation/view/exam-overview';
 import ProfilePage from './presentation/view/profile';
 import MatchingPage from './presentation/view/matching';
 import MultiplePage from './presentation/view/multiple';
@@ -39,6 +40,7 @@ const store = {
   pointRankingStore: _RootStore.pointRankingStore,
   learningStore: _RootStore.learningStore,
   profileStore : _RootStore.profileStore,
+  examinationStore : _RootStore.examinationStore,
 };
 
 interface route {
@@ -50,6 +52,10 @@ const appRouteList : route[] = [
   {
     url: '/overview',
     page : <OverviewPage/>
+  },
+  {
+    url: '/examination',
+    page : <ExamOverviewPage/>
   },
   {
     url: '/profile',

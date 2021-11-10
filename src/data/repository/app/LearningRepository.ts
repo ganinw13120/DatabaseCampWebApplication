@@ -2,9 +2,23 @@ import axios from 'axios';
 import { API_BASE_URL } from '../../../constant/constant';
 
 import {Overview} from '../../../domain/entity/model/Overview';
-import {Lecture, RoadMap, Activity, Hint, Answer} from '../../../domain/entity/model/Learning';
+import {Lecture, RoadMap, Activity, Hint, Answer, ExaminationOverview} from '../../../domain/entity/model/Learning';
 
 export default class LearningRepository {
+  public async fetchExamOverview(token: string) : Promise<ExaminationOverview> {
+    return new Promise((resolve, reject) => {
+      axios.get<ExaminationOverview>(`${API_BASE_URL}/exam/overview`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      }).then(res => {
+        const { data } = res;
+        resolve(data)
+      }).catch(res=>{
+        reject(res.message)
+      })
+    })
+  }
   public async checkMultiple(token: string, activityId : number, result : Answer): Promise<object> {
     return new Promise((resolve, reject) => {
       axios.post(`${API_BASE_URL}/learning/activity/multiple/check-answer`, {
