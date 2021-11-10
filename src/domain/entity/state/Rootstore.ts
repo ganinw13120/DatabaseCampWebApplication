@@ -4,6 +4,8 @@ import { OverviewStore } from "./stores/OverviewStore";
 import { PointRankingStore } from "./stores/PointRankingStore";
 import { LearningStore } from "./stores/LearningStore";
 import { ProfileStore } from "./stores/ProfileStore";
+import { ExaminationStore } from "./stores/ExaminationStore";
+
 
 export default class RootStore {
   public authStore = new AuthStore(this);
@@ -12,4 +14,5 @@ export default class RootStore {
   public pointRankingStore = new PointRankingStore(this);
   public learningStore = new LearningStore(this);
   public profileStore = new ProfileStore(this);
+  public examinationStore = new ExaminationStore(this);
 }
