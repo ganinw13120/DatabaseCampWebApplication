@@ -2,10 +2,27 @@ import axios from 'axios';
 import { API_BASE_URL } from '../../../constant/constant';
 
 import {Overview} from '../../../domain/entity/model/Overview';
-import {Lecture, RoadMap, Activity, Hint} from '../../../domain/entity/model/Learning';
+import {Lecture, RoadMap, Activity, Hint, Answer} from '../../../domain/entity/model/Learning';
 
 export default class LearningRepository {
-  public async checkMatching(token: string, activityId : number, result : any): Promise<object> {
+  public async checkMultiple(token: string, activityId : number, result : Answer): Promise<object> {
+    return new Promise((resolve, reject) => {
+      axios.post(`${API_BASE_URL}/learning/activity/multiple/check-answer`, {
+        activity_id: activityId,
+        answer : result
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      }).then(res => {
+        const { data } = res;
+        resolve(data)
+      }).catch(res=>{
+        reject(res.message)
+      })
+    })
+  } 
+  public async checkMatching(token: string, activityId : number, result : Answer): Promise<object> {
     return new Promise((resolve, reject) => {
       axios.post(`${API_BASE_URL}/learning/activity/matching/check-answer`, {
         activity_id: activityId,
@@ -22,7 +39,7 @@ export default class LearningRepository {
       })
     })
   } 
-  public async checkCompletion(token: string, activityId : number, result : any): Promise<object> {
+  public async checkCompletion(token: string, activityId : number, result : Answer): Promise<object> {
     return new Promise((resolve, reject) => {
       axios.post(`${API_BASE_URL}/learning/activity/completion/check-answer`, {
         activity_id: activityId,

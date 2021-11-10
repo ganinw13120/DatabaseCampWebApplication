@@ -19,6 +19,8 @@ export default class MultipleChoice extends Component<any, MultipleChoiceState>
 
   }
   handleSelect(e : number): void {
+    const {updateResult} = this.props;
+    updateResult(e)
     this.setState({
       selectedChoice : e
     })

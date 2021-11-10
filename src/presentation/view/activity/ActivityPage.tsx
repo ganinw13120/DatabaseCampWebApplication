@@ -12,13 +12,19 @@ import Completion from './components/Completion';
 import MultipleChoice from './components/MultipleChoice';
 import { inject, observer } from 'mobx-react';
 
+import { Activity } from '../../../domain/entity/model/Learning';
+
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+
+interface ActivityState {
+  activityInfo : Activity | null,
+}
 
 @inject('learningStore')
 @inject('appStore')
 @observer
-class ActivityPage extends React.Component<any, any>
+class ActivityPage extends React.Component<any, ActivityState>
   implements BaseView {
   private activityViewModel: ActivityViewModel;
   private swal : any;
@@ -40,13 +46,15 @@ class ActivityPage extends React.Component<any, any>
       this.props.appStore.setExpandWithDelay(false)
     }
   }
-  componentWillUpdate(): void {
-    let { activityInfo } = this.props.learningStore.store;
+
+  
+  componentDidUpdate(): void {
+    let { activityInfo } = this.state;
     const search = this.props.location.search
     const activityID = new URLSearchParams(search).get('id');
-    if (activityInfo?.activity?.activity_id.toString() !== activityID) {
-      this.componentDidMount()
-      activityInfo = null;
+    if (activityInfo && activityInfo?.activity?.activity_id.toString() !== activityID) {
+      this.activityViewModel.attachView(this);
+      this.setState({activityInfo : null})
     }
   }
   showHintPopup(): void {
@@ -59,8 +67,9 @@ class ActivityPage extends React.Component<any, any>
       cancelButtonColor: '#d33',
       confirmButtonText: 'ตกลง',
       cancelButtonText: 'ยกเลิก',
-    }).then((result:any) => {
-      this.activityViewModel.onHint()
+    }).then((result : any) => {
+      if (result.isConfirmed) 
+        this.activityViewModel.onHint()
     })
   }
   public onViewModelChanged(): void {

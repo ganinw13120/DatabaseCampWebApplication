@@ -2,10 +2,17 @@ import IActivityViewModel from './IActivityViewModel';
 import { notification } from 'antd';
 import BaseView from '../../view/BaseView';
 
+import {Activity, Answer} from '../../../domain/entity/model/Learning';
+
 export default class ActivityViewModel implements IActivityViewModel {
   private baseView?: BaseView;
-  public activityInfo : any;
-  private result: any;
+  public activityInfo : Activity | null;
+  private result: Answer | null;
+
+  constructor () {
+    this.activityInfo = null;
+    this.result = null
+  }
 
   public attachView = async (baseView: BaseView): Promise<any> => {
     this.baseView = baseView;
@@ -14,7 +21,7 @@ export default class ActivityViewModel implements IActivityViewModel {
     if (!activityID) baseView.props.history.push('/overview')
     this.result = null;
     baseView?.props.appStore?.setPercent(40)
-    baseView.props.learningStore.FetchActivity(activityID, (res: any) => {
+    baseView.props.learningStore.FetchActivity(activityID, (res : Activity) => {
       
       baseView?.props.appStore?.setPercent(70)
       if (!res) return
@@ -84,7 +91,7 @@ export default class ActivityViewModel implements IActivityViewModel {
     }
   }
 
-  public updateResult = (result: any): void => {
+  public updateResult = (result: Answer): void => {
     this.result = result;
   }
 

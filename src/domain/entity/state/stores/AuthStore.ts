@@ -59,9 +59,9 @@ export class AuthStore{
 
   @action.bound
   Logout(cb?: any) {
-    this.store.isLoading = false;
     this.store.token = '';
     this.store.userData = null;
+    this.store.isLoading = false;
     window.localStorage.removeItem('token');
     cb?.();
   }
@@ -85,8 +85,8 @@ export class AuthStore{
     const token = res.access_token;
     window.localStorage.setItem('token', token);
     const userData : User = res as User;
-    this.store.userData = userData;
     this.store.token = token;
+    this.store.userData = userData;
     return {
       issuccess: true,
       message : ''
@@ -113,8 +113,8 @@ export class AuthStore{
     const token = res.access_token;
     window.localStorage.setItem('token', token);
     const userData : User = res as User;
-    this.store.userData = userData;
     this.store.token = token;
+    this.store.userData = userData;
     return {
       issuccess: true,
       message : ''

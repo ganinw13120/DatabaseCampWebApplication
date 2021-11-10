@@ -4,6 +4,8 @@ import BaseView from '../../BaseView';
 
 import ChoiceBox from './Choicebox';
 
+import {CompletionAnswer} from '../../../../domain/entity/model/Learning';
+
 type QuestionBox = {
   id : number,
   isFilled: boolean,
@@ -13,7 +15,7 @@ type QuestionBox = {
 interface CompletionPageState {
   questions: QuestionBox[],
   hoverQuestion : number | null,
-  result : any,
+  result : CompletionAnswer[],
 }
 
 export default class Completion extends Component<any, CompletionPageState>
@@ -61,7 +63,9 @@ export default class Completion extends Component<any, CompletionPageState>
         this.updateQuestionState(hoverQuestion, true);
         const { result } = this.state;
         let temp = [...result];
-        temp.find(e=>e.completion_choice_id===question.id).content = text;
+        const ans = temp.find(e=>e.completion_choice_id===question.id);
+        if (!ans) return null;
+        ans.content = text;
         this.setState({
           result : temp
         })
@@ -79,7 +83,9 @@ export default class Completion extends Component<any, CompletionPageState>
     const question = questions.find(e => e.id === id);
     if (!question) return;
     let temp = [...result];
-    temp.find(e=>e.completion_choice_id===question.id).content = null;
+    const ans = temp.find(e=>e.completion_choice_id===question.id);
+    if (!ans) return;
+    ans.content = null;
     this.setState({
       result : temp
     })

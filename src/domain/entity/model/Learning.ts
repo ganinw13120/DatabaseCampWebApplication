@@ -57,3 +57,10 @@ export type CompletionQuestion = {
     last : string,
     id : number,
 }
+
+export type CompletionAnswer = {
+    completion_choice_id : number,
+    content : string | null
+}
+
+export type Answer = CompletionAnswer[] | string[][] | number

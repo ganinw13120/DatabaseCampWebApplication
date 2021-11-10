@@ -4,7 +4,7 @@ import RootStore from '../Rootstore';
 
 import LearningRepository from '../../../../data/repository/app/LearningRepository';
 
-import {RoadMap, Lecture, Activity, Hint} from '../../model/Learning';
+import {RoadMap, Lecture, Activity, Hint, Answer ,CompletionAnswer } from '../../model/Learning';
 
 // interface Store {
 //   [key : string] : any
@@ -64,7 +64,7 @@ export class LearningStore {
     const res = await this.learningRepository.fetchActivity(token, activityID).then(this.onFetchActivitySuccess).catch((res) => {
       console.log(res)
     })
-    cb?.(res);
+    cb?.(res as Activity);
   }
 
   @action.bound
@@ -75,7 +75,7 @@ export class LearningStore {
   }
 
   @action.bound
-  public async SubmitActivity(result : any, cb : any): Promise<any> {
+  public async SubmitActivity(result : Answer, cb : any): Promise<any> {
     const { activityInfo } = this.store;
     if (!activityInfo) return;
     if (!result) {
@@ -88,14 +88,37 @@ export class LearningStore {
     }
     const { activity } = activityInfo
     if (activity.activity_type_id === 1) {
-      this.checkMatching(activity.activity_id, result, cb);
+      this.checkMatching(activity.activity_id, result as string[][], cb);
     } else if (activity.activity_type_id === 3) {
-      this.checkCompletion(activity.activity_id, result, cb);
-    }
+      this.checkCompletion(activity.activity_id, result as CompletionAnswer[], cb);
+    } else if (activity.activity_type_id === 2) {
+      this.checkMultiple(activity.activity_id, result as number, cb);
+    } 
   }
 
+  
   @action.bound 
-  private async checkMatching(activityID : number, result : any, cb: any): Promise<any> {
+  private async checkMultiple(activityID : number, result : number, cb: any): Promise<any> {
+    const { token } = this.rootStore.authStore.store;
+    this.learningRepository.checkMultiple(token, activityID, result).then((res : any) => {
+      const {is_correct} = res;
+      if (is_correct) {
+        this.store.isLoading = false;
+        this.store.feedback = 'ถูกแล้วว';
+        cb?.(true)
+        return;
+      }
+      else {
+        this.store.isLoading = false;
+        this.store.feedback = 'ไม่ถูกค้าบ';
+        cb?.(false)
+        return;
+      }
+    });
+  } 
+
+  @action.bound 
+  private async checkMatching(activityID : number, result : string[][], cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     let res : any = [];
     result.forEach((e: any, key: number) => {
@@ -128,7 +151,7 @@ export class LearningStore {
   } 
 
   @action.bound 
-  private async checkCompletion(activityID : number, result : any, cb: any): Promise<any> {
+  private async checkCompletion(activityID : number, result : CompletionAnswer[], cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     result.forEach((e: any, key: number) => {
       if (!e.content) {
