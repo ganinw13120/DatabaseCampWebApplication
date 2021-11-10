@@ -20,7 +20,6 @@ export default class PointRankingPage
   public constructor(props: any) {
     super(props);
     this.viewModel = new PointRankingViewModel();
-    this.props.appStore.setStore({ isExpand: true });
   }
 
   public componentDidMount(): void {

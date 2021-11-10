@@ -1,8 +1,9 @@
 import { makeObservable, observable, action } from 'mobx';
 import RootStore from '../Rootstore';
 
-interface Store {
-  [key : string] : any
+type Store = {
+  isExpand : boolean,
+  progressPercent : number
 }
 
 export class AppStore {
@@ -30,48 +31,25 @@ export class AppStore {
 
   @action.bound 
   public setPercent(percent: number): void {
-    return this.setStore({
-      progressPercent : percent
-    })
+    this.store.progressPercent = percent;
   }
 
   @action.bound 
   public addPercent(percent: number): void {
     const {progressPercent} = this.store; 
-    return this.setStore({
-      progressPercent : progressPercent + percent
-    })
+    this.store.progressPercent = progressPercent + percent;
   }
 
   @action.bound 
   public setExpandWithDelay(type: boolean): void {
     setTimeout(() => {
-      return this.setStore({
-        isExpand : type
-      })
+      this.store.isExpand = type;
     }, 10);
   }
 
   @action.bound 
   public setExpand(type: boolean): void {
-    return this.setStore({
-      isExpand : type
-    })
+    this.store.isExpand = type;
   }
 
-  @action.bound
-  setStore(data: { [key: string]: any }, merge: boolean = false) {
-    for (let e in data) {
-      const _data = data[e];
-      if (merge) {
-        this.store[e] = {
-          ...this.store[e],
-          ..._data
-        };
-      }
-      else {
-        this.store[e] = _data;
-      }
-    }
-  }
 }

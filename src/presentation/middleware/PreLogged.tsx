@@ -9,14 +9,14 @@ import { withRouter } from 'react-router-dom';
 class PreLogged extends React.Component<any> {
   componentDidMount() {
     observe(this.props.authStore.store, (change : any) => {
-      if (change.name === 'isAuthenticated') {
+      if (change.name === 'userData') {
         this.checkUser();
       }
     })
   }
   checkUser() {
-    const { isAuthenticated } = this.props.authStore.store;
-    if (isAuthenticated) {
+    const { userData } = this.props.authStore.store;
+    if (userData) {
       this.props.history?.push('/overview');
     }
   }

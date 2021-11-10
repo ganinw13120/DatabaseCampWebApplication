@@ -3,11 +3,13 @@ import IAuthRepository from './IAuthRepository';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../constant/constant';
 
+import { AuthUser, User } from '../../../domain/entity/model/User';
+
 export default class AuthRepository implements IAuthRepository {
 
-  public async VerifyToken(token: any) : Promise<object> {
+  public async VerifyToken(token: any) : Promise<User> {
     return new Promise((resolve, reject) => {
-      axios.get(`${API_BASE_URL}/user/info`, {
+      axios.get<User>(`${API_BASE_URL}/user/info`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         }
@@ -20,32 +22,20 @@ export default class AuthRepository implements IAuthRepository {
     })
   }
 
-  public async Login(data: any): Promise<any> {
+  public async Login(data: any): Promise<AuthUser> {
     return new Promise((resolve, rejects) => {
       axios.post(`${API_BASE_URL}/user/login`, data).then(res => {
-        resolve({
-          user_id: res.data.user_id,
-          name: res.data.name,
-          Useremail: res.data.email,
-          point: res.data.point,
-          accessToken: res.data.access_token,
-        });
+        resolve(res.data as AuthUser);
       }).catch(res => {
         rejects(new Error(res.response?.data?.th_message))
       })
     })
   }
 
-  public async Register(data: any): Promise<any> {
+  public async Register(data: any): Promise<AuthUser> {
     return new Promise((resolve, rejects) => {
       axios.post(`${API_BASE_URL}/user/register`, data).then(res => {
-        resolve({
-          userID: res.data["user_id"],
-          name: res.data["name"],
-          email: res.data["email"],
-          point: res.data["point"],
-          accessToken: res.data["access_token"],
-        });
+        resolve(res.data as AuthUser);
       }).catch(res => {
         rejects(new Error(res.response?.data?.th_message))
       })
