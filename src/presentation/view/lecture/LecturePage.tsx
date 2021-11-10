@@ -6,21 +6,28 @@ import './lecture.css';
 import './plyr.css';
 import { Button } from 'antd';
 import { inject, observer } from 'mobx-react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import Skeleton from '@mui/material/Skeleton';
 
 import LectureViewModel from '../../view-model/lecture/LectureViewModel';
 
+import { LearningStore } from '../../../domain/entity/state/stores/LearningStore';
+import { AppStore } from '../../../domain/entity/state/stores/AppStore';
 // import {ActivityInfomation} from '../../../domain/entity/model/Activity';
 
 export interface LectureComponentState {
   lectureInfo : any
 }
 
+interface LectureProps extends RouteComponentProps {
+  learningStore ?: LearningStore,
+  appStore ?: AppStore,
+}
+
 @inject('learningStore')
 @inject("appStore")
 @observer
-class LecturePage extends React.Component<any, LectureComponentState>
+class LecturePage extends React.Component<LectureProps, LectureComponentState>
   implements BaseView {
 
   private lectureViewModel: LectureViewModel;
@@ -35,9 +42,9 @@ class LecturePage extends React.Component<any, LectureComponentState>
 
   public componentDidMount(): void {
     this.lectureViewModel.attachView(this);
-    const {isExpand} = this.props.appStore.store;
+    const {isExpand} = this.props.appStore!.store;
     if (isExpand) {
-      this.props.appStore.setExpandWithDelay(false)
+      this.props.appStore!.setExpandWithDelay(false)
     }
   }
 
@@ -67,7 +74,7 @@ class LecturePage extends React.Component<any, LectureComponentState>
           <div className='mt-16'>
             <div className='mx-auto wrapper'>
                 {
-                sourceInfo && <Plyr
+                sourceInfo  && <Plyr
                   source={sourceInfo}
                 />
                 }

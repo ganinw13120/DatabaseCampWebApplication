@@ -4,7 +4,7 @@ import BaseView from '../../BaseView';
 
 import ChoiceBox from './Choicebox';
 
-import {CompletionAnswer} from '../../../../domain/entity/model/Learning';
+import {CompletionAnswer, CompletionChoice} from '../../../../domain/entity/model/Learning';
 
 type QuestionBox = {
   id : number,
@@ -18,7 +18,12 @@ interface CompletionPageState {
   result : CompletionAnswer[],
 }
 
-export default class Completion extends Component<any, CompletionPageState>
+interface CompletionProps {
+  info : CompletionChoice,
+  updateResult(e : CompletionAnswer[]) : void
+}
+
+export default class Completion extends Component<CompletionProps, CompletionPageState>
   implements BaseView {
   public constructor(props: any) {
     super(props);
@@ -105,15 +110,14 @@ export default class Completion extends Component<any, CompletionPageState>
   public render(): JSX.Element {
     const func = { enter: this.onHoverQuestionEnter, exit: this.onHoverQuestionExit, append: this.appendRef };
     const { info } = this.props;
-    const { choice } = info;
     let questionList : ReactElement[] = [];
-    choice.questions.forEach((e: any, key: number) => {
+    info.questions.forEach((e: any, key: number) => {
       questionList.push(<Question key={key} func={func} id={key + 1} info={{...e}}/>)
     });
     return (
       <>
         <div className='w-full'>
-          <ChoiceBox snapPos={this.snapPos} removeSnap={this.removeSnap} list={[...choice.contents]} />
+          <ChoiceBox snapPos={this.snapPos} removeSnap={this.removeSnap} list={[...info.contents]} />
           {questionList}
         </div>
       </>

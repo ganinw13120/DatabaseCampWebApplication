@@ -1,12 +1,18 @@
 import { Component, ReactElement } from 'react';
 import BaseView from '../../BaseView';
 import Radio from '@mui/material/Radio';
+import {MultipleChoice} from '../../../../domain/entity/model/Learning';
 
 interface MultipleChoiceState {
   selectedChoice : number | null,
 }
 
-export default class MultipleChoice extends Component<any, MultipleChoiceState>
+interface MultipleChoiceProps {
+  info : MultipleChoice[],
+  updateResult(e : number) : void
+}
+
+export default class MultipleChoiceComponent extends Component<MultipleChoiceProps, MultipleChoiceState>
   implements BaseView {
   public constructor(props: any) {
     super(props);
@@ -29,7 +35,7 @@ export default class MultipleChoice extends Component<any, MultipleChoiceState>
     const { selectedChoice } = this.state;
     const {info} = this.props;
     let choiceList: ReactElement[] = [];
-    info.choice.forEach((e:  any, key : number) => {
+    info.forEach((e:  MultipleChoice, key : number) => {
       choiceList.push(<Choice key={key} id={e.multiple_choice_id} displayText={e.content} handleSelect={this.handleSelect} selected={selectedChoice} />)
     })
     return (

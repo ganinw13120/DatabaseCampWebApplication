@@ -42,11 +42,12 @@ export class LearningStore {
   }
 
   @action.bound
-  public async FetchRoadmap(contentID: number): Promise<any> {
+  public async FetchRoadmap(contentID: number, cb : any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
-    await this.learningRepository.fetchRoadmap(token, contentID).then(this.onRoadmapFetchSuccess).catch((res) => {
+    const res = await this.learningRepository.fetchRoadmap(token, contentID).then(this.onRoadmapFetchSuccess).catch((res) => {
       console.log(res)
-    })
+    });
+    cb?.(res);
   }
 
   @action.bound

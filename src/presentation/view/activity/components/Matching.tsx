@@ -3,7 +3,11 @@ import React from 'react';
 import BaseView from '../../BaseView';
 import { v4 as uuidv4 } from 'uuid';
 import ChoiceBox from './Choicebox';
+
+// import {MultipleChoice} from '../../../../domain/entity/model/Learning';
+
 import Equal from '../../../assets/equal.svg';
+import { MatchingChoice } from '../../../../domain/entity/model/Learning';
 type QuestionBox = {
   id : string,
   isFilled: boolean,
@@ -17,8 +21,12 @@ interface MatchingPageState {
   result: any
 }
 
+interface MatchingProps {
+  info : MatchingChoice,
+  updateResult(e : string[][]) : void
+}
 
-export default class Matching extends Component<any, MatchingPageState>
+export default class Matching extends Component<MatchingProps, MatchingPageState>
   implements BaseView {
   public constructor(props: any) {
     super(props);
@@ -98,8 +106,7 @@ export default class Matching extends Component<any, MatchingPageState>
   public render(): JSX.Element {
     const func = { enter: this.onHoverQuestionEnter, exit: this.onHoverQuestionExit, append: this.appendRef };
     const { info } = this.props;
-    const { choice } = info;
-    let choiceList = [...choice.items_left, ...choice.items_right];
+    let choiceList = [...info.items_left, ...info.items_right];
     let i = 0;
     let questionList: ReactElement[] = [];
     while (i < Math.floor(choiceList.length / 2)) {

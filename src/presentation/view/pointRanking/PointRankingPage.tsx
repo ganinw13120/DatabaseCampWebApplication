@@ -27,6 +27,7 @@ export default class PointRankingPage
     if (!isExpand) {
       this.props.appStore.setExpandWithDelay(true)
     }
+    this.props.appStore!.hideStepper()
     this.viewModel.attachView(this);
   }
 

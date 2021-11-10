@@ -43,6 +43,11 @@ class ProfilePage extends Component<any, ProfileComponentState>
   }
 
   public componentDidMount(): void {
+    const { isExpand } = this.props.appStore!.store ;
+    if (!isExpand) {
+      this.props.appStore!.setExpandWithDelay(true)
+    }
+    this.props.appStore!.hideStepper()
     this.profileViewModel.attachView(this);
   }
 

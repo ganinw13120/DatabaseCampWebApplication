@@ -6,7 +6,7 @@ export default class Content extends React.Component<any, any> {
   public render(): JSX.Element {
     return (
       <>
-        <div id='content' className='landing-container font-prompt w-full pt-44 pb-44'>
+        <div id='content' className='landing-container font-prompt w-full pt-32 pb-44'>
           <div className='h-auto w-full'>
             <div className='w-full text-center' >
               <span className='border-white mx-auto shadow-text text-3xl md:text-4xl lg:text-5xl text-darkPrimary font-semibold tracking-wider'  style={{borderBottom:'0.7px solid #000000'}}>เนื้อหา</span>

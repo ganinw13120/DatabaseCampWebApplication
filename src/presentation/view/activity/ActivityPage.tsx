@@ -3,28 +3,36 @@ import BaseView from '../BaseView';
 import './activity.css';
 
 import Requirement from './components/Requirement';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import ActivityViewModel from '../../view-model/activity/ActivityViewModel';
 
 import Matching from './components/Matching';
 import Completion from './components/Completion';
-import MultipleChoice from './components/MultipleChoice';
+import MultipleChoiceComponent from './components/MultipleChoice';
 import { inject, observer } from 'mobx-react';
 
-import { Activity } from '../../../domain/entity/model/Learning';
+import { Activity, CompletionChoice, MatchingChoice, MultipleChoice } from '../../../domain/entity/model/Learning';
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { LearningStore } from '../../../domain/entity/state/stores/LearningStore';
+import { AppStore } from '../../../domain/entity/state/stores/AppStore';
 
 interface ActivityState {
   activityInfo : Activity | null,
 }
 
+interface ActivityProps extends RouteComponentProps { 
+  learningStore ?: LearningStore,
+  appStore ?: AppStore,
+
+}
+
 @inject('learningStore')
 @inject('appStore')
 @observer
-class ActivityPage extends React.Component<any, ActivityState>
+class ActivityPage extends React.Component<ActivityProps, ActivityState>
   implements BaseView {
   private activityViewModel: ActivityViewModel;
   private swal : any;
@@ -39,11 +47,11 @@ class ActivityPage extends React.Component<any, ActivityState>
     this.swal = withReactContent(Swal);
   }
   public componentDidMount(): void {
-    this.props.appStore.setExpand(false)
+    this.props.appStore!.setExpand(false)
     this.activityViewModel.attachView(this);
-    const {isExpand} = this.props.appStore.store;
+    const {isExpand} = this.props.appStore!.store;
     if (isExpand) {
-      this.props.appStore.setExpandWithDelay(false)
+      this.props.appStore!.setExpandWithDelay(false)
     }
   }
 
@@ -79,18 +87,25 @@ class ActivityPage extends React.Component<any, ActivityState>
   }
   public render(): JSX.Element {
     const { activityInfo } = this.state;
-    const { roadMap } = this.props.learningStore.store;
+    const { roadMap, feedback, isLoading } = this.props.learningStore!.store;
     return (
       <>
-        <div className='xl:grid xl:grid-cols-10 w-full h-full bg-bg-dark'>
-          <Requirement onHint={this.showHintPopup} onSubmit={this.activityViewModel.onSubmit} />
+        <div className='xl:grid xl:grid-cols-10 w-full pb-10 h-full bg-bg-dark'>
+          <Requirement 
+            onHint={this.showHintPopup} 
+            onSubmit={this.activityViewModel.onSubmit} 
+            activityInfo={activityInfo?.activity}
+            feedback={feedback}
+            isLoading={isLoading}
+            roadMap={roadMap}
+          />
           <div className='py-12 col-span-6'>
             <div className='flex h-auto'>
               <div className='w-10 text-3xl text-darkPrimary font-semibold tracking-wider p-6 px-10'>
                 <span className='w-full h-full bg-darkPrimary'>..</span>
               </div>
               <div className='w-auto py-6 -mx-4'>
-                <span className=' text-3xl text-darkPrimary font-semibold tracking-wider'>กิจกรรม {roadMap && roadMap.items.length !== 0 && activityInfo ? `(${roadMap.items.find((e: any) => e.activity_id === activityInfo?.activity?.activity_id).order}/${roadMap.items.length})`: ''} </span> <span className=' text-lg text-success font-semibold tracking-wider'> {activityInfo ? ` + ${activityInfo.activity.point} Points` : ''} </span>
+                <span className=' text-3xl text-darkPrimary font-semibold tracking-wider'>กิจกรรม {roadMap && roadMap.items.length !== 0 && activityInfo ? `(${roadMap!.items.find((e: any) => e.activity_id === activityInfo?.activity?.activity_id)!.order}/${roadMap.items.length})`: ''} </span> <span className=' text-lg text-success font-semibold tracking-wider'> {activityInfo ? ` + ${activityInfo.activity.point} Points` : ''} </span>
               </div>
             </div>
             {
@@ -98,9 +113,9 @@ class ActivityPage extends React.Component<any, ActivityState>
                 const { activity } = activityInfo;
                 const { activity_type_id: type, question } = activity;
                 const act = (type: number) => {
-                  if (type === 1) return <Matching info={activityInfo} updateResult={this.activityViewModel.updateResult}/>
-                  else if (type === 2) return <MultipleChoice info={activityInfo} updateResult={this.activityViewModel.updateResult} />
-                  else if (type === 3) return <Completion info={activityInfo} updateResult={this.activityViewModel.updateResult} />
+                  if (type === 1) return <Matching info={activityInfo.choice as MatchingChoice} updateResult={this.activityViewModel.updateResult}/>
+                  else if (type === 2) return <MultipleChoiceComponent info={activityInfo.choice as MultipleChoice[]} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 3) return <Completion info={activityInfo.choice as CompletionChoice} updateResult={this.activityViewModel.updateResult} />
                 }
                 return <>
                   <div className='text-xl text-black font-sarabun tracking-wider mx-14 my-8'>

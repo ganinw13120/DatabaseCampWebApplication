@@ -5,6 +5,7 @@ import LoginPage from "./presentation/view/login";
 import RegisterPage from "./presentation/view/register";
 
 import OverviewPage from './presentation/view/overview';
+import ExamPage from './presentation/view/exam';
 import ExamOverviewPage from './presentation/view/exam-overview';
 import ProfilePage from './presentation/view/profile';
 import MatchingPage from './presentation/view/matching';
@@ -58,6 +59,10 @@ const appRouteList : route[] = [
     page : <ExamOverviewPage/>
   },
   {
+    url: '/examination/start',
+    page : <ExamPage/>
+  },
+  {
     url: '/profile',
     page : <ProfilePage/>
   },
@@ -98,7 +103,6 @@ export default class App extends Component {
     })
     return (
       <Provider {...store}>
-        <Progress />
         <Router>
           <Switch>
             <Route path="/" exact>
@@ -117,6 +121,7 @@ export default class App extends Component {
             {appRouterendered}
           </Switch>
         </Router>
+        <Progress />
       </Provider>
     );
   }

@@ -1,9 +1,11 @@
 import { makeObservable, observable, action } from 'mobx';
+import { Stepper } from '../../model/App';
 import RootStore from '../Rootstore';
 
 type Store = {
   isExpand : boolean,
-  progressPercent : number
+  progressPercent : number,
+  stepper : Stepper | null
 }
 
 export class AppStore {
@@ -26,7 +28,8 @@ export class AppStore {
   @observable
   store : Store = {
     isExpand : false,
-    progressPercent : 0
+    progressPercent : 0,
+    stepper : null
   }
 
   @action.bound 
@@ -51,5 +54,15 @@ export class AppStore {
   public setExpand(type: boolean): void {
     this.store.isExpand = type;
   }
+
+  @action.bound
+  public setStepper(data : Stepper) : void {
+    this.store.stepper = data;
+  }
+
+  @action.bound 
+  public hideStepper() : void {
+    this.store.stepper = null;
+  } 
 
 }

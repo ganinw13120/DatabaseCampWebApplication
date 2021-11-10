@@ -66,12 +66,12 @@ export type CompletionAnswer = {
 export type Answer = CompletionAnswer[] | string[][] | number
 
 export interface ExaminationOverview {
-    pre_exam : Exam,
-    mini_exam : Exam[],
-    final_exam : Exam
+    pre_exam : ExamOverviewInfo,
+    mini_exam : ExamOverviewInfo[],
+    final_exam : ExamOverviewInfo
 }
 
-export type Exam = {
+export type ExamOverviewInfo = {
     exam_id : number,
     exam_type : string,
     results : ExamResult[] | null,
@@ -83,4 +83,24 @@ export type ExamResult = {
     created_timestamp : string,
     score : number,
     is_passed : boolean
+}
+
+export type Exam = {
+    exam : ExamInfo ,
+    activities : ExamActivity[]
+}
+
+export type ExamActivity = {
+    info : ActivityInfo,
+    choices : MatchingChoice | MultipleChoice[] | CompletionChoice
+}
+
+export type ExamInfo = {
+    exam_id : number,
+    exam_type : string,
+    instruction : string,
+    created_timestamp : string,
+    content_group_id : number,
+    content_group_name : string,
+    badge_id : number
 }
