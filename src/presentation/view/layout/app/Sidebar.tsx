@@ -31,7 +31,7 @@ class Sidebar extends React.Component <any, SidebarState>{
     const { userData } = this.props.authStore.store;
     return <>
       <div className='sticky top-0 flex flex-row md:block hidden bg-primary text-white h-screen z-20' style={{ boxShadow: '0 4px 4px #000', transition: "width 1s", ...widthBoxStyle}}>
-        <div className={`flex flex-none inline h-auto pb-7 mt-7 w-8/12 mx-auto ${isExpand ? '' : 'pl-3'} `} style={{borderBottom:'0.5px solid #BBBFC0', transition: "all 0.5s"}}>
+        <div className={`cursor-pointer flex flex-none inline h-auto pb-7 mt-7 w-8/12 mx-auto ${isExpand ? '' : 'pl-3'} `} style={{borderBottom:'0.5px solid #BBBFC0', transition: "all 0.5s"}} onClick={() => { this.onClickPage('overview') }}>
           <img src={HalfLeftLogo} alt="Logo" className='mx-auto w-auto h-16' />
           <img src={HalfRightLogo} alt="Logo" className='m-auto w-auto h-14' style={{transition: "all 1s", opacity : isExpand ? 1 : 0, width : isExpand ? '' : ''}}/>
         </div>
