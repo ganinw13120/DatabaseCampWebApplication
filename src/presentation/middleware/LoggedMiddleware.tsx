@@ -6,16 +6,17 @@ import AppLayout from "../view/layout/app/AppLayout";
 
 @inject('authStore')
   
-@observer class LoggedMiddleware extends React.Component<any> {
-
+@observer 
+class LoggedMiddleware extends React.Component<any> {
   componentDidMount() {
-    observe(this.props.authStore.store, () => {
+    this.checkUser();
+    observe(this.props.authStore.store, (data : any) => {
       this.checkUser();
     })
   }
   checkUser() {
-    const { isLoading, userData } = this.props.authStore.store;
-    if (!isLoading && !userData) {
+    const { isLoading, userData, token } = this.props.authStore.store;
+    if ((!isLoading && !userData) || (!isLoading && !token)) {
       this.props.history?.push('/login');
     }
   }

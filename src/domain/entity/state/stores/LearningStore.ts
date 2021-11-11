@@ -97,21 +97,24 @@ export class LearningStore {
     } 
   }
 
-  
+  @action.bound
+  private rejectAnswer (isCorrect : boolean) : void {
+    this.store.isLoading = false;
+    this.store.feedback = isCorrect ? 'คำตอบถูกต้อง' : 'ไม่ถูก';
+  }
+
   @action.bound 
   private async checkMultiple(activityID : number, result : number, cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     this.learningRepository.checkMultiple(token, activityID, result).then((res : any) => {
       const {is_correct} = res;
       if (is_correct) {
-        this.store.isLoading = false;
-        this.store.feedback = 'ถูกแล้วว';
+        this.rejectAnswer(true);
         cb?.(true)
         return;
       }
       else {
-        this.store.isLoading = false;
-        this.store.feedback = 'ไม่ถูกค้าบ';
+        this.rejectAnswer(false);
         cb?.(false)
         return;
       }
@@ -137,14 +140,12 @@ export class LearningStore {
     this.learningRepository.checkMatching(token, activityID, res).then((res : any) => {
       const {is_correct} = res;
       if (is_correct) {
-        this.store.isLoading = false;
-        this.store.feedback = 'ถูกแล้วว';
+        this.rejectAnswer(true);
         cb?.(true)
         return;
       }
       else {
-        this.store.isLoading = false;
-        this.store.feedback = 'ไม่ถูกค้าบ';
+        this.rejectAnswer(false);
         cb?.(false)
         return;
       }
@@ -165,14 +166,12 @@ export class LearningStore {
     this.learningRepository.checkCompletion(token, activityID, result).then((res : any) => {
       const {is_correct} = res;
       if (is_correct) {
-        this.store.isLoading = false;
-        this.store.feedback = 'ถูกแล้วว';
+        this.rejectAnswer(true);
         cb?.(true)
         return;
       }
       else {
-        this.store.isLoading = false;
-        this.store.feedback = 'ไม่ถูกค้าบ';
+        this.rejectAnswer(false);
         cb?.(false)
         return;
       }

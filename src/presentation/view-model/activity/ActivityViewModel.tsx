@@ -37,13 +37,14 @@ export default class ActivityViewModel implements IActivityViewModel {
         baseView.props.learningStore.FetchRoadmap(contentId, (res : RoadMap)=>{
           baseView?.props.appStore?.setPercent(100)
           const stepper = generateStepper(res, this.getCurrentActivityOrder(res), true);
+          stepper.onNext = this.moveNext;
           stepper.onPrev = this.movePrev;
           baseView.props.appStore.setStepper(stepper)
         })
       } else {
         baseView?.props.appStore?.setPercent(100)
         const stepper = generateStepper(this.baseView?.props.learningStore.store.roadMap, this.getCurrentActivityOrder(this.baseView?.props.learningStore.store.roadMap), true);
-        // stepper.onNext = this.moveNext;
+        stepper.onNext = this.moveNext;
         stepper.onPrev = this.movePrev;
         baseView.props.appStore.setStepper(stepper)
       }
@@ -75,12 +76,11 @@ export default class ActivityViewModel implements IActivityViewModel {
 
   private getCurrentActivityOrder = (roadMap : RoadMap) : number => {
     const activiyId = this.activityInfo?.activity.activity_id;
-    console.log(activiyId)
-    console.log(roadMap.items.find(e=>e.activity_id===activiyId))
     return roadMap.items.find(e=>e.activity_id===activiyId) ? roadMap.items.find(e=>e.activity_id===activiyId)!.order : 1;
   }
 
   private moveNext = () : void => {
+    this.baseView?.props.learningStore.clearActivity();
     const next = this.getNextActivityId();
     if (!next) {
       this.baseView?.props.history.push('/overview')
@@ -89,6 +89,7 @@ export default class ActivityViewModel implements IActivityViewModel {
     }
   }
   private movePrev = () : void => {
+    this.baseView?.props.learningStore.clearActivity();
     const prev = this.getPrevActivityId();
     if (!prev) {
       const content_id = this.activityInfo?.activity.content_id;
@@ -102,8 +103,9 @@ export default class ActivityViewModel implements IActivityViewModel {
   }
 
   private  getNextActivityId = (): number | null => {
-    const { roadMap, activityInfo } = this.baseView?.props.learningStore.store;
-    const currentActivityId = activityInfo.activity.activity_id;
+    if (!this.activityInfo) return null;
+    const { roadMap } = this.baseView?.props.learningStore.store;
+    const currentActivityId = this.activityInfo!.activity.activity_id;
     const currentOrder = roadMap.items.find((e : any) => e.activity_id === currentActivityId).order;
     const nextActivity = roadMap.items.find((e: any) => e.order === currentOrder + 1);
     if (!nextActivity) {
@@ -115,8 +117,9 @@ export default class ActivityViewModel implements IActivityViewModel {
   }
 
   private  getPrevActivityId = (): number | null => {
-    const { roadMap, activityInfo } = this.baseView?.props.learningStore.store;
-    const currentActivityId = activityInfo.activity.activity_id;
+    if (!this.activityInfo) return null;
+    const { roadMap } = this.baseView?.props.learningStore.store;
+    const currentActivityId = this.activityInfo!.activity.activity_id;
     const currentOrder = roadMap.items.find((e : any) => e.activity_id === currentActivityId).order;
     const nextActivity = roadMap.items.find((e: any) => e.order === currentOrder - 1);
     if (!nextActivity) {

@@ -46,7 +46,7 @@ export class AppStore {
   @action.bound 
   public setExpandWithDelay(type: boolean): void {
     setTimeout(() => {
-      this.store.isExpand = type;
+      this.setExpand(type);
     }, 10);
   }
 
