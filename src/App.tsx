@@ -30,6 +30,7 @@ import { Provider } from 'mobx-react';
 import RootStore  from '../src/domain/entity/state/Rootstore';
 
 import Progress from './presentation/view/layout/ProgressBar';
+import NotFoundPage from './presentation/view/error';
 
 const _RootStore = new RootStore();
 
@@ -117,6 +118,9 @@ export default class App extends Component {
               <RegisterPage>
                 <RegisterPage/>
               </RegisterPage>
+            </Route>
+            <Route>
+              <NotFoundPage />              
             </Route>
             {appRouterendered}
           </Switch>
