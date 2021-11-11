@@ -119,10 +119,10 @@ export default class App extends Component {
                 <RegisterPage/>
               </RegisterPage>
             </Route>
+            {appRouterendered}
             <Route>
               <NotFoundPage />              
             </Route>
-            {appRouterendered}
           </Switch>
         </Router>
         <Progress />
