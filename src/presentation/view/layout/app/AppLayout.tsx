@@ -13,8 +13,10 @@ export default class AppLayout extends React.Component {
       <div className="flex font-prompt bg-bg">
         <Sidebar/>
         <div className='flex-grow'>
+          <div className='stepper-container h-auto bottom-0'>
+            <Stepper />
+          </div>
           {this.props.children}
-          <Stepper steps={5} currentStep={1}/>
         </div>
       </div>
         

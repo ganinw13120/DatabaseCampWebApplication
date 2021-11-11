@@ -28,11 +28,9 @@ export default class Content extends React.Component<any, any> {
                     <span className='ml-4'>ER Model</span>
                   </div>
                   <div className='mx-auto pl-10 mt-10 text-lg md:text-2xl text-darkPrimary font-semibold tracking-wider block w-80 md:w-96'>
-                    <p className='w-auto'>- ER - Diagram</p>
                     <p className='w-auto'>- Database Entity</p>
                     <p className='w-auto'>- Database Relationship</p>
                     <p className='w-auto'>- Database Attributes</p>
-                    <p className='w-auto'>- Relational Keys</p>
                   </div>
                 </div>
             </div>
@@ -45,7 +43,6 @@ export default class Content extends React.Component<any, any> {
                   <div className='mx-auto pl-10 mt-10 text-lg md:text-2xl text-darkPrimary font-semibold tracking-wider block w-80 md:w-96'>
                     <p className='w-auto'>- Top-down approach</p>
                     <p className='w-auto'>- Inside-out approach</p>
-                    <p className='w-auto'>- Requirement analysis</p>
                   </div>
                 </div>
             </div>

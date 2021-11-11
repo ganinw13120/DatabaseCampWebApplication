@@ -17,8 +17,6 @@ import Matching from '../activity/components/Matching';
 import MultipleChoiceComponent from '../activity/components/MultipleChoice';
 import Completion from '../activity/components/Completion';
 
-import ActivityStepper from '../layout/app/Stepper';
-
 interface ExamPageState {
   exam: Exam | null,
   currentActivity: number
@@ -123,8 +121,7 @@ class ExamPage
   public render(): JSX.Element {
     return (
       <>
-        <ActivityStepper steps={3} currentStep={2}/>
-        <div className='xl:grid xl:grid-cols-10 w-full h-full pb-8 bg-bg-dark'>
+        <div className='xl:grid xl:grid-cols-10 w-full h-full pt-10 bg-bg-dark'>
           {this.getCurrentActivity()}
         </div>
       </>

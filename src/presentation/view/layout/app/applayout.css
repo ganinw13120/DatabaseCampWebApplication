@@ -36,3 +36,8 @@
     -webkit-box-shadow: 4px 3px 9px -4px rgba(0,0,0,0.56);
     -moz-box-shadow: 4px 3px 9px -4px rgba(0,0,0,0.56);
 }
+.stepper-container {
+    position: relative;
+    background-color: red;
+    width : 100%;
+}

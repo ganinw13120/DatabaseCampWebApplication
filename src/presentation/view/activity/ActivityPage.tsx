@@ -71,7 +71,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
       text: "การขอคำใบ้จะหักเเต้มที่ได้รับในการทำกิจกรรม",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
+      confirmButtonColor: '#005FB7',
       cancelButtonColor: '#d33',
       confirmButtonText: 'ตกลง',
       cancelButtonText: 'ยกเลิก',
@@ -90,7 +90,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
     const { roadMap, feedback, isLoading } = this.props.learningStore!.store;
     return (
       <>
-        <div className='xl:grid xl:grid-cols-10 w-full pb-10 h-full bg-bg-dark'>
+        <div className='xl:grid xl:grid-cols-10 w-full pt-10 h-full bg-bg-dark'>
           <Requirement 
             onHint={this.showHintPopup} 
             onSubmit={this.activityViewModel.onSubmit} 

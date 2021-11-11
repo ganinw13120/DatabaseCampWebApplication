@@ -13,6 +13,8 @@ import { AppStore } from "../../../../domain/entity/state/stores/AppStore";
 
 import { inject, observer } from 'mobx-react';
 
+import {Step as StepEnum} from '../../../../domain/entity/model/App';
+
 const primaryColor = '#03EF62'
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
@@ -61,7 +63,7 @@ const QontoStepIconRoot = styled('div')<{ ownerState: { active?: boolean } }>(
   }),
 );
 
-class StepIcon extends Component<StepIconProps, any> {
+class CompleteStepIcon extends Component<StepIconProps, any> {
   render(): JSX.Element {
     const { active, completed, className } = this.props;
     return (
@@ -71,6 +73,17 @@ class StepIcon extends Component<StepIconProps, any> {
         ) : (
           <div className="QontoStepIcon-circle" />
         )}
+      </QontoStepIconRoot>
+    );
+  }
+}
+
+class UnCompleteStepIcon extends Component<StepIconProps, any> {
+  render(): JSX.Element {
+    const { active, className } = this.props;
+    return (
+      <QontoStepIconRoot ownerState={{ active }} className={className}>
+          <div className="QontoStepIcon-circle" />
       </QontoStepIconRoot>
     );
   }
@@ -92,8 +105,6 @@ class LectureIcon extends Component<StepIconProps, any> {
 }
 
 interface StepperProps {
-  steps: number,
-  currentStep: number,
   appStore ?: AppStore
 }
 
@@ -103,24 +114,25 @@ export default class ActivityStepper extends Component<StepperProps, any> {
   render(): JSX.Element | null {
     const {stepper} = this.props!.appStore!.store;
     return (stepper ? <>
-      <div className='fixed bottom-0 bg-darkPrimary w-full' style={{ boxShadow: '0 0px 4px rgba(0, 0, 0, 0.25)', marginTop: '0px', zIndex: -0 }}>
-        <div className='my-3 flex z-0'>
+      <div className='absolute top-0 bg-darkPrimary w-full h-14' style={{ boxShadow: '0 0px 4px rgba(0, 0, 0, 0.25)', marginTop: '0px', zIndex: -0 }}>
+        <div className='mt-3 flex z-0'>
           <div className='flex-grow'></div>
-          <div className='flex-none cursor-pointer' onClick={()=>{stepper?.onNext?.()}}>
+          {stepper.onPrev && stepper.currentStep !== 0 &&
+          <div className='flex-none cursor-pointer' onClick={()=>{stepper?.onPrev?.()}}>
             <LeftOutlined className='text-white my-auto' style={{fontSize : 20, color : 'white'}} />
             <span className='my-auto ml-1 text-white font-normal'>
             Back
             </span>
-          </div>
+          </div>}
           <div className='w-4/6'>
             <Stepper alternativeLabel activeStep={stepper.currentStep} connector={<QontoConnector />}>
               {(() => {
                 const steppers: ReactElement[] = [];
                 let i = 1;
-                while (i <= stepper.totalStep) {
-                  steppers.push(
+                while (i <= stepper.steps.length) {
+                steppers.push(
                     <Step key={i}>
-                      <StepLabel StepIconComponent={StepIcon}></StepLabel>
+                      <StepLabel StepIconComponent={stepper.steps[i-1]===StepEnum.Activity ? CompleteStepIcon : stepper.steps[i-1]===StepEnum.Lecture ? LectureIcon : UnCompleteStepIcon}></StepLabel>
                     </Step>
                   )
                   i++;
@@ -129,12 +141,13 @@ export default class ActivityStepper extends Component<StepperProps, any> {
               })()}
             </Stepper>
           </div>
-          <div className='flex-none cursor-pointer' onClick={()=>{stepper?.onPrev?.()}}>
+          {stepper.onNext && stepper.currentStep !== stepper.steps.length - 1 && 
+          <div className='flex-none cursor-pointer' onClick={()=>{stepper?.onNext?.()}}>
             <span className='my-auto mr-1 text-white font-normal'>
             Next
             </span>
             <RightOutlined className='text-white my-auto' style={{fontSize : 20, color : 'white'}} />
-          </div>
+          </div>}
           <div className='flex-grow'></div>
         </div>
       </div>

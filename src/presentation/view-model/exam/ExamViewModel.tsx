@@ -1,7 +1,7 @@
 import IExamViewModel from './IExamViewModel';
 import BaseView from '../../view/BaseView';
 import { Answer, Exam } from '../../../domain/entity/model/Learning';
-import { Stepper } from '../../../domain/entity/model/App';
+import { Step, Stepper } from '../../../domain/entity/model/App';
 
 export default class ExamViewModel implements IExamViewModel {
   private baseView?: BaseView;
@@ -12,6 +12,8 @@ export default class ExamViewModel implements IExamViewModel {
     this.exam = null;
     this.currentActivity = currentActivity;
     this.result = [];
+    this.moveNext = this.moveNext.bind(this);
+    this.movePrev = this.movePrev.bind(this);
   }
   public attachView = (baseView: BaseView): void => {
     this.baseView = baseView;
@@ -19,17 +21,31 @@ export default class ExamViewModel implements IExamViewModel {
     const search = baseView.props.location.search
     const examId = new URLSearchParams(search).get('id');
     baseView.props.examinationStore.FetchExam(examId).then((res : Exam) => {
-      console.log(res)
-      baseView?.props.appStore?.setPercent(100)
-      const stepper : Stepper = {
-        totalStep : res.activities.length,
-        currentStep : this.currentActivity
-      } 
-      baseView?.props.appStore?.setStepper(stepper)
       this.exam = res;
       baseView.onViewModelChanged();
+      baseView?.props.appStore?.setPercent(100)
+      this.setStepper();
     })
   };
+
+  public setStepper = () : void => {
+    if (!this.exam) return;
+    const stepper : Stepper = this.generateExamStepper(this.exam)
+    stepper.onNext = this.moveNext;
+    stepper.onPrev = this.movePrev;
+    this.baseView!.props.appStore.setStepper(stepper)
+  }
+
+  private generateExamStepper = (res : Exam) : Stepper => { 
+    const stepper : Stepper = {
+      currentStep : this.currentActivity,
+      steps : []
+    } 
+    res.activities.forEach(e=>{
+      stepper.steps.push(Step.Activity)
+    })
+    return stepper;
+  }
 
   public detachView = (): void => {
     this.baseView = undefined;
@@ -40,18 +56,27 @@ export default class ExamViewModel implements IExamViewModel {
   }
 
   public obSubmitActivity = () : void => {
-    console.log(this.result)
     if (!this.exam) return;
-    console.log(this.currentActivity, this.exam?.activities.length - 1)
     if (this.currentActivity < this.exam.activities.length - 1) {
       this.currentActivity++;
       this.baseView?.onViewModelChanged();
     }
-    const stepper : Stepper = {
-      totalStep : this.exam.activities.length,
-      currentStep : this.currentActivity
-    } 
-    this.baseView?.props.appStore?.setStepper(stepper);
+    this.setStepper();
+  }
+
+  public moveNext = () : void => {
+    if (this.currentActivity < this.exam!.activities.length - 1) {
+      this.currentActivity++;
+      this.baseView?.onViewModelChanged();
+    }
+    this.setStepper();
+  }
+  public movePrev = () : void => {
+    if (this.currentActivity !== 0) {
+      this.currentActivity--;
+      this.baseView?.onViewModelChanged();
+    }
+    this.setStepper();
   }
 
 }

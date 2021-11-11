@@ -1,24 +1,26 @@
 import ILectureViewModel from './ILectureViewModel';
 import BaseView from '../../view/BaseView';
 import { notification } from 'antd';
-import { Stepper } from '../../../domain/entity/model/App';
 import { RoadMap } from '../../../domain/entity/model/Learning';
+import generateStepper, { generateEmptyStepper } from '../../util/generateStepper';
 
 export default class LectureViewModel implements ILectureViewModel {
   private baseView?: BaseView;
   public lectureInfo: any;
+  constructor () {
+    this.onClickNext = this.onClickNext.bind(this);
+  }
   public attachView = async (baseView: BaseView): Promise<any> => {
     this.baseView = baseView;
     const search = baseView.props.location.search
     const contentID = new URLSearchParams(search).get('id');
     if (!contentID) baseView.props.history.push('/overview')
+    baseView.props.appStore.setStepper(generateEmptyStepper())
     baseView?.props.appStore?.setPercent(40)
     baseView.props.learningStore.FetchRoadmap(contentID,(res : RoadMap)=>{  
       baseView?.props.appStore?.addPercent(30);
-      const stepper : Stepper = {
-        totalStep : res.items.length,
-        currentStep : 0
-      }
+      const stepper = generateStepper(res, 0, true);
+      stepper.onNext = this.onClickNext ;
       baseView.props.appStore.setStepper(stepper)
     })
     baseView.props.learningStore.FetchLecture(contentID, (res: any) => {

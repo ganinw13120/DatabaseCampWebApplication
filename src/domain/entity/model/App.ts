@@ -1,6 +1,12 @@
 export type Stepper = {
-    totalStep : number,
+    steps : Step[],
     currentStep : number,
     onNext ?() : void,
     onPrev ?() : void
+}
+
+export enum Step {
+    Lecture,
+    Activity = 1,
+    UnCompleteActivity,
 }
