@@ -63,7 +63,7 @@ export type CompletionAnswer = {
     content : string | null
 }
 
-export type Answer = CompletionAnswer[] | string[][] | number
+export type Answer = CompletionAnswer[] | string[][] | number | null
 
 export interface ExaminationOverview {
     pre_exam : ExamOverviewInfo,
@@ -103,4 +103,14 @@ export type ExamInfo = {
     content_group_id : number,
     content_group_name : string,
     badge_id : number
+}
+
+export type ExamAnswer = {
+    exam_id : number,
+    activities : ExamAnswerActivity[]
+}
+
+export type ExamAnswerActivity = {
+    activity_id : number,
+    answer : Answer
 }

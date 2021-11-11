@@ -74,10 +74,10 @@ class ExamPage
       content_name : exam.exam.content_group_name,
       items : []
     }
+    this.examViewModel.updateResult(currentActivity ,null)
     const updateActivityResult = (e : any) : void => {
       this.examViewModel.updateResult(currentActivity ,e)
     }
-    console.log(exam)
     return (<>
       <Requirement 
         activityInfo={data.info}

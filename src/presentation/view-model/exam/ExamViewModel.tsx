@@ -1,7 +1,9 @@
 import IExamViewModel from './IExamViewModel';
 import BaseView from '../../view/BaseView';
-import { Answer, Exam } from '../../../domain/entity/model/Learning';
+import { Answer, CompletionAnswer, Exam } from '../../../domain/entity/model/Learning';
 import { Step, Stepper } from '../../../domain/entity/model/App';
+
+import { validateCompletion, validateMultiple, validateMatching } from '../../util/validateActvitiy';
 
 export default class ExamViewModel implements IExamViewModel {
   private baseView?: BaseView;
@@ -41,8 +43,8 @@ export default class ExamViewModel implements IExamViewModel {
       currentStep : this.currentActivity,
       steps : []
     } 
-    res.activities.forEach(e=>{
-      stepper.steps.push(Step.Activity)
+    res.activities.forEach((e, key : number)=>{
+      stepper.steps.push(this.validateResult(key) ? Step.Activity : Step.UnCompleteActivity)
     })
     return stepper;
   }
@@ -51,7 +53,7 @@ export default class ExamViewModel implements IExamViewModel {
     this.baseView = undefined;
   };
   
-  public updateResult = (key : number, result: Answer): void => {
+  public updateResult = (key : number, result: Answer | null): void => {
     this.result[key] = result;
   }
 
@@ -60,6 +62,14 @@ export default class ExamViewModel implements IExamViewModel {
     if (this.currentActivity < this.exam.activities.length - 1) {
       this.currentActivity++;
       this.baseView?.onViewModelChanged();
+    } else {
+      let isPassed = true;
+      this.exam.activities.forEach((_, key : number) => {
+        const temp = this.validateResult(key);
+        if (!temp) isPassed = false;
+      })
+      if (!isPassed) return;
+      this.baseView!.props.examinationStore.submitExam(this.result, this.exam)
     }
     this.setStepper();
   }
@@ -79,4 +89,21 @@ export default class ExamViewModel implements IExamViewModel {
     this.setStepper();
   }
 
+  private validateResult = (key : number) : boolean => {
+    const result = this.result[key];
+    if (!this.exam?.activities[key] || !result) return false;
+    const {activity_type_id} = this.exam?.activities[key].info;
+    if (activity_type_id === 1) {
+      return validateMatching(result as string[][])
+    }
+    if (activity_type_id === 2) {
+      return validateMultiple(result as number)
+    }
+    if (activity_type_id === 3) {
+      return validateCompletion(result as CompletionAnswer[])
+    }
+    return false;
+  }
 }
+
+

@@ -4,7 +4,7 @@ import RootStore from '../Rootstore';
 
 import LearningRepository from '../../../../data/repository/app/LearningRepository';
 
-import {Exam, ExaminationOverview} from '../../model/Learning';
+import {Answer, Exam, ExamAnswer, ExamAnswerActivity, ExaminationOverview} from '../../model/Learning';
 
 interface Store {
   data : ExaminationOverview | null,
@@ -50,5 +50,36 @@ export class ExaminationStore {
   onFetchExamOverviewSuccess (res : ExaminationOverview) : ExaminationOverview {
     this.store.data = res;
     return res;
+  }
+
+
+  @action.bound
+  submitExam (result : Answer[], exam : Exam) : void {
+    let answer : ExamAnswer = {
+      exam_id : exam.exam.exam_id,
+      activities : []
+    }
+    exam.activities.forEach((e, key : number) => {
+      let res = result[key];
+      if (e.info.activity_type_id===1) {
+        let temp: any = [];
+        (res! as string[][]).forEach((e: any, key: number) => {
+          temp.push({
+                item1: e[0],
+                item2: e[1]
+            })
+        })
+        res = temp;
+      }
+      let examAnswer : ExamAnswerActivity = {
+        activity_id : e.info.activity_id,
+        answer : res
+      }
+      answer.activities.push(examAnswer);
+    })
+    const { token } = this.rootStore.authStore.store;
+    this.learningRepository.submitExam(token, answer).then((res : any)=>{
+      console.log(res)
+    })
   }
 }
