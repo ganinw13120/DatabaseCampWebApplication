@@ -24,8 +24,10 @@ export default class ActivityViewModel implements IActivityViewModel {
     if (!activityID) baseView.props.history.push('/overview')
     this.result = null;
 
-    baseView.props.appStore.setStepper(generateEmptyStepper())
-    
+    if (!baseView.props.learningStore.store.roadMap) baseView.props.appStore.setStepper(generateEmptyStepper())
+    else {
+      this.generateStepperFromStore();
+    }
     baseView?.props.appStore?.setPercent(40)
     baseView.props.learningStore.FetchActivity(activityID, (res : Activity) => {
       this.activityInfo = res;
@@ -43,13 +45,18 @@ export default class ActivityViewModel implements IActivityViewModel {
         })
       } else {
         baseView?.props.appStore?.setPercent(100)
-        const stepper = generateStepper(this.baseView?.props.learningStore.store.roadMap, this.getCurrentActivityOrder(this.baseView?.props.learningStore.store.roadMap), true);
-        stepper.onNext = this.moveNext;
-        stepper.onPrev = this.movePrev;
-        baseView.props.appStore.setStepper(stepper)
+        this.generateStepperFromStore();
       }
     })
   };
+
+  private generateStepperFromStore () : void {
+    const stepper = generateStepper(this.baseView?.props.learningStore.store.roadMap, this.getCurrentActivityOrder(this.baseView?.props.learningStore.store.roadMap), true);
+    stepper.onNext = this.moveNext;
+    stepper.onPrev = this.movePrev;
+    this.baseView?.props.appStore.setStepper(stepper)
+  }
+  
   public onSubmit = (): void => {
     if (!this.baseView) return;
     const {isLoading} = this.baseView.props.learningStore.store;
