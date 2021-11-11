@@ -1,6 +1,4 @@
 import React from 'react';
-import Person from '../../../assets/personwithlaptop.png';
-import Bulb from '../../../assets/landing-bulb.png';
 
 export default class Title extends React.Component<any, any> {
   public constructor(props: any) {

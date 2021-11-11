@@ -5,3 +5,7 @@
 .continuebtn:hover {
     background-color : #E7E5DE; 
 }
+
+.instruction {
+    width : 70vw;
+}

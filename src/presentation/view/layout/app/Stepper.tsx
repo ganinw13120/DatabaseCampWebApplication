@@ -112,10 +112,16 @@ export default class ActivityStepper extends Component<StepperProps, any> {
       <div className='absolute top-0 bg-darkPrimary w-full h-14' style={{ boxShadow: '0 0px 4px rgba(0, 0, 0, 0.25)', marginTop: '0px', zIndex: -0 }}>
         <div className='mt-3 flex z-0'>
           <div className='flex-grow'></div>
-          {stepper.onPrev && stepper.currentStep !== 0 &&
+          {stepper.onPrev && stepper.currentStep > 0 ?
           <div className='flex-none cursor-pointer' onClick={()=>{stepper?.onPrev?.()}}>
             <LeftOutlined className='text-white my-auto' style={{fontSize : 20, color : 'white'}} />
             <span className='my-auto ml-1 text-white font-normal'>
+            Back
+            </span>
+          </div> : 
+          <div className='flex-none cursor-pointer'>
+            <LeftOutlined className='text-white my-auto' style={{fontSize : 20, color : '#BBBFC0'}} />
+            <span className='ml-1 text-gray font-normal'>
             Back
             </span>
           </div>}
@@ -136,12 +142,18 @@ export default class ActivityStepper extends Component<StepperProps, any> {
               })()}
             </Stepper>
           </div>
-          {stepper.onNext && stepper.currentStep !== stepper.steps.length - 1 && 
+          {stepper.onNext && stepper.currentStep !== stepper.steps.length - 1 ?
           <div className='flex-none cursor-pointer' onClick={()=>{stepper?.onNext?.()}}>
             <span className='my-auto mr-1 text-white font-normal'>
             Next
             </span>
             <RightOutlined className='text-white my-auto' style={{fontSize : 20, color : 'white'}} />
+          </div> : 
+          <div className='flex-none cursor-pointer'>
+            <span className='my-auto mr-1 text-gray font-normal'>
+            Next
+            </span>
+            <RightOutlined className='text-white my-auto' style={{fontSize : 20, color : '#BBBFC0'}} />
           </div>}
           <div className='flex-grow'></div>
         </div>

@@ -1,8 +1,7 @@
 import React from 'react';
 import DarkLogo from '../../../assets/dark-logo.png';
 import { withRouter } from 'react-router-dom';
-import scrollTo from '../../../util/scrollTo';
- 
+
 class Navbar extends React.Component<any, any> {
 
   public constructor(props: any) {

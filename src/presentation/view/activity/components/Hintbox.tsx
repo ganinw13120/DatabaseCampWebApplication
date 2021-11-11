@@ -1,5 +1,3 @@
-import bulb from '../../../assets/bulb.png';
-
 import { Component, ReactElement } from 'react';
 
 import { inject, observer } from 'mobx-react';
