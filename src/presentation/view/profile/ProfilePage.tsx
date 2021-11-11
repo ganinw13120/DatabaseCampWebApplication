@@ -108,7 +108,7 @@ class ProfilePage extends Component<any, ProfileComponentState>
             </div>
             {data ? <>
               <div className=' text-xl text-darkPrimary font-prompt font-semibold tracking-wider inline px-2 '>
-                <span>My Badge ({data.badges.length})</span>
+                <span>My Badge ({data.badges.filter(e=>e.is_collect).length})</span>
               </div>
             </> : <>
               <Skeleton variant="text" className="w-1/6 mx-auto" />
