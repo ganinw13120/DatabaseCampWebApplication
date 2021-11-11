@@ -65,14 +65,11 @@ const QontoStepIconRoot = styled('div')<{ ownerState: { active?: boolean } }>(
 
 class CompleteStepIcon extends Component<StepIconProps, any> {
   render(): JSX.Element {
-    const { active, completed, className } = this.props;
+    const { active : isActive, completed, className } = this.props;
+    const active = isActive || completed
     return (
       <QontoStepIconRoot ownerState={{ active }} className={className}>
-        {completed ? (
-          <Check className="QontoStepIcon-completedIcon" />
-        ) : (
-          <div className="QontoStepIcon-circle" />
-        )}
+          <Check className={completed ? `QontoStepIcon-completedIcn` : ''} />
       </QontoStepIconRoot>
     );
   }
@@ -80,7 +77,8 @@ class CompleteStepIcon extends Component<StepIconProps, any> {
 
 class UnCompleteStepIcon extends Component<StepIconProps, any> {
   render(): JSX.Element {
-    const { active, className } = this.props;
+    const { active : isActive, completed, className } = this.props;
+    const active = isActive || completed
     return (
       <QontoStepIconRoot ownerState={{ active }} className={className}>
           <div className="QontoStepIcon-circle" />

@@ -8,7 +8,7 @@ const generateStepper = (data : RoadMap, current : number, isLectureProvide : bo
     }
     if (isLectureProvide) stepper.steps.push(Step.Lecture);
     data.items.forEach(e=>{
-        stepper.steps.push(Step.Activity)
+        stepper.steps.push(e.is_learned ? Step.Activity : Step.UnCompleteActivity)
     })
     return stepper
 }

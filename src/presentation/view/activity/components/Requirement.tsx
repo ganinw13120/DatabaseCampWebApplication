@@ -16,7 +16,9 @@ interface RequirementProps extends RouteComponentProps {
   activityInfo : ActivityInfo | undefined,
   feedback : string | null,
   isLoading : boolean,
-  roadMap : RoadMap | null
+  roadMap : RoadMap | null,
+  submitText ?: string,
+  isHidden ?: boolean
 }
 
 @inject('learningStore')
@@ -38,10 +40,10 @@ class Requirement extends React.Component<RequirementProps, any> {
   }
   public render(): JSX.Element {
     const { width } = this.state;
-    const { onHint, onSubmit, activityInfo, feedback, isLoading, roadMap } = this.props;
+    const { onHint, onSubmit, activityInfo, feedback, isLoading, roadMap, submitText, isHidden } = this.props;
     const { hint } = this.props.learningStore!.store;
     return (<>
-      <div className='col-span-4 bg-white py-4 h-auto flex flex-col' style={{ boxShadow: '0 0px 4px rgba(0, 0, 0, 0.25)' }}>
+      <div className={`${isHidden?'hidden':''} col-span-4 bg-white py-4 h-auto flex flex-col`} style={{ boxShadow: '0 0px 4px rgba(0, 0, 0, 0.25)' }}>
         <div className='text-lg text-darkPrimary w-96 font-semibold tracking-wider pt-4 px-10'>
           {roadMap ? <span>เนื้อหา - {roadMap.content_name}</span> : <>
             <Skeleton variant='text' className='w-full' />
@@ -80,7 +82,7 @@ class Requirement extends React.Component<RequirementProps, any> {
             </div>
           </div> }
           <div onClick={()=>{onSubmit()}} className={`mx-4 bg-${isLoading ? 'darkPrimary' : 'primary'} text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'wait' : 'pointer'}`}  style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)'}}>
-            ตรวจคำตอบ
+            { submitText ? submitText : 'ตรวจคำตอบ'}
           </div>
         </div>
         <div className='mt-auto'>

@@ -25,7 +25,6 @@ export default class ActivityViewModel implements IActivityViewModel {
     this.result = null;
 
     baseView.props.appStore.setStepper(generateEmptyStepper())
-    console.log(activityID)
     
     baseView?.props.appStore?.setPercent(40)
     baseView.props.learningStore.FetchActivity(activityID, (res : Activity) => {
@@ -38,7 +37,6 @@ export default class ActivityViewModel implements IActivityViewModel {
         baseView.props.learningStore.FetchRoadmap(contentId, (res : RoadMap)=>{
           baseView?.props.appStore?.setPercent(100)
           const stepper = generateStepper(res, this.getCurrentActivityOrder(res), true);
-          // stepper.onNext = this.moveNext;
           stepper.onPrev = this.movePrev;
           baseView.props.appStore.setStepper(stepper)
         })
@@ -93,7 +91,11 @@ export default class ActivityViewModel implements IActivityViewModel {
   private movePrev = () : void => {
     const prev = this.getPrevActivityId();
     if (!prev) {
-      this.baseView?.props.history.push('/overview')
+      const content_id = this.activityInfo?.activity.content_id;
+      if (!content_id)
+        this.baseView?.props.history.push('/overview')
+      else 
+        this.baseView?.props.history.push('/content?id=' + content_id)  
     } else {
       this.baseView?.props.history.push(`/activity?id=${prev}`)
     }

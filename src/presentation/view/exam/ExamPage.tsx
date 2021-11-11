@@ -1,4 +1,4 @@
-import { Component, ReactElement } from 'react';
+import { Component, ReactElement, Fragment } from 'react';
 import BaseView from '../BaseView';
 import 'semantic-ui-css/semantic.min.css'
 import './Bar.css'
@@ -64,36 +64,39 @@ class ExamPage
     this.examViewModel.attachView(this);
   }
 
-  private getCurrentActivity(): ReactElement | null {
-    const { exam, currentActivity } = this.state;
+  private getCurrentActivity(act : number, currentActivity : number): ReactElement | null {
+    const { exam } = this.state;
     if (!exam) return null;
     const examActivity : ExamActivity[] = exam?.activities;
-    const data : ExamActivity = examActivity[currentActivity];
+    const data : ExamActivity = examActivity[act];
     const roadMap : RoadMap = {
       content_id : exam.exam.content_group_id,
       content_name : exam.exam.content_group_name,
       items : []
     }
-    this.examViewModel.updateResult(currentActivity ,null)
+    // this.examViewModel.updateResult(act ,null)
     const updateActivityResult = (e : any) : void => {
-      this.examViewModel.updateResult(currentActivity ,e)
+      this.examViewModel.updateResult(act ,e)
     }
-    return (<>
+    const isHidden = !(currentActivity===act);
+    return (<Fragment key={act}>
       <Requirement 
         activityInfo={data.info}
         feedback=''
         onSubmit={this.examViewModel.obSubmitActivity}
         isLoading={false}
         roadMap={roadMap}
+        submitText={ act===examActivity.length-1 ? 'ส่งคำตอบ' : "ถัดไป"}
+        isHidden={isHidden}
       />
-      <div className='py-12 col-span-6'>
+      <div className={`${isHidden ? 'hidden' : ''} py-12 col-span-6`}>
         <div className='flex h-auto'>
           <div className='w-10 text-3xl text-darkPrimary font-semibold tracking-wider p-6 px-10'>
             <span className='w-full h-full bg-darkPrimary'>..</span>
           </div>
           <div className='w-auto py-6 -mx-4'>
             <span className=' text-3xl text-darkPrimary font-semibold tracking-wider'>
-              กิจกรรม {`(${currentActivity + 1}/${examActivity.length})`}
+              กิจกรรม {`(${act + 1}/${examActivity.length})`}
             </span>
           </div>
         </div>
@@ -115,14 +118,25 @@ class ExamPage
               })()} </> : ''
             }
       </div>
-    </>)
+    </Fragment>)
   }
 
   public render(): JSX.Element {
+    const {exam, currentActivity} = this.state;
+    if (!exam ) return <></>
     return (
       <>
-        <div className='xl:grid xl:grid-cols-10 w-full h-full pt-10 bg-bg-dark'>
-          {this.getCurrentActivity()}
+        <div className='xl:grid xl:grid-cols-10 w-full h-full pt-12 bg-bg-dark'>
+          {(()=>{
+            const examList : ReactElement[] = [];
+            let i = 0 ;
+            while (i < exam!.activities.length) {
+              const exam = this.getCurrentActivity(i, currentActivity)
+              if (exam) examList.push(exam);
+              i ++;
+            }
+            return examList;
+          })()}
         </div>
       </>
     );
