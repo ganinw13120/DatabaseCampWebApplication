@@ -1,14 +1,18 @@
+import React from 'react';
 import IProfileViewModel from './IProfileViewModel';
 import BaseView from '../../view/BaseView';
+import { FormInstance } from 'antd/es/form';
 
 import { User } from '../../../domain/entity/model/User';
 
 export default class ActivityViewModel implements IProfileViewModel {
   private baseView?: BaseView;
+  public formRef?: React.RefObject<FormInstance<any>>;
   public profileData : User | null;
 
   constructor () {
     this.profileData = null;
+    this.formRef = React.createRef<FormInstance>();
   }
 
   public attachView = async (baseView: BaseView): Promise<any> => {
@@ -27,5 +31,15 @@ export default class ActivityViewModel implements IProfileViewModel {
   public detachView = (): void => {
     this.baseView = undefined;
   };
+
+  public submitChangeName = () : void => {
+    this.baseView?.props.profileStore.UpdateName(this.formRef?.current?.getFieldValue('name'), (res : any) => {
+      let temp = this.profileData;
+      temp!.name = res.updated_name;
+      this.profileData = temp;
+      this.baseView?.onViewModelChanged();
+    })
+    
+  }
 
 }

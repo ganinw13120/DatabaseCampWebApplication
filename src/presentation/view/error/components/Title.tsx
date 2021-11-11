@@ -1,24 +1,7 @@
 import React from 'react';
 
 export default class Title extends React.Component<any, any> {
-  public constructor(props: any) {
-    super(props);
-    this.state = {
-      offsetY : 0
-    }
-    this.handleScroll = this.handleScroll.bind(this);
-  }
-  handleScroll () :void {
-    this.setState({ offSetY: window.pageYOffset });
-  }
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll, false);
-  }
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll, false);
-  }
   public render(): JSX.Element {
-    const { offSetY } = this.state;
     return (
       <>
         <div id='title' className='wavediv w-full font-prompt h-screen'>

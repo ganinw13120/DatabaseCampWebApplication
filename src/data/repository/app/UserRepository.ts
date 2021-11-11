@@ -33,4 +33,21 @@ export default class LearningRepository {
       })
     })
   }
+
+  public async updateName(token: string, name: string) : Promise<any> {
+    return new Promise((resolve, reject) => {
+      axios.put(`${API_BASE_URL}/user/profile`, {
+        name : name
+      } , {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      }).then(res => {
+        const { data } = res;
+        resolve(data)
+      }).catch(res=>{
+        reject(res.message)
+      })
+    })
+  }
 }
