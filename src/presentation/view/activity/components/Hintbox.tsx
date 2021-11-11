@@ -10,7 +10,9 @@ export default class Hintbox extends Component <any, any> {
   public render(): JSX.Element {
     const { hint } = this.props.learningStore.store;
     let HintTextList : ReactElement[] = [];
+    let pointReduce = 0;
     hint.forEach((e : any, key : number) => {
+      pointReduce += e.point_reduce;
       HintTextList.push(<HintText text={e.content} key={key}/>)
     })
     return (<>
@@ -22,7 +24,7 @@ export default class Hintbox extends Component <any, any> {
           <div className='w-96 py-6 -mx-4 flex'>
             <span className=' text-xl text-darkPrimary font-semibold tracking-wider'>คำใบ้ </span>
               <img src={bulb} alt="Logo4" className='-m-4 pl-4 pr-8' style={{ marginLeft: 3 }} />
-            <span className=' text-lg text-Redwrong font-semibold tracking-wider'> -50 Points  (-30%)</span>
+            <span className=' text-lg text-Redwrong font-semibold tracking-wider'> -{pointReduce} Points</span>
           </div>
         </div>
         {HintTextList}

@@ -58,7 +58,7 @@ export class LearningStore {
 
   
   @action.bound
-  public async FetchActivity(activityID: number, cb: any): Promise<any> {
+  public async FetchActivity(activityID: number, cb : any): Promise<any> {
     this.store.hint = [];
     this.store.activityInfo = null;
     const { token } = this.rootStore.authStore.store;
@@ -103,6 +103,17 @@ export class LearningStore {
     this.store.feedback = isCorrect ? 'คำตอบถูกต้อง' : 'ไม่ถูก';
   }
 
+  @action.bound
+  private updateRoadMapStatus (activity_id : number) : void {
+    let temp = this.store.roadMap;
+    if (!temp) return;
+    let items = [...temp!.items];
+    let item = items.find(e=>e.activity_id===activity_id);
+    if (!item) return;
+    item!.is_learned = true;
+    this.store.roadMap!.items = items;
+  }
+
   @action.bound 
   private async checkMultiple(activityID : number, result : number, cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
@@ -110,6 +121,7 @@ export class LearningStore {
       const {is_correct} = res;
       if (is_correct) {
         this.rejectAnswer(true);
+        this.updateRoadMapStatus(activityID);
         cb?.(true)
         return;
       }
@@ -141,6 +153,7 @@ export class LearningStore {
       const {is_correct} = res;
       if (is_correct) {
         this.rejectAnswer(true);
+        this.updateRoadMapStatus(activityID);
         cb?.(true)
         return;
       }
@@ -167,6 +180,7 @@ export class LearningStore {
       const {is_correct} = res;
       if (is_correct) {
         this.rejectAnswer(true);
+        this.updateRoadMapStatus(activityID);
         cb?.(true)
         return;
       }

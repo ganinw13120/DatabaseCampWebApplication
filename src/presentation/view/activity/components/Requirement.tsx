@@ -18,7 +18,7 @@ interface RequirementProps extends RouteComponentProps {
   isLoading : boolean,
   roadMap : RoadMap | null,
   submitText ?: string,
-  isHidden ?: boolean
+  isHidden ?: boolean,
 }
 
 @inject('learningStore')
@@ -86,7 +86,7 @@ class Requirement extends React.Component<RequirementProps, any> {
           </div>
         </div>
         <div className='mt-auto'>
-          {activityInfo && hint && hint.length !== 0 ? <Hintbox /> : ''}
+          { onHint && activityInfo && hint && hint.length !== 0 ? <Hintbox /> : ''}
         </div>
       </div>
     </>)

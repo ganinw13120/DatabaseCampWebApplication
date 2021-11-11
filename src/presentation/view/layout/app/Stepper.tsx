@@ -89,14 +89,11 @@ class UnCompleteStepIcon extends Component<StepIconProps, any> {
 
 class LectureIcon extends Component<StepIconProps, any> {
   render(): JSX.Element {
-    const { active, completed, className } = this.props;
+    const { active : isActive, completed, className } = this.props;
+    const active = isActive || completed
     return (
       <QontoStepIconRoot ownerState={{ active }} className={className}>
-        {completed ? (
           <TvIcon className="QontoStepIcon-completedIcon" />
-        ) : (
-          <div className="QontoStepIcon-circle" />
-        )}
       </QontoStepIconRoot>
     );
   }

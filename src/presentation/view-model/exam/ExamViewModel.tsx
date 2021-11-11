@@ -19,6 +19,7 @@ export default class ExamViewModel implements IExamViewModel {
   }
   public attachView = (baseView: BaseView): void => {
     this.baseView = baseView;
+    
     baseView?.props.appStore?.setPercent(40)
     const search = baseView.props.location.search
     const examId = new URLSearchParams(search).get('id');
