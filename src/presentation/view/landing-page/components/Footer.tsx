@@ -18,9 +18,9 @@ export default class Footer extends React.Component<any, any> {
             <div className='col-span-1'>
               <div className='w-3/4 mx-auto  mt-16 md:mt-0'>
                 <p className='w-auto text-xl md:text-2xl text-white font-normal'>Content</p>
-                <p className='cursor-pointer mt-5 w-auto text-xl md:text-xl text-white font-extralight' onClick={()=>scrollTo('title')}>หน้าหลัก</p>
-                <p className='cursor-pointer w-auto text-xl md:text-xl text-white font-extralight' onClick={()=>scrollTo('about')}>เกี่ยวกับ</p>
-                <p className='cursor-pointer w-auto text-xl md:text-xl text-white font-extralight' onClick={()=>scrollTo('content')}>เนื้อหา</p>
+                <p className='text-hoverable-white cursor-pointer mt-5 w-auto text-xl md:text-xl text-white font-extralight' onClick={()=>scrollTo('title')}>หน้าหลัก</p>
+                <p className='text-hoverable-white cursor-pointer w-auto text-xl md:text-xl text-white font-extralight' onClick={()=>scrollTo('about')}>เกี่ยวกับ</p>
+                <p className='text-hoverable-white cursor-pointer w-auto text-xl md:text-xl text-white font-extralight' onClick={()=>scrollTo('content')}>เนื้อหา</p>
               </div>
             </div>
             <div className='col-span-2 pb-16 mt-16 md:mt-0'>

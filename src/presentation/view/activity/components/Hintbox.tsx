@@ -23,8 +23,8 @@ export default class Hintbox extends Component <any, any> {
           </div>
           <div className='w-96 py-6 -mx-4 flex'>
             <span className=' text-xl text-darkPrimary font-semibold tracking-wider'>คำใบ้ </span>
-              <img src={bulb} alt="Logo4" className='-m-4 pl-4 pr-8' style={{ marginLeft: 3 }} />
-            <span className=' text-lg text-Redwrong font-semibold tracking-wider'> -{pointReduce} Points</span>
+              {/* <img src={bulb} alt="Logo4" className='-m-4 pl-4 pr-8' style={{ marginLeft: 3 }} /> */}
+            <span className='ml-10 text-lg text-Redwrong font-semibold tracking-wider'> -{pointReduce} Points</span>
           </div>
         </div>
         {HintTextList}

@@ -37,22 +37,22 @@ class Navbar extends React.Component<any, any> {
             </div>
             <div className='flex-none my-auto w-auto flex'>
               <div className='item-space '>
-                <span className='cursor-pointer p-2 align-middle text-xl text-darkPrimary font-medium tracking-wider' onClick={()=>scrollTo('title')}>หน้าหลัก</span>
+                <span className='text-hoverable cursor-pointer p-2 align-middle text-xl text-darkPrimary font-medium tracking-wider' onClick={()=>scrollTo('title')}>หน้าหลัก</span>
               </div>
               <div className='item-space'>
-                <span className='cursor-pointer p-2 align-middle text-xl text-darkPrimary font-medium tracking-wider' onClick={()=>scrollTo('about')}>เกี่ยวกับ</span>
+                <span className='text-hoverable cursor-pointer p-2 align-middle text-xl text-darkPrimary font-medium tracking-wider' onClick={()=>scrollTo('about')}>เกี่ยวกับ</span>
               </div>
               <div className='item-space'>
-                <span className='cursor-pointer p-2 align-middle text-xl text-darkPrimary font-medium tracking-wider' onClick={()=>scrollTo('content')}>เนื้อหา</span>
+                <span className='text-hoverable cursor-pointer p-2 align-middle text-xl text-darkPrimary font-medium tracking-wider' onClick={()=>scrollTo('content')}>เนื้อหา</span>
               </div>
             </div>
             <div className='flex-none my-auto w-auto flex'>
               <div className='ml-20 mr-8'>
-                <span className='cursor-pointer p-2 align-middle text-xl text-darkPrimary font-medium tracking-wider' onClick={()=>this.loadPage('login')}>เข้าสู่ระบบ</span>
+                <span className='text-hoverable cursor-pointer p-2 align-middle text-xl text-darkPrimary font-medium tracking-wider' onClick={()=>this.loadPage('login')}>เข้าสู่ระบบ</span>
               </div>
             </div>
             <div className='flex-none my-auto w-auto flex'>
-              <div className='cursor-pointer bg-primary py-3 px-5 rounded-2xl'  onClick={()=>this.loadPage('register')}>
+              <div className='hoverable cursor-pointer bg-primary py-3 px-5 rounded-2xl'  onClick={()=>this.loadPage('register')}>
                 <span className='align-middle text-xl text-white font-light tracking-wider'>สมัครสมาชิก</span>
               </div>
             </div>

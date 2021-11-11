@@ -88,3 +88,20 @@
 .slider {
     margin : 50px auto 0px;
 }
+
+.text-hoverable { 
+    transition:  all 0.1s;
+}
+
+.text-hoverable:hover {
+    color :black;
+}
+
+.text-hoverable-white {
+    color : #e6e6e6;
+    transition:  all 0.1s;
+}
+.text-hoverable-white:hover {
+    text-decoration: underline;
+    color :white;
+}

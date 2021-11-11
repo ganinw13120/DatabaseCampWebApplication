@@ -41,7 +41,7 @@ export default class ContentGroup extends React.Component<ContentGroupProps, any
                 ล่าสุด
                 </div>
               </div> }
-              <div className='flex-none my-auto ml-5 text-white text-xl tracking-wider'>
+              <div className='flex-none my-auto ml-10 text-white text-xl font-medium tracking-wider'>
                 <span>{group_name}</span>
               </div>
               <div className='hidden md:flex flex-grow text-left my-auto ml-5 text-white tracking-wider'>

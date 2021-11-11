@@ -35,7 +35,7 @@ export default class Title extends React.Component<any, any> {
                   <div className='mt-10'>
                     <span className='shadow-text text-xl md:text-5xl text-black font-light tracking-wider'>เริ่มต้นได้เลยที่นี่!</span>
                   </div>
-                  <div className='mt-10 w-44 cursor-pointer bg-primary py-4 px-5 rounded-2xl text-center'>
+                  <div className='hoverable mt-10 w-44 cursor-pointer bg-primary py-4 px-5 rounded-2xl text-center' style={{boxShadow:  '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
                     <span className='align-middle text-xl text-white font-normal tracking-wider'>สมัครสมาชิก</span>
                   </div>
                 </div>

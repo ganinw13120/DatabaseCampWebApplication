@@ -99,7 +99,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
             isLoading={isLoading}
             roadMap={roadMap}
           />
-          <div className='py-12 col-span-6'>
+          <div className='pt-20 pb-12 col-span-6'>
             <div className='flex h-auto'>
               <div className='w-10 text-3xl text-darkPrimary font-semibold tracking-wider p-6 px-10'>
                 <span className='w-full h-full bg-darkPrimary'>..</span>

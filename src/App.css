@@ -14,3 +14,10 @@
 .primary-contentlist:hover {
     background-color : #0052a0; 
 }
+
+.hoverable {
+    transition : all 0.1s;
+}
+.hoverable:hover {
+    background-color: #014686;
+}

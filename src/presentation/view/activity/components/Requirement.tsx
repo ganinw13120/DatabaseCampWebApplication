@@ -43,7 +43,7 @@ class Requirement extends React.Component<RequirementProps, any> {
     const { onHint, onSubmit, activityInfo, feedback, isLoading, roadMap, submitText, isHidden } = this.props;
     const { hint } = this.props.learningStore!.store;
     return (<>
-      <div className={`${isHidden?'hidden':''} col-span-4 bg-white py-4 h-auto flex flex-col`} style={{ boxShadow: '0 0px 4px rgba(0, 0, 0, 0.25)' }}>
+      <div className={`${isHidden?'hidden':''} col-span-4 bg-white pt-10 pb-4 h-auto flex flex-col`} style={{ boxShadow: '0 0px 4px rgba(0, 0, 0, 0.25)' }}>
         <div className='text-lg text-darkPrimary w-96 font-semibold tracking-wider pt-4 px-10'>
           {roadMap ? <span>เนื้อหา - {roadMap.content_name}</span> : <>
             <Skeleton variant='text' className='w-full' />

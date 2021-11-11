@@ -94,7 +94,7 @@ class ProfilePage extends Component<any, ProfileComponentState>
               {data ? <>
                 <div className='w-auto flex'>
                   <img src={star} alt="Logo4" className='object-none mx-auto my-auto ml-8' />
-                  <span className='ml-6 text-lg text-darkSecondary font-normal tracking-wider w-44 text-left my-auto '>{data.point.toLocaleString()} คะแนน</span>
+                  <span className='ml-6 text-lg text-darkSecondary font-normal tracking-wider w-56 text-left my-auto '>{data.point.toLocaleString()} คะแนน</span>
                 </div>
                 <div className='flex-grow'>
                 </div>

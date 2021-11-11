@@ -71,7 +71,7 @@ class LecturePage extends React.Component<LectureProps, LectureComponentState>
     return (
       <>
         <div className='bg-bg my-auto w-full'>
-          <div className='mt-16'>
+          <div className='mt-32'>
             <div className='mx-auto wrapper'>
                 {
                 sourceInfo  && <Plyr
