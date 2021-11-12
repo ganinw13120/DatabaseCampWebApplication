@@ -12,8 +12,11 @@ import Skeleton from '@mui/material/Skeleton';
 
 import { User } from '../../../domain/entity/model/User';
 
+import { Modal, Button, Form, Input } from 'antd';
+
 export interface ProfileComponentState {
-  data: User | null
+  data: User | null,
+  isShowModal : boolean
 }
 
 var monthNamesThai = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.",
@@ -30,8 +33,11 @@ class ProfilePage extends Component<any, ProfileComponentState>
     super(props);
     this.profileViewModel = new ProfileViewModel();
     this.state = {
-      data: null
+      data: null,
+      isShowModal : false,
     }
+    this.showEditModal = this.showEditModal.bind(this);
+    this.hideEditModal = this.hideEditModal.bind(this);
   }
   componentDidUpdate(): void {
     const search = this.props.location.search
@@ -53,7 +59,20 @@ class ProfilePage extends Component<any, ProfileComponentState>
 
   public onViewModelChanged(): void {
     this.setState({
-      data: this.profileViewModel.profileData
+      data: this.profileViewModel.profileData,
+      isShowModal : false
+    })
+  }
+
+  private showEditModal () : void {
+    this.setState({
+      isShowModal : true
+    })
+  }
+
+  private hideEditModal () : void {
+    this.setState({
+      isShowModal : false
     })
   }
 
@@ -61,19 +80,52 @@ class ProfilePage extends Component<any, ProfileComponentState>
   }
 
   public render(): JSX.Element {
-    const { data } = this.state;
+    const { data, isShowModal } = this.state;
     const date = data ? new Date(data.created_timestamp) : ''
     const dateString = date ? +date.getDate() + " " + monthNamesThai[date.getMonth()] + "  " + date.getFullYear() : '';
     const { userData } = this.props.authStore.store;
     return (
       <>
+          <Modal
+              visible={isShowModal}
+              footer={[
+                <>
+                <div className='flex font-prompt'>
+                  <div className=' w-32 ml-auto  rounded-lg'>
+                    <Button key="back" ghost className='w-full font-black' onClick={this.hideEditModal}>
+                      <span className='text-black'>ยกเลิก</span>
+                    </Button>
+                  </div>
+                    <div className='bg-primary w-32 ml-4 rounded-lg'>
+                      <Button key="back" ghost className='w-full' onClick={this.profileViewModel.submitChangeName}>
+                        บันทึก
+                      </Button>
+                    </div>
+                </div>
+                </>,
+              ]}
+            >
+              <div className='font-prompt gap-9'>
+              <div className='mb-10'>เปลี่ยนชื่อ </div>
+              <Form
+              ref={this.profileViewModel.formRef}
+              name="basic"
+              autoComplete="off"
+              className='mt-10'
+              >
+                <Form.Item name="name" className='mt-10'>
+                  <Input className='pt-10 h-12 w-full' size="large" placeholder="ชื่อ" />
+                </Form.Item>
+              </Form>
+              </div>
+            </Modal>
         <div className="font-prompt bg-bg w-full h-auto">
           <div className='h-full text-white text-center align-middle justify-center '>
             <img src={Profilehead} alt="Logo2" className='object-none pt-20 mx-auto my-auto text-center' />
             <div className='text-5xl text-darkPrimary font-normal tracking-wider py-6 border-b-2 mx-16 border-gray'>
-              {data ? <>
+              {data && userData? <>
                 <span>{data.name}
-                  {userData.user_id === data.user_id && <img src={ProfilenameEdit} alt="Logo3" className='pl-4 inline object-none mx-auto my-auto text-center' />}
+                  {userData.user_id === data.user_id && <img src={ProfilenameEdit} alt="Logo3" className='pl-4 inline object-none mx-auto my-auto text-center cursor-pointer' onClick={this.showEditModal} />}
                 </span>
               </> : <>
                 <Skeleton variant="text" className="w-3/4 mx-auto" />
@@ -108,7 +160,7 @@ class ProfilePage extends Component<any, ProfileComponentState>
             </div>
             {data ? <>
               <div className=' text-xl text-darkPrimary font-prompt font-semibold tracking-wider inline px-2 '>
-                <span>My Badge ({data.badges.length})</span>
+                <span>My Badge ({data.badges.filter(e=>e.is_collect).length})</span>
               </div>
             </> : <>
               <Skeleton variant="text" className="w-1/6 mx-auto" />

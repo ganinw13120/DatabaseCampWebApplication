@@ -83,7 +83,7 @@ class RankingItem extends React.Component<Props> {
                     {isLoading ? (
                       <Skeleton variant="text" className="w-1/2 mx-auto" />
                     ) : (
-                      `${data.point} Points`
+                      `${data.point.toLocaleString()} Points`
                     )}
                   </span>
                 </div>
