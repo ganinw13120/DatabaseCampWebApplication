@@ -22,6 +22,9 @@ import { AppStore } from '../../../domain/entity/state/stores/AppStore';
 import AlertTab from './components/AlertTab';
 import { green } from '@mui/material/colors';
 import { CircularProgress } from '@mui/material';
+
+import SkeletonActivity from './components/SkeletonActivity';
+
 interface ActivityState {
   activityInfo: Activity | null,
   alert : ActivityAlert | null
@@ -52,6 +55,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
     this.swal = withReactContent(Swal);
   }
   public componentDidMount(): void {
+
     this.props.appStore!.setExpand(false)
     this.activityViewModel.attachView(this);
     const { isExpand } = this.props.appStore!.store;
@@ -126,7 +130,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
                   </div>
                   {act(type)}
                 </>
-              })()} </> : ''
+              })()} </> : <SkeletonActivity />
             }
              <AlertTab alert={alert} /> 
             {activityInfo && 

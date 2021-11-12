@@ -41,3 +41,11 @@
 .requirementtext {
     width : 80%;
 }
+.dragable:hover {
+    background-color: #fafafa;
+}
+
+.dragging {
+    background-color: #e7e7e7;
+
+}
