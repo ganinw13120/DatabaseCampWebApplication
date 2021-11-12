@@ -83,6 +83,7 @@ export type ExamOverviewInfo = {
     results : ExamResult[] | null,
     content_group_id ?: number,
     content_group_name ?: string,
+    can_do  :boolean,
 }
 
 export type Exam = {
@@ -122,6 +123,8 @@ export type ActivityAlert = {
 
 export type ExamResult = {
     exam_id : number,
+    content_group_name : string,
+    exam_type : string,
     exam_result_id : number,
     created_timestamp : string,
     score : number,

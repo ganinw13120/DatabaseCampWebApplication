@@ -1,4 +1,4 @@
-import { Component, ReactElement } from 'react';
+import { Component } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 export default class SkeletonActivity extends Component<any, any>{
   public render(): JSX.Element {

@@ -155,11 +155,12 @@ class ExamPage
 
   public render(): JSX.Element {
     const { exam, currentActivity } = this.state;
+    
     if (!exam) return <></>
     return (
       <>
         <div className='xl:grid xl:grid-cols-10 w-full h-full pt-12'>
-          {currentActivity === -1 ? <Instruction displayTitle={exam.exam.content_group_name} returnOverview={this.returnOverview} displayText={exam.exam.instruction} onNext={this.examViewModel.moveNext}/> : (() => {
+          {currentActivity === -1 ? <Instruction displayTitle={exam?.exam.exam_type==='MINI' ? exam.exam.content_group_name : exam?.exam.exam_type ==='POST' ? 'Final Examination' : 'แบบทดสอบก่อนเรียน'} returnOverview={this.returnOverview} displayText={exam.exam.instruction} onNext={this.examViewModel.moveNext}/> : (() => {
             const examList: ReactElement[] = [];
             let i = 0;
             while (i < exam!.activities.length) {

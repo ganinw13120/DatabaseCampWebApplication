@@ -68,7 +68,7 @@ class SideItem extends React.Component<any>{
     const { isExpand, icon, text, onClick, className } = this.props;
     return (
       <>
-        <Tooltip title={text} placement="right">
+        <Tooltip title={text ? text : ' '} placement="right">
         <div className={`truncate flex w-full mx-auto sideitem h-auto py-3  text-center align-middle justify-center ${className}`} onClick={() => { if (onClick) onClick();}}>
           <div className={` flex pl-${isExpand ? '0' : '3'} w-9/12 text-left h-full text-center`} style={{ transition: 'padding 1s' }}>
             {isLoading ? <Skeleton variant="text" className='w-full' /> : <>

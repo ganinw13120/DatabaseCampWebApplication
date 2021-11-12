@@ -3,7 +3,6 @@ import IProfileViewModel from './IExamResultViewModel';
 import BaseView from '../../view/BaseView';
 import { FormInstance } from 'antd/es/form';
 
-import { User } from '../../../domain/entity/model/User';
 import { ExamResult } from '../../../domain/entity/model/Learning';
 
 export default class ActivityViewModel implements IProfileViewModel {

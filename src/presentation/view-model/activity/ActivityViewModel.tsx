@@ -24,15 +24,17 @@ export default class ActivityViewModel implements IActivityViewModel {
     const search = baseView.props.location.search
     const activityID = new URLSearchParams(search).get('id');
     if (!activityID) baseView.props.history.push('/overview')
+    
+    if (!baseView.props.learningStore.store.roadMap) baseView.props.appStore.setStepper(generateEmptyStepper())
+    else {
+      this.generateStepperFromStore();
+    }
+
     this.activityInfo = null;
     this.result = null;
     this.alert = null;
     this.baseView?.onViewModelChanged();
 
-    if (!baseView.props.learningStore.store.roadMap) baseView.props.appStore.setStepper(generateEmptyStepper())
-    else {
-      this.generateStepperFromStore();
-    }
     baseView?.props.appStore?.setPercent(40)
     baseView.props.learningStore.FetchActivity(activityID, (res : Activity) => {
       this.activityInfo = res;

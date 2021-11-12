@@ -38,11 +38,9 @@ export default class Hintbox extends Component <HintProps, HintState> {
     const { hint, hintRoadMap } = this.props.learningStore!.store;
     const {currentTab} = this.state;
     const {onHint} = this.props;
-    console.log([...hintRoadMap])
     let HintTabList : ReactElement[] = [];
     let maximumLevel : number = 0;
     hint.forEach((e : Hint, key : number) => {
-      console.log({...e})
       if (e.level > maximumLevel) maximumLevel = e.level;
       HintTabList.push(<HintHeader isSelect={key===currentTab} key={key} id={key} onSelect={this.selectTab}/>)
     })
