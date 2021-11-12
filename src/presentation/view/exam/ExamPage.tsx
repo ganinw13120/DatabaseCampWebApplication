@@ -82,7 +82,6 @@ class ExamPage
     return (<Fragment key={act}>
       <Requirement
         activityInfo={data.info}
-        feedback=''
         onSubmit={this.examViewModel.obSubmitActivity}
         isLoading={false}
         roadMap={roadMap}

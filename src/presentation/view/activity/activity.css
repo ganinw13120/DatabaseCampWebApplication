@@ -7,3 +7,37 @@
 .test:hover {
     background-color : red;
 }
+
+.hintbox {
+    background-color: white;
+    width : 100%;
+    height: 100px;
+    z-index: 10;
+    padding-bottom: 15vw;
+}
+
+.hint-tab {
+    border-radius: 5px 20px 0 0;
+    box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.1);
+    z-index: 0;
+    transition: all 0.1s;
+    cursor: pointer;
+}
+
+.hint-tab:hover {
+    background-color: #c6850d;
+}
+
+.active-hint {
+    background-color: #F2AE2E;
+}
+.inactive-hint {
+    background-color: #eecd90;
+}
+
+.hinttext {
+    margin : auto;
+}
+.requirementtext {
+    width : 80%;
+}

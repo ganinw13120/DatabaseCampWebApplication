@@ -2,17 +2,19 @@ import IActivityViewModel from './IActivityViewModel';
 import { notification } from 'antd';
 import BaseView from '../../view/BaseView';
 
-import {Activity, Answer, RoadMap} from '../../../domain/entity/model/Learning';
+import {Activity, ActivityAlert, Answer, RoadMap} from '../../../domain/entity/model/Learning';
 import generateStepper, { generateEmptyStepper } from '../../util/generateStepper';
 
 export default class ActivityViewModel implements IActivityViewModel {
   private baseView?: BaseView;
   public activityInfo : Activity | null;
   private result: Answer | null;
+  public alert : ActivityAlert | null;
 
   constructor () {
     this.activityInfo = null;
     this.result = null;
+    this.alert = null;
     this.moveNext = this.moveNext.bind(this);
     this.movePrev = this.movePrev.bind(this);
   }
@@ -22,7 +24,10 @@ export default class ActivityViewModel implements IActivityViewModel {
     const search = baseView.props.location.search
     const activityID = new URLSearchParams(search).get('id');
     if (!activityID) baseView.props.history.push('/overview')
+    this.activityInfo = null;
     this.result = null;
+    this.alert = null;
+    this.baseView?.onViewModelChanged();
 
     if (!baseView.props.learningStore.store.roadMap) baseView.props.appStore.setStepper(generateEmptyStepper())
     else {
@@ -61,23 +66,24 @@ export default class ActivityViewModel implements IActivityViewModel {
     if (!this.baseView) return;
     const {isLoading} = this.baseView.props.learningStore.store;
     if (isLoading) return;
-    this.baseView.props.learningStore.SubmitActivity(this.result, (res: any) => {
-      if (res) {
-        const nextActivity = this.getNextActivityId();
-        this.baseView?.props.learningStore.clearActivity();
-        if (nextActivity) {
-          this.baseView?.props.history.push(`/activity?id=${nextActivity}`)
-        } else {
-          notification['success']({
-            message: "จบเเล้ว",
-            description:
-              'ไม่มีกิจกรรมเเล้ววว',
-            onClick: () => {
-            },
-          });
-          this.baseView?.props.history.push('/overview')
-        }
-      }
+    this.baseView.props.learningStore.SubmitActivity(this.result, (res: ActivityAlert) => {
+      this.generateStepperFromStore();
+      this.alert = res;
+      this.baseView?.onViewModelChanged();
+        // const nextActivity = this.getNextActivityId();
+        // this.baseView?.props.learningStore.clearActivity();
+        // if (nextActivity) {
+        //   this.baseView?.props.history.push(`/activity?id=${nextActivity}`)
+        // } else {
+        //   notification['success']({
+        //     message: "จบเเล้ว",
+        //     description:
+        //       'ไม่มีกิจกรรมเเล้ววว',
+        //     onClick: () => {
+        //     },
+        //   });
+        //   this.baseView?.props.history.push('/overview')
+        // }
     })
   }
 
@@ -86,7 +92,10 @@ export default class ActivityViewModel implements IActivityViewModel {
     return roadMap.items.find(e=>e.activity_id===activiyId) ? roadMap.items.find(e=>e.activity_id===activiyId)!.order : 1;
   }
 
-  private moveNext = () : void => {
+  public moveNext = () : void => {
+    this.result = null;
+    this.alert = null;
+    this.baseView?.onViewModelChanged();
     this.baseView?.props.learningStore.clearActivity();
     const next = this.getNextActivityId();
     if (!next) {
@@ -96,6 +105,9 @@ export default class ActivityViewModel implements IActivityViewModel {
     }
   }
   private movePrev = () : void => {
+    this.result = null;
+    this.alert = null;
+    this.baseView?.onViewModelChanged();
     this.baseView?.props.learningStore.clearActivity();
     const prev = this.getPrevActivityId();
     if (!prev) {

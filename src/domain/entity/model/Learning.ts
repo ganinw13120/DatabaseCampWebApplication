@@ -114,3 +114,8 @@ export type ExamAnswerActivity = {
     activity_id : number,
     answer : Answer
 }
+
+export type ActivityAlert = {
+    feedback : string,
+    isSuccess : boolean
+}

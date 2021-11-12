@@ -26,6 +26,10 @@ module.exports = {
       white: colors.white,
       indigo: colors.indigo,
       yellow: colors.amber,
+      'red-alert' : '#FFE2E4',
+      'pink-alert' : '#EAB3B7',
+      'success-alert' : '#38A605',
+      'green-alert' : '#BFF4B9'
     },
     fontFamily: {
      'header': [ 'Roboto', 'sans-serif'],
