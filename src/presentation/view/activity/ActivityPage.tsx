@@ -18,25 +18,29 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { LearningStore } from '../../../domain/entity/state/stores/LearningStore';
 import { AppStore } from '../../../domain/entity/state/stores/AppStore';
+import { AuthStore } from '../../../domain/entity/state/stores/AuthStore';
 
 import AlertTab from './components/AlertTab';
 import { green } from '@mui/material/colors';
 import { CircularProgress } from '@mui/material';
 
+import Star from '../../assets/starProfile.png';
+
 import SkeletonActivity from './components/SkeletonActivity';
 
 interface ActivityState {
   activityInfo: Activity | null,
-  alert : ActivityAlert | null
+  alert : ActivityAlert | null,
 }
 
 interface ActivityProps extends RouteComponentProps {
   learningStore?: LearningStore,
   appStore?: AppStore,
-
+  authStore ?: AuthStore  | null
 }
 
 @inject('learningStore')
+@inject('authStore')
 @inject('appStore')
 @observer
 class ActivityPage extends React.Component<ActivityProps, ActivityState>
@@ -98,9 +102,16 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
   public render(): JSX.Element {
     const { activityInfo, alert } = this.state;
     const { roadMap, isLoading } = this.props.learningStore!.store;
+    const {userData} = this.props.authStore!.store;
     return (
       <>
         <div className='xl:grid xl:grid-cols-10 w-full pt-10 h-full'>
+          {userData && 
+          <div className='ribbon-points flex z-20'>
+            <img src={Star} alt='points' className='star my-auto mx-10' />
+            <span className='text-white text-xl my-auto mr-5'>{userData?.point.toLocaleString()}</span>
+            <span className='text-white text-lg my-auto mr-5'>Points</span>
+          </div>}
           <Requirement
             onHint={this.showHintPopup}
             activityInfo={activityInfo?.activity}

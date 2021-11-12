@@ -43,6 +43,21 @@ export class AuthStore{
   }
 
   @action.bound
+  UpdateUserPoint (point : number) : void {
+    let {userData : temp} = this.store;
+    if (!temp) return;
+    temp.point -= point;
+    this.store.userData = temp;
+  } 
+  @action.bound
+  UpdateUserName (name : string) : void {
+    let {userData : temp} = this.store;
+    if (!temp) return;
+    temp.name = name;
+    this.store.userData = temp;
+  } 
+
+  @action.bound
   async VerifyToken(token : string) {
     await this.authRepository.VerifyToken(token).then(this.onVerifySuccess).catch(() => {
       this.Logout()

@@ -52,7 +52,7 @@ export default class Hintbox extends Component <HintProps, HintState> {
         <div className='flex text-black font-semibold text-lg'>
           {HintTabList}
           {nextHint && 
-          <div className='active-hint px-2 hint-tab flex py-2' onClick={()=>{onHint()}}>
+          <div className='active-hint px-2 pr-5 hint-tab flex py-2' onClick={()=>{onHint()}}>
             <img src={ActiveBulb} alt='hint' className='h-10 my-auto mr-2' />
             <span className='my-auto'>Show Hint</span>
             <span className='font-normal text-base ml-3 my-auto'>(-{nextHint.reduce_point} points)</span>

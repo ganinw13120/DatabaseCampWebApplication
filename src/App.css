@@ -21,3 +21,10 @@
 .hoverable:hover {
     background-color: #014686;
 }
+.gray-hoverable {
+    transition : all 0.1s;
+}
+.gray-hoverable:hover {
+    background-color: #e8eaeb;
+}
+

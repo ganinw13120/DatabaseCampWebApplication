@@ -70,7 +70,7 @@ class OverviewPage
                   <span className="w-full bg-darkPrimary">..</span>
                 </div>
                 <div className="text-3xl text-darkPrimary font-semibold tracking-wider pt-6">
-                  <span>Overview</span>
+                  <span>ภาพรวมเนื้อหา</span>
                 </div>
               </>
             )}

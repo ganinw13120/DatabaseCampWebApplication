@@ -4,7 +4,7 @@ import RootStore from '../Rootstore';
 
 import LearningRepository from '../../../../data/repository/app/LearningRepository';
 
-import {Answer, Exam, ExamAnswer, ExamAnswerActivity, ExaminationOverview} from '../../model/Learning';
+import {Answer, Exam, ExamAnswer, ExamAnswerActivity, ExaminationOverview, ExamResult} from '../../model/Learning';
 
 interface Store {
   data : ExaminationOverview | null,
@@ -31,9 +31,18 @@ export class ExaminationStore {
   async FetchExam(examId : number) : Promise<Exam | null> {
     const { token } = this.rootStore.authStore.store;
     const res : Exam | null = await this.learningRepository.fetchExam(token, examId).then((res)=> {return res}).catch((res) => {
-      console.log(res)
       return null
     })
+    return res; 
+  }
+
+  @action.bound
+  async FetchResult(examId : number) : Promise<ExamResult | null> {
+    const { token } = this.rootStore.authStore.store;
+    const res : ExamResult | null = await this.learningRepository.fetchExamResult(token, examId).then((res)=> {return res}).catch((res) => {
+      return null
+    })
+    console.log(res)
     return res; 
   }
 

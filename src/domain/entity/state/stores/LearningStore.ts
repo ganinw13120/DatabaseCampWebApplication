@@ -222,6 +222,7 @@ export class LearningStore {
     })
     return res;
   }
+
   @action.bound
   onGetHintSuccess (res : Hint) : Hint | null {
     const { hint } = this.store;
@@ -229,6 +230,7 @@ export class LearningStore {
     temp.push(res);
     this.store.isLoading = false;
     this.store.hint = temp;
+    this.rootStore.authStore.UpdateUserPoint(res.point_reduce);
     return null;
   }
 

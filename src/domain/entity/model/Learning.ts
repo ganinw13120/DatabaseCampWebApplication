@@ -85,12 +85,6 @@ export type ExamOverviewInfo = {
     content_group_name ?: string,
 }
 
-export type ExamResult = {
-    created_timestamp : string,
-    score : number,
-    is_passed : boolean
-}
-
 export type Exam = {
     exam : ExamInfo ,
     activities : ExamActivity[]
@@ -124,4 +118,12 @@ export type ExamAnswerActivity = {
 export type ActivityAlert = {
     feedback : string,
     isSuccess : boolean
+}
+
+export type ExamResult = {
+    exam_id : number,
+    exam_result_id : number,
+    created_timestamp : string,
+    score : number,
+    is_passed : boolean
 }

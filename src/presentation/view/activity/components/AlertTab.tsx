@@ -21,11 +21,11 @@ export default class AlertTab extends Component<AlertProps, AlertState> {
         const {alert} = this.props;
         const {isSuccess, feedback} = alert || {} as ActivityAlert;
         return (<>
-            <div className='flex mt-10' style={{opacity : alert ? 1 : 0, transition : 'all 0.2s'}}>
-                <div className='flex-none w-6 ' style={{backgroundColor : isSuccess ? successAlert : pinkAlert, transition : 'all 0.1s'}}>
+            <div className='flex mt-10' style={{opacity : alert ? 1 : 0, transition : 'opacity 0.2s'}}>
+                <div className='flex-none w-6 ' style={{backgroundColor : isSuccess ? successAlert : pinkAlert, transition : 'opacity 0.1s'}}>
 
                 </div>
-                <div className='flex-grow my-auto h-auto flex'  style={{backgroundColor : isSuccess ? greenAlert : redAlert, transition : 'all 0.1s'}}>
+                <div className='flex-grow my-auto h-auto flex'  style={{backgroundColor : isSuccess ? greenAlert : redAlert, transition : 'opacity 0.1s'}}>
                     <img src={isSuccess ? SuccessIcon : Alerticon} alt="Alert" className='px-10 h-12 my-4' />
                     <div className='text-left text-2xl font-medium my-auto'>
                         <span>

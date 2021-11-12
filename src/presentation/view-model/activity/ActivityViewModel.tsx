@@ -93,6 +93,7 @@ export default class ActivityViewModel implements IActivityViewModel {
   }
 
   public moveNext = () : void => {
+    if (!this.activityInfo) return;
     this.result = null;
     this.alert = null;
     this.baseView?.onViewModelChanged();
@@ -105,6 +106,7 @@ export default class ActivityViewModel implements IActivityViewModel {
     }
   }
   private movePrev = () : void => {
+    if (!this.activityInfo) return;
     this.result = null;
     this.alert = null;
     this.baseView?.onViewModelChanged();

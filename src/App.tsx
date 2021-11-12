@@ -13,6 +13,7 @@ import MultiplePage from './presentation/view/multiple';
 import Activity from './presentation/view/activity';
 import LecturePage from './presentation/view/lecture';
 import PointRankingPage from './presentation/view/pointRanking';
+import ExamResultPage from './presentation/view/exam-result';
 
 import {
   BrowserRouter as Router,
@@ -86,6 +87,10 @@ const appRouteList : route[] = [
   {
     url: '/multiple',
     page : <MultiplePage/>
+  },
+  {
+    url: '/result',
+    page : <ExamResultPage/>
   },
 ];
 
