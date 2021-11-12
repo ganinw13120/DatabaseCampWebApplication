@@ -1,6 +1,4 @@
 import React from 'react';
-import bulb from '../../../assets/bulb.png';
-import Hintbox from './Hintbox';
 import HintTab from './HintTab';
 import Skeleton from '@mui/material/Skeleton';
 import { withRouter, RouteComponentProps  } from 'react-router-dom';
@@ -13,12 +11,11 @@ import { ActivityInfo, RoadMap } from '../../../../domain/entity/model/Learning'
 interface RequirementProps extends RouteComponentProps {
   learningStore ?: LearningStore,
   onHint?() : void,
-  onSubmit() : void,
   activityInfo : ActivityInfo | undefined,
-  isLoading : boolean,
   roadMap : RoadMap | null,
   submitText ?: string,
   isHidden ?: boolean,
+  isHideHint ?: boolean
 }
 
 @inject('learningStore')
@@ -38,7 +35,7 @@ class Requirement extends React.Component<RequirementProps, any> {
     this.setState({ width: window.innerWidth });
   }
   public render(): JSX.Element {
-    const { onHint, onSubmit, activityInfo, isLoading, roadMap, submitText, isHidden } = this.props;
+    const { onHint, activityInfo, roadMap, isHidden } = this.props;
     return (<>
       <div className={`${isHidden?'hidden':''} col-span-4 bg-white pt-10 h-auto flex flex-col`} style={{ boxShadow: '0 0px 4px rgba(0, 0, 0, 0.25)' }}>
         <div className='text-lg text-darkPrimary w-96 font-semibold tracking-wider pt-4 px-10'>
@@ -54,11 +51,9 @@ class Requirement extends React.Component<RequirementProps, any> {
             <span>ความต้องการของระบบ</span>
           </div>
         </div>
-        <div className='font-sarabun text-xl text-wrap mx-auto mt-10 tracking-wider requirementtext'>
+        <div className='font-sarabun text-xl text-wrap mx-auto mt-10 tracking-wider requirementtext pb-10'>
           <p>
             {activityInfo ? <>{activityInfo.story}</> : <>
-                <Skeleton variant='text' className='w-full' />
-                <Skeleton variant='text' className='w-full' />
                 <Skeleton variant='text' className='w-full' />
                 <Skeleton variant='text' className='w-full' />
                 <Skeleton variant='text' className='w-full' />
@@ -69,7 +64,7 @@ class Requirement extends React.Component<RequirementProps, any> {
         </div>
         <div className='mt-auto'>
           {/* { onHint && activityInfo && hint && hint.length !== 0 ? <Hintbox /> : ''} */}
-          {activityInfo && <HintTab activityInfo={activityInfo} />}
+          {activityInfo && onHint && <HintTab activityInfo={activityInfo} />}
         </div>
       </div>
     </>)

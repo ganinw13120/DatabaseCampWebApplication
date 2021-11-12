@@ -20,6 +20,8 @@ import { LearningStore } from '../../../domain/entity/state/stores/LearningStore
 import { AppStore } from '../../../domain/entity/state/stores/AppStore';
 
 import AlertTab from './components/AlertTab';
+import { green } from '@mui/material/colors';
+import { CircularProgress } from '@mui/material';
 interface ActivityState {
   activityInfo: Activity | null,
   alert : ActivityAlert | null
@@ -97,9 +99,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
         <div className='xl:grid xl:grid-cols-10 w-full pt-10 h-full'>
           <Requirement
             onHint={this.showHintPopup}
-            onSubmit={this.activityViewModel.onSubmit}
             activityInfo={activityInfo?.activity}
-            isLoading={isLoading}
             roadMap={roadMap}
           />
           <div className='pt-20 pb-12 col-span-6'>
@@ -133,8 +133,19 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
             <div className='flex w-5/6 mx-auto'>
               <div className='flex-grow'>
               </div>
-              <div onClick={() => {if(alert && alert.isSuccess) this.activityViewModel.moveNext(); else this.activityViewModel.onSubmit(); }} className={`hoverable flex-none bg-${isLoading ? 'darkPrimary' : 'primary'} mt-10 text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'wait' : 'pointer'}`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+              <div onClick={() => {if(alert && alert.isSuccess) this.activityViewModel.moveNext(); else this.activityViewModel.onSubmit(); }} className={`relative ${isLoading ? '' : 'hoverable'} flex-none bg-${isLoading ? 'disabledPrimary' : 'primary'} mt-10 text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'loading' : 'pointer'}`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
                 {alert && alert.isSuccess ? 'ถัดไป' : 'ตรวจคำตอบ'}
+                {isLoading && <CircularProgress
+                  size={24}
+                  sx={{
+                    color: green[500],
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    marginTop: '-12px',
+                    marginLeft: '-12px',
+                  }}
+                />}
               </div>
             </div>}
           </div>

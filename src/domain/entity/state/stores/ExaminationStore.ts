@@ -54,7 +54,7 @@ export class ExaminationStore {
 
 
   @action.bound
-  submitExam (result : Answer[], exam : Exam) : void {
+  submitExam (result : Answer[], exam : Exam, cb : any) : void {
     let answer : ExamAnswer = {
       exam_id : exam.exam.exam_id,
       activities : []
@@ -80,6 +80,7 @@ export class ExaminationStore {
     const { token } = this.rootStore.authStore.store;
     this.learningRepository.submitExam(token, answer).then((res : any)=>{
       console.log(res)
+      cb?.(res)
     })
   }
 }

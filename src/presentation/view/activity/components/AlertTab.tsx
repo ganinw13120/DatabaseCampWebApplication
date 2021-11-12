@@ -1,4 +1,4 @@
-import { Component, ReactElement } from 'react';
+import { Component } from 'react';
 import { ActivityAlert } from '../../../../domain/entity/model/Learning';
 
 import Alerticon from '../../../assets/alerticon.svg';
@@ -17,9 +17,6 @@ interface AlertState {
 }
 
 export default class AlertTab extends Component<AlertProps, AlertState> {
-    constructor(props: AlertProps) {
-        super(props);
-    }
     public render(): JSX.Element {
         const {alert} = this.props;
         const {isSuccess, feedback} = alert || {} as ActivityAlert;

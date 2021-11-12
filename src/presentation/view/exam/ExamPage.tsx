@@ -12,14 +12,19 @@ import Requirement from '../activity/components/Requirement';
 import { AppStore } from '../../../domain/entity/state/stores/AppStore';
 import { ExaminationStore } from '../../../domain/entity/state/stores/ExaminationStore';
 
-import { CompletionChoice, Exam, ExamActivity, MatchingChoice, MultipleChoice, RoadMap } from '../../../domain/entity/model/Learning';
+import { ActivityAlert, CompletionChoice, Exam, ExamActivity, MatchingChoice, MultipleChoice, RoadMap } from '../../../domain/entity/model/Learning';
 import Matching from '../activity/components/Matching';
 import MultipleChoiceComponent from '../activity/components/MultipleChoice';
 import Completion from '../activity/components/Completion';
+import AlertTab from '../activity/components/AlertTab';
+import { CircularProgress } from '@mui/material';
+import { green } from '@mui/material/colors';
 
 interface ExamPageState {
   exam: Exam | null,
-  currentActivity: number
+  currentActivity: number,
+  alert : ActivityAlert | null,
+  isLoading : boolean
 }
 
 interface ExamPageProps extends RouteComponentProps {
@@ -45,6 +50,8 @@ class ExamPage
     this.state = {
       exam: null,
       currentActivity: startActivity,
+      alert : null,
+      isLoading : false
     }
 
   }
@@ -52,7 +59,9 @@ class ExamPage
   public onViewModelChanged(): void {
     this.setState({
       exam: this.examViewModel.exam,
-      currentActivity: this.examViewModel.currentActivity
+      currentActivity: this.examViewModel.currentActivity,
+      alert : this.examViewModel.alert,
+      isLoading : this.examViewModel.isLoading
     })
   }
 
@@ -65,7 +74,7 @@ class ExamPage
   }
 
   private getCurrentActivity(act: number, currentActivity: number): ReactElement | null {
-    const { exam } = this.state;
+    const { exam, alert, isLoading } = this.state;
     if (!exam) return null;
     const examActivity: ExamActivity[] = exam?.activities;
     const data: ExamActivity = examActivity[act];
@@ -74,7 +83,6 @@ class ExamPage
       content_name: exam.exam.content_group_name,
       items: []
     }
-    // this.examViewModel.updateResult(act ,null)
     const updateActivityResult = (e: any): void => {
       this.examViewModel.updateResult(act, e)
     }
@@ -82,8 +90,6 @@ class ExamPage
     return (<Fragment key={act}>
       <Requirement
         activityInfo={data.info}
-        onSubmit={this.examViewModel.obSubmitActivity}
-        isLoading={false}
         roadMap={roadMap}
         submitText={act === examActivity.length - 1 ? 'ส่งคำตอบ' : "ถัดไป"}
         isHidden={isHidden}
@@ -115,7 +121,29 @@ class ExamPage
               {act(type)}
             </>
           })()} </> : ''
+          
         }
+        
+        <AlertTab alert={alert} /> 
+            {data && 
+            <div className='flex w-5/6 mx-auto'>
+              <div className='flex-grow'>
+              </div>
+              <div onClick={() => { this.examViewModel.obSubmitActivity() }} className={`relative ${isLoading ? '' : 'hoverable'} flex-none bg-${isLoading ? 'disabledPrimary' : 'primary'} mt-10 text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'loading' : 'pointer'}`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+                {act === examActivity.length - 1 ? 'ส่งคำตอบ' : "ถัดไป"}
+                {isLoading && <CircularProgress
+                  size={24}
+                  sx={{
+                    color: green[500],
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    marginTop: '-12px',
+                    marginLeft: '-12px',
+                  }}
+                />}
+              </div>
+            </div>}
       </div>
     </Fragment>)
   }
