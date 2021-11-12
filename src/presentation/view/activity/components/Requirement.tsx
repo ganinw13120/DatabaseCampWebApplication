@@ -64,7 +64,7 @@ class Requirement extends React.Component<RequirementProps, any> {
         </div>
         <div className='mt-auto'>
           {/* { onHint && activityInfo && hint && hint.length !== 0 ? <Hintbox /> : ''} */}
-          {activityInfo && onHint && <HintTab activityInfo={activityInfo} />}
+          {activityInfo && onHint && <HintTab onHint={onHint} />}
         </div>
       </div>
     </>)

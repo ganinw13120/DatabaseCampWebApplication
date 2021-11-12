@@ -8,10 +8,8 @@ const generateStepper = (data : RoadMap, current : number, isLectureProvide : bo
     }
     if (isLectureProvide) stepper.steps.push(Step.Lecture);
     data.items.forEach(e=>{
-        console.log({...e})
         stepper.steps.push(e.is_learned ? Step.Activity : Step.UnCompleteActivity)
     })
-    console.log(stepper)
     return stepper
 }
 export default generateStepper

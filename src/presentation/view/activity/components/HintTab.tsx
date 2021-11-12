@@ -5,14 +5,14 @@ import { LearningStore } from '../../../../domain/entity/state/stores/LearningSt
 
 import ActiveBulb from '../../../assets/hint_bulb.png';
 import InactiveBulb from '../../../assets/inactive_bulb.png';
-import { ActivityInfo, Hint } from '../../../../domain/entity/model/Learning';
+import { Hint, HintRoadMap } from '../../../../domain/entity/model/Learning';
 
 import parse from 'html-react-parser';
 
 
 interface HintProps { 
   learningStore ?: LearningStore,
-  activityInfo : ActivityInfo
+  onHint() : void
 }
 
 interface HintState {
@@ -35,24 +35,28 @@ export default class Hintbox extends Component <HintProps, HintState> {
     })
   }
   public render(): JSX.Element {
-    const { hint } = this.props.learningStore!.store;
+    const { hint, hintRoadMap } = this.props.learningStore!.store;
     const {currentTab} = this.state;
-    const {activityInfo} = this.props;
-    console.log(activityInfo)
+    const {onHint} = this.props;
+    console.log([...hintRoadMap])
     let HintTabList : ReactElement[] = [];
-    hint.forEach((e : any, key : number) => {
-      console.log(e)
+    let maximumLevel : number = 0;
+    hint.forEach((e : Hint, key : number) => {
+      console.log({...e})
+      if (e.level > maximumLevel) maximumLevel = e.level;
       HintTabList.push(<HintHeader isSelect={key===currentTab} key={key} id={key} onSelect={this.selectTab}/>)
     })
+    const nextHint : HintRoadMap | undefined = hintRoadMap.find(e=>e.level===maximumLevel+1);
     return (<>
       <div>
         <div className='flex text-black font-semibold text-lg'>
           {HintTabList}
-          <div className='active-hint px-2 hint-tab flex py-2'>
+          {nextHint && 
+          <div className='active-hint px-2 hint-tab flex py-2' onClick={()=>{onHint()}}>
             <img src={ActiveBulb} alt='hint' className='h-10 my-auto mr-2' />
             <span className='my-auto'>Show Hint</span>
-            <span className='font-normal text-base ml-3 my-auto'>(-300 points)</span>
-          </div>
+            <span className='font-normal text-base ml-3 my-auto'>(-{nextHint.reduce_point} points)</span>
+          </div>}
         </div>
       </div>
       <div className='hintbox border-t border-darkPrimary  w-full mx-auto bottom-0 mt-auto'  style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)'}}>

@@ -4,7 +4,7 @@ import RootStore from '../Rootstore';
 
 import LearningRepository from '../../../../data/repository/app/LearningRepository';
 
-import {RoadMap, Lecture, Activity, Hint, Answer ,CompletionAnswer, ActivityAlert } from '../../model/Learning';
+import {RoadMap, Lecture, Activity, Hint, Answer ,CompletionAnswer, ActivityAlert, HintRoadMap } from '../../model/Learning';
 
 // interface Store {
 //   [key : string] : any
@@ -15,6 +15,7 @@ interface Store {
   activityInfo : Activity | null,
   lectureInfo : Lecture | null,
   hint : Hint[],
+  hintRoadMap : HintRoadMap[],
   isLoading : boolean
 }
 
@@ -37,6 +38,7 @@ export class LearningStore {
       lectureInfo: null,
       hint: [],
       isLoading: false,
+      hintRoadMap : []
   }
 
   @action.bound
@@ -69,7 +71,7 @@ export class LearningStore {
   @action.bound
   onFetchActivitySuccess (res : Activity) : Activity {
     this.store.hint = res.hint.used_hints;
-    console.log(res.hint)
+    this.store.hintRoadMap = res.hint.hint_roadmap;
     this.store.activityInfo = res;
     return res;
   }
@@ -151,7 +153,7 @@ export class LearningStore {
   private async checkMatching(activityID : number, result : string[][], cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     let res : any = [];
-    result.forEach((e: any, key: number) => {
+    result.forEach((e: any) => {
       if (!e[0] || !e[1]) {
         this.rejectAnswer(cb, 'กรุณาทำแบบฝึกหัดให้ครบทุกข้อ');
         return;
@@ -178,7 +180,7 @@ export class LearningStore {
   @action.bound 
   private async checkCompletion(activityID : number, result : CompletionAnswer[], cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
-    result.forEach((e: any, key: number) => {
+    result.forEach((e: any) => {
       if (!e.content) {
         this.rejectAnswer(cb, 'กรุณาทำแบบฝึกหัดให้ครบทุกข้อ');
         return;
@@ -203,6 +205,7 @@ export class LearningStore {
   public clearActivity(): void {
     this.store.activityInfo = null;
     this.store.hint = [];
+    this.store.hintRoadMap = [];
     this.store.isLoading = false;
   }
 

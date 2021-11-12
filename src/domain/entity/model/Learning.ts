@@ -29,10 +29,16 @@ export type ActivityInfo = {
     story : string
 }
 export type ActivityHint = {
-    next_hint_point : number | null,
     total_hint : number,
-    used_hints : Hint[]
+    used_hints : Hint[],
+    hint_roadmap : HintRoadMap[]
 }
+
+export type HintRoadMap = {
+    level : number,
+    reduce_point : number
+}
+
 export type Hint = {
     activity_id : number,
     content : string,
