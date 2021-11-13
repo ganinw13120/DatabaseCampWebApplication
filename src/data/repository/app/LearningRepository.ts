@@ -2,9 +2,26 @@ import axios from 'axios';
 import { API_BASE_URL } from '../../../constant/constant';
 
 import {Overview} from '../../../domain/entity/model/Overview';
-import {Lecture, RoadMap, Activity, Hint, Answer, ExaminationOverview, Exam, ExamAnswer} from '../../../domain/entity/model/Learning';
+import {Lecture, RoadMap, Activity, Hint, Answer, ExaminationOverview, Exam, ExamAnswer, ExamResult} from '../../../domain/entity/model/Learning';
 
 export default class LearningRepository {
+  
+  public async fetchExamResult(token: string, exam_id : number) : Promise<ExamResult> {
+    return new Promise((resolve, reject) => {
+      axios.get<ExamResult>(`${API_BASE_URL}/exam/result/${exam_id}` , {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      }).then(res => {
+        const { data } = res;
+        console.log(data)
+        resolve(data)
+      }).catch(res=>{
+        reject(res.message)
+      })
+    })
+  }
+  
   public async submitExam(token: string, result : ExamAnswer): Promise<object> {
     return new Promise((resolve, reject) => {
       axios.post(`${API_BASE_URL}/exam/check`, result, {

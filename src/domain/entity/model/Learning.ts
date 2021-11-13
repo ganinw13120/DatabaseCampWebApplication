@@ -29,10 +29,16 @@ export type ActivityInfo = {
     story : string
 }
 export type ActivityHint = {
-    next_hint_point : number | null,
     total_hint : number,
-    used_hints : Hint[]
+    used_hints : Hint[],
+    hint_roadmap : HintRoadMap[]
 }
+
+export type HintRoadMap = {
+    level : number,
+    reduce_point : number
+}
+
 export type Hint = {
     activity_id : number,
     content : string,
@@ -77,12 +83,7 @@ export type ExamOverviewInfo = {
     results : ExamResult[] | null,
     content_group_id ?: number,
     content_group_name ?: string,
-}
-
-export type ExamResult = {
-    created_timestamp : string,
-    score : number,
-    is_passed : boolean
+    can_do  :boolean,
 }
 
 export type Exam = {
@@ -113,4 +114,19 @@ export type ExamAnswer = {
 export type ExamAnswerActivity = {
     activity_id : number,
     answer : Answer
+}
+
+export type ActivityAlert = {
+    feedback : string,
+    isSuccess : boolean
+}
+
+export type ExamResult = {
+    exam_id : number,
+    content_group_name : string,
+    exam_type : string,
+    exam_result_id : number,
+    created_timestamp : string,
+    score : number,
+    is_passed : boolean
 }

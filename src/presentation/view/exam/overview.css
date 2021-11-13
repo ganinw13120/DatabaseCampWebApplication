@@ -9,3 +9,6 @@
 .instruction {
     width : 70vw;
 }
+.instructionbox {
+    position : absolute;
+}

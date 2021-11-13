@@ -30,12 +30,16 @@ export class PointRankingStore {
   @action.bound
   async fatchRanking(): Promise<any> {
     const { token } = this.rootStore.authStore.store;
-    await this.userRepository.fetchPointRanking(token).then((res) => {
-      this.store.data = res;
-      this.store.isLoading = false;
-    }).catch((res) => {
+    await this.userRepository.fetchPointRanking(token).then(this.onFetchRankingSuccess).catch((res) => {
       console.log(res)
     })
     return;
+  }
+
+  @action.bound
+  onFetchRankingSuccess (res : Ranking) : void {
+    this.store.data = res;
+    this.store.isLoading = false;
+
   }
 }

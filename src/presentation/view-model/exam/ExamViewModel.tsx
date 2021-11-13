@@ -1,6 +1,6 @@
 import IExamViewModel from './IExamViewModel';
 import BaseView from '../../view/BaseView';
-import { Answer, CompletionAnswer, Exam } from '../../../domain/entity/model/Learning';
+import { ActivityAlert, Answer, CompletionAnswer, Exam } from '../../../domain/entity/model/Learning';
 import { Step, Stepper } from '../../../domain/entity/model/App';
 
 import { validateCompletion, validateMultiple, validateMatching } from '../../util/validateActvitiy';
@@ -10,10 +10,14 @@ export default class ExamViewModel implements IExamViewModel {
   public currentActivity : number;
   public exam : Exam | null
   public result : Answer[]
+  public alert : ActivityAlert | null;
+  public isLoading : boolean;
   constructor (currentActivity : number) {
     this.exam = null;
     this.currentActivity = currentActivity;
     this.result = [];
+    this.alert = null;
+    this.isLoading = false;
     this.moveNext = this.moveNext.bind(this);
     this.movePrev = this.movePrev.bind(this);
   }
@@ -69,8 +73,21 @@ export default class ExamViewModel implements IExamViewModel {
         const temp = this.validateResult(key);
         if (!temp) isPassed = false;
       })
-      if (!isPassed) return;
-      this.baseView!.props.examinationStore.submitExam(this.result, this.exam)
+      if (!isPassed) {
+        const alert : ActivityAlert = {
+          isSuccess : false,
+          feedback : 'กรุณาทำแบบฝึกหัดให้ครบทุกข้อ'
+        }
+        this.alert = alert;
+        this.baseView?.onViewModelChanged();
+
+        return;
+      }
+      this.isLoading = true;
+      this.baseView?.onViewModelChanged();
+      this.baseView!.props.examinationStore.submitExam(this.result, this.exam, (res : any)=>{
+        this.baseView?.props.history.push('/result?id=' + res.exam_result_id);
+      })
     }
     this.setStepper();
   }
@@ -80,6 +97,8 @@ export default class ExamViewModel implements IExamViewModel {
       this.currentActivity++;
       this.baseView?.onViewModelChanged();
     }
+    this.alert = null;
+    this.baseView?.onViewModelChanged();
     this.setStepper();
   }
   public movePrev = () : void => {
@@ -87,6 +106,8 @@ export default class ExamViewModel implements IExamViewModel {
       this.currentActivity--;
       this.baseView?.onViewModelChanged();
     }
+    this.alert = null;
+    this.baseView?.onViewModelChanged();
     this.setStepper();
   }
 

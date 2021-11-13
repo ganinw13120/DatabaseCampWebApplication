@@ -30,13 +30,16 @@ export class OverviewStore {
   @action.bound
   async FetchOverview(): Promise<any> {
     const { token } = this.rootStore.authStore.store;
-    await this.learningRepository.fetchOverview(token).then((res) => {
-      this.store = {
-        data : res,
-      }
-    }).catch((res) => {
+    await this.learningRepository.fetchOverview(token).then(this.onFetchOverviewSuccess).catch((res) => {
       console.log(res)
     })
     return;
   }
+
+  @action.bound
+  onFetchOverviewSuccess (res : Overview) : void {
+    this.store = {
+      data : res,
+    }
+  } 
 }

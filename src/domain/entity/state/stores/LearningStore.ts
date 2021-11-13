@@ -4,7 +4,7 @@ import RootStore from '../Rootstore';
 
 import LearningRepository from '../../../../data/repository/app/LearningRepository';
 
-import {RoadMap, Lecture, Activity, Hint, Answer ,CompletionAnswer } from '../../model/Learning';
+import {RoadMap, Lecture, Activity, Hint, Answer ,CompletionAnswer, ActivityAlert, HintRoadMap } from '../../model/Learning';
 
 // interface Store {
 //   [key : string] : any
@@ -15,7 +15,7 @@ interface Store {
   activityInfo : Activity | null,
   lectureInfo : Lecture | null,
   hint : Hint[],
-  feedback : string | null,
+  hintRoadMap : HintRoadMap[],
   isLoading : boolean
 }
 
@@ -37,8 +37,8 @@ export class LearningStore {
       activityInfo: null,
       lectureInfo: null,
       hint: [],
-      feedback : null,
       isLoading: false,
+      hintRoadMap : []
   }
 
   @action.bound
@@ -71,6 +71,7 @@ export class LearningStore {
   @action.bound
   onFetchActivitySuccess (res : Activity) : Activity {
     this.store.hint = res.hint.used_hints;
+    this.store.hintRoadMap = res.hint.hint_roadmap;
     this.store.activityInfo = res;
     return res;
   }
@@ -81,8 +82,11 @@ export class LearningStore {
     if (!activityInfo) return;
     if (!result) {
       this.store.isLoading = false;
-      this.store.feedback = 'กรุณาทำแบบฝึกหัดก่อนตรวจคำตอบ';
-      cb?.(false)
+      const alert : ActivityAlert = {
+        isSuccess : false,
+        feedback : 'กรุณาทำแบบฝึกหัดก่อนตรวจคำตอบ'
+      }
+      cb?.(alert)
       return;
     } else {
       this.store.isLoading = true;
@@ -98,9 +102,23 @@ export class LearningStore {
   }
 
   @action.bound
-  private rejectAnswer (isCorrect : boolean) : void {
+  private rejectAnswer (cb : any, message ?: string) : void {
     this.store.isLoading = false;
-    this.store.feedback = isCorrect ? 'คำตอบถูกต้อง' : 'ไม่ถูก';
+    const alert : ActivityAlert = {
+      isSuccess : false,
+      feedback : message ? message : 'คำตอบไม่ถูกต้อง'
+    }
+    cb?.(alert);
+  }
+
+  @action.bound
+  private successAnswer (cb : any, message ?: string) : void {
+    this.store.isLoading = false;
+    const alert : ActivityAlert = {
+      isSuccess : true,
+      feedback : message ? message : 'ถูกต้อง'
+    }
+    cb?.(alert);
   }
 
   @action.bound
@@ -120,14 +138,12 @@ export class LearningStore {
     this.learningRepository.checkMultiple(token, activityID, result).then((res : any) => {
       const {is_correct} = res;
       if (is_correct) {
-        this.rejectAnswer(true);
         this.updateRoadMapStatus(activityID);
-        cb?.(true)
+        this.successAnswer(cb);
         return;
       }
       else {
-        this.rejectAnswer(false);
-        cb?.(false)
+        this.rejectAnswer(cb);
         return;
       }
     });
@@ -137,11 +153,9 @@ export class LearningStore {
   private async checkMatching(activityID : number, result : string[][], cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     let res : any = [];
-    result.forEach((e: any, key: number) => {
+    result.forEach((e: any) => {
       if (!e[0] || !e[1]) {
-        this.store.isLoading = false;
-        this.store.feedback = 'กรุณาทำแบบฝึกหัดให้ครบทุกข้อ';
-        cb?.(false)
+        this.rejectAnswer(cb, 'กรุณาทำแบบฝึกหัดให้ครบทุกข้อ');
         return;
       }
       res.push({
@@ -152,14 +166,12 @@ export class LearningStore {
     this.learningRepository.checkMatching(token, activityID, res).then((res : any) => {
       const {is_correct} = res;
       if (is_correct) {
-        this.rejectAnswer(true);
         this.updateRoadMapStatus(activityID);
-        cb?.(true)
+        this.successAnswer(cb);
         return;
       }
       else {
-        this.rejectAnswer(false);
-        cb?.(false)
+        this.rejectAnswer(cb);
         return;
       }
     });
@@ -168,25 +180,22 @@ export class LearningStore {
   @action.bound 
   private async checkCompletion(activityID : number, result : CompletionAnswer[], cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
-    result.forEach((e: any, key: number) => {
+    result.forEach((e: any) => {
       if (!e.content) {
-        this.store.isLoading = false;
-        this.store.feedback = 'กรุณาทำแบบฝึกหัดให้ครบทุกข้อ';
-        cb?.(false)
+        this.rejectAnswer(cb, 'กรุณาทำแบบฝึกหัดให้ครบทุกข้อ');
         return;
       }
     })
     this.learningRepository.checkCompletion(token, activityID, result).then((res : any) => {
       const {is_correct} = res;
       if (is_correct) {
-        this.rejectAnswer(true);
         this.updateRoadMapStatus(activityID);
+        this.successAnswer(cb);
         cb?.(true)
         return;
       }
       else {
-        this.rejectAnswer(false);
-        cb?.(false)
+        this.rejectAnswer(cb);
         return;
       }
     });
@@ -196,7 +205,7 @@ export class LearningStore {
   public clearActivity(): void {
     this.store.activityInfo = null;
     this.store.hint = [];
-    this.store.feedback = null;
+    this.store.hintRoadMap = [];
     this.store.isLoading = false;
   }
 
@@ -213,6 +222,7 @@ export class LearningStore {
     })
     return res;
   }
+
   @action.bound
   onGetHintSuccess (res : Hint) : Hint | null {
     const { hint } = this.store;
@@ -220,6 +230,7 @@ export class LearningStore {
     temp.push(res);
     this.store.isLoading = false;
     this.store.hint = temp;
+    this.rootStore.authStore.UpdateUserPoint(res.point_reduce);
     return null;
   }
 

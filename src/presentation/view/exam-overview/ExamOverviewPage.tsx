@@ -52,7 +52,6 @@ class OverviewPage
 
   public render(): JSX.Element {
     const { data } = this.props.examinationStore!.store;
-    console.log(data?.mini_exam)
     return (
       <>
         <div className="font-prompt w-full p-12 px-10">
@@ -65,7 +64,7 @@ class OverviewPage
                   <span className="w-full bg-darkPrimary">..</span>
                 </div>
                 <div className="text-3xl text-darkPrimary font-semibold tracking-wider pt-6">
-                  <span>Examination</span>
+                  <span>การทดสอบ</span>
                 </div>
               </>
             )}
@@ -75,17 +74,18 @@ class OverviewPage
             <HeaderSkeleton />
             <HeaderSkeleton />
           </>}
-          {data && data.final_exam && <HeaderCard exam={data.final_exam} displayName='Final Examination' isEnabled={true}/>}
+          {data && data.final_exam && <HeaderCard exam={data.final_exam} displayName='Final Examination' isEnabled={data.final_exam.can_do} isPassed={data.final_exam.results?.find(e=>e.is_passed) ? true : false} />}
           {data && data.mini_exam && data.mini_exam.length > 0 && <>
             {(()=>{
               let examList : ReactElement[] = [];
               data.mini_exam.forEach(e=>{
-                examList.push(<HeaderCard exam={e} isEnabled={true} />)
+                const isPassed = e.results?.find(e=>e.is_passed) ? true : false;
+                examList.push(<HeaderCard exam={e} isEnabled={true} isPassed={isPassed} key={e.exam_id} />)
               })
               return examList;
             })()}
           </>}
-          {data && data.pre_exam && <HeaderCard exam={data.pre_exam} displayName='แบบทดสอบก่อนเรียน' isEnabled={false}/>}
+          {data && data.pre_exam && <HeaderCard exam={data.pre_exam} displayName='แบบทดสอบก่อนเรียน' isEnabled={true} isPassed={false} />}
         </div>
       </>
     );

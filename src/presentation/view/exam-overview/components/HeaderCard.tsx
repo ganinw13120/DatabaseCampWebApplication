@@ -6,7 +6,8 @@ import {ExamOverviewInfo} from '../../../../domain/entity/model/Learning';
 interface ExamCardProps extends RouteComponentProps {
   exam : ExamOverviewInfo,
   isEnabled : boolean, 
-  displayName ?: string
+  displayName ?: string,
+  isPassed : boolean
 }
 
 class HeaderCard extends React.Component<ExamCardProps, any>{
@@ -17,7 +18,7 @@ class HeaderCard extends React.Component<ExamCardProps, any>{
 
   }
   public render(): JSX.Element {
-    const { exam, displayName, isEnabled } = this.props;
+    const { exam, displayName, isEnabled, isPassed } = this.props;
     const {content_group_name} = exam;
     // const { content_name, group_name, progress  } = this.props.overviewStore.store.data?.lasted_group;
     return (
@@ -31,6 +32,12 @@ class HeaderCard extends React.Component<ExamCardProps, any>{
               </div>
               <div className='flex-none my-auto ml-5 text-white text-xl tracking-wider'>
                 <span>{displayName ? displayName : content_group_name}</span>
+              </div>
+              <div className='flex-grow'></div>
+              <div className='text-right flex-none  text-xl text-right my-auto ml-auto mr-8 text-white tracking-widest hidden lg:flex h-full'>
+                <div className='flex-grow xl:flex-none my-auto'>
+                  <span className=''>{isPassed ? 'ผ่านแล้ว' : 'ยังไม่ผ่าน'}</span>
+                </div>
               </div>
             </div>
         </div>

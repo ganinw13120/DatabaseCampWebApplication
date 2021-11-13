@@ -25,6 +25,7 @@ export class ProfileStore {
   async UpdateName(name : string, cb : any) : Promise<any> {
     const { token } = this.rootStore.authStore.store;
     const res = await this.userRepository.updateName(token, name).then((res)=>{
+      this.rootStore.authStore.UpdateUserName(name);
       return res;
     })
     cb?.(res)

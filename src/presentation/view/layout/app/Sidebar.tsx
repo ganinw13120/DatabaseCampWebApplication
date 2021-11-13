@@ -30,16 +30,16 @@ class Sidebar extends React.Component <any, SidebarState>{
     const widthBoxStyle = { width: isExpand ? 320 : 90 };
     const { userData } = this.props.authStore.store;
     return <>
-      <div className='sticky top-0 flex flex-row md:block hidden bg-primary text-white h-screen z-20' style={{ boxShadow: '0 4px 4px #000', transition: "width 1s", ...widthBoxStyle}}>
+      <div className='flex-none sticky top-0 flex flex-row md:block hidden bg-primary text-white h-screen z-20' style={{ boxShadow: '0 4px 4px #000', transition: "width 1s", ...widthBoxStyle}}>
         <div className={`cursor-pointer flex flex-none inline h-auto pb-7 mt-7 w-8/12 mx-auto ${isExpand ? '' : 'pl-3'} `} style={{borderBottom:'0.5px solid #BBBFC0', transition: "all 0.5s"}} onClick={() => { this.onClickPage('overview') }}>
           <img src={HalfLeftLogo} alt="Logo" className='mx-auto w-auto h-16' />
           <img src={HalfRightLogo} alt="Logo" className='m-auto w-auto h-14' style={{transition: "all 1s", opacity : isExpand ? 1 : 0, width : isExpand ? '' : ''}}/>
         </div>
         <div className="pt-5 grid grid-rows-3 gap-5">
-          <SideItem isExpand={isExpand} text='Overview' icon={<AppstoreOutlined style={{ fontSize: 25 }} />} onClick={() => { this.onClickPage('overview') }} />
+          <SideItem isExpand={isExpand} text='ภาพรวมเนื้อหา' icon={<AppstoreOutlined style={{ fontSize: 25 }} />} onClick={() => { this.onClickPage('overview') }} />
           
-          <SideItem isExpand={isExpand} text='Examination'  icon={<FileTextOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('examination') }}/>
-          <SideItem  isExpand={isExpand} text='Point Ranking'  icon={<BarsOutlined  style={{fontSize:25}} />} onClick={() => { this.onClickPage('ranking') }}/>
+          <SideItem isExpand={isExpand} text='การทดสอบ'  icon={<FileTextOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('examination') }}/>
+          <SideItem  isExpand={isExpand} text='จัดลำดับคะแนน'  icon={<BarsOutlined  style={{fontSize:25}} />} onClick={() => { this.onClickPage('ranking') }}/>
         </div>
         <div className='absolute bottom-0 mb-8' style={{...widthBoxStyle, transition: "width 1s"}}>
           <div className='w-12 h-24'>
@@ -68,7 +68,7 @@ class SideItem extends React.Component<any>{
     const { isExpand, icon, text, onClick, className } = this.props;
     return (
       <>
-        <Tooltip title={text} placement="right">
+        <Tooltip title={text ? text : ' '} placement="right">
         <div className={`truncate flex w-full mx-auto sideitem h-auto py-3  text-center align-middle justify-center ${className}`} onClick={() => { if (onClick) onClick();}}>
           <div className={` flex pl-${isExpand ? '0' : '3'} w-9/12 text-left h-full text-center`} style={{ transition: 'padding 1s' }}>
             {isLoading ? <Skeleton variant="text" className='w-full' /> : <>
