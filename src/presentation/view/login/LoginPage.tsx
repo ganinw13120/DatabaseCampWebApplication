@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseView from '../BaseView';
-import FullLogo from '../../assets/full-logo.png';
+import FullLogo from '../../assets/high-res-full-logo.png';
 import LoginViewModel from '../../view-model/auth/LoginViewModel';
 import { Form, Input, Button  } from 'antd';
 import { KeyOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
@@ -8,7 +8,6 @@ import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 
 import validateEmail from '../../util/validateEmail';
-import validatePassword from '../../util/validatePassword';
 
 export interface LoginComponentState {
   isLoading: boolean
@@ -99,7 +98,7 @@ class LoginPage extends React.Component<any, LoginComponentState>
                       <span >รหัสผ่าน :</span>
                     </div>
                     <div className='w-full'>
-                    <Form.Item name="password" rules={[{ validator: validatePassword }]} className='w-full'>
+                    <Form.Item name="password" rules={[{ required: true, message: 'กรุณากรอกรหัสผ่าน'}]} className='w-full'>
                         <Input.Password iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} className='mt-3 h-12 ' size="large" placeholder="รหัสผ่าน" prefix={<KeyOutlined  className='mr-3'/>}  />
                       </Form.Item>
                     </div>

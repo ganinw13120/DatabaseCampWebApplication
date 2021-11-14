@@ -50,8 +50,10 @@ export default class RegisterViewModel implements IAuthViewModel {
     public matchPassword = (_ : any, val : string, callback : any) : void => {
         if (val === this.formRef?.current?.getFieldValue("password")) {
             callback();
-        } else {
+        } else if(val) {
             callback("รหัสผ่านไม่ตรงกัน")
+        } else {
+            callback("กรุณากรอกรหัสผ่าน")
         }
     }
 

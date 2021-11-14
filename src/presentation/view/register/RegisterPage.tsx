@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseView from '../BaseView';
-import FullLogo from '../../assets/full-logo.png';
+import FullLogo from '../../assets/high-res-full-logo.png';
 import RegisterViewModel from '../../view-model/auth/RegisterViewModel';
 import { Form, Input, Button  } from 'antd';
 import { KeyOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
@@ -121,7 +121,7 @@ class RegisterPage extends React.Component<any, RegisterComponentState>
                   <span >ยีนยันรหัสผ่าน :</span>
                 </div>
                 <div className='w-full'>
-                  <Form.Item name="password_comfirmation" rules={[{ required: true, message: 'กรุณากรอกรหัสผ่าน' }, {validator : this.viewModel?.matchPassword}]} className='w-full'>
+                  <Form.Item name="password_comfirmation" rules={[ {validator : this.viewModel?.matchPassword}]} className='w-full'>
                     <Input.Password iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} className='mt-3 h-12 ' size="large" placeholder="รหัสผ่าน" prefix={<KeyOutlined className='mr-3'/>}  />
                   </Form.Item>
                 </div>
