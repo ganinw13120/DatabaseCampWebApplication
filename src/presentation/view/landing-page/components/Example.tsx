@@ -1,5 +1,7 @@
-import React from 'react';
-import SimpleImageSlider from "react-simple-image-slider";
+import React, { ReactElement } from 'react';
+
+import AwesomeSlider from 'react-awesome-slider';
+import 'react-awesome-slider/dist/styles.css';
 
 const images = [
   { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/lecture.PNG" },
@@ -37,13 +39,19 @@ export default class Example extends React.Component<any, any> {
             </div>
           <div className='text-center mt-20 w-auto h-auto'>
             <div className=" slider mt-10" style={{width : Swidth, height : (Swidth / 1.77) + 100}}>
-              <SimpleImageSlider
-                width={Swidth}
-                height={Swidth / 1.77}
-                images={images}
-                showBullets={true}
-                showNavs={true}
-              />
+              <AwesomeSlider mobileTouch={true}>
+                {(()=>{
+                  const imgList : ReactElement[] = [];
+                  images.forEach((e: any) => {
+                    imgList.push(<>
+                      <div>
+                        <img alt='example' src={e.url} />
+                      </div>
+                    </>)
+                  })
+                  return imgList;
+                })()}
+              </AwesomeSlider>
             </div>
           </div>
         </div>
