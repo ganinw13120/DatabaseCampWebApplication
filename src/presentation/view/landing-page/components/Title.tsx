@@ -1,8 +1,9 @@
 import React from 'react';
 import Person from '../../../assets/personwithlaptop.png';
 import Bulb from '../../../assets/landing-bulb.png';
+import { withRouter } from 'react-router-dom';
 
-export default class Title extends React.Component<any, any> {
+class Title extends React.Component<any, any> {
   public constructor(props: any) {
     super(props);
     this.state = {
@@ -18,6 +19,9 @@ export default class Title extends React.Component<any, any> {
   }
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll, false);
+  }
+  loadPage(url: string) {
+    this.props.history.push('/' + url);
   }
   public render(): JSX.Element {
     const { offSetY } = this.state;
@@ -35,9 +39,9 @@ export default class Title extends React.Component<any, any> {
                   <div className='mt-10'>
                     <span className='shadow-text text-xl md:text-5xl text-black font-light tracking-wider'>เริ่มต้นได้เลยที่นี่!</span>
                   </div>
-                  <div className='hoverable mt-10 w-44 cursor-pointer bg-primary py-4 px-5 rounded-2xl text-center' style={{boxShadow:  '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+                  <button aria-label='Register' className='hoverable mt-10 w-44 cursor-pointer bg-primary py-4 px-5 rounded-2xl text-center' style={{boxShadow:  '0 4px 4px rgba(0, 0, 0, 0.25)' }} onClick={()=>this.loadPage('register')}>
                     <span className='align-middle text-xl text-white font-normal tracking-wider'>สมัครสมาชิก</span>
-                  </div>
+                  </button>
                 </div>
               </div>
             </div>
@@ -57,3 +61,5 @@ export default class Title extends React.Component<any, any> {
     );
   }
 }
+
+export default withRouter(Title);

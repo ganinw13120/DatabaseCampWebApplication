@@ -52,9 +52,9 @@ class Navbar extends React.Component<any, any> {
               </div>
             </div>
             <div className='flex-none my-auto w-auto flex'>
-              <div className='hoverable cursor-pointer bg-primary py-3 px-5 rounded-2xl'  onClick={()=>this.loadPage('register')}>
+              <button aria-label='Register' className='hoverable cursor-pointer bg-primary py-3 px-5 rounded-2xl'  onClick={()=>this.loadPage('register')}>
                 <span className='align-middle text-xl text-white font-light tracking-wider'>สมัครสมาชิก</span>
-              </div>
+              </button>
             </div>
           </div>
           
