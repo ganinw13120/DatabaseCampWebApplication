@@ -191,7 +191,6 @@ export class LearningStore {
       if (is_correct) {
         this.updateRoadMapStatus(activityID);
         this.successAnswer(cb);
-        cb?.(true)
         return;
       }
       else {
