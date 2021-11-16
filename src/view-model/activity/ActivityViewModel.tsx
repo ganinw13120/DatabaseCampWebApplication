@@ -72,20 +72,6 @@ export default class ActivityViewModel implements IActivityViewModel {
       this.generateStepperFromStore();
       this.alert = res;
       this.baseView?.onViewModelChanged();
-        // const nextActivity = this.getNextActivityId();
-        // this.baseView?.props.learningStore.clearActivity();
-        // if (nextActivity) {
-        //   this.baseView?.props.history.push(`/activity?id=${nextActivity}`)
-        // } else {
-        //   notification['success']({
-        //     message: "จบเเล้ว",
-        //     description:
-        //       'ไม่มีกิจกรรมเเล้ววว',
-        //     onClick: () => {
-        //     },
-        //   });
-        //   this.baseView?.props.history.push('/overview')
-        // }
     })
   }
 
