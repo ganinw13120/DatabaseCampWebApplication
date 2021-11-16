@@ -8,8 +8,8 @@ import { validateCompletion, validateMultiple, validateMatching } from '../../ut
 export default class ExamViewModel implements IExamViewModel {
   private baseView?: BaseView;
   public currentActivity : number;
-  public exam : Exam | null
-  public result : Answer[]
+  public exam : Exam | null;
+  private result : Answer[];
   public alert : ActivityAlert | null;
   public isLoading : boolean;
   constructor (currentActivity : number) {
@@ -35,7 +35,7 @@ export default class ExamViewModel implements IExamViewModel {
     })
   };
 
-  public setStepper = () : void => {
+  private setStepper = () : void => {
     if (!this.exam) return;
     const stepper : Stepper = this.generateExamStepper(this.exam)
     stepper.onNext = this.moveNext;
