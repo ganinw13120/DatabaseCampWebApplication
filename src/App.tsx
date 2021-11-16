@@ -1,19 +1,17 @@
 import { Component, ReactElement } from 'react';
 import './App.css';
-import LandingPage from "./presentation/view/landing-page";
-import LoginPage from "./presentation/view/login";
-import RegisterPage from "./presentation/view/register";
+import LandingPage from "./view/landing-page";
+import LoginPage from "./view/login";
+import RegisterPage from "./view/register";
 
-import OverviewPage from './presentation/view/overview';
-import ExamPage from './presentation/view/exam';
-import ExamOverviewPage from './presentation/view/exam-overview';
-import ProfilePage from './presentation/view/profile';
-import MatchingPage from './presentation/view/matching';
-import MultiplePage from './presentation/view/multiple';
-import Activity from './presentation/view/activity';
-import LecturePage from './presentation/view/lecture';
-import PointRankingPage from './presentation/view/pointRanking';
-import ExamResultPage from './presentation/view/exam-result';
+import OverviewPage from './view/overview';
+import ExamPage from './view/exam';
+import ExamOverviewPage from './view/exam-overview';
+import ProfilePage from './view/profile';
+import Activity from './view/activity';
+import LecturePage from './view/lecture';
+import PointRankingPage from './view/pointRanking';
+import ExamResultPage from './view/exam-result';
 
 import {
   BrowserRouter as Router,
@@ -23,15 +21,15 @@ import {
 import 'antd/dist/antd.css';
 import './index.css';
 
-import PreLogged from './presentation/middleware/PreLogged';
-import LoggedMiddleware from './presentation/middleware/LoggedMiddleware';
+import PreLogged from './middleware/PreLogged';
+import LoggedMiddleware from './middleware/LoggedMiddleware';
 
 import { Provider } from 'mobx-react';
 
 import RootStore  from './store/Rootstore';
 
-import Progress from './presentation/view/layout/ProgressBar';
-import NotFoundPage from './presentation/view/error';
+import Progress from './view/layout/ProgressBar';
+import NotFoundPage from './view/error';
 
 const _RootStore = new RootStore();
 
@@ -69,10 +67,6 @@ const appRouteList : route[] = [
     page : <ProfilePage/>
   },
   {
-    url: '/activity/matching',
-    page : <MatchingPage/>
-  },
-  {
     url: '/activity',
     page : <Activity/>
   },
@@ -83,10 +77,6 @@ const appRouteList : route[] = [
   {
     url: '/ranking',
     page : <PointRankingPage/>
-  },
-  {
-    url: '/multiple',
-    page : <MultiplePage/>
   },
   {
     url: '/result',
