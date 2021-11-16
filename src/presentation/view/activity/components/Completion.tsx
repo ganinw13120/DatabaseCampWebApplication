@@ -4,7 +4,7 @@ import BaseView from '../../BaseView';
 
 import ChoiceBox from './Choicebox';
 
-import {CompletionAnswer, CompletionChoice} from '../../../../domain/entity/model/Learning';
+import {CompletionAnswer, CompletionChoice} from '../../../../model/Learning';
 
 type QuestionBox = {
   id : number,

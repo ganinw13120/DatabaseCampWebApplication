@@ -12,13 +12,13 @@ import Completion from './components/Completion';
 import MultipleChoiceComponent from './components/MultipleChoice';
 import { inject, observer } from 'mobx-react';
 
-import { Activity, ActivityAlert, CompletionChoice, MatchingChoice, MultipleChoice } from '../../../domain/entity/model/Learning';
+import { Activity, ActivityAlert, CompletionChoice, MatchingChoice, MultipleChoice } from '../../../model/Learning';
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { LearningStore } from '../../../domain/entity/state/stores/LearningStore';
-import { AppStore } from '../../../domain/entity/state/stores/AppStore';
-import { AuthStore } from '../../../domain/entity/state/stores/AuthStore';
+import { LearningStore } from '../../../store/stores/LearningStore';
+import { AppStore } from '../../../store/stores/AppStore';
+import { AuthStore } from '../../../store/stores/AuthStore';
 
 import AlertTab from './components/AlertTab';
 import { green } from '@mui/material/colors';

@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { API_BASE_URL } from '../../../constant/constant';
+import { API_BASE_URL } from '../../constant/constant';
 
-import {Overview} from '../../../domain/entity/model/Overview';
-import {Lecture, RoadMap, Activity, Hint, Answer, ExaminationOverview, Exam, ExamAnswer, ExamResult} from '../../../domain/entity/model/Learning';
+import {Overview} from '../../model/Overview';
+import {Lecture, RoadMap, Activity, Hint, Answer, ExaminationOverview, Exam, ExamAnswer, ExamResult} from '../../model/Learning';
 
 export default class LearningRepository {
   

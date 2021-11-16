@@ -1,6 +1,6 @@
 import { makeObservable, observable, action } from 'mobx';
 
-import AuthRepository from '../../../../data/repository/auth/AuthRepository';
+import AuthRepository from '../../repository/auth/AuthRepository';
 
 import RootStore from '../Rootstore';
 

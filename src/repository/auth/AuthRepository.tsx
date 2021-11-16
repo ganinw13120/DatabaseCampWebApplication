@@ -1,9 +1,9 @@
 import IAuthRepository from './IAuthRepository';
 
 import axios from 'axios';
-import { API_BASE_URL } from '../../../constant/constant';
+import { API_BASE_URL } from '../../constant/constant';
 
-import { AuthUser, User } from '../../../domain/entity/model/User';
+import { AuthUser, User } from '../../model/User';
 
 export default class AuthRepository implements IAuthRepository {
 

@@ -8,10 +8,10 @@ import './profile.css';
 import Alerticon from '../../assets/alerticon.svg';
 import SuccessIcon from '../../assets/alertsuccess.svg';
 
-import { AppStore } from '../../../domain/entity/state/stores/AppStore';
-import { ExaminationStore } from '../../../domain/entity/state/stores/ExaminationStore';
-import { AuthStore } from '../../../domain/entity/state/stores/AuthStore';
-import { ExamResult } from '../../../domain/entity/model/Learning';
+import { AppStore } from '../../../store/stores/AppStore';
+import { ExaminationStore } from '../../../store/stores/ExaminationStore';
+import { AuthStore } from '../../../store/stores/AuthStore';
+import { ExamResult } from '../../../model/Learning';
 
 export interface ProfileComponentState {
   data: ExamResult | null,

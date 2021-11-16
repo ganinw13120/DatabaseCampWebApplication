@@ -1,7 +1,7 @@
 import { Component, ReactElement } from 'react';
 import BaseView from '../../BaseView';
 import Radio from '@mui/material/Radio';
-import {MultipleChoice} from '../../../../domain/entity/model/Learning';
+import {MultipleChoice} from '../../../../model/Learning';
 
 interface MultipleChoiceState {
   selectedChoice : number | null,

@@ -1,7 +1,7 @@
 import ILectureViewModel from './ILectureViewModel';
 import BaseView from '../../view/BaseView';
 import { notification } from 'antd';
-import { RoadMap } from '../../../domain/entity/model/Learning';
+import { RoadMap } from '../../../model/Learning';
 import generateStepper, { generateEmptyStepper } from '../../util/generateStepper';
 
 export default class LectureViewModel implements ILectureViewModel {

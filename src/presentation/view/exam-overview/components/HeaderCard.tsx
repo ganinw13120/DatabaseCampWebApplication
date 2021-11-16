@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter, RouteComponentProps  } from 'react-router-dom';
 
-import {ExamOverviewInfo} from '../../../../domain/entity/model/Learning';
+import {ExamOverviewInfo} from '../../../../model/Learning';
 
 interface ExamCardProps extends RouteComponentProps {
   exam : ExamOverviewInfo,

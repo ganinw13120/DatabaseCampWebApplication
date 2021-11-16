@@ -10,7 +10,7 @@ import { inject, observer } from 'mobx-react';
 import './profile.css';
 import Skeleton from '@mui/material/Skeleton';
 
-import { User } from '../../../domain/entity/model/User';
+import { User } from '../../../model/User';
 
 import { Modal, Button, Form, Input } from 'antd';
 

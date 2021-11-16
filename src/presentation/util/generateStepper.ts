@@ -1,5 +1,5 @@
-import { Step, Stepper } from "../../domain/entity/model/App";
-import { RoadMap } from "../../domain/entity/model/Learning";
+import { Step, Stepper } from "../../model/App";
+import { RoadMap } from "../../model/Learning";
 
 const generateStepper = (data : RoadMap, current : number, isLectureProvide : boolean = false) : Stepper => {
     let stepper : Stepper = {

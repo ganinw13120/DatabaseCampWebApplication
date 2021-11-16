@@ -11,8 +11,8 @@ import Skeleton from '@mui/material/Skeleton';
 
 import LectureViewModel from '../../view-model/lecture/LectureViewModel';
 
-import { LearningStore } from '../../../domain/entity/state/stores/LearningStore';
-import { AppStore } from '../../../domain/entity/state/stores/AppStore';
+import { LearningStore } from '../../../store/stores/LearningStore';
+import { AppStore } from '../../../store/stores/AppStore';
 // import {ActivityInfomation} from '../../../domain/entity/model/Activity';
 
 export interface LectureComponentState {
@@ -92,7 +92,7 @@ class LecturePage extends React.Component<LectureProps, LectureComponentState>
               </div>
               <div className='flex-grow'>
               </div>
-              <div className='nextbtn flex-none w-1/6 bg-primary rounded-xl h-16' onClick={this.lectureViewModel.onClickNext}>
+              <div className='nextbtn flex-none w-44 bg-primary rounded-xl h-16' onClick={this.lectureViewModel.onClickNext}>
                   <Button className='w-full h-24 bg-primary' style={{height: '100%'}} ghost size='large'><span className='text-base text-white font-light tracking-wider '>ถัดไป</span></Button>
               </div>
             </div>

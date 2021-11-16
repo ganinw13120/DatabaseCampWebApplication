@@ -28,7 +28,7 @@ import LoggedMiddleware from './presentation/middleware/LoggedMiddleware';
 
 import { Provider } from 'mobx-react';
 
-import RootStore  from '../src/domain/entity/state/Rootstore';
+import RootStore  from './store/Rootstore';
 
 import Progress from './presentation/view/layout/ProgressBar';
 import NotFoundPage from './presentation/view/error';

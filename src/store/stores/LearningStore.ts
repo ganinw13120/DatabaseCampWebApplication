@@ -2,7 +2,7 @@ import { makeObservable, observable, action } from 'mobx';
 
 import RootStore from '../Rootstore';
 
-import LearningRepository from '../../../../data/repository/app/LearningRepository';
+import LearningRepository from '../../repository/app/LearningRepository';
 
 import {RoadMap, Lecture, Activity, Hint, Answer ,CompletionAnswer, ActivityAlert, HintRoadMap } from '../../model/Learning';
 

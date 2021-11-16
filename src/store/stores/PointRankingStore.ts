@@ -2,7 +2,7 @@ import { makeObservable, observable, action } from 'mobx';
 
 import RootStore from '../Rootstore';
 
-import UserRepository from '../../../../data/repository/app/UserRepository';
+import UserRepository from '../../repository/app/UserRepository';
 
 import {Ranking} from '../../model/User';
 

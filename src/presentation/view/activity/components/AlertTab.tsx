@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { ActivityAlert } from '../../../../domain/entity/model/Learning';
+import { ActivityAlert } from '../../../../model/Learning';
 
 import Alerticon from '../../../assets/alerticon.svg';
 import SuccessIcon from '../../../assets/alertsuccess.svg';

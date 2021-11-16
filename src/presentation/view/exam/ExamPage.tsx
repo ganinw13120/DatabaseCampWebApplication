@@ -9,10 +9,10 @@ import ExamViewModel from '../../view-model/exam/ExamViewModel';
 
 import Requirement from '../activity/components/Requirement';
 
-import { AppStore } from '../../../domain/entity/state/stores/AppStore';
-import { ExaminationStore } from '../../../domain/entity/state/stores/ExaminationStore';
+import { AppStore } from '../../../store/stores/AppStore';
+import { ExaminationStore } from '../../../store/stores/ExaminationStore';
 
-import { ActivityAlert, CompletionChoice, Exam, ExamActivity, MatchingChoice, MultipleChoice, RoadMap } from '../../../domain/entity/model/Learning';
+import { ActivityAlert, CompletionChoice, Exam, ExamActivity, MatchingChoice, MultipleChoice, RoadMap } from '../../../model/Learning';
 import Matching from '../activity/components/Matching';
 import MultipleChoiceComponent from '../activity/components/MultipleChoice';
 import Completion from '../activity/components/Completion';

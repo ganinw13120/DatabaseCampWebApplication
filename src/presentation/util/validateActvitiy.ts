@@ -1,4 +1,4 @@
-import { CompletionAnswer } from "../../domain/entity/model/Learning";
+import { CompletionAnswer } from "../../model/Learning";
 
 export const validateMatching = (result : string[][]) : boolean => {
 let _result = true;

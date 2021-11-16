@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { API_BASE_URL } from '../../../constant/constant';
+import { API_BASE_URL } from '../../constant/constant';
 
-import { Ranking, User } from '../../../domain/entity/model/User';
+import { Ranking, User } from '../../model/User';
 
 export default class LearningRepository {
   public async fetchPointRanking(token: string) : Promise<Ranking> {

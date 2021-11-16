@@ -11,8 +11,8 @@ import Skeleton from '@mui/material/Skeleton';
 import HeaderCard from "./components/HeaderCard";
 import HeaderSkeleton from "./components/HeaderSkeleton";
 
-import {AppStore} from '../../../domain/entity/state/stores/AppStore';
-import {ExaminationStore} from '../../../domain/entity/state/stores/ExaminationStore';
+import {AppStore} from '../../../store/stores/AppStore';
+import {ExaminationStore} from '../../../store/stores/ExaminationStore';
 
 interface ExamOverviewComponentState {}
 

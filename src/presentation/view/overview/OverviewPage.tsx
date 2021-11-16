@@ -13,9 +13,9 @@ import HeaderCard from "./components/HeaderCard";
 import HeaderSkeleton from "./components/HeaderSkeleton";
 import SkeletonCard from "./components/SkeletonCard";
 
-import {AppStore} from '../../../domain/entity/state/stores/AppStore';
-import {OverviewStore} from '../../../domain/entity/state/stores/OverviewStore';
-import {AuthStore} from '../../../domain/entity/state/stores/AuthStore';
+import {AppStore} from '../../../store/stores/AppStore';
+import {OverviewStore} from '../../../store/stores/OverviewStore';
+import {AuthStore} from '../../../store/stores/AuthStore';
 
 export interface OverviewComponentState {}
 

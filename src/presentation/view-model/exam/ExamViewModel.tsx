@@ -1,7 +1,7 @@
 import IExamViewModel from './IExamViewModel';
 import BaseView from '../../view/BaseView';
-import { ActivityAlert, Answer, CompletionAnswer, Exam } from '../../../domain/entity/model/Learning';
-import { Step, Stepper } from '../../../domain/entity/model/App';
+import { ActivityAlert, Answer, CompletionAnswer, Exam } from '../../../model/Learning';
+import { Step, Stepper } from '../../../model/App';
 
 import { validateCompletion, validateMultiple, validateMatching } from '../../util/validateActvitiy';
 

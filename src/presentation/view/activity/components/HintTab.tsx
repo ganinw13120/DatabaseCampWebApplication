@@ -1,11 +1,11 @@
 import { Component, ReactElement } from 'react';
 
 import { inject, observer } from 'mobx-react';
-import { LearningStore } from '../../../../domain/entity/state/stores/LearningStore';
+import { LearningStore } from '../../../../store/stores/LearningStore';
 
 import ActiveBulb from '../../../assets/hint_bulb.png';
 import InactiveBulb from '../../../assets/inactive_bulb.png';
-import { Hint, HintRoadMap } from '../../../../domain/entity/model/Learning';
+import { Hint, HintRoadMap } from '../../../../model/Learning';
 
 import parse from 'html-react-parser';
 
