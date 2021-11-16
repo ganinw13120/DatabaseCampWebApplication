@@ -9,9 +9,11 @@ export default class ActivityViewModel implements IProfileViewModel {
   private baseView?: BaseView;
   public formRef?: React.RefObject<FormInstance<any>>;
   public profileData : User | null;
+  public alertText : string;
 
   constructor () {
     this.profileData = null;
+    this.alertText = '';
     this.formRef = React.createRef<FormInstance>();
   }
 
@@ -33,6 +35,19 @@ export default class ActivityViewModel implements IProfileViewModel {
   };
 
   public submitChangeName = () : void => {
+    const newName = this.formRef?.current?.getFieldValue('name');
+    if (!newName) {
+      this.alertText = 'กรุณากรอกชื่อ';
+      this.baseView?.onViewModelChanged();
+      return;
+    }   
+    else if (newName===this.profileData?.name) {
+      this.alertText = 'กรุณากรอกชื่อใหม่';
+      this.baseView?.onViewModelChanged();
+      return;
+    }
+    this.alertText = '';
+    this.baseView?.onViewModelChanged();
     this.baseView?.props.profileStore.UpdateName(this.formRef?.current?.getFieldValue('name'), (res : any) => {
       let temp = this.profileData;
       temp!.name = res.updated_name;

@@ -14,9 +14,10 @@ import { User } from '../../model/User';
 
 import { Modal, Button, Form, Input } from 'antd';
 
-export interface ProfileComponentState {
+interface ProfileComponentState {
   data: User | null,
-  isShowModal : boolean
+  isShowModal : boolean,
+  textAlertModal : string,
 }
 
 var monthNamesThai = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.",
@@ -35,6 +36,7 @@ class ProfilePage extends Component<any, ProfileComponentState>
     this.state = {
       data: null,
       isShowModal : false,
+      textAlertModal : ''
     }
     this.showEditModal = this.showEditModal.bind(this);
     this.hideEditModal = this.hideEditModal.bind(this);
@@ -58,9 +60,11 @@ class ProfilePage extends Component<any, ProfileComponentState>
   }
 
   public onViewModelChanged(): void {
+    const alertText = this.profileViewModel.alertText;
     this.setState({
       data: this.profileViewModel.profileData,
-      isShowModal : false
+      isShowModal : alertText!=='',
+      textAlertModal : alertText
     })
   }
 
@@ -80,7 +84,7 @@ class ProfilePage extends Component<any, ProfileComponentState>
   }
 
   public render(): JSX.Element {
-    const { data, isShowModal } = this.state;
+    const { data, isShowModal, textAlertModal } = this.state;
     const date = data ? new Date(data.created_timestamp) : ''
     const dateString = date ? +date.getDate() + " " + monthNamesThai[date.getMonth()] + "  " + date.getFullYear() : '';
     const { userData } = this.props.authStore.store;
@@ -88,6 +92,7 @@ class ProfilePage extends Component<any, ProfileComponentState>
       <>
           <Modal
               visible={isShowModal}
+              onCancel={this.hideEditModal}
               footer={[
                 <>
                 <div className='flex font-prompt'>
@@ -114,10 +119,11 @@ class ProfilePage extends Component<any, ProfileComponentState>
               className='mt-10'
               >
                 <Form.Item name="name" className='mt-10'>
-                  <Input className='pt-10 h-12 w-full' size="large" placeholder="ชื่อ" />
+                  <Input className='pt-10 h-12 w-full' size="large" placeholder="ชื่อ" defaultValue={data?.name}/>
                 </Form.Item>
               </Form>
               </div>
+              <span className='text-red-500'> {textAlertModal} </span>
             </Modal>
         <div className="font-prompt bg-bg w-full h-auto">
           <div className='h-full text-white text-center align-middle justify-center '>
