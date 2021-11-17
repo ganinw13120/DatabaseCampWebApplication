@@ -97,7 +97,7 @@ class ProfilePage extends Component<any, ProfileComponentState>
                 <>
                 <div className='flex font-prompt'>
                   <div className=' w-32 ml-auto  rounded-lg'>
-                    <Button key="back" ghost className='w-full font-black' onClick={this.hideEditModal}>
+                    <Button key="back" ghost className='w-full ' onClick={this.hideEditModal}>
                       <span className='text-black'>ยกเลิก</span>
                     </Button>
                   </div>
@@ -119,7 +119,7 @@ class ProfilePage extends Component<any, ProfileComponentState>
               className='mt-10'
               >
                 <Form.Item name="name" className='mt-10'>
-                  <Input className='pt-10 h-12 w-full' size="large" placeholder="ชื่อ" defaultValue={data?.name}/>
+                  <Input className='w-full' size="large" placeholder="ชื่อ" defaultValue={data?.name}/>
                 </Form.Item>
               </Form>
               </div>
