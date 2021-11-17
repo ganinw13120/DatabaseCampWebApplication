@@ -70,7 +70,7 @@ export class LearningStore {
 
   @action.bound
   onFetchActivitySuccess (res : Activity) : Activity {
-    this.store.hint = res.hint.used_hints;
+    this.store.hint = res.hint.used_hints ?  res.hint.used_hints : [];
     this.store.hintRoadMap = res.hint.hint_roadmap;
     this.store.activityInfo = res;
     return res;
