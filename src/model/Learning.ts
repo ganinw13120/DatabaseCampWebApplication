@@ -71,6 +71,12 @@ export type CompletionAnswer = {
 
 export type Answer = CompletionAnswer[] | string[][] | number | null
 
+export type ActivityResult = {
+    activity_id : number,
+    is_correct : boolean,
+    updated_point : number
+}
+
 export interface ExaminationOverview {
     pre_exam : ExamOverviewInfo,
     mini_exam : ExamOverviewInfo[],

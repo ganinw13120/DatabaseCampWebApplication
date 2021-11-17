@@ -42,10 +42,10 @@ export default class Example extends React.Component<any, any> {
               <AwesomeSlider mobileTouch={true}>
                 {(()=>{
                   const imgList : ReactElement[] = [];
-                  images.forEach((e: any) => {
+                  images.forEach((e: any, key : number) => {
                     imgList.push(<>
                       <div>
-                        <img alt='example' src={e.url} />
+                        <img alt='example' src={e.url} key={key} />
                       </div>
                     </>)
                   })

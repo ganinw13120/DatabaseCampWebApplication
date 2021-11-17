@@ -139,6 +139,7 @@ export class LearningStore {
       const {is_correct} = res;
       if (is_correct) {
         this.updateRoadMapStatus(activityID);
+        this.rootStore.authStore.SetUserPoint(res.updated_point);
         this.successAnswer(cb);
         return;
       }
@@ -167,6 +168,7 @@ export class LearningStore {
       const {is_correct} = res;
       if (is_correct) {
         this.updateRoadMapStatus(activityID);
+        this.rootStore.authStore.SetUserPoint(res.updated_point);
         this.successAnswer(cb);
         return;
       }
@@ -190,6 +192,7 @@ export class LearningStore {
       const {is_correct} = res;
       if (is_correct) {
         this.updateRoadMapStatus(activityID);
+        this.rootStore.authStore.SetUserPoint(res.updated_point);
         this.successAnswer(cb);
         return;
       }
@@ -229,7 +232,7 @@ export class LearningStore {
     temp.push(res);
     this.store.isLoading = false;
     this.store.hint = temp;
-    this.rootStore.authStore.UpdateUserPoint(res.point_reduce);
+    this.rootStore.authStore.DecreaseUserPoint(res.point_reduce);
     return null;
   }
 

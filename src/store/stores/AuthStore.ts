@@ -43,12 +43,21 @@ export class AuthStore{
   }
 
   @action.bound
-  UpdateUserPoint (point : number) : void {
+  DecreaseUserPoint (point : number) : void {
     let {userData : temp} = this.store;
     if (!temp) return;
     temp.point -= point;
     this.store.userData = temp;
   } 
+
+  @action.bound
+  SetUserPoint (point : number) : void {
+    let {userData : temp} = this.store;
+    if (!temp) return;
+    temp.point = point;
+    this.store.userData = temp;
+  }
+
   @action.bound
   UpdateUserName (name : string) : void {
     let {userData : temp} = this.store;
