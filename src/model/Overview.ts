@@ -1,5 +1,5 @@
 import {Content, ContentGroup} from './Content';
-export interface Overview {
+export type Overview = {
     lasted_group : Content,
     content_group_overview : ContentGroup[]
 }

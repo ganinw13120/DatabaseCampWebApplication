@@ -1,9 +1,9 @@
-export interface Lecture {
+export type Lecture = {
     contend_id : number,
     content_name : string,
     video_link : string
 }
-export interface RoadMap {
+export type RoadMap = {
     content_id : number,
     content_name : string,
     items : RoadMapItem[]
@@ -14,7 +14,7 @@ export type RoadMapItem = {
     order : number
 }
 
-export interface Activity {
+export type Activity = {
     activity : ActivityInfo,
     hint : ActivityHint,
     choice : MatchingChoice | MultipleChoice[] | CompletionChoice
@@ -77,7 +77,10 @@ export type ActivityResult = {
     updated_point : number
 }
 
-export interface ExaminationOverview {
+/**
+ * Response for examination overview page.
+ */
+export type ExaminationOverview = {
     pre_exam : ExamOverviewInfo,
     mini_exam : ExamOverviewInfo[],
     final_exam : ExamOverviewInfo

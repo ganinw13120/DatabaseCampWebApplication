@@ -1,4 +1,4 @@
-export interface Ranking {
+export type Ranking = {
     leader_board : UserRanking[],
     user_ranking : UserRanking
 }
@@ -9,7 +9,7 @@ export type UserRanking = {
     ranking : number,
     user_id : number
 }
-export interface User {
+export type User = {
     activity_count : number,
     badges : Badge[],
     created_timestamp : string,
@@ -18,7 +18,7 @@ export interface User {
     user_id : number,
 }
 
-export interface AuthUser extends User {
+export type AuthUser = User & {
     access_token : string,
     email : string,
     updated_timestamp : string
