@@ -3,16 +3,22 @@ import BaseView from "../BaseView";
 import "semantic-ui-css/semantic.min.css";
 import { inject, observer } from "mobx-react";
 import PointRankingViewModel from "../../view-model/app/PointRanking.ViewModel";
-import RankingItem from "./components/RankingItem.Component";
-import Header from "./components/Header.Component";
+import RankingItem from "./components/RankingItem";
+import Header from "./components/Header";
+import { RouteComponentProps, withRouter } from "react-router";
+import { AppStore } from "../../store/stores/AppStore";
+import { PointRankingStore } from "../../store/stores/PointRankingStore";
 
-export interface PointComponentState {}
+interface PointRankingProps extends RouteComponentProps {
+  appStore ?: AppStore,
+  pointRankingStore ?: PointRankingStore
+}
 
 @inject("pointRankingStore")
 @inject("appStore")
 @observer
-export default class PointRankingPage
-  extends React.Component<any, PointComponentState>
+class PointRankingPage
+  extends React.Component<PointRankingProps, {}>
   implements BaseView
 {
   private viewModel: PointRankingViewModel;
@@ -23,9 +29,9 @@ export default class PointRankingPage
   }
 
   public componentDidMount(): void {
-    const {isExpand} = this.props.appStore.store;
+    const {isExpand} = this.props.appStore!.store;
     if (!isExpand) {
-      this.props.appStore.setExpandWithDelay(true)
+      this.props.appStore!.setExpandWithDelay(true)
     }
     this.props.appStore!.hideStepper()
     this.viewModel.attachView(this);
@@ -36,17 +42,18 @@ export default class PointRankingPage
   onFinishFailed = () => {};
 
   public render(): JSX.Element {
-    const { isLoading, data } = this.props.pointRankingStore.store;
+    const { isLoading, data } = this.props.pointRankingStore!.store;
     return (
       <>
         <div className="font-prompt w-full p-12 px-10">
           <Header />
           <div className="mt-10">
+            {data && 
             <RankingItem
-              data={data == null ? null : data.user_ranking}
+              data={data.user_ranking}
               isLoading={isLoading}
               isHighlight={true}
-            />
+            />}
           </div>
 
           <div className=" w-full h-auto text-center align-middle mt-10">
@@ -74,3 +81,5 @@ export default class PointRankingPage
     );
   }
 }
+
+export default withRouter(PointRankingPage);

@@ -16,8 +16,8 @@ import { Modal, Button, Form, Input } from 'antd';
 
 interface ProfileComponentState {
   data: User | null,
-  isShowModal : boolean,
-  textAlertModal : string,
+  isShowModal: boolean,
+  textAlertModal: string,
 }
 
 var monthNamesThai = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.",
@@ -35,8 +35,8 @@ class ProfilePage extends Component<any, ProfileComponentState>
     this.profileViewModel = new ProfileViewModel();
     this.state = {
       data: null,
-      isShowModal : false,
-      textAlertModal : ''
+      isShowModal: false,
+      textAlertModal: ''
     }
     this.showEditModal = this.showEditModal.bind(this);
     this.hideEditModal = this.hideEditModal.bind(this);
@@ -51,7 +51,7 @@ class ProfilePage extends Component<any, ProfileComponentState>
   }
 
   public componentDidMount(): void {
-    const { isExpand } = this.props.appStore!.store ;
+    const { isExpand } = this.props.appStore!.store;
     if (!isExpand) {
       this.props.appStore!.setExpandWithDelay(true)
     }
@@ -63,20 +63,20 @@ class ProfilePage extends Component<any, ProfileComponentState>
     const alertText = this.profileViewModel.alertText;
     this.setState({
       data: this.profileViewModel.profileData,
-      isShowModal : alertText!=='',
-      textAlertModal : alertText
+      isShowModal: alertText !== '',
+      textAlertModal: alertText
     })
   }
 
-  private showEditModal () : void {
+  private showEditModal(): void {
     this.setState({
-      isShowModal : true
+      isShowModal: true
     })
   }
 
-  private hideEditModal () : void {
+  private hideEditModal(): void {
     this.setState({
-      isShowModal : false
+      isShowModal: false
     })
   }
 
@@ -90,46 +90,46 @@ class ProfilePage extends Component<any, ProfileComponentState>
     const { userData } = this.props.authStore.store;
     return (
       <>
-          <Modal
-              visible={isShowModal}
-              onCancel={this.hideEditModal}
-              footer={[
-                <>
-                <div className='flex font-prompt'>
-                  <div className=' w-32 ml-auto  rounded-lg'>
-                    <Button key="back" ghost className='w-full ' onClick={this.hideEditModal}>
-                      <span className='text-black'>ยกเลิก</span>
-                    </Button>
-                  </div>
-                    <div className='bg-primary w-32 ml-4 rounded-lg'>
-                      <Button key="back" ghost className='w-full' onClick={this.profileViewModel.submitChangeName}>
-                        บันทึก
-                      </Button>
-                    </div>
+        <Modal
+          visible={isShowModal}
+          onCancel={this.hideEditModal}
+          footer={[
+            <>
+              <div className='flex font-prompt'>
+                <div className=' w-32 ml-auto  rounded-lg'>
+                  <Button key="back" ghost className='w-full ' onClick={this.hideEditModal}>
+                    <span className='text-black'>ยกเลิก</span>
+                  </Button>
                 </div>
-                </>,
-              ]}
-            >
-              <div className='font-prompt gap-9'>
-              <div className='mb-10'>เปลี่ยนชื่อ </div>
-              <Form
+                <div className='bg-primary w-32 ml-4 rounded-lg'>
+                  <Button key="back" ghost className='w-full' onClick={this.profileViewModel.submitChangeName}>
+                    บันทึก
+                  </Button>
+                </div>
+              </div>
+            </>,
+          ]}
+        >
+          <div className='font-prompt gap-9'>
+            <div className='mb-10'>เปลี่ยนชื่อ </div>
+            <Form
               ref={this.profileViewModel.formRef}
               name="basic"
               autoComplete="off"
               className='mt-10'
-              >
-                <Form.Item name="name" className='mt-10'>
-                  <Input className='w-full' size="large" placeholder="ชื่อ" defaultValue={data?.name}/>
-                </Form.Item>
-              </Form>
-              </div>
-              <span className='text-red-500'> {textAlertModal} </span>
-            </Modal>
+            >
+              <Form.Item name="name" className='mt-10'>
+                <Input className='w-full' size="large" placeholder="ชื่อ" defaultValue={data?.name} />
+              </Form.Item>
+            </Form>
+          </div>
+          <span className='text-red-500'> {textAlertModal} </span>
+        </Modal>
         <div className="font-prompt bg-bg w-full h-auto">
           <div className='h-full text-white text-center align-middle justify-center '>
             <img src={Profilehead} alt="Logo2" className='object-none pt-20 mx-auto my-auto text-center' />
             <div className='text-5xl text-darkPrimary font-normal tracking-wider py-6 border-b-2 mx-16 border-gray'>
-              {data && userData? <>
+              {data && userData ? <>
                 <span>{data.name}
                   {userData.user_id === data.user_id && <img src={ProfilenameEdit} alt="Logo3" className='pl-4 inline object-none mx-auto my-auto text-center cursor-pointer' onClick={this.showEditModal} />}
                 </span>
@@ -158,7 +158,7 @@ class ProfilePage extends Component<any, ProfileComponentState>
                 </div>
                 <div className='w-auto flex'>
                   <img src={hat} alt="Logo4" className='object-none mx-auto my-auto' />
-                  <span className='ml-6 text-lg text-darkSecondary font-normal tracking-wider w-32 text-left my-auto'>{data.activity_count} บทเรียน</span>
+                  <span className='ml-6 text-lg text-darkSecondary font-normal tracking-wider w-32 text-left my-auto'>{data.activity_count} กิจกรรม</span>
                 </div>
               </> : <>
                 <Skeleton variant="text" className="w-5/6 mx-auto" />
@@ -166,7 +166,7 @@ class ProfilePage extends Component<any, ProfileComponentState>
             </div>
             {data ? <>
               <div className=' text-xl text-darkPrimary font-prompt font-semibold tracking-wider inline px-2 '>
-                <span>My Badge ({data.badges.filter(e=>e.is_collect).length})</span>
+                <span>My Badge ({data.badges.filter(e => e.is_collect).length})</span>
               </div>
             </> : <>
               <Skeleton variant="text" className="w-1/6 mx-auto" />

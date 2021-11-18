@@ -47,6 +47,7 @@ export class ExaminationStore {
 
   @action.bound
   async FetchExamOverview(): Promise<any> {
+    this.store.data = null;
     const { token } = this.rootStore.authStore.store;
     await this.learningRepository.fetchExamOverview(token).then(this.onFetchExamOverviewSuccess).catch((res) => {
       console.log(res)
