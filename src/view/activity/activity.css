@@ -35,6 +35,13 @@
     background-color: #eecd90;
 }
 
+.disabled-hint {
+    background-color: #eecd90;
+}
+.disabled-hint:hover {
+    cursor:not-allowed;
+}
+
 .hinttext {
     margin : auto;
 }

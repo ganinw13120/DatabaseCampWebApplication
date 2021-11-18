@@ -20,6 +20,7 @@ export class OverviewStore {
 
     const learningRepository = new LearningRepository();
     this.learningRepository = learningRepository;
+
   }
 
   @observable
@@ -29,6 +30,7 @@ export class OverviewStore {
 
   @action.bound
   async FetchOverview(): Promise<any> {
+    this.store.data = null;
     const { token } = this.rootStore.authStore.store;
     await this.learningRepository.fetchOverview(token).then(this.onFetchOverviewSuccess).catch((res) => {
       console.log(res)

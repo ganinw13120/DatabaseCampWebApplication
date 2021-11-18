@@ -52,12 +52,6 @@ class RegisterPage extends React.Component<any, RegisterComponentState>
     })
   }
 
-  onFinishFailed = () => {
-    // console.log("onFinishFailed")
-  }
-
- 
-
   public render(): JSX.Element {
     const { isLoading, displayText } = this.state
     return (
@@ -66,7 +60,6 @@ class RegisterPage extends React.Component<any, RegisterComponentState>
           ref={this.viewModel.formRef}
           name="basic"
           onFinish={this.viewModel.OnFinish}
-          onFinishFailed={this.onFinishFailed}
           autoComplete="off"
         >
             <div className="grid  md:grid-cols-2 h-screen font-prompt bg-bg">

@@ -26,7 +26,8 @@ export default class AlertTab extends Component<AlertProps, AlertState> {
 
                 </div>
                 <div className='flex-grow my-auto h-auto flex'  style={{backgroundColor : isSuccess ? greenAlert : redAlert}}>
-                    <img src={isSuccess ? SuccessIcon : Alerticon} alt="Alert" className='px-10 h-12 my-4' />
+                    <img src={Alerticon} alt="Alert" className={`px-10 h-12 my-4 ${isSuccess ? ' hidden' : ' '}`} />
+                    <img src={SuccessIcon} alt="Alert" className={`px-10 h-12 my-4 ${isSuccess ? ' ' : ' hidden'}`} />
                     <div className='text-left text-2xl font-medium my-auto'>
                         <span>
                             {feedback}

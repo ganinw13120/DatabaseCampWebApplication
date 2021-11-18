@@ -42,7 +42,6 @@ export class ExaminationStore {
     const res : ExamResult | null = await this.learningRepository.fetchExamResult(token, examId).then((res)=> {return res}).catch((res) => {
       return null
     })
-    console.log(res)
     return res; 
   }
 
@@ -88,7 +87,6 @@ export class ExaminationStore {
     })
     const { token } = this.rootStore.authStore.store;
     this.learningRepository.submitExam(token, answer).then((res : any)=>{
-      console.log(res)
       cb?.(res)
     })
   }

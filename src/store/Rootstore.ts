@@ -15,4 +15,5 @@ export default class RootStore {
   public learningStore = new LearningStore(this);
   public profileStore = new ProfileStore(this);
   public examinationStore = new ExaminationStore(this);
+
 }

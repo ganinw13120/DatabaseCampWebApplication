@@ -124,7 +124,6 @@ export class AuthStore{
       email: email,
       password : password,
     }).then(this.onRegisterSuccess).catch((err) => {
-      console.log(err)
       return {
         issuccess: false,
         message : err.message
