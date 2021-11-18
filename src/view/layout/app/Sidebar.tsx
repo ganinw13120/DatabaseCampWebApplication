@@ -52,7 +52,7 @@ class Sidebar extends React.Component <any, SidebarState>{
         <div className="pt-5 grid grid-rows-3 gap-5">
           <SideItem isExpand={isExpand} text='ภาพรวมเนื้อหา' icon={<AppstoreOutlined style={{ fontSize: 25 }} />} onClick={() => { this.onClickPage('overview') }} />
           
-          <SideItem isExpand={isExpand} text='การทดสอบ'  icon={<FileTextOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('examination') }}/>
+          <SideItem isExpand={isExpand} text='การทดสอบ'  icon={<FileTextOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('examination-overview') }}/>
           <SideItem  isExpand={isExpand} text='จัดลำดับคะแนน'  icon={<BarsOutlined  style={{fontSize:25}} />} onClick={() => { this.onClickPage('ranking') }}/>
         </div>
         <div className='absolute bottom-0 mb-8' style={{...widthBoxStyle, transition: "width 1s"}}>

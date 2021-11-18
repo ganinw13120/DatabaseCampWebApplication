@@ -55,11 +55,11 @@ const appRouteList : route[] = [
     page : <OverviewPage/>
   },
   {
-    url: '/examination',
+    url: '/examination-overview',
     page : <ExamOverviewPage/>
   },
   {
-    url: '/examination/start',
+    url: '/examination',
     page : <ExamPage/>
   },
   {
