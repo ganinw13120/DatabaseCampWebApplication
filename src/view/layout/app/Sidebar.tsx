@@ -38,7 +38,7 @@ class Sidebar extends React.Component <any, SidebarState>{
         <div className="pt-5 grid grid-rows-3 gap-5">
           <SideItem isExpand={isExpand} text='ภาพรวมเนื้อหา' icon={<AppstoreOutlined style={{ fontSize: 25 }} />} onClick={() => { this.onClickPage('overview') }} />
           
-          <SideItem isExpand={isExpand} text='การทดสอบ'  icon={<FileTextOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('examination') }}/>
+          <SideItem isExpand={isExpand} text='การทดสอบ'  icon={<FileTextOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('examination-overview') }}/>
           <SideItem  isExpand={isExpand} text='จัดลำดับคะแนน'  icon={<BarsOutlined  style={{fontSize:25}} />} onClick={() => { this.onClickPage('ranking') }}/>
         </div>
         <div className='absolute bottom-0 mb-8' style={{...widthBoxStyle, transition: "width 1s"}}>
@@ -63,7 +63,7 @@ class Sidebar extends React.Component <any, SidebarState>{
         </div>
         <div className="pt-5 grid grid-rows-3 gap-5">
           <SideItem isExpand={isExpand} text='ภาพรวมเนื้อหา' icon={<AppstoreOutlined style={{ fontSize: 25 }} />} onClick={() => { this.onClickPage('overview') }} />
-          <SideItem isExpand={isExpand} text='การทดสอบ'  icon={<FileTextOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('examination') }}/>
+          <SideItem isExpand={isExpand} text='การทดสอบ'  icon={<FileTextOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('examination-overview') }}/>
           <SideItem  isExpand={isExpand} text='จัดลำดับคะแนน'  icon={<BarsOutlined  style={{fontSize:25}} />} onClick={() => { this.onClickPage('ranking') }}/>
           <SideItem className='z-10' isExpand={isExpand} text={userData?.name} icon={<UserOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('profile?id=' + userData.user_id) }}/>
           <SideItem className='z-10' isExpand={isExpand} text='ออกจากระบบ' icon={<LogoutOutlined style={{ fontSize: 25 }}/>}  onClick={() => { this.onLogout();}} />
