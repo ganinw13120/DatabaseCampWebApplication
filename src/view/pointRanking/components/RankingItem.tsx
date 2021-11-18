@@ -1,16 +1,10 @@
 import { Skeleton } from "@mui/material";
 import { withRouter, RouteComponentProps  } from 'react-router-dom';
 import React from "react";
-
-type Ranking = {
-  user_id: number;
-  name: string;
-  point: number;
-  ranking: number;
-};
+import { UserRanking } from "../../../model/User";
 
 interface Props extends RouteComponentProps  {
-  data: Ranking;
+  data: UserRanking;
   isLoading: boolean;
   isHighlight: boolean;
 };
