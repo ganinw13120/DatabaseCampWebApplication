@@ -101,8 +101,8 @@ export type Exam = {
 }
 
 export type ExamActivity = {
-    info : ActivityInfo,
-    choices : MatchingChoice | MultipleChoice[] | CompletionChoice
+    activity : ActivityInfo,
+    choice : MatchingChoice | MultipleChoice[] | CompletionChoice
 }
 
 export type ExamInfo = {

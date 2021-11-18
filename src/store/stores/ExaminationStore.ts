@@ -69,7 +69,7 @@ export class ExaminationStore {
     }
     exam.activities.forEach((e, key : number) => {
       let res = result[key];
-      if (e.info.activity_type_id===1) {
+      if (e.activity.activity_type_id===1) {
         let temp: any = [];
         (res! as string[][]).forEach((e: any, key: number) => {
           temp.push({
@@ -80,7 +80,7 @@ export class ExaminationStore {
         res = temp;
       }
       let examAnswer : ExamAnswerActivity = {
-        activity_id : e.info.activity_id,
+        activity_id : e.activity.activity_id,
         answer : res
       }
       answer.activities.push(examAnswer);

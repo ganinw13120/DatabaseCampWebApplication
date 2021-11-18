@@ -90,7 +90,7 @@ class ExamPage
     const isHidden = !(currentActivity === act);
     return (<Fragment key={act}>
       <Requirement
-        activityInfo={data.info}
+        activityInfo={data.activity}
         roadMap={roadMap}
         submitText={act === examActivity.length - 1 ? 'ส่งคำตอบ' : "ถัดไป"}
         isHidden={isHidden}
@@ -108,16 +108,16 @@ class ExamPage
         </div>
         {
           data ? <> {(() => {
-            const { info: activity } = data;
+            const { activity } = data;
             const { activity_type_id: type } = activity;
             const act = (type: number) => {
-              if (type === 1) return <Matching info={data.choices as MatchingChoice} updateResult={updateActivityResult} />
-              else if (type === 2) return <MultipleChoiceComponent info={data.choices as MultipleChoice[]} updateResult={updateActivityResult} />
-              else if (type === 3) return <Completion info={data.choices as CompletionChoice} updateResult={updateActivityResult} />
+              if (type === 1) return <Matching info={data.choice as MatchingChoice} updateResult={updateActivityResult} />
+              else if (type === 2) return <MultipleChoiceComponent info={data.choice as MultipleChoice[]} updateResult={updateActivityResult} />
+              else if (type === 3) return <Completion info={data.choice as CompletionChoice} updateResult={updateActivityResult} />
             }
             return <>
               <div className='text-xl text-black font-sarabun tracking-wider mx-14 my-8'>
-                <span>{data.info.question}</span>
+                <span>{data.activity.question}</span>
               </div>
               {act(type)}
             </>

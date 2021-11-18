@@ -114,7 +114,7 @@ export default class ExamViewModel implements IExamViewModel {
   private validateResult = (key : number) : boolean => {
     const result = this.result[key];
     if (!this.exam?.activities[key] || !result) return false;
-    const {activity_type_id} = this.exam?.activities[key].info;
+    const {activity_type_id} = this.exam?.activities[key].activity;
     if (activity_type_id === 1) {
       return validateMatching(result as string[][])
     }
