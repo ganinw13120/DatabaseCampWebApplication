@@ -61,7 +61,7 @@ class PointRankingPage
               <>
                 {(() => {
                   let list: any = [];
-                  data.leader_board.slice().forEach((item: any, index: number) => {
+                  data.leader_board.slice().sort((a,b)=>a.name>b.name ? 1 : -1).sort((a,b)=>b.point-a.point).forEach((item: any, index: number) => {
                     list.push(
                       <RankingItem
                         key={index}
