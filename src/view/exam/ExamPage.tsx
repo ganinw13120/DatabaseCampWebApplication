@@ -41,7 +41,7 @@ class ExamPage
   implements BaseView {
   private examViewModel: ExamViewModel;
 
-  public constructor(props: any) {
+  public constructor(props: ExamPageProps) {
     super(props);
     this.props.appStore?.setPercent(0)
     const startActivity = -1;
@@ -150,7 +150,7 @@ class ExamPage
   }
 
   private returnOverview(): void {
-    return this.props.history.push('/examination');
+    return this.props.history.replace('/examination');
   }
 
   public render(): JSX.Element {

@@ -35,10 +35,10 @@ class Sidebar extends React.Component <OverviewProps, SidebarState>{
   }
   onLogout() {
     this.props.authStore!.Logout();
-    this.props.history.push('/login');
+    this.props.history.replace('/login');
   }
   onClickPage(url : string): void {
-    this.props.history.push('/' + url);
+    this.props.history.replace('/' + url);
   }
   setMobileExpand (target : boolean) : void {
     this.setState({
@@ -59,7 +59,7 @@ class Sidebar extends React.Component <OverviewProps, SidebarState>{
         <div className="pt-5 grid grid-rows-3 gap-5">
           <SideItem isExpand={isExpand} text='ภาพรวมเนื้อหา' icon={<AppstoreOutlined style={{ fontSize: 25 }} />} onClick={() => { this.onClickPage('overview') }} />
           
-          <SideItem isExpand={isExpand} text='การทดสอบ'  icon={<FileTextOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('examination-overview') }}/>
+          <SideItem isExpand={isExpand} text='การทดสอบ'  icon={<FileTextOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('examination/overview') }}/>
           <SideItem  isExpand={isExpand} text='จัดลำดับคะแนน'  icon={<BarsOutlined  style={{fontSize:25}} />} onClick={() => { this.onClickPage('ranking') }}/>
         </div>
         <div className='absolute bottom-0 mb-8' style={{...widthBoxStyle, transition: "width 1s"}}>
@@ -70,7 +70,7 @@ class Sidebar extends React.Component <OverviewProps, SidebarState>{
               <RightOutlined  style={{fontSize:25}} />
             </div>
           </div>
-          <SideItem className='z-10' isExpand={isExpand} text={userData?.name} icon={<UserOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('profile?id=' + userData?.user_id) }}/>
+          <SideItem className='z-10' isExpand={isExpand} text={userData?.name} icon={<UserOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('profile/' + userData?.user_id) }}/>
           <SideItem className='z-10' isExpand={isExpand} text='ออกจากระบบ' icon={<LogoutOutlined style={{ fontSize: 25 }}/>}  onClick={() => { this.onLogout();}} />
         </div>
       </div>
@@ -86,9 +86,9 @@ class Sidebar extends React.Component <OverviewProps, SidebarState>{
         </div>
         <div className="pt-5 grid grid-rows-3 gap-5">
           <SideItem isExpand={true} text='ภาพรวมเนื้อหา' icon={<AppstoreOutlined style={{ fontSize: 25 }} />} onClick={() => { this.onClickPage('overview');this.setMobileExpand(false); }} />
-          <SideItem isExpand={true} text='การทดสอบ'  icon={<FileTextOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('examination');this.setMobileExpand(false); }}/>
+          <SideItem isExpand={true} text='การทดสอบ'  icon={<FileTextOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('examination/overview');this.setMobileExpand(false); }}/>
           <SideItem  isExpand={true} text='จัดลำดับคะแนน'  icon={<BarsOutlined  style={{fontSize:25}} />} onClick={() => { this.onClickPage('ranking');this.setMobileExpand(false); }}/>
-          <SideItem className='z-10' isExpand={true} text={userData?.name} icon={<UserOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('profile?id=' + userData?.user_id);this.setMobileExpand(false); }}/>
+          <SideItem className='z-10' isExpand={true} text={userData?.name} icon={<UserOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('profile/' + userData?.user_id);this.setMobileExpand(false); }}/>
           <SideItem className='z-10' isExpand={true} text='ออกจากระบบ' icon={<LogoutOutlined style={{ fontSize: 25 }}/>}  onClick={() => { this.onLogout();}} />
           <SideItem className='z-10' isExpand={true} text='ปิดหน้าต่าง' icon={<CloseOutlined  style={{ fontSize: 25 }} className='my-auto'   />}  onClick={()=>{this.setMobileExpand(false); }} />
         </div>

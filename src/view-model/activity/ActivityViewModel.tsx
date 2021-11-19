@@ -21,10 +21,8 @@ export default class ActivityViewModel implements IActivityViewModel {
 
   public attachView = async (baseView: BaseView): Promise<any> => {
     this.baseView = baseView;
-    const search = baseView.props.location.search
-    const activityID = new URLSearchParams(search).get('id');
-    if (!activityID) baseView.props.history.push('/overview')
-    
+    const activityID = baseView.props.match.params?.id;
+    if (!activityID) baseView.props.history.replace('/overview')
     if (!baseView.props.learningStore.store.roadMap) baseView.props.appStore.setStepper(generateEmptyStepper())
     else {
       this.generateStepperFromStore();
@@ -88,9 +86,9 @@ export default class ActivityViewModel implements IActivityViewModel {
     this.baseView?.props.learningStore.clearActivity();
     const next = this.getNextActivityId();
     if (!next) {
-      this.baseView?.props.history.push('/overview')
+      this.baseView?.props.history.replace('/overview')
     } else {
-      this.baseView?.props.history.push(`/activity?id=${next}`)
+      this.baseView?.props.history.replace(`/learning/activity/${next}`)
     }
   }
   private movePrev = () : void => {
@@ -103,11 +101,11 @@ export default class ActivityViewModel implements IActivityViewModel {
     if (!prev) {
       const content_id = this.activityInfo?.activity.content_id;
       if (!content_id)
-        this.baseView?.props.history.push('/overview')
+        this.baseView?.props.history.replace('/overview')
       else 
-        this.baseView?.props.history.push('/content?id=' + content_id)  
+        this.baseView?.props.history.replace('/learning/content/' + content_id)  
     } else {
-      this.baseView?.props.history.push(`/activity?id=${prev}`)
+      this.baseView?.props.history.replace(`/learning/activity/${prev}`)
     }
   }
 

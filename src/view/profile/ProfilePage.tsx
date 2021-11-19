@@ -47,9 +47,8 @@ class ProfilePage extends Component<any, ProfileComponentState>
     this.hideEditModal = this.hideEditModal.bind(this);
   }
   componentDidUpdate(): void {
-    const search = this.props.location.search
     const { data } = this.state;
-    const profileId = new URLSearchParams(search).get('id');
+    const profileId = this.props.match.params?.id;
     if (data && profileId && profileId !== data.user_id.toString()) {
       this.profileViewModel.attachView(this);
     }

@@ -71,8 +71,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
 
   componentDidUpdate(): void {
     let { activityInfo } = this.state;
-    const search = this.props.location.search
-    const activityID = new URLSearchParams(search).get('id');
+    const activityID = (this.props.match.params as any).id;
     if (activityInfo && activityInfo?.activity?.activity_id.toString() !== activityID) {
       this.activityViewModel.attachView(this);
       this.setState({ activityInfo: null })

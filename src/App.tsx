@@ -55,23 +55,23 @@ const appRouteList : route[] = [
     page : <OverviewPage/>
   },
   {
-    url: '/examination-overview',
+    url: '/examination/overview',
     page : <ExamOverviewPage/>
   },
   {
-    url: '/examination',
+    url: '/examination/:id',
     page : <ExamPage/>
   },
   {
-    url: '/profile',
+    url: '/profile/:id',
     page : <ProfilePage/>
   },
   {
-    url: '/activity',
+    url: '/learning/activity/:id',
     page : <Activity/>
   },
   {
-    url: '/content',
+    url: '/learning/content/:id',
     page: <LecturePage />
   },
   {
@@ -79,7 +79,7 @@ const appRouteList : route[] = [
     page : <PointRankingPage/>
   },
   {
-    url: '/result',
+    url: '/examination/result/:id',
     page : <ExamResultPage/>
   },
 ];

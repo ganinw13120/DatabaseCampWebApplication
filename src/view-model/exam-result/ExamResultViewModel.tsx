@@ -17,9 +17,8 @@ export default class ActivityViewModel implements IProfileViewModel {
 
   public attachView = async (baseView: BaseView): Promise<any> => {
     this.baseView = baseView;
-    const search = baseView.props.location.search
-    const exam_id = new URLSearchParams(search).get('id');
-    if (!exam_id) baseView.props.history.push('/examination');
+    const exam_id = baseView.props.match.params.id;
+    if (!exam_id) baseView.props.history.replace('/examination');
     baseView?.props.appStore?.setPercent(40)
     const res = await baseView?.props.examinationStore.FetchResult(exam_id)
     this.baseView?.props.appStore?.setPercent(100)

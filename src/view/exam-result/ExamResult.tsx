@@ -43,9 +43,8 @@ class ExamResultPage extends Component<ExamPageProps, ProfileComponentState>
     }
   }
   componentDidUpdate(): void {
-    const search = this.props.location.search
     const { data } = this.state;
-    const exam_result_id = new URLSearchParams(search).get('id');
+    const exam_result_id = (this.props.match.params as any).id;
     if (data && exam_result_id && exam_result_id !== data.exam_result_id.toString()) {
       this.examResultViewModel.attachView(this);
     }

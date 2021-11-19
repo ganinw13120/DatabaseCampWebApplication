@@ -12,9 +12,8 @@ export default class LectureViewModel implements ILectureViewModel {
   }
   public attachView = async (baseView: BaseView): Promise<any> => {
     this.baseView = baseView;
-    const search = baseView.props.location.search
-    const contentID = new URLSearchParams(search).get('id');
-    if (!contentID) baseView.props.history.push('/overview')
+    const contentID = baseView.props.match.params?.id;
+    if (!contentID) baseView.props.history.replace('/overview')
     baseView.props.appStore.setStepper(generateEmptyStepper())
     baseView?.props.appStore?.setPercent(40)
     baseView.props.learningStore.FetchRoadmap(contentID,(res : RoadMap)=>{  
@@ -37,7 +36,7 @@ export default class LectureViewModel implements ILectureViewModel {
     const { roadMap } = this.baseView?.props.learningStore.store;
     if (roadMap.items.length !== 0) {
       const nextActivity = roadMap.items.sort((a: any, b: any) => a.order - b.order)[0];
-      this.baseView?.props.history.push('/activity?id=' + nextActivity.activity_id);
+      this.baseView?.props.history.replace('/learning/activity/' + nextActivity.activity_id);
     } else {
       notification['error']({
         message: "โอ้ววว ไม่นะ",

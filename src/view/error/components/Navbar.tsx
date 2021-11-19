@@ -21,7 +21,7 @@ class Navbar extends React.Component<any, any> {
     window.removeEventListener('scroll', this.handleScroll, false);
   }
   loadPage(url: string) {
-    this.props.history.push('/' + url);
+    this.props.history.replace('/' + url);
   }
   public render(): JSX.Element {
     const { offSetY } = this.state;

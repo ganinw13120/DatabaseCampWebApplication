@@ -24,9 +24,9 @@ export default class ExamViewModel implements IExamViewModel {
   public attachView = (baseView: BaseView): void => {
     this.baseView = baseView;
     
-    baseView?.props.appStore?.setPercent(40)
-    const search = baseView.props.location.search
-    const examId = new URLSearchParams(search).get('id');
+    baseView?.props.appStore?.setPercent(40);
+    const examId = baseView.props.match.params?.id;
+    if (!examId) baseView.props.history.replace('/examination/overview');
     baseView.props.examinationStore.FetchExam(examId).then((res : Exam) => {
       this.exam = res;
       baseView.onViewModelChanged();
@@ -86,7 +86,7 @@ export default class ExamViewModel implements IExamViewModel {
       this.isLoading = true;
       this.baseView?.onViewModelChanged();
       this.baseView!.props.examinationStore.submitExam(this.result, this.exam, (res : any)=>{
-        this.baseView?.props.history.push('/result?id=' + res.exam_result_id);
+        this.baseView?.props.history.replace('/examination/result/' + res.exam_result_id);
       })
     }
     this.setStepper();

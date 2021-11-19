@@ -17,7 +17,7 @@ class HeaderCard extends React.Component<HeaderCardProps, {}>{
   private onClickContinue () : void {
     // const { content_id } = this.props.overviewStore!.store.data?.lasted_group;
     const {content_id} = this.props.data;
-    this.props.history.push('/content?id=' + content_id);
+    this.props.history.replace('/learning/content/' + content_id);
   }
   public render(): JSX.Element {
     const { content_name, group_name, progress  } = this.props.data;
