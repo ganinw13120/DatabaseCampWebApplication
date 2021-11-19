@@ -9,6 +9,10 @@ import { RouteComponentProps, withRouter } from "react-router";
 import { AppStore } from "@store/stores/AppStore";
 import { PointRankingStore } from "@store/stores/PointRankingStore";
 
+export interface IPointRanking extends BaseView {
+  props : PointRankingProps
+}
+
 interface PointRankingProps extends RouteComponentProps {
   appStore ?: AppStore,
   pointRankingStore ?: PointRankingStore
@@ -19,7 +23,7 @@ interface PointRankingProps extends RouteComponentProps {
 @observer
 class PointRankingPage
   extends React.Component<PointRankingProps, {}>
-  implements BaseView
+  implements IPointRanking
 {
   private viewModel: PointRankingViewModel;
 

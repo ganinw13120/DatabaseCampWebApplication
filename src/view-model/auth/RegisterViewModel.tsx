@@ -1,7 +1,8 @@
 import React from 'react';
 import IAuthViewModel from './IAuthViewModel';
-import BaseView from '@view/BaseView';
 import { FormInstance } from 'antd/es/form';
+
+import { IRegisterPage } from '@view/register/RegisterPage';
 
 
 export default class RegisterViewModel implements IAuthViewModel {
@@ -10,7 +11,7 @@ export default class RegisterViewModel implements IAuthViewModel {
     public displayText: string;
     public isLoading: boolean;
 
-    private baseView?: BaseView;
+    private baseView?: IRegisterPage;
 
     public constructor() {
         this.isLoading = false;
@@ -18,7 +19,7 @@ export default class RegisterViewModel implements IAuthViewModel {
         this.formRef = React.createRef<FormInstance>();
     }
 
-    public attachView = (baseView: BaseView): void => {
+    public attachView = (baseView: IRegisterPage): void => {
         this.baseView = baseView;
     };
 
@@ -28,8 +29,8 @@ export default class RegisterViewModel implements IAuthViewModel {
     public OnFinish = async (): Promise<void> => {
         this.isLoading = true;
         this.baseView?.onViewModelChanged();
-        
-        await this.baseView?.props.authStore.Register(
+
+        await this.baseView?.props.authStore!.Register(
             this.formRef?.current?.getFieldValue("name"),
             this.formRef?.current?.getFieldValue("email"),
             this.formRef?.current?.getFieldValue("password"),
@@ -47,10 +48,10 @@ export default class RegisterViewModel implements IAuthViewModel {
         this.baseView?.props?.history?.push('/login');
     }
 
-    public matchPassword = (_ : any, val : string, callback : any) : void => {
+    public matchPassword = (_: any, val: string, callback: any): void => {
         if (val === this.formRef?.current?.getFieldValue("password")) {
             callback();
-        } else if(val) {
+        } else if (val) {
             callback("รหัสผ่านไม่ตรงกัน")
         } else {
             callback("กรุณากรอกรหัสผ่าน")

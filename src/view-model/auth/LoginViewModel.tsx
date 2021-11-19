@@ -1,6 +1,6 @@
 import React from 'react';
 import IAuthViewModel from './IAuthViewModel';
-import BaseView from '@view/BaseView';
+import { ILoginPage } from '@view/login/LoginPage';
 import { FormInstance } from 'antd/es/form';
 
 
@@ -10,7 +10,7 @@ export default class LoginViewModel implements IAuthViewModel {
   public displayText: string;
   public isLoading: boolean;
 
-  private baseView?: BaseView;
+  private baseView?: ILoginPage;
 
   public constructor() {
     this.isLoading = false;
@@ -18,7 +18,7 @@ export default class LoginViewModel implements IAuthViewModel {
     this.formRef = React.createRef<FormInstance>();
   }
 
-  public attachView = (baseView: BaseView): void => {
+  public attachView = (baseView: ILoginPage): void => {
     this.baseView = baseView;
   };
 
@@ -29,7 +29,7 @@ export default class LoginViewModel implements IAuthViewModel {
   public OnFinish = async (): Promise<void> => {
     this.isLoading = true;
     this.baseView?.onViewModelChanged();
-    await this.baseView?.props.authStore.Login(
+    await this.baseView!.props.authStore!.Login(
       this.formRef?.current?.getFieldValue("email"),
       this.formRef?.current?.getFieldValue("password"),
       async (res: { issuccess: boolean, message: string }) => {

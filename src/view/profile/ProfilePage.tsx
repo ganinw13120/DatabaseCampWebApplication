@@ -10,7 +10,7 @@ import './profile.css';
 
 import ProfileViewModel from '@view-model/profile/ProfileViewModel';
 
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 
 import Skeleton from '@mui/material/Skeleton';
@@ -18,6 +18,22 @@ import Skeleton from '@mui/material/Skeleton';
 import { User } from '@model/User';
 
 import { Modal, Button, Form, Input } from 'antd';
+import { AppStore } from '@store/stores/AppStore';
+import { AuthStore } from '@store/stores/AuthStore';
+import { ProfileStore } from '@store/stores/ProfileStore';
+
+
+export interface IProfilePage extends BaseView {
+  props : ProfilePageProps,
+}
+
+interface ProfilePageProps extends RouteComponentProps <{
+  id : string
+}> {
+  appStore ?: AppStore,
+  profileStore ?: ProfileStore,
+  authStore ?: AuthStore,
+}
 
 interface ProfileComponentState {
   data: User | null,
@@ -32,8 +48,8 @@ var monthNamesThai = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ
 @inject('authStore')
 @inject('appStore')
 @observer
-class ProfilePage extends Component<any, ProfileComponentState>
-  implements BaseView {
+class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
+  implements IProfilePage {
   private profileViewModel: ProfileViewModel;
   public constructor(props: any) {
     super(props);
@@ -91,7 +107,7 @@ class ProfilePage extends Component<any, ProfileComponentState>
     const { data, isShowModal, textAlertModal } = this.state;
     const date = data ? new Date(data.created_timestamp) : ''
     const dateString = date ? +date.getDate() + " " + monthNamesThai[date.getMonth()] + "  " + date.getFullYear() : '';
-    const { userData } = this.props.authStore.store;
+    const { userData } = this.props.authStore!.store;
     return (
       <>
         <Modal
