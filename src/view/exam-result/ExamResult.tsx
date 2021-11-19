@@ -76,7 +76,7 @@ class ExamResultPage extends Component<ExamPageProps, ProfileComponentState>
     return (
       <>{ data && 
         <div className='w-full h-auto m-auto'>
-          <div className='my-44 mx-auto text-center h-1/4'>
+          <div className='my-36 mx-auto text-center h-1/4'>
             <img src={data.is_passed ? SuccessIcon : Alerticon} alt='alert' className='m-auto my-auto h-72 py-10' />
             {data.is_passed ? 
             <h1 className='font-prompt text-3xl md:text-5xl my-10'>ยินดีด้วย!</h1> :

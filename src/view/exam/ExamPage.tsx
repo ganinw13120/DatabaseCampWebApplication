@@ -20,6 +20,10 @@ import AlertTab from '../activity/components/AlertTab';
 import { CircularProgress } from '@mui/material';
 import { green } from '@mui/material/colors';
 
+export interface IExamPage extends BaseView {
+  props : ExamPageProps
+}
+
 interface ExamPageState {
   exam: Exam | null,
   currentActivity: number,
@@ -27,7 +31,9 @@ interface ExamPageState {
   isLoading: boolean
 }
 
-interface ExamPageProps extends RouteComponentProps {
+interface ExamPageProps extends RouteComponentProps<{
+  id : string
+}> {
   appStore?: AppStore,
   examinationStore?: ExaminationStore,
 }
@@ -38,7 +44,7 @@ interface ExamPageProps extends RouteComponentProps {
 
 class ExamPage
   extends Component<ExamPageProps, ExamPageState>
-  implements BaseView {
+  implements IExamPage {
   private examViewModel: ExamViewModel;
 
   public constructor(props: ExamPageProps) {
@@ -72,6 +78,15 @@ class ExamPage
       this.props.appStore!.setExpandWithDelay(false)
     }
     this.examViewModel.attachView(this);
+  }
+
+  componentDidUpdate(): void {
+    // let { exam } = this.state;
+    // const examId = this.props.match.params.id;
+    // if (examId && exam?.exam.exam_id.toString() !== examId) {
+    //   this.examViewModel.attachView(this);
+    //   this.setState({ exam: null })
+    // }
   }
 
   private getCurrentActivity(act: number, currentActivity: number): ReactElement | null {

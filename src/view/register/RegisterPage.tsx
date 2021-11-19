@@ -1,31 +1,40 @@
-import React from 'react';
+import { Component } from 'react';
 import BaseView from '@view/BaseView';
 import FullLogo from '@assets/high-res-full-logo.png';
 import RegisterViewModel from '@view-model/auth/RegisterViewModel';
 import { Form, Input, Button  } from 'antd';
 import { KeyOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { inject, observer } from 'mobx-react';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import validateEmail from '@util/validateEmail';
 import validatePassword from '@util/validatePassword';
+import { AppStore } from '@store/stores/AppStore';
+import { AuthStore } from '@store/stores/AuthStore';
 
-export interface RegisterComponentState {
+export interface IRegisterPage extends BaseView {
+  props : RegisterProps
+}
+
+interface RegisterProps extends RouteComponentProps {
+  appStore ?: AppStore,
+  authStore ?: AuthStore
+}
+
+interface RegisterComponentState {
   isLoading: boolean
   displayText : string
 }
 
 @inject('appStore')
 @inject('authStore')
-  
-
 @observer
-class RegisterPage extends React.Component<any, RegisterComponentState>
-  implements BaseView {
+class RegisterPage extends Component<RegisterProps, RegisterComponentState>
+  implements IRegisterPage {
   
   private viewModel: RegisterViewModel;
   
-  public constructor(props: any) {
+  public constructor(props: RegisterProps) {
     super(props);
     this.props.appStore?.setPercent(0)
 

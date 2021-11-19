@@ -1,12 +1,14 @@
 import React from 'react';
 import IProfileViewModel from './IProfileViewModel';
-import BaseView from '@view/BaseView';
+
+import { IProfilePage } from '@view/profile/ProfilePage';
+
 import { FormInstance } from 'antd/es/form';
 
 import { User } from '@model/User';
 
 export default class ActivityViewModel implements IProfileViewModel {
-  private baseView?: BaseView;
+  private baseView?: IProfilePage;
   public formRef?: React.RefObject<FormInstance<any>>;
   public profileData : User | null;
   public alertText : string;
@@ -17,12 +19,12 @@ export default class ActivityViewModel implements IProfileViewModel {
     this.formRef = React.createRef<FormInstance>();
   }
 
-  public attachView = async (baseView: BaseView): Promise<any> => {
+  public attachView = async (baseView: IProfilePage): Promise<any> => {
     this.baseView = baseView;
-    const profileId = baseView.props.match.params?.id;
+    const profileId = parseInt(baseView.props.match.params?.id);
     if (!profileId) baseView.props.history.replace('/overview');
     baseView?.props.appStore?.setPercent(40)
-    baseView.props.profileStore.FetchUserProfile(profileId, (res : User)=>{
+    baseView.props.profileStore!.FetchUserProfile(profileId, (res : User)=>{
       this.profileData = res;
       this.baseView?.props.appStore?.setPercent(100)
       this.baseView?.onViewModelChanged();
@@ -47,7 +49,7 @@ export default class ActivityViewModel implements IProfileViewModel {
     }
     this.alertText = '';
     this.baseView?.onViewModelChanged();
-    this.baseView?.props.profileStore.UpdateName(this.formRef?.current?.getFieldValue('name'), (res : any) => {
+    this.baseView?.props.profileStore!.UpdateName(this.formRef?.current?.getFieldValue('name'), (res : any) => {
       let temp = this.profileData;
       temp!.name = res.updated_name;
       this.profileData = temp;
