@@ -1,17 +1,26 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Progress } from 'semantic-ui-react'
+
+import {Content} from '@model/Learning';
+import { OverviewStore } from '@store/stores/OverviewStore';
+
+interface HeaderCardProps extends RouteComponentProps {
+  data : Content,
+  overviewStore ?: OverviewStore
+}
 
 @inject('overviewStore')
 @observer
-class HeaderCard extends React.Component<any, any>{
+class HeaderCard extends React.Component<HeaderCardProps, {}>{
   private onClickContinue () : void {
-    const { content_id } = this.props.overviewStore.store.data?.lasted_group;
+    // const { content_id } = this.props.overviewStore!.store.data?.lasted_group;
+    const {content_id} = this.props.data;
     this.props.history.push('/content?id=' + content_id);
   }
   public render(): JSX.Element {
-    const { content_name, group_name, progress  } = this.props.overviewStore.store.data?.lasted_group;
+    const { content_name, group_name, progress  } = this.props.data;
     return (
       <>
         <div className='w-full h-auto text-center align-middle mt-10'>

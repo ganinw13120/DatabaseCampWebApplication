@@ -4,29 +4,37 @@ import HalfLeftLogo from '../../../assets/halfleftlogo.png';
 import HalfRightLogo from '../../../assets/halfrightlogo.png';
 import { AppstoreOutlined, FileTextOutlined, BarsOutlined, UserOutlined, LogoutOutlined, RightOutlined, CloseOutlined, MenuOutlined } from '@ant-design/icons';
 import { inject, observer } from 'mobx-react';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import Skeleton from '@mui/material/Skeleton';
 
 
 import Tooltip from '@mui/material/Tooltip';
+import { AppStore } from "@store/stores/AppStore";
+import { AuthStore } from "@store/stores/AuthStore";
+import { OverviewStore } from "@store/stores/OverviewStore";
 
 interface SidebarState {
   isMobileExpand: boolean
 }
 
+interface OverviewProps extends RouteComponentProps {
+  appStore ?: AppStore,
+  overviewStore ?: OverviewStore,
+  authStore ?: AuthStore,
+}
 
 @inject('authStore')
 @inject('appStore')
 @observer
-class Sidebar extends React.Component <any, SidebarState>{
-  constructor (props : any) {
+class Sidebar extends React.Component <OverviewProps, SidebarState>{
+  constructor (props : OverviewProps) {
     super (props);
     this.state = {
       isMobileExpand : false
     }
   }
   onLogout() {
-    this.props.authStore.Logout();
+    this.props.authStore!.Logout();
     this.props.history.push('/login');
   }
   onClickPage(url : string): void {
@@ -38,11 +46,10 @@ class Sidebar extends React.Component <any, SidebarState>{
     })
   }
   render(): JSX.Element {
-    const { isExpand } = this.props.appStore.store;
+    const { isExpand } = this.props.appStore!.store;
     const {isMobileExpand} = this.state;
     const widthBoxStyle = { width: isExpand ? 320 : 90 };
-    const { userData } = this.props.authStore.store;
-    console.log(isExpand)
+    const { userData } = this.props.authStore!.store;
     return <>
       <div className='flex-none sticky md:block hidden top-0 bg-primary text-white h-screen z-20' style={{ boxShadow: '0 4px 4px #000', transition: "width 1s", ...widthBoxStyle}}>
         <div className={`cursor-pointer flex flex-none inline h-auto pb-7 mt-7 w-8/12 mx-auto ${isExpand ? '' : 'pl-3'} `} style={{borderBottom:'0.5px solid #BBBFC0', transition: "all 0.5s"}} onClick={() => { this.onClickPage('overview') }}>
@@ -58,12 +65,12 @@ class Sidebar extends React.Component <any, SidebarState>{
         <div className='absolute bottom-0 mb-8' style={{...widthBoxStyle, transition: "width 1s"}}>
           <div className='w-12 h-24'>
             <div className='bg-darkPrimary toggleBtn  text-center align-middle justify-center' onClick={() => {
-              this.props.appStore.setExpand(!isExpand);
+              this.props.appStore!.setExpand(!isExpand);
             }} style={{ transition: 'transform .2s ease-in-out', transform: isExpand ? '' : 'rotate(180deg)' }}>
               <RightOutlined  style={{fontSize:25}} />
             </div>
           </div>
-          <SideItem className='z-10' isExpand={isExpand} text={userData?.name} icon={<UserOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('profile?id=' + userData.user_id) }}/>
+          <SideItem className='z-10' isExpand={isExpand} text={userData?.name} icon={<UserOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('profile?id=' + userData?.user_id) }}/>
           <SideItem className='z-10' isExpand={isExpand} text='ออกจากระบบ' icon={<LogoutOutlined style={{ fontSize: 25 }}/>}  onClick={() => { this.onLogout();}} />
         </div>
       </div>
@@ -81,7 +88,7 @@ class Sidebar extends React.Component <any, SidebarState>{
           <SideItem isExpand={true} text='ภาพรวมเนื้อหา' icon={<AppstoreOutlined style={{ fontSize: 25 }} />} onClick={() => { this.onClickPage('overview');this.setMobileExpand(false); }} />
           <SideItem isExpand={true} text='การทดสอบ'  icon={<FileTextOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('examination');this.setMobileExpand(false); }}/>
           <SideItem  isExpand={true} text='จัดลำดับคะแนน'  icon={<BarsOutlined  style={{fontSize:25}} />} onClick={() => { this.onClickPage('ranking');this.setMobileExpand(false); }}/>
-          <SideItem className='z-10' isExpand={true} text={userData?.name} icon={<UserOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('profile?id=' + userData.user_id);this.setMobileExpand(false); }}/>
+          <SideItem className='z-10' isExpand={true} text={userData?.name} icon={<UserOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('profile?id=' + userData?.user_id);this.setMobileExpand(false); }}/>
           <SideItem className='z-10' isExpand={true} text='ออกจากระบบ' icon={<LogoutOutlined style={{ fontSize: 25 }}/>}  onClick={() => { this.onLogout();}} />
           <SideItem className='z-10' isExpand={true} text='ปิดหน้าต่าง' icon={<CloseOutlined  style={{ fontSize: 25 }} className='my-auto'   />}  onClick={()=>{this.setMobileExpand(false); }} />
         </div>

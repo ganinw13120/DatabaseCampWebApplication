@@ -56,7 +56,6 @@ export default class LearningRepository {
         }
       }).then(res => {
         const { data } = res;
-        console.log(data)
         resolve(data)
       }).catch(res=>{
         reject(res.message)

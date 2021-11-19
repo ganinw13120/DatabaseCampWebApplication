@@ -17,7 +17,11 @@ import {AppStore} from '@store/stores/AppStore';
 import {OverviewStore} from '@store/stores/OverviewStore';
 import {AuthStore} from '@store/stores/AuthStore';
 
-export interface OverviewComponentState {}
+import {Overview} from '@model/Learning';
+
+interface OverviewState {
+  data : Overview | null
+}
 
 interface OverviewProps extends RouteComponentProps {
   appStore ?: AppStore,
@@ -31,7 +35,7 @@ interface OverviewProps extends RouteComponentProps {
 @observer
 
 class OverviewPage
-  extends React.Component<OverviewProps, OverviewComponentState>
+  extends React.Component<OverviewProps, OverviewState>
   implements BaseView
 {
   private overviewViewModel: OverviewViewModel;
@@ -41,10 +45,18 @@ class OverviewPage
     this.props.appStore?.setPercent(0)
     const overviewViewModel = new OverviewViewModel();
 
+    this.state = {
+      data : null
+    }
+
     this.overviewViewModel = overviewViewModel;
   }
 
-  public onViewModelChanged(): void {}
+  public onViewModelChanged(): void {
+    this.setState({
+      data : this.overviewViewModel.data
+    })
+  }
 
   public componentDidMount(): void {
     const { isExpand } = this.props.appStore!.store ;
@@ -56,7 +68,7 @@ class OverviewPage
   }
 
   public render(): JSX.Element {
-    const { data } = this.props.overviewStore!.store;
+    const { data } = this.state;
     const {userData} = this.props.authStore!.store;
     return (
       <>
@@ -82,7 +94,7 @@ class OverviewPage
               <Skeleton variant="text" className="w-full" />
             )}
           </div>
-          {!data  ? <HeaderSkeleton variant="h1" /> : data.lasted_group && <HeaderCard /> }
+          {!data  ? <HeaderSkeleton variant="h1" /> : data.lasted_group && <HeaderCard data={data.lasted_group}/> }
           {!data ? (
             <SkeletonCard />
           ) : (
