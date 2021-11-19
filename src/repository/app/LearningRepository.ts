@@ -5,6 +5,18 @@ import {Overview, Lecture, RoadMap, Activity, Hint, Answer, ExaminationOverview,
 
 export default class LearningRepository {
   
+  /**
+   * Fetch `Examination Result` data on examination result page.
+   * 
+   * @remarks
+   * This method is part of repository, connect to backend service.
+   * 
+   * @param token for authentication
+   * 
+   * @param exam_id for target examination
+   * 
+   * @return ExamResult 
+   */
   public async fetchExamResult(token: string, exam_id : number) : Promise<ExamResult> {
     return new Promise((resolve, reject) => {
       axios.get<ExamResult>(`${API_BASE_URL}/exam/result/${exam_id}` , {
@@ -20,6 +32,18 @@ export default class LearningRepository {
     })
   }
   
+  /**
+   * Submit `Examination` result.
+   * 
+   * @remarks
+   * This method is part of repository, connect to backend service.
+   * 
+   * @param token for authentication
+   * 
+   * @param result answer of examination
+   * 
+   * @return Result including lead to result page
+   */
   public async submitExam(token: string, result : ExamAnswer): Promise<object> {
     return new Promise((resolve, reject) => {
       axios.post(`${API_BASE_URL}/exam/check`, result, {

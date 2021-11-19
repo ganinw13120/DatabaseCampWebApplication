@@ -1,13 +1,13 @@
 /**
- * Store _Stepper_ information shown on stepper.
+ * Store `Stepper` information shown on stepper.
  * 
- * _steps_ : Steps information
+ * `steps` : Steps information
  * 
- * _currentStep_ : Current step index
+ * `currentStep` : Current step index
  * 
- * _onNext_ : Function which will be trigger on click next
+ * `onNext` : Function which will be trigger on click next
  * 
- * _onPrev_ : Function which will be trigger on click previous
+ * `onPrev` : Function which will be trigger on click previous
  */
 export type Stepper = {
     steps : Step[],

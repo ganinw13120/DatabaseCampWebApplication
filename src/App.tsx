@@ -1,17 +1,21 @@
 import { Component, ReactElement } from 'react';
-import './App.css';
-import LandingPage from "./view/landing-page";
-import LoginPage from "./view/login";
-import RegisterPage from "./view/register";
 
-import OverviewPage from './view/overview';
-import ExamPage from './view/exam';
-import ExamOverviewPage from './view/exam-overview';
-import ProfilePage from './view/profile';
-import Activity from './view/activity';
-import LecturePage from './view/lecture';
-import PointRankingPage from './view/pointRanking';
-import ExamResultPage from './view/exam-result';
+import '@root/App.css';
+
+import LandingPage from "@view/landing-page";
+import LoginPage from "@view/login";
+import RegisterPage from "@view/register";
+
+import Progress from '@view/layout/ProgressBar';
+import NotFoundPage from '@view/error';
+import OverviewPage from '@view/overview';
+import ExamPage from '@view/exam';
+import ExamOverviewPage from '@view/exam-overview';
+import ProfilePage from '@view/profile';
+import Activity from '@view/activity';
+import LecturePage from '@view/lecture';
+import PointRankingPage from '@view/pointRanking';
+import ExamResultPage from '@view/exam-result';
 
 import {
   BrowserRouter as Router,
@@ -19,7 +23,7 @@ import {
   Switch
 } from "react-router-dom";
 import 'antd/dist/antd.css';
-import './index.css';
+import '@root/index.css';
 
 import PreLogged from '@middleware/PreLogged';
 import LoggedMiddleware from '@middleware/LoggedMiddleware';
@@ -28,8 +32,6 @@ import { Provider } from 'mobx-react';
 
 import RootStore  from '@store/RootStore';
 
-import Progress from '@view/layout/ProgressBar';
-import NotFoundPage from '@view/error';
 
 const _RootStore = new RootStore();
 
