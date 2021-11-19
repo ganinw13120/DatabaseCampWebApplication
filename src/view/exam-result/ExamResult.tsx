@@ -13,6 +13,8 @@ import { ExaminationStore } from '@store/stores/ExaminationStore';
 import { AuthStore } from '@store/stores/AuthStore';
 import { ExamResult } from '@model/Learning';
 
+import { ExamType } from '@model/Learning';
+
 export interface ProfileComponentState {
   data: ExamResult | null,
 }
@@ -81,7 +83,7 @@ class ExamResultPage extends Component<ExamPageProps, ProfileComponentState>
             <h1 className='font-prompt text-3xl md:text-5xl my-10'>ยินดีด้วย!</h1> :
             <h1 className='font-prompt text-3xl md:text-5xl my-10'>ขอเเสดงความเสียใจ</h1>}
             <h1 className='font-prompt text-xl md:text-4xl font-light'>คุณ{data.is_passed ? '' : 'ไม่'}ผ่านด้วยคะแนน {`${data.score.toLocaleString()}`} คะแนน</h1>
-            <h1 className='font-prompt text-lg md:text-2xl font-light my-10'>ข้อสอบชุด : {data.exam_type ==='MINI' ? data.content_group_name : data.exam_type ==='POST' ? 'Final Examination' : 'แบบทดสอบก่อนเรียน'}</h1>
+            <h1 className='font-prompt text-lg md:text-2xl font-light my-10'>ข้อสอบชุด : {data.exam_type === ExamType.MINI ? data.content_group_name : data.exam_type === ExamType.POST ? 'Final Examination' : 'แบบทดสอบก่อนเรียน'}</h1>
             <h1 className='font-prompt text-lg md:text-2xl font-light my-10'>เมื่อวันที่ : {dateString}</h1>
             <h1 className='font-prompt text-lg md:text-2xl font-light my-10'>ณ เวลา : {timeString}</h1>
           </div>

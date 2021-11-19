@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { API_BASE_URL } from '../../constant/constant';
 
-import {Overview} from '../../model/Overview';
-import {Lecture, RoadMap, Activity, Hint, Answer, ExaminationOverview, Exam, ExamAnswer, ExamResult} from '../../model/Learning';
+import {Overview, Lecture, RoadMap, Activity, Hint, Answer, ExaminationOverview, Exam, ExamAnswer, ExamResult} from '@model/Learning';
 
 export default class LearningRepository {
   
@@ -57,6 +56,7 @@ export default class LearningRepository {
         }
       }).then(res => {
         const { data } = res;
+        console.log(data)
         resolve(data)
       }).catch(res=>{
         reject(res.message)

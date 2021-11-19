@@ -12,7 +12,7 @@ import Requirement from '../activity/components/Requirement';
 import { AppStore } from '@store/stores/AppStore';
 import { ExaminationStore } from '@store/stores/ExaminationStore';
 
-import { ActivityAlert, CompletionChoice, Exam, ExamActivity, MatchingChoice, MultipleChoice, RoadMap } from '@model/Learning';
+import { ActivityAlert, CompletionChoice, Exam, ExamActivity, ExamType, MatchingChoice, MultipleChoice, RoadMap } from '@model/Learning';
 import Matching from '../activity/components/Matching';
 import MultipleChoiceComponent from '../activity/components/MultipleChoice';
 import Completion from '../activity/components/Completion';
@@ -23,8 +23,8 @@ import { green } from '@mui/material/colors';
 interface ExamPageState {
   exam: Exam | null,
   currentActivity: number,
-  alert : ActivityAlert | null,
-  isLoading : boolean
+  alert: ActivityAlert | null,
+  isLoading: boolean
 }
 
 interface ExamPageProps extends RouteComponentProps {
@@ -51,8 +51,8 @@ class ExamPage
     this.state = {
       exam: null,
       currentActivity: startActivity,
-      alert : null,
-      isLoading : false
+      alert: null,
+      isLoading: false
     }
 
   }
@@ -61,8 +61,8 @@ class ExamPage
     this.setState({
       exam: this.examViewModel.exam,
       currentActivity: this.examViewModel.currentActivity,
-      alert : this.examViewModel.alert,
-      isLoading : this.examViewModel.isLoading
+      alert: this.examViewModel.alert,
+      isLoading: this.examViewModel.isLoading
     })
   }
 
@@ -122,45 +122,44 @@ class ExamPage
               {act(type)}
             </>
           })()} </> : ''
-          
+
         }
-        
-        <AlertTab alert={alert} /> 
-            {data && 
-            <div className='flex w-5/6 mx-auto'>
-              <div className='flex-grow'>
-              </div>
-              <div onClick={() => { this.examViewModel.obSubmitActivity() }} className={`relative ${isLoading ? '' : 'hoverable'} flex-none bg-${isLoading ? 'disabledPrimary' : 'primary'} mt-10 text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'loading' : 'pointer'}`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
-                {act === examActivity.length - 1 ? 'ส่งคำตอบ' : "ถัดไป"}
-                {isLoading && <CircularProgress
-                  size={24}
-                  sx={{
-                    color: green[500],
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    marginTop: '-12px',
-                    marginLeft: '-12px',
-                  }}
-                />}
-              </div>
-            </div>}
+
+        <AlertTab alert={alert} />
+        {data &&
+          <div className='flex w-5/6 mx-auto'>
+            <div className='flex-grow'>
+            </div>
+            <div onClick={() => { this.examViewModel.obSubmitActivity() }} className={`relative ${isLoading ? '' : 'hoverable'} flex-none bg-${isLoading ? 'disabledPrimary' : 'primary'} mt-10 text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'loading' : 'pointer'}`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+              {act === examActivity.length - 1 ? 'ส่งคำตอบ' : "ถัดไป"}
+              {isLoading && <CircularProgress
+                size={24}
+                sx={{
+                  color: green[500],
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  marginTop: '-12px',
+                  marginLeft: '-12px',
+                }}
+              />}
+            </div>
+          </div>}
       </div>
     </Fragment>)
   }
 
-  private returnOverview () : void {
+  private returnOverview(): void {
     return this.props.history.push('/examination');
   }
 
   public render(): JSX.Element {
     const { exam, currentActivity } = this.state;
-    
     if (!exam) return <></>
     return (
       <>
         <div className='xl:grid xl:grid-cols-10 w-full h-full pt-12'>
-          {currentActivity === -1 ? <Instruction displayTitle={exam?.exam.exam_type==='MINI' ? exam.exam.content_group_name : exam?.exam.exam_type ==='POST' ? 'Final Examination' : 'แบบทดสอบก่อนเรียน'} returnOverview={this.returnOverview} displayText={exam.exam.instruction} onNext={this.examViewModel.moveNext}/> : (() => {
+          {currentActivity === -1 ? <Instruction displayTitle={exam?.exam.exam_type === ExamType.MINI ? exam.exam.content_group_name : exam?.exam.exam_type === ExamType.POST ? 'Final Examination' : 'แบบทดสอบก่อนเรียน'} returnOverview={this.returnOverview} displayText={exam.exam.instruction} onNext={this.examViewModel.moveNext} /> : (() => {
             const examList: ReactElement[] = [];
             let i = 0;
             while (i < exam!.activities.length) {
@@ -178,9 +177,9 @@ class ExamPage
 
 interface InstructionProps {
   displayText: string,
-  displayTitle : string,
+  displayTitle: string,
   onNext?(): void,
-  returnOverview() : void
+  returnOverview(): void
 }
 
 class Instruction extends Component<InstructionProps, any> {
@@ -197,22 +196,22 @@ class Instruction extends Component<InstructionProps, any> {
           </div>
         </div>
         <div className='my-auto'>
-          <div className='mx-auto w-5/6 py-32 mt-12 bg-white text-center' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)'}}>
+          <div className='mx-auto w-5/6 py-32 mt-12 bg-white text-center' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
             <h1 className='font-prompt text-center mx-auto text-xl font-medium mt-10 my-auto'>เริ่มทำแบบทดสอบ</h1>
             <h1 className='font-prompt text-center mx-auto text-4xl font-medium mt-10 my-auto'> เรื่อง : {this.props.displayTitle}</h1>
             <h1 className='font-prompt text-center mx-auto text-xl font-medium mt-10 my-auto'>{this.props.displayText}</h1>
           </div>
         </div>
-          <div className='flex'>
-            <div className='flex-grow'></div>
-            <div onClick={()=>{this.props.returnOverview();}} className={`w-64 text-center mt-32 border-gray gray-hoverable  mx-8 border text-darkPrimary text-lg font-medium py-4 px-10 tracking-wider rounded-xl cursor-pointer`}  style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)'}}>
-              ย้อนกลับ
-            </div>
-            <div onClick={()=>{this.props.onNext?.()}} className={`w-64 text-center mt-32 hoverable  mx-8 bg-primary text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-pointer`}  style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)'}}>
-              เริ่มทำแบบทดสอบ
-            </div>
-            <div className='flex-grow'></div>
+        <div className='flex'>
+          <div className='flex-grow'></div>
+          <div onClick={() => { this.props.returnOverview(); }} className={`w-64 text-center mt-32 border-gray gray-hoverable  mx-8 border text-darkPrimary text-lg font-medium py-4 px-10 tracking-wider rounded-xl cursor-pointer`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+            ย้อนกลับ
           </div>
+          <div onClick={() => { this.props.onNext?.() }} className={`w-64 text-center mt-32 hoverable  mx-8 bg-primary text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-pointer`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+            เริ่มทำแบบทดสอบ
+          </div>
+          <div className='flex-grow'></div>
+        </div>
       </div>
 
     </>)

@@ -52,6 +52,7 @@ export class LearningStore {
 
   @action.bound
   onRoadmapFetchSuccess (res : RoadMap) : RoadMap {
+    if (!res.items) res.items = [];
     this.store.roadMap = res;
     return res;
   }

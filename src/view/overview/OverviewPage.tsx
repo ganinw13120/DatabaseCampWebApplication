@@ -8,7 +8,7 @@ import { withRouter, RouteComponentProps  } from 'react-router-dom';
 import OverviewViewModel from '@view-model/overview/OverviewViewModel';
 import Skeleton from '@mui/material/Skeleton';
 
-import ContentCard from "./components/ContentGroup";
+import ContentGroup from "./components/ContentGroup";
 import HeaderCard from "./components/HeaderCard";
 import HeaderSkeleton from "./components/HeaderSkeleton";
 import SkeletonCard from "./components/SkeletonCard";
@@ -94,7 +94,7 @@ class OverviewPage
                   .slice()
                   .sort((a: any, b: any) => a.group_id - b.group_id)
                   .forEach((item: any, key: number) => {
-                    cardList.push(<ContentCard data={item} key={key} />);
+                    cardList.push(<ContentGroup data={item} key={key} />);
                   });
                 return cardList;
               })()}

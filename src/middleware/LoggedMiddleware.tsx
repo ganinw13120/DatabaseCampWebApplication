@@ -2,7 +2,7 @@ import { inject, observer  } from "mobx-react"
 import { observe  } from "mobx"
 import React from "react"
 import { withRouter } from 'react-router-dom';
-import AppLayout from "../view/layout/app/AppLayout";
+import AppLayout from "@view/layout/app/AppLayout";
 // import AppLayout from "../view/layout/app/AppLayout";
 
 @inject('authStore')
