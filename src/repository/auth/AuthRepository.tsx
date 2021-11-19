@@ -7,7 +7,7 @@ import { AuthUser, User } from '../../model/User';
 
 export default class AuthRepository implements IAuthRepository {
 
-  public async VerifyToken(token: any) : Promise<User> {
+  public async VerifyToken(token: string) : Promise<User> {
     return new Promise((resolve, reject) => {
       axios.get<User>(`${API_BASE_URL}/user/info`, {
         headers: {

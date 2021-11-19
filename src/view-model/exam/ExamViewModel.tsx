@@ -1,12 +1,13 @@
 import IExamViewModel from './IExamViewModel';
-import BaseView from '@view/BaseView';
 import { ActivityAlert, Answer, CompletionAnswer, Exam } from '@model/Learning';
 import { Step, Stepper } from '@model/App';
+
+import { IExamPage } from '@view/exam/ExamPage';
 
 import { validateCompletion, validateMultiple, validateMatching } from '@util/validateActvitiy';
 
 export default class ExamViewModel implements IExamViewModel {
-  private baseView?: BaseView;
+  private baseView?: IExamPage;
   public currentActivity : number;
   public exam : Exam | null;
   private result : Answer[];
@@ -21,13 +22,17 @@ export default class ExamViewModel implements IExamViewModel {
     this.moveNext = this.moveNext.bind(this);
     this.movePrev = this.movePrev.bind(this);
   }
-  public attachView = (baseView: BaseView): void => {
+  public attachView = (baseView: IExamPage): void => {
     this.baseView = baseView;
     
     baseView?.props.appStore?.setPercent(40);
-    const examId = baseView.props.match.params?.id;
+    const examId = parseInt(baseView.props.match.params?.id);
     if (!examId) baseView.props.history.replace('/examination/overview');
-    baseView.props.examinationStore.FetchExam(examId).then((res : Exam) => {
+    baseView.props.examinationStore!.FetchExam(examId).then((res : Exam | null) => {
+      if (!res) {
+        baseView.props.history.replace('/examination/overview');
+        return;
+      }
       this.exam = res;
       baseView.onViewModelChanged();
       baseView?.props.appStore?.setPercent(100)
@@ -40,7 +45,7 @@ export default class ExamViewModel implements IExamViewModel {
     const stepper : Stepper = this.generateExamStepper(this.exam)
     stepper.onNext = this.moveNext;
     stepper.onPrev = this.movePrev;
-    this.baseView!.props.appStore.setStepper(stepper)
+    this.baseView?.props.appStore!.setStepper(stepper)
   }
 
   private generateExamStepper = (res : Exam) : Stepper => { 
@@ -85,7 +90,7 @@ export default class ExamViewModel implements IExamViewModel {
       }
       this.isLoading = true;
       this.baseView?.onViewModelChanged();
-      this.baseView!.props.examinationStore.submitExam(this.result, this.exam, (res : any)=>{
+      this.baseView?.props.examinationStore!.submitExam(this.result, this.exam, (res : any)=>{
         this.baseView?.props.history.replace('/examination/result/' + res.exam_result_id);
       })
     }

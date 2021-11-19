@@ -6,10 +6,6 @@ import LearningRepository from '@repository/app/LearningRepository';
 
 import {RoadMap, Lecture, Activity, Hint, Answer ,CompletionAnswer, ActivityAlert, HintRoadMap } from '@model/Learning';
 
-// interface Store {
-//   [key : string] : any
-// }
-
 interface Store {
   roadMap : RoadMap | null,
   activityInfo : Activity | null,
@@ -41,6 +37,11 @@ export class LearningStore {
       hintRoadMap : []
   }
 
+  /**
+  * Gets script version
+  * @param fileName
+  * @returns script version
+  */
   @action.bound
   public async FetchRoadmap(contentID: number, cb : any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
