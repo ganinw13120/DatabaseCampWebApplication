@@ -67,7 +67,7 @@ class Sidebar extends React.Component <any, SidebarState>{
           <SideItem className='z-10' isExpand={isExpand} text='ออกจากระบบ' icon={<LogoutOutlined style={{ fontSize: 25 }}/>}  onClick={() => { this.onLogout();}} />
         </div>
       </div>
-      <div className='bg-primary px-8 py-4 w-full' style={{boxShadow: '0 2px 2px rgba(0, 0, 0, 0.25)'}}>
+      <div className='bg-primary md:hidden px-8 py-4 w-full' style={{boxShadow: '0 2px 2px rgba(0, 0, 0, 0.25)'}}>
         <div  className='my-auto text-white' >
         <MenuOutlined  style={{ fontSize: 40 }} onClick={()=>{this.setMobileExpand(!isMobileExpand);}}/>
         </div>
