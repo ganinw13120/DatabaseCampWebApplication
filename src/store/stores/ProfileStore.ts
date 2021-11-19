@@ -1,8 +1,8 @@
 import { makeObservable, action } from 'mobx';
 
-import RootStore from '../Rootstore';
+import RootStore from '../RootStore';
 
-import UserRepository from '../../repository/app/UserRepository';
+import UserRepository from '@repository/app/UserRepository';
 export class ProfileStore {
   rootStore: RootStore; // contains the root of store (outest mobx)
   private userRepository: UserRepository;

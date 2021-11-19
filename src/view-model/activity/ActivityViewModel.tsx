@@ -1,9 +1,9 @@
 import IActivityViewModel from './IActivityViewModel';
 import { notification } from 'antd';
-import BaseView from '../../view/BaseView';
+import BaseView from '@view/BaseView';
 
-import {Activity, ActivityAlert, Answer, RoadMap} from '../../model/Learning';
-import generateStepper, { generateEmptyStepper } from '../../util/generateStepper';
+import {Activity, ActivityAlert, Answer, RoadMap} from '@model/Learning';
+import generateStepper, { generateEmptyStepper } from '@util/generateStepper';
 
 export default class ActivityViewModel implements IActivityViewModel {
   private baseView?: BaseView;

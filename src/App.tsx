@@ -21,15 +21,15 @@ import {
 import 'antd/dist/antd.css';
 import './index.css';
 
-import PreLogged from './middleware/PreLogged';
-import LoggedMiddleware from './middleware/LoggedMiddleware';
+import PreLogged from '@middleware/PreLogged';
+import LoggedMiddleware from '@middleware/LoggedMiddleware';
 
 import { Provider } from 'mobx-react';
 
-import RootStore  from './store/Rootstore';
+import RootStore  from '@store/RootStore';
 
-import Progress from './view/layout/ProgressBar';
-import NotFoundPage from './view/error';
+import Progress from '@view/layout/ProgressBar';
+import NotFoundPage from '@view/error';
 
 const _RootStore = new RootStore();
 

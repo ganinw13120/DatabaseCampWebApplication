@@ -1,8 +1,8 @@
 import ILectureViewModel from './ILectureViewModel';
-import BaseView from '../../view/BaseView';
+import BaseView from '@view/BaseView';
 import { notification } from 'antd';
-import { RoadMap } from '../../model/Learning';
-import generateStepper, { generateEmptyStepper } from '../../util/generateStepper';
+import { RoadMap } from '@model/Learning';
+import generateStepper, { generateEmptyStepper } from '@util/generateStepper';
 
 export default class LectureViewModel implements ILectureViewModel {
   private baseView?: BaseView;

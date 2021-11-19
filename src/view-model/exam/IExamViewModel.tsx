@@ -1,5 +1,5 @@
-import { ActivityAlert, Answer, Exam } from '../../model/Learning';
-import BaseViewModel from '../BaseViewModel';
+import { ActivityAlert, Answer, Exam } from '@model/Learning';
+import BaseViewModel from '@view-model/BaseViewModel';
 
 export default interface IExamViewModel extends BaseViewModel {
     currentActivity : number;

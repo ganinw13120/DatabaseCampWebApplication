@@ -1,5 +1,5 @@
 import React from 'react';
-import DarkLogo from '../../../assets/dark-logo.png';
+import DarkLogo from '@assets/dark-logo.png';
 import { withRouter } from 'react-router-dom';
 
 class Navbar extends React.Component<any, any> {

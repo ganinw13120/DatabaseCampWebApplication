@@ -1,6 +1,6 @@
 import React from 'react';
-import Person from '../../../assets/personwithlaptop.png';
-import Bulb from '../../../assets/landing-bulb.png';
+import Person from '@assets/personwithlaptop.png';
+import Bulb from '@assets/landing-bulb.png';
 import { withRouter } from 'react-router-dom';
 
 class Title extends React.Component<any, any> {

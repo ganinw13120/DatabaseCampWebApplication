@@ -1,18 +1,18 @@
 import React, { ReactElement } from 'react';
-import BaseView from '../BaseView';
+import BaseView from '@view/BaseView';
 import 'semantic-ui-css/semantic.min.css'
 import './Bar.css'
 import './overview.css'
 import { inject, observer } from 'mobx-react';
 import { withRouter, RouteComponentProps  } from 'react-router-dom';
-import ExamOverviewViewModel from '../../view-model/exam-overview/ExamOverviewViewModel';
+import ExamOverviewViewModel from '@view-model/exam-overview/ExamOverviewViewModel';
 import Skeleton from '@mui/material/Skeleton';
 
 import HeaderCard from "./components/HeaderCard";
 import HeaderSkeleton from "./components/HeaderSkeleton";
 
-import {AppStore} from '../../store/stores/AppStore';
-import {ExaminationStore} from '../../store/stores/ExaminationStore';
+import {AppStore} from '@store/stores/AppStore';
+import {ExaminationStore} from '@store/stores/ExaminationStore';
 
 interface ExamOverviewComponentState {}
 

@@ -1,18 +1,17 @@
 import { Component } from 'react';
-import BaseView from '../BaseView';
-import ExamResultViewModel from '../../view-model/exam-result/ExamResultViewModel';
-// import ExamResultViewModel from '../../view-model/exam-result/ExamResultViewModel';
+import BaseView from '@view/BaseView';
+import ExamResultViewModel from '@view-model/exam-result/ExamResultViewModel';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import './profile.css';
 
-import Alerticon from '../../assets/alerticon.svg';
-import SuccessIcon from '../../assets/alertsuccess.svg';
+import Alerticon from '@assets/alerticon.svg';
+import SuccessIcon from '@assets/alertsuccess.svg';
 
-import { AppStore } from '../../store/stores/AppStore';
-import { ExaminationStore } from '../../store/stores/ExaminationStore';
-import { AuthStore } from '../../store/stores/AuthStore';
-import { ExamResult } from '../../model/Learning';
+import { AppStore } from '@store/stores/AppStore';
+import { ExaminationStore } from '@store/stores/ExaminationStore';
+import { AuthStore } from '@store/stores/AuthStore';
+import { ExamResult } from '@model/Learning';
 
 export interface ProfileComponentState {
   data: ExamResult | null,

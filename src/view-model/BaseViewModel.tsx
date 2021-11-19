@@ -1,4 +1,4 @@
-import BaseView from '../view/BaseView';
+import BaseView from '@view/BaseView';
 
 export default interface BaseViewModel {
   attachView(baseView: BaseView): void;

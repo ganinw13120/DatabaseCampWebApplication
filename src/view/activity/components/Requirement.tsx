@@ -5,8 +5,8 @@ import { withRouter, RouteComponentProps  } from 'react-router-dom';
 
 import { inject, observer } from 'mobx-react';
 
-import {LearningStore} from '../../../store/stores/LearningStore';
-import { ActivityInfo, RoadMap } from '../../../model/Learning';
+import {LearningStore} from '@store/stores/LearningStore';
+import { ActivityInfo, RoadMap } from '@model/Learning';
 
 interface RequirementProps extends RouteComponentProps {
   learningStore ?: LearningStore,
@@ -20,10 +20,7 @@ interface RequirementProps extends RouteComponentProps {
 
 @inject('learningStore')
 @observer
-class Requirement extends React.Component<RequirementProps, any> {
-  public constructor(props: any) {
-    super(props);
-  }
+class Requirement extends React.Component<RequirementProps, {}> {
   componentDidMount() {
     this.getDimensions();
     window.addEventListener('resize', this.getDimensions);

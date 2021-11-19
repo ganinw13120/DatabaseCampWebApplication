@@ -1,18 +1,18 @@
 import { Component, ReactElement, Fragment } from 'react';
-import BaseView from '../BaseView';
+import BaseView from '@view/BaseView';
 import 'semantic-ui-css/semantic.min.css'
 import './Bar.css'
 import './overview.css'
 import { inject, observer } from 'mobx-react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import ExamViewModel from '../../view-model/exam/ExamViewModel';
+import ExamViewModel from '@view-model/exam/ExamViewModel';
 
 import Requirement from '../activity/components/Requirement';
 
-import { AppStore } from '../../store/stores/AppStore';
-import { ExaminationStore } from '../../store/stores/ExaminationStore';
+import { AppStore } from '@store/stores/AppStore';
+import { ExaminationStore } from '@store/stores/ExaminationStore';
 
-import { ActivityAlert, CompletionChoice, Exam, ExamActivity, MatchingChoice, MultipleChoice, RoadMap } from '../../model/Learning';
+import { ActivityAlert, CompletionChoice, Exam, ExamActivity, MatchingChoice, MultipleChoice, RoadMap } from '@model/Learning';
 import Matching from '../activity/components/Matching';
 import MultipleChoiceComponent from '../activity/components/MultipleChoice';
 import Completion from '../activity/components/Completion';

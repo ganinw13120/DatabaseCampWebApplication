@@ -1,9 +1,9 @@
 import React from 'react';
 import IProfileViewModel from './IProfileViewModel';
-import BaseView from '../../view/BaseView';
+import BaseView from '@view/BaseView';
 import { FormInstance } from 'antd/es/form';
 
-import { User } from '../../model/User';
+import { User } from '@model/User';
 
 export default class ActivityViewModel implements IProfileViewModel {
   private baseView?: BaseView;

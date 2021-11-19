@@ -1,6 +1,6 @@
 import React from 'react';
 import IAuthViewModel from './IAuthViewModel';
-import BaseView from '../../view/BaseView';
+import BaseView from '@view/BaseView';
 import { FormInstance } from 'antd/es/form';
 
 

@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import { ActivityAlert } from '../../../model/Learning';
+import { ActivityAlert } from '@model/Learning';
 
-import Alerticon from '../../../assets/alerticon.svg';
-import SuccessIcon from '../../../assets/alertsuccess.svg';
+import Alerticon from '@assets/alerticon.svg';
+import SuccessIcon from '@assets/alertsuccess.svg';
 
 const greenAlert = '#BFF4B9';
 const successAlert = '#38A605';

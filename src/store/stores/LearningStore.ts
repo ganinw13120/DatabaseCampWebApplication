@@ -1,10 +1,10 @@
 import { makeObservable, observable, action } from 'mobx';
 
-import RootStore from '../Rootstore';
+import RootStore from '../RootStore';
 
-import LearningRepository from '../../repository/app/LearningRepository';
+import LearningRepository from '@repository/app/LearningRepository';
 
-import {RoadMap, Lecture, Activity, Hint, Answer ,CompletionAnswer, ActivityAlert, HintRoadMap } from '../../model/Learning';
+import {RoadMap, Lecture, Activity, Hint, Answer ,CompletionAnswer, ActivityAlert, HintRoadMap } from '@model/Learning';
 
 // interface Store {
 //   [key : string] : any

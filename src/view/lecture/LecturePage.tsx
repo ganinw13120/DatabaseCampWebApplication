@@ -1,5 +1,5 @@
 import React from 'react';
-import BaseView from '../BaseView';
+import BaseView from '@view/BaseView';
 import { SourceInfo } from 'plyr';
 import Plyr from 'plyr-react'
 import './lecture.css';
@@ -9,10 +9,10 @@ import { inject, observer } from 'mobx-react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import Skeleton from '@mui/material/Skeleton';
 
-import LectureViewModel from '../../view-model/lecture/LectureViewModel';
+import LectureViewModel from '@view-model/lecture/LectureViewModel';
 
-import { LearningStore } from '../../store/stores/LearningStore';
-import { AppStore } from '../../store/stores/AppStore';
+import { LearningStore } from '@store/stores/LearningStore';
+import { AppStore } from '@store/stores/AppStore';
 
 export interface LectureComponentState {
   lectureInfo : any

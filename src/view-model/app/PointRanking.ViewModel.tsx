@@ -1,4 +1,4 @@
-import BaseView from '../../view/BaseView';
+import BaseView from '@view/BaseView';
 import IPointRankingViewModel from './IPointRankingViewModel';
 
 

@@ -1,1 +1,1 @@
-export { default } from './notFound';
+export { default } from './NotFound';

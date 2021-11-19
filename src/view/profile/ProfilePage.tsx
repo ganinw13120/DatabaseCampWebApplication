@@ -1,16 +1,21 @@
 import { Component, ReactElement } from 'react';
-import BaseView from '../BaseView';
-import Profilehead from '../../assets/image-7.png';
-import ProfilenameEdit from '../../assets/nameEditProfile.png';
-import star from '../../assets/starProfile.png';
-import hat from '../../assets/hat.png';
-import ProfileViewModel from '../../view-model/profile/ProfileViewModel';
+import BaseView from '@view/BaseView';
+
+import Profilehead from '@assets/image-7.png';
+import ProfilenameEdit from '@assets/nameEditProfile.png';
+import star from '@assets/starProfile.png';
+import hat from '@assets/hat.png';
+
+import './profile.css';
+
+import ProfileViewModel from '@view-model/profile/ProfileViewModel';
+
 import { withRouter } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
-import './profile.css';
+
 import Skeleton from '@mui/material/Skeleton';
 
-import { User } from '../../model/User';
+import { User } from '@model/User';
 
 import { Modal, Button, Form, Input } from 'antd';
 

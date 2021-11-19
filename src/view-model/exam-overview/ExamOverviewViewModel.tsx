@@ -1,5 +1,5 @@
 import IExamOverviewViewModel from './IExamOverviewViewModel';
-import BaseView from '../../view/BaseView';
+import BaseView from '@view/BaseView';
 
 export default class ExamOverviewViewModel implements IExamOverviewViewModel {
   private baseView?: BaseView;

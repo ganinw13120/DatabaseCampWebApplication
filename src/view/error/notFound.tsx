@@ -1,5 +1,5 @@
 import React from 'react';
-import BaseView from '../BaseView';
+import BaseView from '@view/BaseView';
 import Navbar from './components/Navbar';
 import Title from './components/Title';
 

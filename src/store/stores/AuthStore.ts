@@ -1,10 +1,10 @@
 import { makeObservable, observable, action } from 'mobx';
 
-import AuthRepository from '../../repository/auth/AuthRepository';
+import AuthRepository from '@repository/auth/AuthRepository';
 
-import RootStore from '../Rootstore';
+import RootStore from '../RootStore';
 
-import {User, AuthUser} from '../../model/User';
+import {User, AuthUser} from '@model/User';
 
 interface Store {
   userData : User | null,

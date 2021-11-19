@@ -1,7 +1,7 @@
 import { Skeleton } from "@mui/material";
 import { withRouter, RouteComponentProps  } from 'react-router-dom';
 import React from "react";
-import { UserRanking } from "../../../model/User";
+import { UserRanking } from "@model/User";
 
 interface Props extends RouteComponentProps  {
   data: UserRanking;

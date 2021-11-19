@@ -1,9 +1,9 @@
 import IExamViewModel from './IExamViewModel';
-import BaseView from '../../view/BaseView';
-import { ActivityAlert, Answer, CompletionAnswer, Exam } from '../../model/Learning';
-import { Step, Stepper } from '../../model/App';
+import BaseView from '@view/BaseView';
+import { ActivityAlert, Answer, CompletionAnswer, Exam } from '@model/Learning';
+import { Step, Stepper } from '@model/App';
 
-import { validateCompletion, validateMultiple, validateMatching } from '../../util/validateActvitiy';
+import { validateCompletion, validateMultiple, validateMatching } from '@util/validateActvitiy';
 
 export default class ExamViewModel implements IExamViewModel {
   private baseView?: BaseView;

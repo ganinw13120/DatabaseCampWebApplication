@@ -1,13 +1,13 @@
 import React from 'react';
-import BaseView from '../BaseView';
-import FullLogo from '../../assets/high-res-full-logo.png';
-import LoginViewModel from '../../view-model/auth/LoginViewModel';
+import BaseView from '@view/BaseView';
+import FullLogo from '@assets/high-res-full-logo.png';
+import LoginViewModel from '@view-model/auth/LoginViewModel';
 import { Form, Input, Button  } from 'antd';
 import { KeyOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 
-import validateEmail from '../../util/validateEmail';
+import validateEmail from '@util/validateEmail';
 
 export interface LoginComponentState {
   isLoading: boolean

@@ -1,13 +1,13 @@
 import React from "react";
-import BaseView from "../BaseView";
+import BaseView from '@view/BaseView';
 import "semantic-ui-css/semantic.min.css";
 import { inject, observer } from "mobx-react";
-import PointRankingViewModel from "../../view-model/app/PointRanking.ViewModel";
+import PointRankingViewModel from "@view-model/app/PointRanking.ViewModel";
 import RankingItem from "./components/RankingItem";
-import Header from "./components/Header";
+import Header from "@view/layout/app/Header";
 import { RouteComponentProps, withRouter } from "react-router";
-import { AppStore } from "../../store/stores/AppStore";
-import { PointRankingStore } from "../../store/stores/PointRankingStore";
+import { AppStore } from "@store/stores/AppStore";
+import { PointRankingStore } from "@store/stores/PointRankingStore";
 
 interface PointRankingProps extends RouteComponentProps {
   appStore ?: AppStore,
@@ -46,7 +46,7 @@ class PointRankingPage
     return (
       <>
         <div className="font-prompt w-full p-12 px-10">
-          <Header />
+          <Header text='จัดลำดับคะแนน' />
           <div className="mt-10">
             {data && 
             <RankingItem

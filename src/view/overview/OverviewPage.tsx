@@ -1,11 +1,11 @@
 import React from 'react';
-import BaseView from '../BaseView';
+import BaseView from '@view/BaseView';
 import 'semantic-ui-css/semantic.min.css'
 import './Bar.css'
 import './overview.css'
 import { inject, observer } from 'mobx-react';
 import { withRouter, RouteComponentProps  } from 'react-router-dom';
-import OverviewViewModel from '../../view-model/overview/OverviewViewModel';
+import OverviewViewModel from '@view-model/overview/OverviewViewModel';
 import Skeleton from '@mui/material/Skeleton';
 
 import ContentCard from "./components/ContentGroup";
@@ -13,9 +13,9 @@ import HeaderCard from "./components/HeaderCard";
 import HeaderSkeleton from "./components/HeaderSkeleton";
 import SkeletonCard from "./components/SkeletonCard";
 
-import {AppStore} from '../../store/stores/AppStore';
-import {OverviewStore} from '../../store/stores/OverviewStore';
-import {AuthStore} from '../../store/stores/AuthStore';
+import {AppStore} from '@store/stores/AppStore';
+import {OverviewStore} from '@store/stores/OverviewStore';
+import {AuthStore} from '@store/stores/AuthStore';
 
 export interface OverviewComponentState {}
 

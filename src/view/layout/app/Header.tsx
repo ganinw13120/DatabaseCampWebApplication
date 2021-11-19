@@ -1,6 +1,10 @@
 import React from "react";
 
-export default class Header extends React.Component {
+interface HeaderProps { 
+  text : string
+}
+
+export default class Header extends React.Component <HeaderProps ,{}> {
   public render(): JSX.Element {
     return (
       <>
@@ -9,7 +13,7 @@ export default class Header extends React.Component {
             <span className="w-full bg-darkPrimary">..</span>
           </div>
           <div className="text-3xl text-darkPrimary font-semibold tracking-wider pt-6">
-            <span>จัดลำดับคะแนน</span>
+            <span>{this.props.text}</span>
           </div>
         </div>
       </>

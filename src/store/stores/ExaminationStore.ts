@@ -1,10 +1,10 @@
 import { makeObservable, observable, action } from 'mobx';
 
-import RootStore from '../Rootstore';
+import RootStore from '../RootStore';
 
-import LearningRepository from '../../repository/app/LearningRepository';
+import LearningRepository from '@repository/app/LearningRepository';
 
-import {Answer, Exam, ExamAnswer, ExamAnswerActivity, ExaminationOverview, ExamResult} from '../../model/Learning';
+import {Answer, Exam, ExamAnswer, ExamAnswerActivity, ExaminationOverview, ExamResult} from '@model/Learning';
 
 interface Store {
   data : ExaminationOverview | null,
