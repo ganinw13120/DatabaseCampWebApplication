@@ -34,21 +34,21 @@ class Requirement extends React.Component<RequirementProps, {}> {
   public render(): JSX.Element {
     const { onHint, activityInfo, roadMap, isHidden } = this.props;
     return (<>
-      <div className={`${isHidden?'hidden':''} col-span-4 bg-white pt-10 h-auto flex flex-col`} style={{ boxShadow: '0 0px 4px rgba(0, 0, 0, 0.25)' }}>
+      <div className={`${isHidden?'hidden':''} col-span-4 bg-white pt-10 h-auto flex flex-col w-full`} style={{ boxShadow: '0 0px 4px rgba(0, 0, 0, 0.25)' }}>
         <div className='text-lg text-darkPrimary w-96 font-semibold tracking-wider pt-4 px-10'>
           {roadMap ? <span>เนื้อหา - {roadMap.content_name}</span> : <>
             <Skeleton variant='text' className='w-full' />
           </>}
         </div>
-        <div className='flex h-auto'>
-          <div className='w-10 text-3xl text-darkPrimary font-semibold tracking-wider p-6 px-10'>
+        <div className='flex h-auto w-full'>
+          <div className='text-3xl text-darkPrimary font-semibold tracking-wider p-6 px-10'>
             <span className='w-full h-full bg-darkPrimary'>..</span>
           </div>
-          <div className='w-96 text-3xl text-darkPrimary font-semibold tracking-wider py-6 -mx-4'>
+          <div className='text-3xl text-darkPrimary font-semibold tracking-wider py-6 -mx-4'>
             <span>ความต้องการของระบบ</span>
           </div>
         </div>
-        <div className='font-sarabun text-xl text-wrap mx-auto mt-10 tracking-wider requirementtext pb-10'>
+        <div className='font-sarabun text-xl text-wrap mx-auto mt-24 md:mt-10 tracking-wider requirementtext pb-10'>
           <p>
             {activityInfo ? <>{activityInfo.story}</> : <>
                 <Skeleton variant='text' className='w-full' />
@@ -60,7 +60,6 @@ class Requirement extends React.Component<RequirementProps, {}> {
           </p>
         </div>
         <div className='mt-auto'>
-          {/* { onHint && activityInfo && hint && hint.length !== 0 ? <Hintbox /> : ''} */}
           {activityInfo && onHint && <HintTab onHint={onHint} />}
         </div>
       </div>
