@@ -12,7 +12,7 @@ export default class AppLayout extends React.Component {
     
       <div className="md:flex font-prompt bg-bg">
         <Sidebar/>
-        <div className='flex-grow'>
+        <div className='md:flex-grow relative'>
           <div className='stepper-container h-auto bottom-0'>
             <Stepper />
           </div>

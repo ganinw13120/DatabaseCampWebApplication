@@ -25,12 +25,12 @@ class HeaderCard extends React.Component<HeaderCardProps, {}>{
       <>
         <div className='w-full h-auto text-center align-middle mt-10'>
             <div className='bg-primary w-full h-20 mx-auto flex align-middle' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
-            <div className='flex-none bg-white h-3/6 w-36 align-middle my-auto ml-7 rounded cursor-pointer continuebtn' onClick={() => { this.onClickContinue () }}>
-                <div className=' font-semibold' style={{ marginTop: 8 }}>
+            <div className='flex-none bg-white h-3/6 px-4 md:px-0 md:w-36 align-middle my-auto ml-7 rounded cursor-pointer continuebtn' onClick={() => { this.onClickContinue () }}>
+                <div className='font-semibold' style={{ marginTop: 8 }}>
                   เรียนต่อ
                 </div>
               </div>
-              <div className='flex-none my-auto ml-5 text-white text-xl tracking-wider'>
+              <div className='flex-none my-auto ml-5 text-white text-lg md:text-xl tracking-wider'>
                 <span>{content_name}</span>
               </div>
               <div className='hidden md:flex flex-grow text-left my-auto ml-5 text-white tracking-wider'>

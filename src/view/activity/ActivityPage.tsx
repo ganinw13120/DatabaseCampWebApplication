@@ -112,7 +112,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
       <>
         <div className='xl:grid xl:grid-cols-10 w-full pt-10 h-full'>
           {userData && 
-          <div className='ribbon-points flex z-20'>
+          <div className='ribbon-points flex z-20 mt-16 md:mt-0'>
             <img src={Star} alt='points' className='star my-auto mx-10' />
             <span className='text-white text-xl my-auto mr-5'>{userData?.point.toLocaleString()}</span>
             <span className='text-white text-lg my-auto mr-5'>Points</span>

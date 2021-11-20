@@ -165,7 +165,7 @@ class ExamPage
   }
 
   private returnOverview(): void {
-    return this.props.history.replace('/examination');
+    return this.props.history.replace('/examination/overview');
   }
 
   public render(): JSX.Element {

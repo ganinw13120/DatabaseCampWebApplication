@@ -51,7 +51,7 @@ class Sidebar extends React.Component <OverviewProps, SidebarState>{
     const widthBoxStyle = { width: isExpand ? 320 : 90 };
     const { userData } = this.props.authStore!.store;
     return <>
-      <div className='flex-none sticky md:block hidden top-0 bg-primary text-white h-screen z-20' style={{ boxShadow: '0 4px 4px #000', transition: "width 1s", ...widthBoxStyle}}>
+      <div className='flex-none sticky md:block hidden top-0 bg-primary text-white h-screen z-40' style={{ boxShadow: '0 4px 4px #000', transition: "width 1s", ...widthBoxStyle}}>
         <div className={`cursor-pointer flex flex-none inline h-auto pb-7 mt-7 w-8/12 mx-auto ${isExpand ? '' : 'pl-3'} `} style={{borderBottom:'0.5px solid #BBBFC0', transition: "all 0.5s"}} onClick={() => { this.onClickPage('overview') }}>
           <img src={HalfLeftLogo} alt="Logo" className='mx-auto w-auto h-16' />
           <img src={HalfRightLogo} alt="Logo" className='m-auto w-auto h-14' style={{transition: "all 1s", opacity : isExpand ? 1 : 0, width : isExpand ? '' : ''}}/>
@@ -79,7 +79,7 @@ class Sidebar extends React.Component <OverviewProps, SidebarState>{
         <MenuOutlined  style={{ fontSize: 40 }} onClick={()=>{this.setMobileExpand(!isMobileExpand);}}/>
         </div>
       </div>
-      <div className={`absolute ${isMobileExpand ? ' ' : 'hidden'} md:hidden top-0 h-screen bg-primary w-full transition-all z-10`} >
+      <div className={`absolute ${isMobileExpand ? ' ' : 'hidden'} md:hidden top-0 h-screen bg-primary w-full transition-all z-50`} >
         <div className={`cursor-pointer flex flex-none inline h-auto pb-7 mt-7 w-8/12 mx-auto ${isExpand ? '' : 'pl-3'} `} style={{borderBottom:'0.5px solid #BBBFC0', transition: "all 0.5s"}} onClick={() => { this.onClickPage('overview') }}>
           <img src={HalfLeftLogo} alt="Logo" className='ml-auto w-auto h-16' />
           <img src={HalfRightLogo} alt="Logo" className='mr-auto w-auto h-14' style={{transition: "all 1s", opacity : isExpand ? 1 : 0, width : isExpand ? '' : ''}}/>

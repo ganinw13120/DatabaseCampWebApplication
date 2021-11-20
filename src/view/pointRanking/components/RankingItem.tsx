@@ -33,7 +33,7 @@ class RankingItem extends React.Component<Props> {
             <div
               className={`flex-none ${
                 isHighlight ? "bg-white" : "bg-primary"
-              } h-3/6 w-36 align-middle my-auto ml-7 rounded`}
+              } h-3/6 px-6 md:px-12 align-middle my-auto ml-7 rounded`}
             >
               <div
                 className={`font-semibold ${
@@ -49,7 +49,7 @@ class RankingItem extends React.Component<Props> {
               </div>
             </div>
             <div
-              className={`flex-none my-auto ml-5 text-xl tracking-wider ${
+              className={`flex-none my-auto ml-5 text-base md:text-xl tracking-wider ${
                 isHighlight ? "text-white" : "text-darkPrimary"
               }`}
             >
