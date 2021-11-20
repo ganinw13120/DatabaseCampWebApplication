@@ -1,39 +1,45 @@
 import React from 'react';
-import BaseView from '../BaseView';
+import BaseView from '@view/BaseView';
 import './activity.css';
 
 import Requirement from './components/Requirement';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import ActivityViewModel from '../../view-model/activity/ActivityViewModel';
+import ActivityViewModel from '@view-model/activity/ActivityViewModel';
 
 import Matching from './components/Matching';
 import Completion from './components/Completion';
 import MultipleChoiceComponent from './components/MultipleChoice';
 import { inject, observer } from 'mobx-react';
 
-import { Activity, ActivityAlert, CompletionChoice, MatchingChoice, MultipleChoice } from '../../model/Learning';
+import { Activity, ActivityAlert, CompletionChoice, MatchingChoice, MultipleChoice } from '@model/Learning';
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { LearningStore } from '../../store/stores/LearningStore';
-import { AppStore } from '../../store/stores/AppStore';
-import { AuthStore } from '../../store/stores/AuthStore';
+import { LearningStore } from '@store/stores/LearningStore';
+import { AppStore } from '@store/stores/AppStore';
+import { AuthStore } from '@store/stores/AuthStore';
 
 import AlertTab from './components/AlertTab';
 import { green } from '@mui/material/colors';
 import { CircularProgress } from '@mui/material';
 
-import Star from '../../assets/starProfile.png';
+import Star from '@assets/starProfile.png';
 
 import SkeletonActivity from './components/SkeletonActivity';
+
+export interface IActivityPage extends BaseView {
+  props : ActivityProps
+}
 
 interface ActivityState {
   activityInfo: Activity | null,
   alert : ActivityAlert | null,
 }
 
-interface ActivityProps extends RouteComponentProps {
+interface ActivityProps extends RouteComponentProps<{
+    id : string
+}> {
   learningStore?: LearningStore,
   appStore?: AppStore,
   authStore ?: AuthStore  | null
@@ -44,7 +50,7 @@ interface ActivityProps extends RouteComponentProps {
 @inject('appStore')
 @observer
 class ActivityPage extends React.Component<ActivityProps, ActivityState>
-  implements BaseView {
+  implements IActivityPage {
   private activityViewModel: ActivityViewModel;
   private swal: any;
   constructor(props: any) {
@@ -68,16 +74,15 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
     }
   }
 
-
   componentDidUpdate(): void {
     let { activityInfo } = this.state;
-    const search = this.props.location.search
-    const activityID = new URLSearchParams(search).get('id');
+    const activityID = this.props.match.params.id;
     if (activityInfo && activityInfo?.activity?.activity_id.toString() !== activityID) {
       this.activityViewModel.attachView(this);
       this.setState({ activityInfo: null })
     }
   }
+  
   showHintPopup(): void {
     this.swal.fire({
       title: 'ท่านต้องการขอคำใบ้ใช่หรือไม่?',

@@ -1,7 +1,7 @@
 import React from 'react';
-import Circle from '../../../assets/circle.svg';
-import About1 from '../../../assets/about-1.png';
-import About2 from '../../../assets/about-2.png';
+import Circle from '@assets/circle.svg';
+import About1 from '@assets/about-1.png';
+import About2 from '@assets/about-2.png';
 
 export default class About extends React.Component<any, any> {
 

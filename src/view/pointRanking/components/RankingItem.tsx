@@ -1,16 +1,10 @@
 import { Skeleton } from "@mui/material";
 import { withRouter, RouteComponentProps  } from 'react-router-dom';
 import React from "react";
-
-type Ranking = {
-  user_id: number;
-  name: string;
-  point: number;
-  ranking: number;
-};
+import { UserRanking } from "@model/User";
 
 interface Props extends RouteComponentProps  {
-  data: Ranking;
+  data: UserRanking;
   isLoading: boolean;
   isHighlight: boolean;
 };
@@ -21,7 +15,7 @@ class RankingItem extends React.Component<Props> {
     this.onInspectPerson = this.onInspectPerson.bind(this)
   }
   onInspectPerson () : void {
-    this.props.history.push('/profile?id=' + this.props.data.user_id)
+    this.props.history.replace('/profile/' + this.props.data.user_id)
   }
   public render(): JSX.Element {
     const data = this.props.data;

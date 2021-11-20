@@ -1,6 +1,6 @@
 import { makeObservable, observable, action } from 'mobx';
-import { Stepper } from '../../model/App';
-import RootStore from '../Rootstore';
+import { Stepper } from '@model/App';
+import RootStore from '../RootStore';
 
 type Store = {
   isExpand : boolean,

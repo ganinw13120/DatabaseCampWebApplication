@@ -10,7 +10,7 @@ export default class AppLayout extends React.Component {
   render(): JSX.Element {
     return <>
     
-      <div className="flex font-prompt bg-bg">
+      <div className="md:flex font-prompt bg-bg">
         <Sidebar/>
         <div className='flex-grow'>
           <div className='stepper-container h-auto bottom-0'>

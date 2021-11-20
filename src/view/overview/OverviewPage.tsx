@@ -1,23 +1,31 @@
 import React from 'react';
-import BaseView from '../BaseView';
+import BaseView from '@view/BaseView';
 import 'semantic-ui-css/semantic.min.css'
 import './Bar.css'
 import './overview.css'
 import { inject, observer } from 'mobx-react';
 import { withRouter, RouteComponentProps  } from 'react-router-dom';
-import OverviewViewModel from '../../view-model/overview/OverviewViewModel';
+import OverviewViewModel from '@view-model/overview/OverviewViewModel';
 import Skeleton from '@mui/material/Skeleton';
 
-import ContentCard from "./components/ContentGroup";
+import ContentGroup from "./components/ContentGroup";
 import HeaderCard from "./components/HeaderCard";
 import HeaderSkeleton from "./components/HeaderSkeleton";
 import SkeletonCard from "./components/SkeletonCard";
 
-import {AppStore} from '../../store/stores/AppStore';
-import {OverviewStore} from '../../store/stores/OverviewStore';
-import {AuthStore} from '../../store/stores/AuthStore';
+import {AppStore} from '@store/stores/AppStore';
+import {OverviewStore} from '@store/stores/OverviewStore';
+import {AuthStore} from '@store/stores/AuthStore';
 
-export interface OverviewComponentState {}
+import {Overview} from '@model/Learning';
+
+export interface IOverview extends BaseView {
+  props : OverviewProps,
+}
+
+interface OverviewState {
+  data : Overview | null
+}
 
 interface OverviewProps extends RouteComponentProps {
   appStore ?: AppStore,
@@ -31,8 +39,8 @@ interface OverviewProps extends RouteComponentProps {
 @observer
 
 class OverviewPage
-  extends React.Component<OverviewProps, OverviewComponentState>
-  implements BaseView
+  extends React.Component<OverviewProps, OverviewState>
+  implements IOverview
 {
   private overviewViewModel: OverviewViewModel;
 
@@ -41,10 +49,18 @@ class OverviewPage
     this.props.appStore?.setPercent(0)
     const overviewViewModel = new OverviewViewModel();
 
+    this.state = {
+      data : null
+    }
+
     this.overviewViewModel = overviewViewModel;
   }
 
-  public onViewModelChanged(): void {}
+  public onViewModelChanged(): void {
+    this.setState({
+      data : this.overviewViewModel.data
+    })
+  }
 
   public componentDidMount(): void {
     const { isExpand } = this.props.appStore!.store ;
@@ -56,7 +72,7 @@ class OverviewPage
   }
 
   public render(): JSX.Element {
-    const { data } = this.props.overviewStore!.store;
+    const { data } = this.state;
     const {userData} = this.props.authStore!.store;
     return (
       <>
@@ -82,7 +98,7 @@ class OverviewPage
               <Skeleton variant="text" className="w-full" />
             )}
           </div>
-          {!data  ? <HeaderSkeleton variant="h1" /> : data.lasted_group && <HeaderCard /> }
+          {!data  ? <HeaderSkeleton variant="h1" /> : data.lasted_group && <HeaderCard data={data.lasted_group}/> }
           {!data ? (
             <SkeletonCard />
           ) : (
@@ -94,7 +110,7 @@ class OverviewPage
                   .slice()
                   .sort((a: any, b: any) => a.group_id - b.group_id)
                   .forEach((item: any, key: number) => {
-                    cardList.push(<ContentCard data={item} key={key} />);
+                    cardList.push(<ContentGroup data={item} key={key} />);
                   });
                 return cardList;
               })()}

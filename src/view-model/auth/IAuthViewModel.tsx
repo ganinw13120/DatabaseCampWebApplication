@@ -1,4 +1,4 @@
-import BaseViewModel from '../BaseViewModel';
+import BaseViewModel from '@view-model/BaseViewModel';
 import { FormInstance } from 'antd/es/form';
 
 export default interface IAuthViewModel extends BaseViewModel {

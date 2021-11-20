@@ -7,7 +7,17 @@ import { AuthUser, User } from '../../model/User';
 
 export default class AuthRepository implements IAuthRepository {
 
-  public async VerifyToken(token: any) : Promise<User> {
+  /**
+   * Verify `Access Token` of current session token.
+   * 
+   * @remarks
+   * This method is part of repository, connect to backend service.
+   * 
+   * @param token for authentication
+   * 
+   * @return current user's information, reject if token is unable to verify.
+   */
+  public async VerifyToken(token: string) : Promise<User> {
     return new Promise((resolve, reject) => {
       axios.get<User>(`${API_BASE_URL}/user/info`, {
         headers: {
@@ -22,6 +32,16 @@ export default class AuthRepository implements IAuthRepository {
     })
   }
 
+  /**
+   * Submit `Login` information to generate session.
+   * 
+   * @remarks
+   * This method is part of repository, connect to backend service.
+   * 
+   * @param data information of user
+   * 
+   * @return User's information, reject if unable to login.
+   */
   public async Login(data: any): Promise<AuthUser> {
     return new Promise((resolve, rejects) => {
       axios.post(`${API_BASE_URL}/user/login`, data).then(res => {
@@ -32,6 +52,16 @@ export default class AuthRepository implements IAuthRepository {
     })
   }
 
+  /**
+   * Submit `Register` information to generate session.
+   * 
+   * @remarks
+   * This method is part of repository, connect to backend service.
+   * 
+   * @param data information of user
+   * 
+   * @return User's information, reject if unable to register
+   */
   public async Register(data: any): Promise<AuthUser> {
     return new Promise((resolve, rejects) => {
       axios.post(`${API_BASE_URL}/user/register`, data).then(res => {

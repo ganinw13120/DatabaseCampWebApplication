@@ -1,10 +1,10 @@
 import { makeObservable, observable, action } from 'mobx';
 
-import RootStore from '../Rootstore';
+import RootStore from '../RootStore';
 
-import LearningRepository from '../../repository/app/LearningRepository';
+import LearningRepository from '@repository/app/LearningRepository';
 
-import {Answer, Exam, ExamAnswer, ExamAnswerActivity, ExaminationOverview, ExamResult} from '../../model/Learning';
+import {Answer, Exam, ExamAnswer, ExamAnswerActivity, ExaminationOverview, ExamResult} from '@model/Learning';
 
 interface Store {
   data : ExaminationOverview | null,
@@ -42,12 +42,12 @@ export class ExaminationStore {
     const res : ExamResult | null = await this.learningRepository.fetchExamResult(token, examId).then((res)=> {return res}).catch((res) => {
       return null
     })
-    console.log(res)
     return res; 
   }
 
   @action.bound
   async FetchExamOverview(): Promise<any> {
+    this.store.data = null;
     const { token } = this.rootStore.authStore.store;
     await this.learningRepository.fetchExamOverview(token).then(this.onFetchExamOverviewSuccess).catch((res) => {
       console.log(res)
@@ -70,7 +70,7 @@ export class ExaminationStore {
     }
     exam.activities.forEach((e, key : number) => {
       let res = result[key];
-      if (e.info.activity_type_id===1) {
+      if (e.activity.activity_type_id===1) {
         let temp: any = [];
         (res! as string[][]).forEach((e: any, key: number) => {
           temp.push({
@@ -81,14 +81,13 @@ export class ExaminationStore {
         res = temp;
       }
       let examAnswer : ExamAnswerActivity = {
-        activity_id : e.info.activity_id,
+        activity_id : e.activity.activity_id,
         answer : res
       }
       answer.activities.push(examAnswer);
     })
     const { token } = this.rootStore.authStore.store;
     this.learningRepository.submitExam(token, answer).then((res : any)=>{
-      console.log(res)
       cb?.(res)
     })
   }

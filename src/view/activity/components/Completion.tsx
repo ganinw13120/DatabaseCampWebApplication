@@ -1,6 +1,5 @@
 import { Component, ReactElement } from 'react';
 import React from 'react';
-import BaseView from '../../BaseView';
 
 import ChoiceBox from './Choicebox';
 
@@ -23,8 +22,7 @@ interface CompletionProps {
   updateResult(e : CompletionAnswer[]) : void
 }
 
-export default class Completion extends Component<CompletionProps, CompletionPageState>
-  implements BaseView {
+export default class Completion extends Component<CompletionProps, CompletionPageState> {
   public constructor(props: any) {
     super(props);
     this.state = {
@@ -37,9 +35,6 @@ export default class Completion extends Component<CompletionProps, CompletionPag
     this.snapPos = this.snapPos.bind(this);
     this.removeSnap = this.removeSnap.bind(this);
     this.appendRef = this.appendRef.bind(this);
-  }
-  public onViewModelChanged(): void {
-
   }
 
   public onHoverQuestionEnter(id: number): void {

@@ -1,14 +1,10 @@
 import { makeObservable, observable, action } from 'mobx';
 
-import RootStore from '../Rootstore';
+import RootStore from '../RootStore';
 
-import LearningRepository from '../../repository/app/LearningRepository';
+import LearningRepository from '@repository/app/LearningRepository';
 
-import {RoadMap, Lecture, Activity, Hint, Answer ,CompletionAnswer, ActivityAlert, HintRoadMap } from '../../model/Learning';
-
-// interface Store {
-//   [key : string] : any
-// }
+import {RoadMap, Lecture, Activity, Hint, Answer ,CompletionAnswer, ActivityAlert, HintRoadMap } from '@model/Learning';
 
 interface Store {
   roadMap : RoadMap | null,
@@ -41,6 +37,11 @@ export class LearningStore {
       hintRoadMap : []
   }
 
+  /**
+  * Gets script version
+  * @param fileName
+  * @returns script version
+  */
   @action.bound
   public async FetchRoadmap(contentID: number, cb : any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
@@ -52,6 +53,7 @@ export class LearningStore {
 
   @action.bound
   onRoadmapFetchSuccess (res : RoadMap) : RoadMap {
+    if (!res.items) res.items = [];
     this.store.roadMap = res;
     return res;
   }
@@ -70,8 +72,8 @@ export class LearningStore {
 
   @action.bound
   onFetchActivitySuccess (res : Activity) : Activity {
-    this.store.hint = res.hint.used_hints;
-    this.store.hintRoadMap = res.hint.hint_roadmap;
+    this.store.hint = res.hint.used_hints ?  res.hint.used_hints : [];
+    this.store.hintRoadMap = res.hint.hint_roadmap ? res.hint.hint_roadmap : [];
     this.store.activityInfo = res;
     return res;
   }
@@ -139,6 +141,7 @@ export class LearningStore {
       const {is_correct} = res;
       if (is_correct) {
         this.updateRoadMapStatus(activityID);
+        this.rootStore.authStore.SetUserPoint(res.updated_point);
         this.successAnswer(cb);
         return;
       }
@@ -167,6 +170,7 @@ export class LearningStore {
       const {is_correct} = res;
       if (is_correct) {
         this.updateRoadMapStatus(activityID);
+        this.rootStore.authStore.SetUserPoint(res.updated_point);
         this.successAnswer(cb);
         return;
       }
@@ -190,6 +194,7 @@ export class LearningStore {
       const {is_correct} = res;
       if (is_correct) {
         this.updateRoadMapStatus(activityID);
+        this.rootStore.authStore.SetUserPoint(res.updated_point);
         this.successAnswer(cb);
         return;
       }
@@ -229,7 +234,7 @@ export class LearningStore {
     temp.push(res);
     this.store.isLoading = false;
     this.store.hint = temp;
-    this.rootStore.authStore.UpdateUserPoint(res.point_reduce);
+    this.rootStore.authStore.DecreaseUserPoint(res.point_reduce);
     return null;
   }
 

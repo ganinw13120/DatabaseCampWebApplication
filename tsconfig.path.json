@@ -1,8 +1,17 @@
 {
-    "compilerOptions": {
-      "baseUrl": "./src",
-      "paths": {
-        "@store/*": ["./store/*"],
-      }
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@root/*": ["./*"],
+      "@store/*": ["./store/*"],
+      "@constant/*": ["./constant/*"],
+      "@assets/*": ["./assets/*"],
+      "@middleware/*": ["./middleware/*"],
+      "@model/*": ["./model/*"],
+      "@repository/*": ["./repository/*"],
+      "@util/*": ["./util/*"],
+      "@view/*": ["./view/*"],
+      "@view-model/*": ["./view-model/*"]
     }
   }
+}

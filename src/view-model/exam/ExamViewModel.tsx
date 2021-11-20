@@ -1,15 +1,16 @@
 import IExamViewModel from './IExamViewModel';
-import BaseView from '../../view/BaseView';
-import { ActivityAlert, Answer, CompletionAnswer, Exam } from '../../model/Learning';
-import { Step, Stepper } from '../../model/App';
+import { ActivityAlert, Answer, CompletionAnswer, Exam } from '@model/Learning';
+import { Step, Stepper } from '@model/App';
 
-import { validateCompletion, validateMultiple, validateMatching } from '../../util/validateActvitiy';
+import { IExamPage } from '@view/exam/ExamPage';
+
+import { validateCompletion, validateMultiple, validateMatching } from '@util/validateActvitiy';
 
 export default class ExamViewModel implements IExamViewModel {
-  private baseView?: BaseView;
+  private baseView?: IExamPage;
   public currentActivity : number;
-  public exam : Exam | null
-  public result : Answer[]
+  public exam : Exam | null;
+  private result : Answer[];
   public alert : ActivityAlert | null;
   public isLoading : boolean;
   constructor (currentActivity : number) {
@@ -21,13 +22,17 @@ export default class ExamViewModel implements IExamViewModel {
     this.moveNext = this.moveNext.bind(this);
     this.movePrev = this.movePrev.bind(this);
   }
-  public attachView = (baseView: BaseView): void => {
+  public attachView = (baseView: IExamPage): void => {
     this.baseView = baseView;
     
-    baseView?.props.appStore?.setPercent(40)
-    const search = baseView.props.location.search
-    const examId = new URLSearchParams(search).get('id');
-    baseView.props.examinationStore.FetchExam(examId).then((res : Exam) => {
+    baseView?.props.appStore?.setPercent(40);
+    const examId = parseInt(baseView.props.match.params?.id);
+    if (!examId) baseView.props.history.replace('/examination/overview');
+    baseView.props.examinationStore!.FetchExam(examId).then((res : Exam | null) => {
+      if (!res) {
+        baseView.props.history.replace('/examination/overview');
+        return;
+      }
       this.exam = res;
       baseView.onViewModelChanged();
       baseView?.props.appStore?.setPercent(100)
@@ -35,12 +40,12 @@ export default class ExamViewModel implements IExamViewModel {
     })
   };
 
-  public setStepper = () : void => {
+  private setStepper = () : void => {
     if (!this.exam) return;
     const stepper : Stepper = this.generateExamStepper(this.exam)
     stepper.onNext = this.moveNext;
     stepper.onPrev = this.movePrev;
-    this.baseView!.props.appStore.setStepper(stepper)
+    this.baseView?.props.appStore!.setStepper(stepper)
   }
 
   private generateExamStepper = (res : Exam) : Stepper => { 
@@ -85,8 +90,8 @@ export default class ExamViewModel implements IExamViewModel {
       }
       this.isLoading = true;
       this.baseView?.onViewModelChanged();
-      this.baseView!.props.examinationStore.submitExam(this.result, this.exam, (res : any)=>{
-        this.baseView?.props.history.push('/result?id=' + res.exam_result_id);
+      this.baseView?.props.examinationStore!.submitExam(this.result, this.exam, (res : any)=>{
+        this.baseView?.props.history.replace('/examination/result/' + res.exam_result_id);
       })
     }
     this.setStepper();
@@ -114,7 +119,7 @@ export default class ExamViewModel implements IExamViewModel {
   private validateResult = (key : number) : boolean => {
     const result = this.result[key];
     if (!this.exam?.activities[key] || !result) return false;
-    const {activity_type_id} = this.exam?.activities[key].info;
+    const {activity_type_id} = this.exam?.activities[key].activity;
     if (activity_type_id === 1) {
       return validateMatching(result as string[][])
     }

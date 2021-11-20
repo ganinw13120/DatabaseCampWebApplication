@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter, RouteComponentProps  } from 'react-router-dom';
 
-import {ExamOverviewInfo} from '../../../model/Learning';
+import {ExamOverviewInfo} from '@model/Learning';
 
 interface ExamCardProps extends RouteComponentProps {
   exam : ExamOverviewInfo,
@@ -13,7 +13,7 @@ class HeaderCard extends React.Component<ExamCardProps, any>{
   private onClickContinue () : void {
     const {exam} = this.props;
     const {exam_id} = exam;
-    this.props.history.push('/examination/start?id=' + exam_id);
+    this.props.history.replace('/examination/start?id=' + exam_id);
 
   }
   public render(): JSX.Element {

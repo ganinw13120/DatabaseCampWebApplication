@@ -1,7 +1,7 @@
 import React from 'react';
-import DarkLogo from '../../../assets/dark-logo.png';
+import DarkLogo from '@assets/dark-logo.png';
 import { withRouter } from 'react-router-dom';
-import scrollTo from '../../../util/scrollTo';
+import scrollTo from '@util/scrollTo';
  
 class Navbar extends React.Component<any, any> {
 
@@ -22,7 +22,7 @@ class Navbar extends React.Component<any, any> {
     window.removeEventListener('scroll', this.handleScroll, false);
   }
   loadPage(url: string) {
-    this.props.history.push('/' + url);
+    this.props.history.replace('/' + url);
   }
   public render(): JSX.Element {
     const { offSetY } = this.state;

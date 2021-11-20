@@ -1,7 +1,6 @@
 import { Component, ReactElement } from 'react';
-import BaseView from '../../BaseView';
 import Radio from '@mui/material/Radio';
-import {MultipleChoice} from '../../../model/Learning';
+import {MultipleChoice} from '@model/Learning';
 
 interface MultipleChoiceState {
   selectedChoice : number | null,
@@ -12,17 +11,13 @@ interface MultipleChoiceProps {
   updateResult(e : number) : void
 }
 
-export default class MultipleChoiceComponent extends Component<MultipleChoiceProps, MultipleChoiceState>
-  implements BaseView {
+export default class MultipleChoiceComponent extends Component<MultipleChoiceProps, MultipleChoiceState> {
   public constructor(props: any) {
     super(props);
     this.state = {
       selectedChoice : null,
     }
     this.handleSelect = this.handleSelect.bind(this);
-  }
-  public onViewModelChanged(): void {
-
   }
   handleSelect(e : number): void {
     const {updateResult} = this.props;

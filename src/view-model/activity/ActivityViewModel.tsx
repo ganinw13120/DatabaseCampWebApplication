@@ -1,12 +1,13 @@
 import IActivityViewModel from './IActivityViewModel';
 import { notification } from 'antd';
-import BaseView from '../../view/BaseView';
 
-import {Activity, ActivityAlert, Answer, RoadMap} from '../../model/Learning';
-import generateStepper, { generateEmptyStepper } from '../../util/generateStepper';
+import { IActivityPage } from '@root/view/activity/ActivityPage';
+
+import {Activity, ActivityAlert, Answer, RoadMap} from '@model/Learning';
+import generateStepper, { generateEmptyStepper } from '@util/generateStepper';
 
 export default class ActivityViewModel implements IActivityViewModel {
-  private baseView?: BaseView;
+  private baseView?: IActivityPage;
   public activityInfo : Activity | null;
   private result: Answer | null;
   public alert : ActivityAlert | null;
@@ -19,13 +20,11 @@ export default class ActivityViewModel implements IActivityViewModel {
     this.movePrev = this.movePrev.bind(this);
   }
 
-  public attachView = async (baseView: BaseView): Promise<any> => {
+  public attachView = async (baseView: IActivityPage): Promise<any> => {
     this.baseView = baseView;
-    const search = baseView.props.location.search
-    const activityID = new URLSearchParams(search).get('id');
-    if (!activityID) baseView.props.history.push('/overview')
-    
-    if (!baseView.props.learningStore.store.roadMap) baseView.props.appStore.setStepper(generateEmptyStepper())
+    const activityID = parseInt(baseView.props.match.params?.id);
+    if (!activityID) baseView.props.history.replace('/overview')
+    if (!baseView.props.learningStore!.store.roadMap) baseView.props.appStore!.setStepper(generateEmptyStepper())
     else {
       this.generateStepperFromStore();
     }
@@ -35,20 +34,20 @@ export default class ActivityViewModel implements IActivityViewModel {
     this.alert = null;
     this.baseView?.onViewModelChanged();
 
-    baseView?.props.appStore?.setPercent(40)
-    baseView.props.learningStore.FetchActivity(activityID, (res : Activity) => {
+    baseView.props.appStore!.setPercent(40)
+    baseView.props.learningStore!.FetchActivity(activityID, (res : Activity) => {
       this.activityInfo = res;
       this.baseView?.onViewModelChanged()
       baseView?.props.appStore?.setPercent(70)
       if (!res) return
-      if (!this.baseView?.props.learningStore.store.roadMap) {
+      if (!baseView.props.learningStore!.store.roadMap) {
         const {content_id : contentId} = res.activity;
-        baseView.props.learningStore.FetchRoadmap(contentId, (res : RoadMap)=>{
+        baseView.props.learningStore!.FetchRoadmap(contentId, (res : RoadMap)=>{
           baseView?.props.appStore?.setPercent(100)
           const stepper = generateStepper(res, this.getCurrentActivityOrder(res), true);
           stepper.onNext = this.moveNext;
           stepper.onPrev = this.movePrev;
-          baseView.props.appStore.setStepper(stepper)
+          baseView.props.appStore!.setStepper(stepper)
         })
       } else {
         baseView?.props.appStore?.setPercent(100)
@@ -58,34 +57,22 @@ export default class ActivityViewModel implements IActivityViewModel {
   };
 
   private generateStepperFromStore () : void {
-    const stepper = generateStepper(this.baseView?.props.learningStore.store.roadMap, this.getCurrentActivityOrder(this.baseView?.props.learningStore.store.roadMap), true);
+    const roadMap = this.baseView!.props.learningStore!.store.roadMap;
+    if (!roadMap) return;
+    const stepper = generateStepper(roadMap, this.getCurrentActivityOrder(roadMap), true);
     stepper.onNext = this.moveNext;
     stepper.onPrev = this.movePrev;
-    this.baseView?.props.appStore.setStepper(stepper)
+    this.baseView?.props.appStore!.setStepper(stepper)
   }
   
   public onSubmit = (): void => {
     if (!this.baseView) return;
-    const {isLoading} = this.baseView.props.learningStore.store;
+    const {isLoading} = this.baseView.props.learningStore!.store;
     if (isLoading) return;
-    this.baseView.props.learningStore.SubmitActivity(this.result, (res: ActivityAlert) => {
+    this.baseView.props.learningStore!.SubmitActivity(this.result, (res: ActivityAlert) => {
       this.generateStepperFromStore();
       this.alert = res;
       this.baseView?.onViewModelChanged();
-        // const nextActivity = this.getNextActivityId();
-        // this.baseView?.props.learningStore.clearActivity();
-        // if (nextActivity) {
-        //   this.baseView?.props.history.push(`/activity?id=${nextActivity}`)
-        // } else {
-        //   notification['success']({
-        //     message: "จบเเล้ว",
-        //     description:
-        //       'ไม่มีกิจกรรมเเล้ววว',
-        //     onClick: () => {
-        //     },
-        //   });
-        //   this.baseView?.props.history.push('/overview')
-        // }
     })
   }
 
@@ -99,12 +86,12 @@ export default class ActivityViewModel implements IActivityViewModel {
     this.result = null;
     this.alert = null;
     this.baseView?.onViewModelChanged();
-    this.baseView?.props.learningStore.clearActivity();
+    this.baseView?.props.learningStore!.clearActivity();
     const next = this.getNextActivityId();
     if (!next) {
-      this.baseView?.props.history.push('/overview')
+      this.baseView?.props.history.replace('/overview')
     } else {
-      this.baseView?.props.history.push(`/activity?id=${next}`)
+      this.baseView?.props.history.replace(`/learning/activity/${next}`)
     }
   }
   private movePrev = () : void => {
@@ -112,24 +99,26 @@ export default class ActivityViewModel implements IActivityViewModel {
     this.result = null;
     this.alert = null;
     this.baseView?.onViewModelChanged();
-    this.baseView?.props.learningStore.clearActivity();
+    this.baseView?.props.learningStore!.clearActivity();
     const prev = this.getPrevActivityId();
     if (!prev) {
       const content_id = this.activityInfo?.activity.content_id;
       if (!content_id)
-        this.baseView?.props.history.push('/overview')
+        this.baseView?.props.history.replace('/overview')
       else 
-        this.baseView?.props.history.push('/content?id=' + content_id)  
+        this.baseView?.props.history.replace('/learning/content/' + content_id)  
     } else {
-      this.baseView?.props.history.push(`/activity?id=${prev}`)
+      this.baseView?.props.history.replace(`/learning/activity/${prev}`)
     }
   }
 
   private  getNextActivityId = (): number | null => {
     if (!this.activityInfo) return null;
-    const { roadMap } = this.baseView?.props.learningStore.store;
+    const { roadMap } = this.baseView?.props.learningStore!.store!;
+    if (!roadMap) return null;
     const currentActivityId = this.activityInfo!.activity.activity_id;
-    const currentOrder = roadMap.items.find((e : any) => e.activity_id === currentActivityId).order;
+    const currentOrder = roadMap.items.find((e : any) => e.activity_id === currentActivityId)?.order;
+    if (!currentOrder) return null;
     const nextActivity = roadMap.items.find((e: any) => e.order === currentOrder + 1);
     if (!nextActivity) {
       return null;
@@ -141,9 +130,11 @@ export default class ActivityViewModel implements IActivityViewModel {
 
   private  getPrevActivityId = (): number | null => {
     if (!this.activityInfo) return null;
-    const { roadMap } = this.baseView?.props.learningStore.store;
+    const { roadMap } = this.baseView?.props.learningStore!.store!;
+    if (!roadMap) return null;
     const currentActivityId = this.activityInfo!.activity.activity_id;
-    const currentOrder = roadMap.items.find((e : any) => e.activity_id === currentActivityId).order;
+    const currentOrder = roadMap.items.find((e : any) => e.activity_id === currentActivityId)?.order;
+    if (!currentOrder) return null;
     const nextActivity = roadMap.items.find((e: any) => e.order === currentOrder - 1);
     if (!nextActivity) {
       return null;
@@ -156,9 +147,9 @@ export default class ActivityViewModel implements IActivityViewModel {
 
   public onHint = async (): Promise<any> => {
     if (!this.baseView) return;
-    const {isLoading} = this.baseView.props.learningStore.store;
+    const {isLoading} = this.baseView.props.learningStore!.store;
     if (isLoading) return;
-    const result = await this.baseView?.props.learningStore.getHint()
+    const result = await this.baseView?.props.learningStore!.getHint()
     if (result) {
       notification['error']({
         message: "พบข้อผิดพลาด",

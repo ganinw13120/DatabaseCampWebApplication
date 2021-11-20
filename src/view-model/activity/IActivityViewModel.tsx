@@ -1,5 +1,9 @@
-import BaseViewModel from '../BaseViewModel';
+import { Answer } from '@model/Learning';
+import BaseViewModel from '@view-model/BaseViewModel';
 
 export default interface IOverviewViewModel extends BaseViewModel {
-  
+    onSubmit () : void;
+    moveNext () : void;
+    onHint () : Promise<any>;
+    updateResult (result : Answer) : void;
 }

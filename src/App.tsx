@@ -1,17 +1,21 @@
 import { Component, ReactElement } from 'react';
-import './App.css';
-import LandingPage from "./view/landing-page";
-import LoginPage from "./view/login";
-import RegisterPage from "./view/register";
 
-import OverviewPage from './view/overview';
-import ExamPage from './view/exam';
-import ExamOverviewPage from './view/exam-overview';
-import ProfilePage from './view/profile';
-import Activity from './view/activity';
-import LecturePage from './view/lecture';
-import PointRankingPage from './view/pointRanking';
-import ExamResultPage from './view/exam-result';
+import '@root/App.css';
+
+import LandingPage from "@view/landing-page";
+import LoginPage from "@view/login";
+import RegisterPage from "@view/register";
+
+import Progress from '@view/layout/ProgressBar';
+import NotFoundPage from '@view/error';
+import OverviewPage from '@view/overview';
+import ExamPage from '@view/exam';
+import ExamOverviewPage from '@view/exam-overview';
+import ProfilePage from '@view/profile';
+import Activity from '@view/activity';
+import LecturePage from '@view/lecture';
+import PointRankingPage from '@view/pointRanking';
+import ExamResultPage from '@view/exam-result';
 
 import {
   BrowserRouter as Router,
@@ -19,17 +23,15 @@ import {
   Switch
 } from "react-router-dom";
 import 'antd/dist/antd.css';
-import './index.css';
+import '@root/index.css';
 
-import PreLogged from './middleware/PreLogged';
-import LoggedMiddleware from './middleware/LoggedMiddleware';
+import PreLogged from '@middleware/PreLogged';
+import LoggedMiddleware from '@middleware/LoggedMiddleware';
 
 import { Provider } from 'mobx-react';
 
-import RootStore  from './store/Rootstore';
+import RootStore  from '@store/RootStore';
 
-import Progress from './view/layout/ProgressBar';
-import NotFoundPage from './view/error';
 
 const _RootStore = new RootStore();
 
@@ -55,23 +57,23 @@ const appRouteList : route[] = [
     page : <OverviewPage/>
   },
   {
-    url: '/examination',
+    url: '/examination/overview',
     page : <ExamOverviewPage/>
   },
   {
-    url: '/examination/start',
+    url: '/examination/:id',
     page : <ExamPage/>
   },
   {
-    url: '/profile',
+    url: '/profile/:id',
     page : <ProfilePage/>
   },
   {
-    url: '/activity',
+    url: '/learning/activity/:id',
     page : <Activity/>
   },
   {
-    url: '/content',
+    url: '/learning/content/:id',
     page: <LecturePage />
   },
   {
@@ -79,7 +81,7 @@ const appRouteList : route[] = [
     page : <PointRankingPage/>
   },
   {
-    url: '/result',
+    url: '/examination/result/:id',
     page : <ExamResultPage/>
   },
 ];

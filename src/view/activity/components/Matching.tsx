@@ -4,10 +4,8 @@ import BaseView from '../../BaseView';
 import { v4 as uuidv4 } from 'uuid';
 import ChoiceBox from './Choicebox';
 
-// import {MultipleChoice} from '../../../../domain/entity/model/Learning';
-
-import Equal from '../../../assets/equal.svg';
-import { MatchingChoice } from '../../../model/Learning';
+import Equal from '@assets/equal.svg';
+import { MatchingChoice } from '@model/Learning';
 type QuestionBox = {
   id : string,
   isFilled: boolean,

@@ -1,10 +1,10 @@
 import { makeObservable, observable, action } from 'mobx';
 
-import AuthRepository from '../../repository/auth/AuthRepository';
+import AuthRepository from '@repository/auth/AuthRepository';
 
-import RootStore from '../Rootstore';
+import RootStore from '../RootStore';
 
-import {User, AuthUser} from '../../model/User';
+import {User, AuthUser} from '@model/User';
 
 interface Store {
   userData : User | null,
@@ -43,12 +43,21 @@ export class AuthStore{
   }
 
   @action.bound
-  UpdateUserPoint (point : number) : void {
+  DecreaseUserPoint (point : number) : void {
     let {userData : temp} = this.store;
     if (!temp) return;
     temp.point -= point;
     this.store.userData = temp;
   } 
+
+  @action.bound
+  SetUserPoint (point : number) : void {
+    let {userData : temp} = this.store;
+    if (!temp) return;
+    temp.point = point;
+    this.store.userData = temp;
+  }
+
   @action.bound
   UpdateUserName (name : string) : void {
     let {userData : temp} = this.store;
@@ -64,6 +73,7 @@ export class AuthStore{
     })
     return;
   }
+  
   @action.bound
   onVerifySuccess (res : User) : User {
     this.store.userData = res;
@@ -115,7 +125,6 @@ export class AuthStore{
       email: email,
       password : password,
     }).then(this.onRegisterSuccess).catch((err) => {
-      console.log(err)
       return {
         issuccess: false,
         message : err.message

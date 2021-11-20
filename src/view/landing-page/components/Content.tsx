@@ -1,5 +1,5 @@
 import React from 'react';
-import Circle from '../../../assets/circle.svg';
+import Circle from '@assets/circle.svg';
 
 export default class Content extends React.Component<any, any> {
 

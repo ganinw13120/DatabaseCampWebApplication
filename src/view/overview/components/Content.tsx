@@ -3,15 +3,9 @@ import { withRouter } from 'react-router-dom';
 
 import { Progress } from 'semantic-ui-react'
 
-// type ContentProps = {
-//   id: number,
-//   is_lasted : boolean,
-//   name: string,
-//   progress : number,
-// }
 class Content extends React.Component<any, any> {
   onSelectContent() {
-    this.props.history.push('/content?id=' + this.props.id);
+    this.props.history.replace('/learning/content/' + this.props.id);
   }
   public render(): JSX.Element {
     const { name, progress, is_lasted } = this.props;
