@@ -28,12 +28,18 @@ import Star from '@assets/starProfile.png';
 
 import SkeletonActivity from './components/SkeletonActivity';
 
+export interface IActivityPage extends BaseView {
+  props : ActivityProps
+}
+
 interface ActivityState {
   activityInfo: Activity | null,
   alert : ActivityAlert | null,
 }
 
-interface ActivityProps extends RouteComponentProps {
+interface ActivityProps extends RouteComponentProps<{
+    id : string
+}> {
   learningStore?: LearningStore,
   appStore?: AppStore,
   authStore ?: AuthStore  | null
@@ -44,7 +50,7 @@ interface ActivityProps extends RouteComponentProps {
 @inject('appStore')
 @observer
 class ActivityPage extends React.Component<ActivityProps, ActivityState>
-  implements BaseView {
+  implements IActivityPage {
   private activityViewModel: ActivityViewModel;
   private swal: any;
   constructor(props: any) {
@@ -68,15 +74,15 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
     }
   }
 
-
   componentDidUpdate(): void {
     let { activityInfo } = this.state;
-    const activityID = (this.props.match.params as any).id;
+    const activityID = this.props.match.params.id;
     if (activityInfo && activityInfo?.activity?.activity_id.toString() !== activityID) {
       this.activityViewModel.attachView(this);
       this.setState({ activityInfo: null })
     }
   }
+  
   showHintPopup(): void {
     this.swal.fire({
       title: 'ท่านต้องการขอคำใบ้ใช่หรือไม่?',

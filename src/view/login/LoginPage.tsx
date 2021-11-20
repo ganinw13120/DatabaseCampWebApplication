@@ -1,15 +1,26 @@
-import React from 'react';
+import { Component } from 'react';
 import BaseView from '@view/BaseView';
 import FullLogo from '@assets/high-res-full-logo.png';
 import LoginViewModel from '@view-model/auth/LoginViewModel';
 import { Form, Input, Button  } from 'antd';
 import { KeyOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { inject, observer } from 'mobx-react';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import validateEmail from '@util/validateEmail';
+import { AppStore } from '@store/stores/AppStore';
+import { AuthStore } from '@store/stores/AuthStore';
 
-export interface LoginComponentState {
+export interface ILoginPage extends BaseView {
+  props : LoginProps
+}
+
+interface LoginProps extends RouteComponentProps {
+  appStore ?: AppStore,
+  authStore ?: AuthStore
+}
+
+interface LoginComponentState {
   isLoading: boolean
   displayText : string
 }
@@ -19,12 +30,12 @@ export interface LoginComponentState {
   
 
 @observer
-class LoginPage extends React.Component<any, LoginComponentState>
-  implements BaseView {
+class LoginPage extends Component<LoginProps, LoginComponentState>
+  implements ILoginPage {
   
   private loginViewModel: LoginViewModel;
   
-  public constructor(props: any) {
+  public constructor(props: LoginProps) {
     super(props);
     this.props.appStore?.setPercent(0)
 

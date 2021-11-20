@@ -14,11 +14,17 @@ import LectureViewModel from '@view-model/lecture/LectureViewModel';
 import { LearningStore } from '@store/stores/LearningStore';
 import { AppStore } from '@store/stores/AppStore';
 
-export interface LectureComponentState {
+export interface ILecturePage extends BaseView {
+  props : LectureProps
+}
+
+interface LectureComponentState {
   lectureInfo : any
 }
 
-interface LectureProps extends RouteComponentProps {
+interface LectureProps extends RouteComponentProps <{
+  id : string
+}> {
   learningStore ?: LearningStore,
   appStore ?: AppStore,
 }
@@ -27,7 +33,7 @@ interface LectureProps extends RouteComponentProps {
 @inject("appStore")
 @observer
 class LecturePage extends React.Component<LectureProps, LectureComponentState>
-  implements BaseView {
+  implements ILecturePage {
 
   private lectureViewModel: LectureViewModel;
 

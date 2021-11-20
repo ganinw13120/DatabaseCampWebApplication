@@ -19,6 +19,10 @@ import {AuthStore} from '@store/stores/AuthStore';
 
 import {Overview} from '@model/Learning';
 
+export interface IOverview extends BaseView {
+  props : OverviewProps,
+}
+
 interface OverviewState {
   data : Overview | null
 }
@@ -36,7 +40,7 @@ interface OverviewProps extends RouteComponentProps {
 
 class OverviewPage
   extends React.Component<OverviewProps, OverviewState>
-  implements BaseView
+  implements IOverview
 {
   private overviewViewModel: OverviewViewModel;
 
