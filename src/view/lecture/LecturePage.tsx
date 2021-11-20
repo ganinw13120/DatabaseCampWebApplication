@@ -86,18 +86,18 @@ class LecturePage extends React.Component<LectureProps, LectureComponentState>
             </div>
           </div>
           <div className="mt-10 mx-auto text-center w-3/4">
-            <div className='flex'>
+            <div className='md:flex'>
               <div className='flex-none flex h-auto space-x-4 mt-3'>
                 <div className='text-3xl text-darkPrimary font-semibold tracking-wider'>
                   <span className='w-full bg-darkPrimary'>..</span>
                 </div>
-                <div className='text-3xl text-darkPrimary font-semibold tracking-wider'>
+                <div className='text-lg md:text-3xl text-darkPrimary font-semibold tracking-wider'>
                   <span>{!lectureInfo ?  <Skeleton variant="text" className="w-36" /> : `เนื้อหา - ${lectureInfo.content_name}`}</span>
                 </div>
               </div>
               <div className='flex-grow'>
               </div>
-              <div className='nextbtn flex-none w-44 bg-primary rounded-xl h-16' onClick={this.lectureViewModel.onClickNext}>
+              <div className='mt-10 md:mt-0 nextbtn flex-none w-44 bg-primary rounded-xl h-16' onClick={this.lectureViewModel.onClickNext}>
                   <Button className='w-full h-24 bg-primary' style={{height: '100%'}} ghost size='large'><span className='text-base text-white font-light tracking-wider '>ถัดไป</span></Button>
               </div>
             </div>

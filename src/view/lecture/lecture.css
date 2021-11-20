@@ -6,8 +6,15 @@
 .wrapper{
     display: flex;
     justify-content:center;
-    width: 60vw;
+    width: 70%;
 }
+
+/* @media only screen and (max-width: 7680px) {
+    .wrapper{
+        width: 60%;
+    }
+  } */
+  
 
 .plyr__video-wrapper {
     position: relative;
