@@ -1,6 +1,7 @@
 # Database Camp
 > Web Application part of project.
 
+[![DeepScan grade](https://deepscan.io/api/teams/16049/projects/19278/branches/495378/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=16049&pid=19278&bid=495378)
 [![CodeFactor](https://www.codefactor.io/repository/github/ganinw13120/databasecampwebapplication/badge/develop)](https://www.codefactor.io/repository/github/ganinw13120/databasecampwebapplication/overview/develop)
 <a href="https://codeclimate.com/github/ganinw13120/DatabaseCampWebApplication/maintainability"><img src="https://api.codeclimate.com/v1/badges/7e4cae8ce350cf11b51d/maintainability" /></a> 
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
