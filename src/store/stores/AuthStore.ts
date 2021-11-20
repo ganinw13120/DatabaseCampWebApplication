@@ -73,6 +73,7 @@ export class AuthStore{
     })
     return;
   }
+  
   @action.bound
   onVerifySuccess (res : User) : User {
     this.store.userData = res;
