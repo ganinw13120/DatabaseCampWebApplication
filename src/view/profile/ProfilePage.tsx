@@ -148,7 +148,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
         <div className="font-prompt bg-bg w-full h-auto">
           <div className='h-full text-white text-center align-middle justify-center '>
             <img src={Profilehead} alt="Logo2" className='object-none pt-20 mx-auto my-auto text-center' />
-            <div className='text-5xl text-darkPrimary font-normal tracking-wider py-6 border-b-2 mx-16 border-gray'>
+            <div className='text-2xl md:text-5xl text-darkPrimary font-normal tracking-wider py-6 border-b-2 mx-16 border-gray'>
               {data && userData ? <>
                 <span>{data.name}
                   {userData.user_id === data.user_id && <img src={ProfilenameEdit} alt="Logo3" className='pl-4 inline object-none mx-auto my-auto text-center cursor-pointer' onClick={this.showEditModal} />}
@@ -171,14 +171,14 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
 
               {data ? <>
                 <div className='w-auto flex'>
-                  <img src={star} alt="Logo4" className='object-none mx-auto my-auto ml-8' />
-                  <span className='ml-6 text-lg text-darkSecondary font-normal tracking-wider w-56 text-left my-auto '>{data.point.toLocaleString()} คะแนน</span>
+                  <img src={star} alt="Logo4" className='object-none mx-auto my-auto ml-2 md:ml-8' />
+                  <span className='ml-6 text-sm md:text-lg text-darkSecondary font-normal tracking-wider text-left my-auto '>{data.point.toLocaleString()} คะแนน</span>
                 </div>
                 <div className='flex-grow'>
                 </div>
                 <div className='w-auto flex'>
                   <img src={hat} alt="Logo4" className='object-none mx-auto my-auto' />
-                  <span className='ml-6 text-lg text-darkSecondary font-normal tracking-wider w-32 text-left my-auto'>{data.activity_count} กิจกรรม</span>
+                  <span className='ml-2 pr-10 md:ml-6 text-sm md:text-lg text-darkSecondary font-normal tracking-wider text-left my-auto'>{data.activity_count} กิจกรรม</span>
                 </div>
               </> : <>
                 <Skeleton variant="text" className="w-5/6 mx-auto" />
@@ -192,7 +192,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
               <Skeleton variant="text" className="w-1/6 mx-auto" />
             </>}
             {data && <>
-              <div className='  mt-16 w-auto flex'>
+              <div className='  mt-16 w-auto md:flex'>
                 <div className='flex-grow'>
                 </div>
                 {(() => {
@@ -222,7 +222,7 @@ class Badge extends Component<any, any> {
       <>
         <div className='object-contain my-auto text-center mx-5'>
           <div className=''>
-            <img src={Icon} alt="Logo8" className={`h-36 ${isCollect ? '' : 'monochrome'}`} />
+            <img src={Icon} alt="Logo8" className={`h-36 ${isCollect ? '' : 'monochrome'} mx-auto`} />
           </div>
           <div className=' text-lg text-darkSecondary font-normal tracking-wider mt-6'>
             <span>{displayText}</span>
