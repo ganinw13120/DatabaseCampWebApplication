@@ -15,7 +15,7 @@ class Content extends React.Component<any, any> {
               <div className='font-semibold text-sm md:text-base text-darkPrimary mx-8 md:mx-16 font-bold my-auto'>
                 - {name}
               </div>
-              {is_lasted && 
+              {is_lasted &&
               <div className='flex-none bg-primary px-4 md:px-0 md:w-24 align-middle my-auto  rounded'>
                 <div className=' font-normal text-white' style={{ marginTop: 2 }}>
                 ล่าสุด

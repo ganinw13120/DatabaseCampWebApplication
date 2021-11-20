@@ -100,7 +100,7 @@ export class LearningStore {
       this.checkCompletion(activity.activity_id, result as CompletionAnswer[], cb);
     } else if (activity.activity_type_id === 2) {
       this.checkMultiple(activity.activity_id, result as number, cb);
-    } 
+    }
   }
 
   @action.bound
@@ -134,7 +134,7 @@ export class LearningStore {
     this.store.roadMap!.items = items;
   }
 
-  @action.bound 
+  @action.bound
   private async checkMultiple(activityID : number, result : number, cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     this.learningRepository.checkMultiple(token, activityID, result).then((res : any) => {
@@ -150,9 +150,9 @@ export class LearningStore {
         return;
       }
     });
-  } 
+  }
 
-  @action.bound 
+  @action.bound
   private async checkMatching(activityID : number, result : string[][], cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     let res : any = [];
@@ -179,9 +179,9 @@ export class LearningStore {
         return;
       }
     });
-  } 
+  }
 
-  @action.bound 
+  @action.bound
   private async checkCompletion(activityID : number, result : CompletionAnswer[], cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     result.forEach((e: any) => {
@@ -203,7 +203,7 @@ export class LearningStore {
         return;
       }
     });
-  } 
+  }
 
   @action.bound
   public clearActivity(): void {

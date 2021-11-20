@@ -8,7 +8,7 @@ import { ExaminationStore } from "./stores/ExaminationStore";
 
 /**
  * Initialize and store mobx stores, which root store is included in every store(For communicating between stores).
- * 
+ *
  * @remarks
  * Intitializing stores in only root store, provide in every component.
  */

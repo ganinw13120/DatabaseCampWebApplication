@@ -5,7 +5,7 @@ import {ExamOverviewInfo} from '@model/Learning';
 
 interface ExamCardProps extends RouteComponentProps {
   exam : ExamOverviewInfo,
-  isEnabled : boolean, 
+  isEnabled : boolean,
   displayName ?: string
 }
 

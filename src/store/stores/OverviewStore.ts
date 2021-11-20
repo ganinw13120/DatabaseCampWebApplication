@@ -31,5 +31,5 @@ export class OverviewStore {
   @action.bound
   onFetchOverviewSuccess (res : Overview) : Overview {
     return res;
-  } 
+  }
 }

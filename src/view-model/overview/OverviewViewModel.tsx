@@ -2,13 +2,13 @@ import IOverviewViewModel from './IOverviewViewModel';
 import BaseView from '@view/BaseView';
 import { Overview } from '@root/model/Learning';
 
-import {IOverview} from '@view/overview/OverviewPage'; 
+import {IOverview} from '@view/overview/OverviewPage';
 
 export default class OverviewViewModel implements IOverviewViewModel {
   public data : Overview | null;
   private baseView?: BaseView;
   constructor () {
-    this.data = null;  
+    this.data = null;
   }
 
   public attachView = (baseView: IOverview): void => {

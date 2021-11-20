@@ -40,7 +40,7 @@ export default class About extends React.Component<any, any> {
             </div>
           </div>
           <div className='md:grid md:grid-cols-2 w-full'>
-            <div className='landing-container p-4 w-full'>            
+            <div className='landing-container p-4 w-full'>
               <img src={About1} alt="Logo"/>
             </div>
             <div className='landing-container p-4 w-full my-auto'>
@@ -64,7 +64,7 @@ export default class About extends React.Component<any, any> {
             </div>
           </div>
           <div className='md:grid md:grid-cols-2 w-screen mt-16 bg-bg'>
-            <div className='md:order-2 landing-container p-4 w-full'>            
+            <div className='md:order-2 landing-container p-4 w-full'>
               <img src={About2} alt="Logo"/>
             </div>
             <div className='text-right landing-container p-4 w-full my-auto '>

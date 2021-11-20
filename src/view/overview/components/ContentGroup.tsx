@@ -29,13 +29,13 @@ export default class ContentGroup extends React.Component<ContentGroupProps, any
       <>
         <div className='w-full h-auto text-center align-middle mt-10'>
             <div className='bg-primary w-full h-20 mx-auto flex align-middle' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
-              { is_recommend && 
+              { is_recommend &&
               <div className='flex-none bg-white h-2/6 w-24 align-middle my-auto ml-7 rounded'>
                 <div className=' font-semibold text-blueSecondary' style={{ marginTop: 2 }}>
                   แนะนำ
                 </div>
               </div> }
-              { is_lasted && 
+              { is_lasted &&
               <div className='flex-none bg-white h-2/6 w-24 align-middle my-auto ml-7 rounded'>
                 <div className=' font-semibold text-blueSecondary' style={{ marginTop: 2 }}>
                 ล่าสุด

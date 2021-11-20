@@ -33,7 +33,7 @@ export class ExaminationStore {
     const res : Exam | null = await this.learningRepository.fetchExam(token, examId).then((res)=> {return res}).catch((res) => {
       return null
     })
-    return res; 
+    return res;
   }
 
   @action.bound
@@ -42,7 +42,7 @@ export class ExaminationStore {
     const res : ExamResult | null = await this.learningRepository.fetchExamResult(token, examId).then((res)=> {return res}).catch((res) => {
       return null
     })
-    return res; 
+    return res;
   }
 
   @action.bound
