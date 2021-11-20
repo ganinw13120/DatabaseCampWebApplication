@@ -9,15 +9,15 @@ export default class LearningRepository implements ILearningRepository {
   
   /**
    * Fetch `Examination Result` data on examination result page.
-   * 
+   *
    * @remarks
    * This method is part of repository, connect to backend service.
-   * 
+   *
    * @param token for authentication
-   * 
+   *
    * @param exam_id for target examination
-   * 
-   * @return ExamResult 
+   *
+   * @return ExamResult
    */
   public async fetchExamResult(token: string, exam_id : number) : Promise<ExamResult> {
     return new Promise((resolve, reject) => {
@@ -36,14 +36,14 @@ export default class LearningRepository implements ILearningRepository {
   
   /**
    * Submit `Examination` result.
-   * 
+   *
    * @remarks
    * This method is part of repository, connect to backend service.
-   * 
+   *
    * @param token for authentication
-   * 
+   *
    * @param result answer of examination
-   * 
+   *
    * @return Result including lead to result page
    */
   public async submitExam(token: string, result : ExamAnswer): Promise<object> {
@@ -59,18 +59,18 @@ export default class LearningRepository implements ILearningRepository {
         reject(res.message)
       })
     })
-  } 
+  }
   
   /**
    * Fetch `Examination` information shown on examination flow.
-   * 
+   *
    * @remarks
    * This method is part of repository, connect to backend service.
-   * 
+   *
    * @param token for authentication
-   * 
+   *
    * @param examId identifier for target examination
-   * 
+   *
    * @return Exam information
    */
   public async fetchExam(token: string, examId : number) : Promise<Exam> {
@@ -90,12 +90,12 @@ export default class LearningRepository implements ILearningRepository {
   
   /**
    * Fetch `Overview Examination` information shown on examination overview page.
-   * 
+   *
    * @remarks
    * This method is part of repository, connect to backend service.
-   * 
+   *
    * @param token for authentication
-   * 
+   *
    * @return Examinations information
    */
   public async fetchExamOverview(token: string) : Promise<ExaminationOverview> {
@@ -115,16 +115,16 @@ export default class LearningRepository implements ILearningRepository {
   
   /**
    * Submit `Answer` of multiple choice activity and check for result.
-   * 
+   *
    * @remarks
    * This method is part of repository, connect to backend service.
-   * 
+   *
    * @param token for authentication
-   * 
+   *
    * @param activityId identifier of target activity
-   * 
+   *
    * @param result result of activity
-   * 
+   *
    * @return Result of submittion
    */
   public async checkMultiple(token: string, activityId : number, result : Answer): Promise<object> {
@@ -143,20 +143,20 @@ export default class LearningRepository implements ILearningRepository {
         reject(res.message)
       })
     })
-  } 
+  }
   
   /**
    * Submit `Answer` of matching choice activity and check for result.
-   * 
+   *
    * @remarks
    * This method is part of repository, connect to backend service.
-   * 
+   *
    * @param token for authentication
-   * 
+   *
    * @param activityId identifier of target activity
-   * 
+   *
    * @param result result of activity
-   * 
+   *
    * @return Result of submittion
    */
   public async checkMatching(token: string, activityId : number, result : Answer): Promise<object> {
@@ -175,20 +175,20 @@ export default class LearningRepository implements ILearningRepository {
         reject(res.message)
       })
     })
-  } 
+  }
   
   /**
    * Submit `Answer` of completion choice activity and check for result.
-   * 
+   *
    * @remarks
    * This method is part of repository, connect to backend service.
-   * 
+   *
    * @param token for authentication
-   * 
+   *
    * @param activityId identifier of target activity
-   * 
+   *
    * @param result result of activity
-   * 
+   *
    * @return Result of submittion
    */
   public async checkCompletion(token: string, activityId : number, result : Answer): Promise<object> {
@@ -207,18 +207,18 @@ export default class LearningRepository implements ILearningRepository {
         reject(res.message)
       })
     })
-  } 
+  }
   
   /**
    * Fetch `Hint` information of target activity.
-   * 
+   *
    * @remarks
    * This method is part of repository, connect to backend service.
-   * 
+   *
    * @param token for authentication
-   * 
+   *
    * @param activityId identifier of target activity
-   * 
+   *
    * @return Hint information
    */
   public async getHint(token: string, activityId : number): Promise<Hint> {
@@ -234,18 +234,18 @@ export default class LearningRepository implements ILearningRepository {
         reject(new Error(res.response?.data?.th_message))
       })
     })
-  } 
+  }
   
   /**
    * Fetch `Roadmap` information of target content.
-   * 
+   *
    * @remarks
    * This method is part of repository, connect to backend service.
-   * 
+   *
    * @param token for authentication
-   * 
+   *
    * @param contentId identifier of target content
-   * 
+   *
    * @return Roadmap information
    */
   public async fetchRoadmap(token: string, contentId : number): Promise<RoadMap> {
@@ -261,18 +261,18 @@ export default class LearningRepository implements ILearningRepository {
         reject(res.message)
       })
     })
-  } 
+  }
   
   /**
    * Fetch `Lecture` information of target content shown on lecture page.
-   * 
+   *
    * @remarks
    * This method is part of repository, connect to backend service.
-   * 
+   *
    * @param token for authentication
-   * 
+   *
    * @param contentId identifier of target content
-   * 
+   *
    * @return Lecture information shown on lecture page
    */
   public async fetchLecture(token: string, contentId : number): Promise<Lecture> {
@@ -288,18 +288,18 @@ export default class LearningRepository implements ILearningRepository {
         reject(res.message)
       })
     })
-  } 
+  }
   
   /**
    * Fetch `Activity` information of target activity on activity page.
-   * 
+   *
    * @remarks
    * This method is part of repository, connect to backend service.
-   * 
+   *
    * @param token for authentication
-   * 
+   *
    * @param activityId identifier of target activity
-   * 
+   *
    * @return Activity information shown on activity page
    */
   public async fetchActivity(token: string, activityId : number): Promise<Activity> {
@@ -315,16 +315,16 @@ export default class LearningRepository implements ILearningRepository {
         reject(res.message)
       })
     })
-  } 
+  }
   
   /**
    * Fetch `Overview` information of current user shown on overview page.
-   * 
+   *
    * @remarks
    * This method is part of repository, connect to backend service.
-   * 
+   *
    * @param token for authentication
-   * 
+   *
    * @return Overview information shown on overview page
    */
   public async fetchOverview(token: string) : Promise<Overview> {

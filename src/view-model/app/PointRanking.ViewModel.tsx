@@ -8,7 +8,7 @@ export default class PointRankingModel implements IPointRankingViewModel {
   public attachView = (baseView: IPointRanking): void => {
     this.baseView = baseView;
     baseView.props.appStore!.setPercent(40)
-    baseView.props.pointRankingStore!.fatchRanking().then(()=>{  
+    baseView.props.pointRankingStore!.fatchRanking().then(()=>{
       baseView?.props.appStore!.setPercent(100)
     })
   };

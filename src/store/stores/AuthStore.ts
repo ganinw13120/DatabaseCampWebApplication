@@ -48,7 +48,7 @@ export class AuthStore{
     if (!temp) return;
     temp.point -= point;
     this.store.userData = temp;
-  } 
+  }
 
   @action.bound
   SetUserPoint (point : number) : void {
@@ -64,7 +64,7 @@ export class AuthStore{
     if (!temp) return;
     temp.name = name;
     this.store.userData = temp;
-  } 
+  }
 
   @action.bound
   async VerifyToken(token : string) {

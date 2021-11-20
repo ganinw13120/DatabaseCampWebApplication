@@ -105,8 +105,8 @@ export default class ActivityViewModel implements IActivityViewModel {
       const content_id = this.activityInfo?.activity.content_id;
       if (!content_id)
         this.baseView?.props.history.replace('/overview')
-      else 
-        this.baseView?.props.history.replace('/learning/content/' + content_id)  
+      else
+        this.baseView?.props.history.replace('/learning/content/' + content_id)
     } else {
       this.baseView?.props.history.replace(`/learning/activity/${prev}`)
     }

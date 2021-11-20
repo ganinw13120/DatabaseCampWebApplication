@@ -7,12 +7,12 @@ export default class LearningRepository {
   
   /**
    * Fetch `Point` information of all users shown on point ranking page.
-   * 
+   *
    * @remarks
    * This method is part of repository, connect to backend service.
-   * 
+   *
    * @param token for authentication
-   * 
+   *
    * @return Ranking of users information shown on point ranking page
    */
   public async fetchPointRanking(token: string) : Promise<Ranking> {
@@ -32,14 +32,14 @@ export default class LearningRepository {
 
   /**
    * Fetch `Profile` information of target user shown on profile page.
-   * 
+   *
    * @remarks
    * This method is part of repository, connect to backend service.
-   * 
+   *
    * @param token for authentication
-   * 
+   *
    * @param userID identifier of target user
-   * 
+   *
    * @return Users information shown on profile page
    */
   public async fetchProfile(token: string, userID: number) : Promise<User> {
@@ -59,14 +59,14 @@ export default class LearningRepository {
 
   /**
    * Update `User's Name` of current user.
-   * 
+   *
    * @remarks
    * This method is part of repository, connect to backend service.
-   * 
+   *
    * @param token for authentication
-   * 
+   *
    * @param name user's new name
-   * 
+   *
    * @return Result of action
    */
   public async updateName(token: string, name: string) : Promise<any> {

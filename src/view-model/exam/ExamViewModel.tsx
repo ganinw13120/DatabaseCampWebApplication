@@ -48,11 +48,11 @@ export default class ExamViewModel implements IExamViewModel {
     this.baseView?.props.appStore!.setStepper(stepper)
   }
 
-  private generateExamStepper = (res : Exam) : Stepper => { 
+  private generateExamStepper = (res : Exam) : Stepper => {
     const stepper : Stepper = {
       currentStep : this.currentActivity,
       steps : []
-    } 
+    }
     res.activities.forEach((e, key : number)=>{
       stepper.steps.push(this.validateResult(key) ? Step.Activity : Step.UnCompleteActivity)
     })
