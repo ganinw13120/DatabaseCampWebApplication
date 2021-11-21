@@ -1,14 +1,9 @@
 import { makeObservable, observable, action } from 'mobx';
 import { Stepper } from '@model/App';
-import RootStore from '../RootStore';
+import RootStore from '../../RootStore';
+import IAppStore, {Store} from './IAppStore';
 
-type Store = {
-  isExpand : boolean,
-  progressPercent : number,
-  stepper : Stepper | null
-}
-
-export class AppStore {
+export class AppStore implements IAppStore {
   rootStore: RootStore; // contains the root of store (outest mobx)
 
   constructor(rootStore: RootStore) {
@@ -32,25 +27,25 @@ export class AppStore {
     stepper : null
   }
 
-  @action.bound 
+  @action.bound
   public setPercent(percent: number): void {
     this.store.progressPercent = percent;
   }
 
-  @action.bound 
+  @action.bound
   public addPercent(percent: number): void {
-    const {progressPercent} = this.store; 
+    const {progressPercent} = this.store;
     this.store.progressPercent = progressPercent + percent;
   }
 
-  @action.bound 
+  @action.bound
   public setExpandWithDelay(type: boolean): void {
     setTimeout(() => {
       this.setExpand(type);
     }, 10);
   }
 
-  @action.bound 
+  @action.bound
   public setExpand(type: boolean): void {
     this.store.isExpand = type;
   }
@@ -60,9 +55,9 @@ export class AppStore {
     this.store.stepper = data;
   }
 
-  @action.bound 
+  @action.bound
   public hideStepper() : void {
     this.store.stepper = null;
-  } 
+  }
 
 }

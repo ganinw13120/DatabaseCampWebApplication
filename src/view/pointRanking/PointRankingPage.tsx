@@ -6,8 +6,8 @@ import PointRankingViewModel from "@view-model/app/PointRanking.ViewModel";
 import RankingItem from "./components/RankingItem";
 import Header from "@view/layout/app/Header";
 import { RouteComponentProps, withRouter } from "react-router";
-import { AppStore } from "@store/stores/AppStore";
-import { PointRankingStore } from "@store/stores/PointRankingStore";
+import { AppStore } from "@store/stores/AppStore/AppStore";
+import { PointRankingStore } from "@store/stores/PointRankingStore/PointRankingStore";
 
 export interface IPointRanking extends BaseView {
   props : PointRankingProps
@@ -52,7 +52,7 @@ class PointRankingPage
         <div className="font-prompt w-full p-12 px-10">
           <Header text='จัดลำดับคะแนน' />
           <div className="mt-10">
-            {data && 
+            {data &&
             <RankingItem
               data={data.user_ranking}
               isLoading={isLoading}
@@ -65,7 +65,7 @@ class PointRankingPage
               <>
                 {(() => {
                   let list: any = [];
-                  data.leader_board.slice().sort((a,b)=>a.name>b.name ? 1 : -1).sort((a,b)=>b.point-a.point).forEach((item: any, index: number) => {
+                  data.leader_board.slice().sort((a,b)=>b.point-a.point).forEach((item: any, index: number) => {
                     list.push(
                       <RankingItem
                         key={index}

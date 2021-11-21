@@ -37,7 +37,7 @@ export default class MultipleChoiceComponent extends Component<MultipleChoicePro
       <>
         <div className='w-3/4 mx-auto'>
           {choiceList}
-        </div> 
+        </div>
 
       </>
     );
@@ -49,7 +49,7 @@ class Choice extends Component<any, any> {
     return (<>
 
           <div className='w-full flex'>
-            <Radio  name='choices' size='medium' 
+            <Radio  name='choices' size='medium'
               value={id}
               checked={id === selected}
               onChange={() => {

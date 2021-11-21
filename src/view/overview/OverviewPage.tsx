@@ -13,9 +13,9 @@ import HeaderCard from "./components/HeaderCard";
 import HeaderSkeleton from "./components/HeaderSkeleton";
 import SkeletonCard from "./components/SkeletonCard";
 
-import {AppStore} from '@store/stores/AppStore';
-import {OverviewStore} from '@store/stores/OverviewStore';
-import {AuthStore} from '@store/stores/AuthStore';
+import {AppStore} from '@store/stores/AppStore/AppStore';
+import {OverviewStore} from '@store/stores/OverviewStore/OverviewStore';
+import { AuthStore } from '@store/stores/AuthStore/AuthStore';
 
 import {Overview} from '@model/Learning';
 

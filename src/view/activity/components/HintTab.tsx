@@ -1,8 +1,8 @@
 import { Component, ReactElement } from 'react';
 
 import { inject, observer } from 'mobx-react';
-import { AuthStore } from '@store/stores/AuthStore';
-import { LearningStore } from '@store/stores/LearningStore';
+import { AuthStore } from '@store/stores/AuthStore/AuthStore';
+import { LearningStore } from '@store/stores/LearningStore/LearningStore';
 
 import ActiveBulb from '@assets/hint_bulb.png';
 import InactiveBulb from '@assets/inactive_bulb.png';

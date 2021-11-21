@@ -1,9 +1,12 @@
 import { makeObservable, action } from 'mobx';
 
-import RootStore from '../RootStore';
+import RootStore from '../../RootStore';
 
 import UserRepository from '@repository/app/UserRepository';
-export class ProfileStore {
+
+import IProfileStore from './IProfileStore';
+
+export class ProfileStore implements IProfileStore {
   rootStore: RootStore; // contains the root of store (outest mobx)
   private userRepository: UserRepository;
 
@@ -14,7 +17,7 @@ export class ProfileStore {
   }
 
   @action
-  FetchUserProfile(userId : number, cb : any) {
+  public FetchUserProfile(userId : number, cb : any) {
     const { token } = this.rootStore.authStore.store;
     this.userRepository.fetchProfile(token, userId).then((res)=>{
         cb?.(res)
@@ -22,7 +25,7 @@ export class ProfileStore {
   }
 
   @action.bound
-  async UpdateName(name : string, cb : any) : Promise<any> {
+  public async UpdateName(name : string, cb : any) : Promise<any> {
     const { token } = this.rootStore.authStore.store;
     const res = await this.userRepository.updateName(token, name).then((res)=>{
       this.rootStore.authStore.UpdateUserName(name);

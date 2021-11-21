@@ -1,5 +1,4 @@
 import { Component, ReactElement } from 'react';
-
 import '@root/App.css';
 
 import LandingPage from "@view/landing-page";
@@ -87,7 +86,6 @@ const appRouteList : route[] = [
 ];
 
 export default class App extends Component {
-
   render(): JSX.Element  {
     const appRouterendered : ReactElement[] = [];
     appRouteList.forEach((e, key) => {
@@ -99,6 +97,7 @@ export default class App extends Component {
         </Route>
       )
     })
+    
     return (
       <Provider {...store}>
         <Router>
@@ -118,7 +117,7 @@ export default class App extends Component {
             </Route>
             {appRouterendered}
             <Route>
-              <NotFoundPage />              
+              <NotFoundPage />
             </Route>
           </Switch>
         </Router>

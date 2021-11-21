@@ -1,21 +1,13 @@
 import { makeObservable, observable, action } from 'mobx';
 
-import RootStore from '../RootStore';
+import RootStore from '../../RootStore';
 
 import LearningRepository from '@repository/app/LearningRepository';
 
-import {RoadMap, Lecture, Activity, Hint, Answer ,CompletionAnswer, ActivityAlert, HintRoadMap } from '@model/Learning';
+import { RoadMap, Lecture, Activity, Hint, Answer, CompletionAnswer, ActivityAlert } from '@model/Learning';
+import ILearningStore, { Store } from './ILearningStore';
 
-interface Store {
-  roadMap : RoadMap | null,
-  activityInfo : Activity | null,
-  lectureInfo : Lecture | null,
-  hint : Hint[],
-  hintRoadMap : HintRoadMap[],
-  isLoading : boolean
-}
-
-export class LearningStore {
+export class LearningStore implements ILearningStore {
   rootStore: RootStore; // contains the root of store (outest mobx)
   private learningRepository: LearningRepository;
 
@@ -28,13 +20,13 @@ export class LearningStore {
   }
 
   @observable
-  store : Store = {
-      roadMap: null,
-      activityInfo: null,
-      lectureInfo: null,
-      hint: [],
-      isLoading: false,
-      hintRoadMap : []
+  store: Store = {
+    roadMap: null,
+    activityInfo: null,
+    lectureInfo: null,
+    hint: [],
+    isLoading: false,
+    hintRoadMap: []
   }
 
   /**
@@ -43,7 +35,7 @@ export class LearningStore {
   * @returns script version
   */
   @action.bound
-  public async FetchRoadmap(contentID: number, cb : any): Promise<any> {
+  public async FetchRoadmap(contentID: number, cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     const res = await this.learningRepository.fetchRoadmap(token, contentID).then(this.onRoadmapFetchSuccess).catch((res) => {
       console.log(res)
@@ -52,15 +44,15 @@ export class LearningStore {
   }
 
   @action.bound
-  onRoadmapFetchSuccess (res : RoadMap) : RoadMap {
+  private onRoadmapFetchSuccess(res: RoadMap): RoadMap {
     if (!res.items) res.items = [];
     this.store.roadMap = res;
     return res;
   }
 
-  
+
   @action.bound
-  public async FetchActivity(activityID: number, cb : any): Promise<any> {
+  public async FetchActivity(activityID: number, cb: any): Promise<any> {
     this.store.hint = [];
     this.store.activityInfo = null;
     const { token } = this.rootStore.authStore.store;
@@ -71,22 +63,22 @@ export class LearningStore {
   }
 
   @action.bound
-  onFetchActivitySuccess (res : Activity) : Activity {
-    this.store.hint = res.hint.used_hints ?  res.hint.used_hints : [];
+  private onFetchActivitySuccess(res: Activity): Activity {
+    this.store.hint = res.hint.used_hints ? res.hint.used_hints : [];
     this.store.hintRoadMap = res.hint.hint_roadmap ? res.hint.hint_roadmap : [];
     this.store.activityInfo = res;
     return res;
   }
 
   @action.bound
-  public async SubmitActivity(result : Answer, cb : any): Promise<any> {
+  public async SubmitActivity(result: Answer, cb: any): Promise<any> {
     const { activityInfo } = this.store;
     if (!activityInfo) return;
     if (!result) {
       this.store.isLoading = false;
-      const alert : ActivityAlert = {
-        isSuccess : false,
-        feedback : 'กรุณาทำแบบฝึกหัดก่อนตรวจคำตอบ'
+      const alert: ActivityAlert = {
+        isSuccess: false,
+        feedback: 'กรุณาทำแบบฝึกหัดก่อนตรวจคำตอบ'
       }
       cb?.(alert)
       return;
@@ -100,45 +92,45 @@ export class LearningStore {
       this.checkCompletion(activity.activity_id, result as CompletionAnswer[], cb);
     } else if (activity.activity_type_id === 2) {
       this.checkMultiple(activity.activity_id, result as number, cb);
-    } 
+    }
   }
 
   @action.bound
-  private rejectAnswer (cb : any, message ?: string) : void {
+  private rejectAnswer(cb: any, message?: string): void {
     this.store.isLoading = false;
-    const alert : ActivityAlert = {
-      isSuccess : false,
-      feedback : message ? message : 'คำตอบไม่ถูกต้อง'
+    const alert: ActivityAlert = {
+      isSuccess: false,
+      feedback: message ? message : 'คำตอบไม่ถูกต้อง'
     }
     cb?.(alert);
   }
 
   @action.bound
-  private successAnswer (cb : any, message ?: string) : void {
+  private successAnswer(cb: any, message?: string): void {
     this.store.isLoading = false;
-    const alert : ActivityAlert = {
-      isSuccess : true,
-      feedback : message ? message : 'ถูกต้อง'
+    const alert: ActivityAlert = {
+      isSuccess: true,
+      feedback: message ? message : 'ถูกต้อง'
     }
     cb?.(alert);
   }
 
   @action.bound
-  private updateRoadMapStatus (activity_id : number) : void {
+  private updateRoadMapStatus(activity_id: number): void {
     let temp = this.store.roadMap;
     if (!temp) return;
     let items = [...temp!.items];
-    let item = items.find(e=>e.activity_id===activity_id);
+    let item = items.find(e => e.activity_id === activity_id);
     if (!item) return;
     item!.is_learned = true;
     this.store.roadMap!.items = items;
   }
 
-  @action.bound 
+  @action.bound
   private async checkMultiple(activityID : number, result : number, cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
-    this.learningRepository.checkMultiple(token, activityID, result).then((res : any) => {
-      const {is_correct} = res;
+    this.learningRepository.checkMultiple(token, activityID, result).then((res: any) => {
+      const { is_correct } = res;
       if (is_correct) {
         this.updateRoadMapStatus(activityID);
         this.rootStore.authStore.SetUserPoint(res.updated_point);
@@ -150,24 +142,24 @@ export class LearningStore {
         return;
       }
     });
-  } 
+  }
 
-  @action.bound 
+  @action.bound
   private async checkMatching(activityID : number, result : string[][], cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
-    let res : any = [];
+    let res: any = [];
     result.forEach((e: any) => {
       if (!e[0] || !e[1]) {
         this.rejectAnswer(cb, 'กรุณาทำแบบฝึกหัดให้ครบทุกข้อ');
         return;
       }
       res.push({
-        item1 : e[0],
-        item2 : e[1]
+        item1: e[0],
+        item2: e[1]
       })
     })
-    this.learningRepository.checkMatching(token, activityID, res).then((res : any) => {
-      const {is_correct} = res;
+    this.learningRepository.checkMatching(token, activityID, res).then((res: any) => {
+      const { is_correct } = res;
       if (is_correct) {
         this.updateRoadMapStatus(activityID);
         this.rootStore.authStore.SetUserPoint(res.updated_point);
@@ -179,9 +171,9 @@ export class LearningStore {
         return;
       }
     });
-  } 
+  }
 
-  @action.bound 
+  @action.bound
   private async checkCompletion(activityID : number, result : CompletionAnswer[], cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     result.forEach((e: any) => {
@@ -190,8 +182,8 @@ export class LearningStore {
         return;
       }
     })
-    this.learningRepository.checkCompletion(token, activityID, result).then((res : any) => {
-      const {is_correct} = res;
+    this.learningRepository.checkCompletion(token, activityID, result).then((res: any) => {
+      const { is_correct } = res;
       if (is_correct) {
         this.updateRoadMapStatus(activityID);
         this.rootStore.authStore.SetUserPoint(res.updated_point);
@@ -203,7 +195,7 @@ export class LearningStore {
         return;
       }
     });
-  } 
+  }
 
   @action.bound
   public clearActivity(): void {
@@ -214,7 +206,7 @@ export class LearningStore {
   }
 
   @action.bound
-  public async getHint () : Promise<any> {
+  public async getHint(): Promise<any> {
     this.store.isLoading = true;
     const { activityInfo } = this.store;
     if (!activityInfo) return;
@@ -228,7 +220,7 @@ export class LearningStore {
   }
 
   @action.bound
-  onGetHintSuccess (res : Hint) : Hint | null {
+  private onGetHintSuccess(res: Hint): Hint | null {
     const { hint } = this.store;
     let temp = [...hint];
     temp.push(res);
@@ -239,7 +231,7 @@ export class LearningStore {
   }
 
   @action.bound
-  public async FetchLecture(contentID: number, cb : any): Promise<any> {
+  public async FetchLecture(contentID: number, cb: any): Promise<any> {
     this.store.activityInfo = null;
     this.store.lectureInfo = null;
     const { token } = this.rootStore.authStore.store;
@@ -250,9 +242,8 @@ export class LearningStore {
   }
 
   @action.bound
-  onLectureFetchSuccess (res : Lecture) : Lecture {
+  private onLectureFetchSuccess(res: Lecture): Lecture {
     this.store.lectureInfo = res;
     return res;
   }
-
 }

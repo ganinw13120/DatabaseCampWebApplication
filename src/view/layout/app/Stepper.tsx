@@ -10,11 +10,11 @@ import { StepIconProps } from '@mui/material/StepIcon';
 import TvIcon from '@mui/icons-material/Tv';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 
-import { AppStore } from "../../../store/stores/AppStore";
+import { AppStore } from "@store/stores/AppStore/AppStore";
 
 import { inject, observer } from 'mobx-react';
 
-import {Step as StepEnum} from '../../../model/App';
+import {Step as StepEnum} from '@model/App';
 
 
 const primaryColor = '#03EF62'
@@ -120,7 +120,7 @@ export default class ActivityStepper extends Component<StepperProps, any> {
             <span className='my-auto ml-1 text-white font-normal'>
             Back
             </span>
-          </div> : 
+          </div> :
           <div className='flex-none cursor-pointer'>
             <LeftOutlined className='text-white my-auto' style={{fontSize : 20, color : '#BBBFC0'}} />
             <span className='ml-1 text-gray font-normal'>
@@ -150,7 +150,7 @@ export default class ActivityStepper extends Component<StepperProps, any> {
             Next
             </span>
             <RightOutlined className='text-white my-auto' style={{fontSize : 20, color : 'white'}} />
-          </div> : 
+          </div> :
           <div className='flex-none cursor-pointer'>
             <span className='my-auto mr-1 text-gray font-normal'>
             Next

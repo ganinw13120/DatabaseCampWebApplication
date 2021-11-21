@@ -16,9 +16,9 @@ import { Activity, ActivityAlert, CompletionChoice, MatchingChoice, MultipleChoi
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { LearningStore } from '@store/stores/LearningStore';
-import { AppStore } from '@store/stores/AppStore';
-import { AuthStore } from '@store/stores/AuthStore';
+import { LearningStore } from '@store/stores/LearningStore/LearningStore';
+import { AppStore } from '@store/stores/AppStore/AppStore';
+import { AuthStore } from '@store/stores/AuthStore/AuthStore';
 
 import AlertTab from './components/AlertTab';
 import { green } from '@mui/material/colors';
@@ -111,7 +111,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
     return (
       <>
         <div className='xl:grid xl:grid-cols-10 w-full pt-10 h-full'>
-          {userData && 
+          {userData &&
           <div className='ribbon-points flex z-20 mt-16 md:mt-0'>
             <img src={Star} alt='points' className='star my-auto mx-10' />
             <span className='text-white text-xl my-auto mr-5'>{userData?.point.toLocaleString()}</span>
@@ -148,8 +148,8 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
                 </>
               })()} </> : <SkeletonActivity />
             }
-             <AlertTab alert={alert} /> 
-            {activityInfo && 
+             <AlertTab alert={alert} />
+            {activityInfo &&
             <div className='flex w-5/6 mx-auto'>
               <div className='flex-grow'>
               </div>

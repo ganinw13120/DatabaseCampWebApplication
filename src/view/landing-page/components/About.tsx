@@ -3,12 +3,15 @@ import Circle from '@assets/circle.svg';
 import About1 from '@assets/about-1.png';
 import About2 from '@assets/about-2.png';
 
-export default class About extends React.Component<any, any> {
+type AboutState = {
+  offSetY : number
+}
 
-  public constructor(props: any) {
+export default class About extends React.Component<{}, AboutState> {
+  public constructor(props: {}) {
     super(props);
     this.state = {
-      offsetY : 0
+      offSetY : 0
     }
     this.handleScroll = this.handleScroll.bind(this);
   }
@@ -40,7 +43,7 @@ export default class About extends React.Component<any, any> {
             </div>
           </div>
           <div className='md:grid md:grid-cols-2 w-full'>
-            <div className='landing-container p-4 w-full'>            
+            <div className='landing-container p-4 w-full'>
               <img src={About1} alt="Logo"/>
             </div>
             <div className='landing-container p-4 w-full my-auto'>
@@ -64,7 +67,7 @@ export default class About extends React.Component<any, any> {
             </div>
           </div>
           <div className='md:grid md:grid-cols-2 w-screen mt-16 bg-bg'>
-            <div className='md:order-2 landing-container p-4 w-full'>            
+            <div className='md:order-2 landing-container p-4 w-full'>
               <img src={About2} alt="Logo"/>
             </div>
             <div className='text-right landing-container p-4 w-full my-auto '>

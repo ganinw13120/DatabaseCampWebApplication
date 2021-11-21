@@ -8,9 +8,9 @@ import './profile.css';
 import Alerticon from '@assets/alerticon.svg';
 import SuccessIcon from '@assets/alertsuccess.svg';
 
-import { AppStore } from '@store/stores/AppStore';
-import { ExaminationStore } from '@store/stores/ExaminationStore';
-import { AuthStore } from '@store/stores/AuthStore';
+import { AppStore } from '@store/stores/AppStore/AppStore';
+import { ExaminationStore } from '@store/stores/ExaminationStore/ExaminationStore';
+import { AuthStore } from '@store/stores/AuthStore/AuthStore';
 import { ExamResult } from '@model/Learning';
 
 import { ExamType } from '@model/Learning';
@@ -74,11 +74,11 @@ class ExamResultPage extends Component<ExamPageProps, ProfileComponentState>
     const dateString = date ? +date.getDate() + " " + monthNamesThai[date.getMonth()] + "  " + date.getFullYear() : '';
     const timeString = date ? date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0') + ':' + date.getSeconds().toString().padStart(2, '0') : '';
     return (
-      <>{ data && 
+      <>{ data &&
         <div className='w-full h-auto m-auto'>
           <div className='my-36 mx-auto text-center h-1/4'>
             <img src={data.is_passed ? SuccessIcon : Alerticon} alt='alert' className='m-auto my-auto h-72 py-10' />
-            {data.is_passed ? 
+            {data.is_passed ?
             <h1 className='font-prompt text-3xl md:text-5xl my-10'>ยินดีด้วย!</h1> :
             <h1 className='font-prompt text-3xl md:text-5xl my-10'>ขอเเสดงความเสียใจ</h1>}
             <h1 className='font-prompt text-xl md:text-4xl font-light'>คุณ{data.is_passed ? '' : 'ไม่'}ผ่านด้วยคะแนน {`${data.score.toLocaleString()}`} คะแนน</h1>

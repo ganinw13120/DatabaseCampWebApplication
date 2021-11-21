@@ -9,8 +9,8 @@ import ExamViewModel from '@view-model/exam/ExamViewModel';
 
 import Requirement from '../activity/components/Requirement';
 
-import { AppStore } from '@store/stores/AppStore';
-import { ExaminationStore } from '@store/stores/ExaminationStore';
+import { AppStore } from '@store/stores/AppStore/AppStore';
+import { ExaminationStore } from '@store/stores/ExaminationStore/ExaminationStore';
 
 import { ActivityAlert, CompletionChoice, Exam, ExamActivity, ExamType, MatchingChoice, MultipleChoice, RoadMap } from '@model/Learning';
 import Matching from '../activity/components/Matching';

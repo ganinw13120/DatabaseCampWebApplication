@@ -8,8 +8,8 @@ import { inject, observer } from 'mobx-react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import validateEmail from '@util/validateEmail';
-import { AppStore } from '@store/stores/AppStore';
-import { AuthStore } from '@store/stores/AuthStore';
+import { AppStore } from '@store/stores/AppStore/AppStore';
+import { AuthStore } from '@store/stores/AuthStore/AuthStore';
 
 export interface ILoginPage extends BaseView {
   props : LoginProps

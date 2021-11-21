@@ -3,14 +3,14 @@ import { observe  } from "mobx"
 import { Component } from "react"
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import AppLayout from "@view/layout/app/AppLayout";
-import { AuthStore } from "@store/stores/AuthStore";
+import { AuthStore } from '@store/stores/AuthStore/AuthStore';
 
 interface LoggedMiddlewareProps extends RouteComponentProps {
   authStore ?: AuthStore
 }
 
 @inject('authStore')
-@observer 
+@observer
 class LoggedMiddleware extends Component<LoggedMiddlewareProps, {}> {
   componentDidMount() {
     this.checkUser();

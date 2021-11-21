@@ -11,8 +11,8 @@ import Skeleton from '@mui/material/Skeleton';
 
 import LectureViewModel from '@view-model/lecture/LectureViewModel';
 
-import { LearningStore } from '@store/stores/LearningStore';
-import { AppStore } from '@store/stores/AppStore';
+import { LearningStore } from '@store/stores/LearningStore/LearningStore';
+import { AppStore } from '@store/stores/AppStore/AppStore';
 
 export interface ILecturePage extends BaseView {
   props : LectureProps
