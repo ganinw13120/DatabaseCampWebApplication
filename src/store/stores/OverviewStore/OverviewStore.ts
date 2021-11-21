@@ -22,15 +22,11 @@ export class OverviewStore implements IOverviewStore {
   @action.bound
   public async FetchOverview(): Promise<Overview | null> {
     const { token } = this.rootStore.authStore.store;
-    const res = await this.learningRepository.fetchOverview(token).then(this.onFetchOverviewSuccess).catch((res) => {
+    const res = await this.learningRepository.fetchOverview(token).then((res : Overview)=>{return res;}).catch((res) => {
       console.log(res)
       return null;
     })
     return res;
   }
 
-  @action.bound
-  onFetchOverviewSuccess (res : Overview) : Overview {
-    return res;
-  }
 }
