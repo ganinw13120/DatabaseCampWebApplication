@@ -1,17 +1,14 @@
 import { makeObservable, observable, action } from 'mobx';
 
-import RootStore from '../RootStore';
+import RootStore from '../../RootStore';
 
 import UserRepository from '@repository/app/UserRepository';
 
 import {Ranking} from '@model/User';
+import IPointRankingStore, { Store } from './IPointRankingStore';
 
-interface Store {
-  data : Ranking | null,
-  isLoading : boolean
-}
 
-export class PointRankingStore {
+export class PointRankingStore implements IPointRankingStore {
   rootStore: RootStore; // contains the root of store (outest mobx)
   private userRepository: UserRepository;
 
@@ -22,13 +19,13 @@ export class PointRankingStore {
   }
 
   @observable
-  store : Store = {
+  public store : Store = {
       data: null,
       isLoading : true,
   }
 
   @action.bound
-  async fatchRanking(): Promise<any> {
+  public async fatchRanking(): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     await this.userRepository.fetchPointRanking(token).then(this.onFetchRankingSuccess).catch((res) => {
       console.log(res)
@@ -37,7 +34,7 @@ export class PointRankingStore {
   }
 
   @action.bound
-  onFetchRankingSuccess (res : Ranking) : void {
+  private onFetchRankingSuccess (res : Ranking) : void {
     this.store.data = res;
     this.store.isLoading = false;
 

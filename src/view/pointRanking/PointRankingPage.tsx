@@ -6,8 +6,8 @@ import PointRankingViewModel from "@view-model/app/PointRanking.ViewModel";
 import RankingItem from "./components/RankingItem";
 import Header from "@view/layout/app/Header";
 import { RouteComponentProps, withRouter } from "react-router";
-import { AppStore } from "@store/stores/AppStore";
-import { PointRankingStore } from "@store/stores/PointRankingStore";
+import { AppStore } from "@store/stores/AppStore/AppStore";
+import { PointRankingStore } from "@store/stores/PointRankingStore/PointRankingStore";
 
 export interface IPointRanking extends BaseView {
   props : PointRankingProps

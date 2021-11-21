@@ -9,9 +9,8 @@ import Skeleton from '@mui/material/Skeleton';
 
 
 import Tooltip from '@mui/material/Tooltip';
-import { AppStore } from "@store/stores/AppStore";
-import { AuthStore } from "@store/stores/AuthStore";
-import { OverviewStore } from "@store/stores/OverviewStore";
+import { AppStore } from "@store/stores/AppStore/AppStore";
+import { AuthStore } from '@store/stores/AuthStore/AuthStore';
 
 interface SidebarState {
   isMobileExpand: boolean
@@ -19,7 +18,6 @@ interface SidebarState {
 
 interface OverviewProps extends RouteComponentProps {
   appStore ?: AppStore,
-  overviewStore ?: OverviewStore,
   authStore ?: AuthStore,
 }
 

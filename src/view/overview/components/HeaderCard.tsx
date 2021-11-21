@@ -1,21 +1,15 @@
 import React from 'react';
-import { inject, observer } from 'mobx-react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Progress } from 'semantic-ui-react'
 
 import {Content} from '@model/Learning';
-import { OverviewStore } from '@store/stores/OverviewStore';
 
 interface HeaderCardProps extends RouteComponentProps {
   data : Content,
-  overviewStore ?: OverviewStore
 }
 
-@inject('overviewStore')
-@observer
 class HeaderCard extends React.Component<HeaderCardProps, {}>{
   private onClickContinue () : void {
-    // const { content_id } = this.props.overviewStore!.store.data?.lasted_group;
     const {content_id} = this.props.data;
     this.props.history.replace('/learning/content/' + content_id);
   }

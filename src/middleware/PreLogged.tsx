@@ -2,7 +2,7 @@ import { inject, observer } from "mobx-react"
 import React from "react"
 import { observe  } from "mobx"
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { AuthStore } from "@root/store/stores/AuthStore";
+import { AuthStore } from '@store/stores/AuthStore/AuthStore';
 
 interface LoggedMiddlewareProps extends RouteComponentProps {
   authStore ?: AuthStore

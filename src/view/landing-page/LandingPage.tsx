@@ -11,7 +11,7 @@ import Content from './components/Content';
 import Footer from './components/Footer';
 import { inject, observer } from 'mobx-react';
 
-import {AppStore}  from '@store/stores/AppStore';
+import {AppStore}  from '@store/stores/AppStore/AppStore';
 
 export interface LandingComponentProps {
   appStore ?: AppStore

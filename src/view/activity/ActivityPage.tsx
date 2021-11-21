@@ -16,9 +16,9 @@ import { Activity, ActivityAlert, CompletionChoice, MatchingChoice, MultipleChoi
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { LearningStore } from '@store/stores/LearningStore';
-import { AppStore } from '@store/stores/AppStore';
-import { AuthStore } from '@store/stores/AuthStore';
+import { LearningStore } from '@store/stores/LearningStore/LearningStore';
+import { AppStore } from '@store/stores/AppStore/AppStore';
+import { AuthStore } from '@store/stores/AuthStore/AuthStore';
 
 import AlertTab from './components/AlertTab';
 import { green } from '@mui/material/colors';

@@ -1,14 +1,9 @@
 import { makeObservable, observable, action } from 'mobx';
 import { Stepper } from '@model/App';
-import RootStore from '../RootStore';
+import RootStore from '../../RootStore';
+import IAppStore, {Store} from './IAppStore';
 
-type Store = {
-  isExpand : boolean,
-  progressPercent : number,
-  stepper : Stepper | null
-}
-
-export class AppStore {
+export class AppStore implements IAppStore {
   rootStore: RootStore; // contains the root of store (outest mobx)
 
   constructor(rootStore: RootStore) {

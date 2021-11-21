@@ -10,11 +10,11 @@ import { StepIconProps } from '@mui/material/StepIcon';
 import TvIcon from '@mui/icons-material/Tv';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 
-import { AppStore } from "../../../store/stores/AppStore";
+import { AppStore } from "@store/stores/AppStore/AppStore";
 
 import { inject, observer } from 'mobx-react';
 
-import {Step as StepEnum} from '../../../model/App';
+import {Step as StepEnum} from '@model/App';
 
 
 const primaryColor = '#03EF62'

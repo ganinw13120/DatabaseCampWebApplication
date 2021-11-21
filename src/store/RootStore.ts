@@ -1,10 +1,10 @@
-import { AuthStore } from "./stores/AuthStore";
-import { AppStore } from "./stores/AppStore";
-import { OverviewStore } from "./stores/OverviewStore";
-import { PointRankingStore } from "./stores/PointRankingStore";
-import { LearningStore } from "./stores/LearningStore";
-import { ProfileStore } from "./stores/ProfileStore";
-import { ExaminationStore } from "./stores/ExaminationStore";
+import { AuthStore } from "./stores/AuthStore/AuthStore";
+import { AppStore } from "./stores/AppStore/AppStore";
+import { OverviewStore } from "./stores/OverviewStore/OverviewStore";
+import { PointRankingStore } from "./stores/PointRankingStore/PointRankingStore";
+import { LearningStore } from "./stores/LearningStore/LearningStore";
+import { ProfileStore } from "./stores/ProfileStore/ProfileStore";
+import { ExaminationStore } from "./stores/ExaminationStore/ExaminationStore";
 
 /**
  * Initialize and store mobx stores, which root store is included in every store(For communicating between stores).

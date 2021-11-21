@@ -5,7 +5,7 @@ import { withRouter, RouteComponentProps  } from 'react-router-dom';
 
 import { inject, observer } from 'mobx-react';
 
-import {LearningStore} from '@store/stores/LearningStore';
+import {LearningStore} from '@store/stores/LearningStore/LearningStore';
 import { ActivityInfo, RoadMap } from '@model/Learning';
 
 interface RequirementProps extends RouteComponentProps {

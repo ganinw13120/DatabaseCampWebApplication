@@ -2,20 +2,15 @@ import { makeObservable, observable, action } from 'mobx';
 
 import AuthRepository from '@repository/auth/AuthRepository';
 
-import RootStore from '../RootStore';
+import RootStore from '../../RootStore';
 
-import {User, AuthUser} from '@model/User';
-
-interface Store {
-  userData : User | null,
-  token : string,
-  isLoading : boolean,
-}
+import { User, AuthUser } from '@model/User';
+import IAuthStore, { Store } from './IAuthStore';
 
 
-export class AuthStore{
+export class AuthStore implements IAuthStore {
   rootStore; // contains the root of store (outest mobx)
-  
+
   private authRepository: AuthRepository;
 
   constructor(rootStore: RootStore) {
@@ -36,46 +31,46 @@ export class AuthStore{
   }
 
   @observable
-  store : Store = {
+  store: Store = {
     isLoading: false,
     userData: null,
-    token : '',
+    token: '',
   }
 
   @action.bound
-  DecreaseUserPoint (point : number) : void {
-    let {userData : temp} = this.store;
+  public DecreaseUserPoint(point: number): void {
+    let { userData: temp } = this.store;
     if (!temp) return;
     temp.point -= point;
     this.store.userData = temp;
-  } 
+  }
 
   @action.bound
-  SetUserPoint (point : number) : void {
-    let {userData : temp} = this.store;
+  public SetUserPoint(point: number): void {
+    let { userData: temp } = this.store;
     if (!temp) return;
     temp.point = point;
     this.store.userData = temp;
   }
 
   @action.bound
-  UpdateUserName (name : string) : void {
-    let {userData : temp} = this.store;
+  public UpdateUserName(name: string): void {
+    let { userData: temp } = this.store;
     if (!temp) return;
     temp.name = name;
     this.store.userData = temp;
-  } 
+  }
 
   @action.bound
-  async VerifyToken(token : string) {
+  public async VerifyToken(token: string): Promise<void> {
     await this.authRepository.VerifyToken(token).then(this.onVerifySuccess).catch(() => {
       this.Logout()
     })
     return;
   }
-  
+
   @action.bound
-  onVerifySuccess (res : User) : User {
+  private onVerifySuccess(res: User): User {
     this.store.userData = res;
     this.store.isLoading = false;
     return res;
@@ -83,7 +78,7 @@ export class AuthStore{
 
 
   @action.bound
-  Logout(cb?: any) {
+  public Logout(cb?: any): void {
     this.store.token = '';
     this.store.userData = null;
     this.store.isLoading = false;
@@ -92,56 +87,57 @@ export class AuthStore{
   }
 
   @action.bound
-  async Login(email: string, password: string, cb : any) {
+  public async Login(email: string, password: string, cb: any): Promise<void> {
     const result = await this.authRepository.Login({
       email: email,
-      password : password,
+      password: password,
     }).then(this.onLoginSuccess).catch((err) => {
       return {
         issuccess: false,
-        message : err.message
+        message: err.message
       }
     })
     cb?.(result)
   }
 
   @action.bound
-  onLoginSuccess (res : AuthUser) : any {
+  private onLoginSuccess(res: AuthUser): any {
     const token = res.access_token;
     window.localStorage.setItem('token', token);
-    const userData : User = res as User;
+    const userData: User = res as User;
     this.store.token = token;
     this.store.userData = userData;
     return {
       issuccess: true,
-      message : ''
+      message: ''
     }
   }
 
   @action.bound
-  async Register(name : string, email: string, password: string, cb : any) {
+  public async Register(name: string, email: string, password: string, cb: any): Promise<void> {
     const result = await this.authRepository.Register({
-      name : name,
+      name: name,
       email: email,
-      password : password,
+      password: password,
     }).then(this.onRegisterSuccess).catch((err) => {
       return {
         issuccess: false,
-        message : err.message
+        message: err.message
       }
     })
     cb?.(result)
   }
+
   @action.bound
-  onRegisterSuccess (res : AuthUser) : any {
+  private onRegisterSuccess(res: AuthUser): any {
     const token = res.access_token;
     window.localStorage.setItem('token', token);
-    const userData : User = res as User;
+    const userData: User = res as User;
     this.store.token = token;
     this.store.userData = userData;
     return {
       issuccess: true,
-      message : ''
+      message: ''
     }
   }
 }

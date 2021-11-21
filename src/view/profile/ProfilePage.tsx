@@ -18,9 +18,9 @@ import Skeleton from '@mui/material/Skeleton';
 import { User } from '@model/User';
 
 import { Modal, Button, Form, Input } from 'antd';
-import { AppStore } from '@store/stores/AppStore';
-import { AuthStore } from '@store/stores/AuthStore';
-import { ProfileStore } from '@store/stores/ProfileStore';
+import { AppStore } from '@store/stores/AppStore/AppStore';
+import { AuthStore } from '@store/stores/AuthStore/AuthStore';
+import { ProfileStore } from '@store/stores/ProfileStore/ProfileStore';
 
 
 export interface IProfilePage extends BaseView {

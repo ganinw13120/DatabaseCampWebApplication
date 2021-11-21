@@ -8,9 +8,9 @@ import './profile.css';
 import Alerticon from '@assets/alerticon.svg';
 import SuccessIcon from '@assets/alertsuccess.svg';
 
-import { AppStore } from '@store/stores/AppStore';
-import { ExaminationStore } from '@store/stores/ExaminationStore';
-import { AuthStore } from '@store/stores/AuthStore';
+import { AppStore } from '@store/stores/AppStore/AppStore';
+import { ExaminationStore } from '@store/stores/ExaminationStore/ExaminationStore';
+import { AuthStore } from '@store/stores/AuthStore/AuthStore';
 import { ExamResult } from '@model/Learning';
 
 import { ExamType } from '@model/Learning';

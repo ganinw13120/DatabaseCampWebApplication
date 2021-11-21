@@ -9,8 +9,8 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import validateEmail from '@util/validateEmail';
 import validatePassword from '@util/validatePassword';
-import { AppStore } from '@store/stores/AppStore';
-import { AuthStore } from '@store/stores/AuthStore';
+import { AppStore } from '@store/stores/AppStore/AppStore';
+import { AuthStore } from '@store/stores/AuthStore/AuthStore';
 
 export interface IRegisterPage extends BaseView {
   props : RegisterProps
