@@ -97,6 +97,7 @@ export default class App extends Component {
         </Route>
       )
     })
+    
     return (
       <Provider {...store}>
         <Router>
