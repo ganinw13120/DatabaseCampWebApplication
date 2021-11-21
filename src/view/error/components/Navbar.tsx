@@ -1,13 +1,17 @@
-import React from 'react';
+import { Component } from 'react';
 import DarkLogo from '@assets/dark-logo.png';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-class Navbar extends React.Component<any, any> {
+type NavbarState = {
+  offSetY : number
+}
 
-  public constructor(props: any) {
+class Navbar extends Component<RouteComponentProps, NavbarState> {
+
+  public constructor(props: RouteComponentProps) {
     super(props);
     this.state = {
-      offsetY : 0
+      offSetY : 0
     }
     this.handleScroll = this.handleScroll.bind(this);
   }

@@ -3,12 +3,15 @@ import Circle from '@assets/circle.svg';
 import About1 from '@assets/about-1.png';
 import About2 from '@assets/about-2.png';
 
-export default class About extends React.Component<any, any> {
+type AboutState = {
+  offSetY : number
+}
 
-  public constructor(props: any) {
+export default class About extends React.Component<{}, AboutState> {
+  public constructor(props: {}) {
     super(props);
     this.state = {
-      offsetY : 0
+      offSetY : 0
     }
     this.handleScroll = this.handleScroll.bind(this);
   }

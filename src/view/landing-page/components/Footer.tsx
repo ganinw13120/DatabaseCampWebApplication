@@ -6,7 +6,6 @@ import { CopyrightOutlined } from '@ant-design/icons';
 import scrollTo from '@util/scrollTo';
 
 export default class Footer extends React.Component<any, any> {
-
   public render(): JSX.Element {
     return (
       <>

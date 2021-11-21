@@ -7,7 +7,7 @@ class Title extends React.Component<any, any> {
   public constructor(props: any) {
     super(props);
     this.state = {
-      offsetY : 0
+      offSetY : 0
     }
     this.handleScroll = this.handleScroll.bind(this);
   }
