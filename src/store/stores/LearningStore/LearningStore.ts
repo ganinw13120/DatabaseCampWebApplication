@@ -246,5 +246,4 @@ export class LearningStore implements ILearningStore {
     this.store.lectureInfo = res;
     return res;
   }
-
 }
