@@ -1,5 +1,4 @@
 import { Component, ReactElement } from 'react';
-
 import '@root/App.css';
 
 import LandingPage from "@view/landing-page";
