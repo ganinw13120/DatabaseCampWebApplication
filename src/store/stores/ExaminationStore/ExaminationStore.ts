@@ -26,7 +26,7 @@ export class ExaminationStore implements IExaminationStore {
   }
 
   @action.bound
-  async FetchExam(examId : number) : Promise<Exam | null> {
+  public async FetchExam(examId : number) : Promise<Exam | null> {
     const { token } = this.rootStore.authStore.store;
     const res : Exam | null = await this.learningRepository.fetchExam(token, examId).then((res)=> {return res}).catch((res) => {
       return null
@@ -35,7 +35,7 @@ export class ExaminationStore implements IExaminationStore {
   }
 
   @action.bound
-  async FetchResult(examId : number) : Promise<ExamResult | null> {
+  public async FetchResult(examId : number) : Promise<ExamResult | null> {
     const { token } = this.rootStore.authStore.store;
     const res : ExamResult | null = await this.learningRepository.fetchExamResult(token, examId).then((res)=> {return res}).catch((res) => {
       return null
@@ -44,7 +44,7 @@ export class ExaminationStore implements IExaminationStore {
   }
 
   @action.bound
-  async FetchExamOverview(): Promise<any> {
+  public async FetchExamOverview(): Promise<any> {
     this.store.data = null;
     const { token } = this.rootStore.authStore.store;
     await this.learningRepository.fetchExamOverview(token).then(this.onFetchExamOverviewSuccess).catch((res) => {
