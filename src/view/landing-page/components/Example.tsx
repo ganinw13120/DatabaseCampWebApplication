@@ -18,11 +18,11 @@ export default class Example extends React.Component<any, any> {
     this.state = { width: 0 };
   }
   componentDidMount() {
-    this.getDimensions(); 
-    window.addEventListener('resize', this.getDimensions); 
+    this.getDimensions();
+    window.addEventListener('resize', this.getDimensions);
   }
   componentWillUnmount() {
-    window.removeEventListener('resize', this.getDimensions); 
+    window.removeEventListener('resize', this.getDimensions);
   }
 
   getDimensions = () => {
@@ -33,7 +33,7 @@ export default class Example extends React.Component<any, any> {
     let Swidth: number = width * 0.7;
     return (
       <>
-        <div className='w-full bg-bg-dark pt-44 mb-16 pb-16 font-prompt'> 
+        <div className='w-full bg-bg-dark pt-44 mb-16 pb-16 font-prompt'>
             <div className='w-full text-center' >
               <span className='border-white mx-auto shadow-text text-3xl md:text-4xl lg:text-5xl text-darkPrimary font-semibold tracking-wider'  style={{borderBottom:'0.7px solid #000000'}}>ตัวอย่างเนื้อหา</span>
             </div>

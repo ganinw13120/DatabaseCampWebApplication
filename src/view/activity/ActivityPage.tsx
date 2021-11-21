@@ -111,7 +111,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
     return (
       <>
         <div className='xl:grid xl:grid-cols-10 w-full pt-10 h-full'>
-          {userData && 
+          {userData &&
           <div className='ribbon-points flex z-20 mt-16 md:mt-0'>
             <img src={Star} alt='points' className='star my-auto mx-10' />
             <span className='text-white text-xl my-auto mr-5'>{userData?.point.toLocaleString()}</span>
@@ -148,8 +148,8 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
                 </>
               })()} </> : <SkeletonActivity />
             }
-             <AlertTab alert={alert} /> 
-            {activityInfo && 
+             <AlertTab alert={alert} />
+            {activityInfo &&
             <div className='flex w-5/6 mx-auto'>
               <div className='flex-grow'>
               </div>

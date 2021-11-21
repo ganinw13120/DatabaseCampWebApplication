@@ -120,7 +120,7 @@ export default class ActivityStepper extends Component<StepperProps, any> {
             <span className='my-auto ml-1 text-white font-normal'>
             Back
             </span>
-          </div> : 
+          </div> :
           <div className='flex-none cursor-pointer'>
             <LeftOutlined className='text-white my-auto' style={{fontSize : 20, color : '#BBBFC0'}} />
             <span className='ml-1 text-gray font-normal'>
@@ -150,7 +150,7 @@ export default class ActivityStepper extends Component<StepperProps, any> {
             Next
             </span>
             <RightOutlined className='text-white my-auto' style={{fontSize : 20, color : 'white'}} />
-          </div> : 
+          </div> :
           <div className='flex-none cursor-pointer'>
             <span className='my-auto mr-1 text-gray font-normal'>
             Next

@@ -127,7 +127,7 @@ export class LearningStore implements ILearningStore {
   }
 
   @action.bound
-  private async checkMultiple(activityID: number, result: number, cb: any): Promise<any> {
+  private async checkMultiple(activityID : number, result : number, cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     this.learningRepository.checkMultiple(token, activityID, result).then((res: any) => {
       const { is_correct } = res;
@@ -145,7 +145,7 @@ export class LearningStore implements ILearningStore {
   }
 
   @action.bound
-  private async checkMatching(activityID: number, result: string[][], cb: any): Promise<any> {
+  private async checkMatching(activityID : number, result : string[][], cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     let res: any = [];
     result.forEach((e: any) => {
@@ -174,7 +174,7 @@ export class LearningStore implements ILearningStore {
   }
 
   @action.bound
-  private async checkCompletion(activityID: number, result: CompletionAnswer[], cb: any): Promise<any> {
+  private async checkCompletion(activityID : number, result : CompletionAnswer[], cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     result.forEach((e: any) => {
       if (!e.content) {

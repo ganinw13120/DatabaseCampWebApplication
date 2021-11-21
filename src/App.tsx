@@ -118,7 +118,7 @@ export default class App extends Component {
             </Route>
             {appRouterendered}
             <Route>
-              <NotFoundPage />              
+              <NotFoundPage />
             </Route>
           </Switch>
         </Router>

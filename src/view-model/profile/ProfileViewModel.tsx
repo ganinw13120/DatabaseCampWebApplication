@@ -41,7 +41,7 @@ export default class ActivityViewModel implements IProfileViewModel {
       this.alertText = 'กรุณากรอกชื่อ';
       this.baseView?.onViewModelChanged();
       return;
-    }   
+    }
     else if (newName===this.profileData?.name) {
       this.alertText = 'กรุณากรอกชื่อใหม่';
       this.baseView?.onViewModelChanged();

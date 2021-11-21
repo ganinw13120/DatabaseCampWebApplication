@@ -10,7 +10,7 @@ interface LoggedMiddlewareProps extends RouteComponentProps {
 }
 
 @inject('authStore')
-@observer 
+@observer
 class LoggedMiddleware extends Component<LoggedMiddlewareProps, {}> {
   componentDidMount() {
     this.checkUser();

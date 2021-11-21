@@ -52,7 +52,7 @@ class PointRankingPage
         <div className="font-prompt w-full p-12 px-10">
           <Header text='จัดลำดับคะแนน' />
           <div className="mt-10">
-            {data && 
+            {data &&
             <RankingItem
               data={data.user_ranking}
               isLoading={isLoading}

@@ -32,5 +32,5 @@ export class OverviewStore implements IOverviewStore {
   @action.bound
   onFetchOverviewSuccess (res : Overview) : Overview {
     return res;
-  } 
+  }
 }

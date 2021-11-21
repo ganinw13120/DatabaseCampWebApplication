@@ -16,7 +16,7 @@ export default class LectureViewModel implements ILectureViewModel {
     if (!contentID) baseView.props.history.replace('/overview')
     baseView.props.appStore!.setStepper(generateEmptyStepper())
     baseView?.props.appStore!.setPercent(40)
-    baseView.props.learningStore!.FetchRoadmap(contentID,(res : RoadMap)=>{  
+    baseView.props.learningStore!.FetchRoadmap(contentID,(res : RoadMap)=>{
       baseView?.props.appStore?.addPercent(30);
       const stepper = generateStepper(res, 0, true);
       stepper.onNext = this.onClickNext ;
