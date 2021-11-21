@@ -86,7 +86,6 @@ const appRouteList : route[] = [
 ];
 
 export default class App extends Component {
-
   render(): JSX.Element  {
     const appRouterendered : ReactElement[] = [];
     appRouteList.forEach((e, key) => {
