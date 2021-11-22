@@ -68,8 +68,8 @@ export default class Hintbox extends Component<HintProps, HintState> {
 }
 
 interface HintHeadereProps {
-  isSelect: boolean,
-  onSelect(tab: number): void,
+  isSelect: boolean
+  onSelect(tab: number): void
   id: number
 }
 class HintHeader extends Component<HintHeadereProps, {}> {
@@ -84,8 +84,8 @@ class HintHeader extends Component<HintHeadereProps, {}> {
 }
 
 interface NextHintHeaderProps {
-  isEnabled: boolean,
-  reduce_point: number,
+  isEnabled: boolean
+  reduce_point: number
   onHint(): void
 }
 

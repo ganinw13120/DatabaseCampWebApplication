@@ -26,7 +26,7 @@ type ChoiceProps = {
   func: any
 }
 class Choice extends React.Component<ChoiceProps, any> {
-  private ref: any;
+  private ref: React.Ref<HTMLDivElement>;
   private originalRef: any;
   constructor(props: any) {
     super(props);
