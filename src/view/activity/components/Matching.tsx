@@ -38,13 +38,13 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
     this.removeSnap = this.removeSnap.bind(this);
     this.appendRef = this.appendRef.bind(this);
   }
-  private onHoverQuestionEnter(id: string): void {
+  public onHoverQuestionEnter(id: string): void {
     this.setState({ hoverQuestion: id });
   }
-  private onHoverQuestionExit(): void {
+  public onHoverQuestionExit(): void {
     this.setState({ hoverQuestion: null });
   }
-  private updateQuestionState(id : string, isFilled : boolean): void {
+  public updateQuestionState(id : string, isFilled : boolean): void {
     const { questions } = this.state;
     let temp = [...questions];
     ((obj) => {
@@ -55,7 +55,7 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
       questions : temp
     })
   }
-  private snapPos(text : string): any | null {
+  public snapPos(text : string): any | null {
     const { questions, hoverQuestion } = this.state;
     if (hoverQuestion) {
       const question = questions.find(e => e.id === hoverQuestion && !e.isFilled);
@@ -77,7 +77,7 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
     }
     return null;
   }
-  private removeSnap(id: string, displayText : string): void {
+  public removeSnap(id: string, displayText : string): void {
     const { questions,result } = this.state;
     let temp = [...result];
     const question = questions.find(e => e.id === id);
@@ -89,7 +89,7 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
     this.props.updateResult(temp);
     this.updateQuestionState(id, false);
   }
-  private appendRef(quest: QuestionBox): void {
+  public appendRef(quest: QuestionBox): void {
     this.setState((prev: MatchingPageState) => {
       prev.result[quest.pairId - 1] = [];
       prev.questions.push(quest);
