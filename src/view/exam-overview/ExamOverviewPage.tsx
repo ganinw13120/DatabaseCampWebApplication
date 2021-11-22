@@ -5,7 +5,10 @@ import './Bar.css'
 import './overview.css'
 import { inject, observer } from 'mobx-react';
 import { withRouter, RouteComponentProps  } from 'react-router-dom';
+
 import ExamOverviewViewModel from '@view-model/exam-overview/ExamOverviewViewModel';
+import IExamOverviewViewModel from '@view-model/exam-overview/IExamOverviewViewModel';
+
 import Skeleton from '@mui/material/Skeleton';
 
 import HeaderCard from "./components/HeaderCard";
@@ -29,7 +32,7 @@ class OverviewPage
   extends React.Component<ExamOverviewProps, ExamOverviewComponentState>
   implements BaseView
 {
-  private examOverviewViewModel: ExamOverviewViewModel;
+  private examOverviewViewModel: IExamOverviewViewModel;
 
   public constructor(props: any) {
     super(props);

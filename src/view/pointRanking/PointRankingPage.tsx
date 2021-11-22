@@ -2,7 +2,10 @@ import React from "react";
 import BaseView from '@view/BaseView';
 import "semantic-ui-css/semantic.min.css";
 import { inject, observer } from "mobx-react";
-import PointRankingViewModel from "@view-model/app/PointRanking.ViewModel";
+
+import PointRankingViewModel from "@view-model/app/PointRankingViewModel";
+import IPointRankingViewModel from "@view-model/app/IPointRankingViewModel";
+
 import RankingItem from "./components/RankingItem";
 import Header from "@view/layout/app/Header";
 import { RouteComponentProps, withRouter } from "react-router";
@@ -25,7 +28,7 @@ class PointRankingPage
   extends React.Component<PointRankingProps, {}>
   implements IPointRanking
 {
-  private viewModel: PointRankingViewModel;
+  private viewModel: IPointRankingViewModel;
 
   public constructor(props: any) {
     super(props);

@@ -10,6 +10,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import validateEmail from '@util/validateEmail';
 import { AppStore } from '@store/stores/AppStore/AppStore';
 import { AuthStore } from '@store/stores/AuthStore/AuthStore';
+import IAuthViewModel from '@view-model/auth/IAuthViewModel';
 
 export interface ILoginPage extends BaseView {
   props : LoginProps
@@ -33,7 +34,7 @@ interface LoginComponentState {
 class LoginPage extends Component<LoginProps, LoginComponentState>
   implements ILoginPage {
   
-  private loginViewModel: LoginViewModel;
+  private loginViewModel: IAuthViewModel;
   
   public constructor(props: LoginProps) {
     super(props);
@@ -62,10 +63,6 @@ class LoginPage extends Component<LoginProps, LoginComponentState>
     })
   }
 
-  onFinishFailed = () => {
-
-  }
-
   public render(): JSX.Element {
     const { isLoading, displayText } = this.state
     return (
@@ -74,7 +71,6 @@ class LoginPage extends Component<LoginProps, LoginComponentState>
           ref={this.loginViewModel.formRef}
           name="basic"
           onFinish={this.loginViewModel.OnFinish}
-          onFinishFailed={this.onFinishFailed}
           autoComplete="off"
         >
             <div className="grid  md:grid-cols-2 h-screen font-prompt bg-bg">
@@ -118,7 +114,7 @@ class LoginPage extends Component<LoginProps, LoginComponentState>
                   <div className={`bg-${isLoading ? 'gray' : 'primary'} h-14 rounded-xl mt-4`}>
                     <Button disabled={isLoading} htmlType="submit" className='w-full h-24 bg-primary' style={{height: '100%'}} ghost size='large'><span className='text-base text-white font-light tracking-wider '>เข้าสู่ระบบ</span></Button>
                   </div>
-                  <div className="mt-5 h-14 text-center cursor-pointer" onClick={this.loginViewModel.OnClickRegister}>
+                  <div className="mt-5 h-14 text-center cursor-pointer" onClick={this.loginViewModel.onChangePage}>
                     <span className='text-base text-darkPrimary font-light tracking-wider '>สมัครสมาชิก</span>
                   </div>
                 </div>

@@ -5,7 +5,9 @@ import './Bar.css'
 import './overview.css'
 import { inject, observer } from 'mobx-react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+
 import ExamViewModel from '@view-model/exam/ExamViewModel';
+import IExamViewModel from '@view-model/exam/IExamViewModel';
 
 import Requirement from '../activity/components/Requirement';
 
@@ -45,7 +47,7 @@ interface ExamPageProps extends RouteComponentProps<{
 class ExamPage
   extends Component<ExamPageProps, ExamPageState>
   implements IExamPage {
-  private examViewModel: ExamViewModel;
+  private examViewModel: IExamViewModel;
 
   public constructor(props: ExamPageProps) {
     super(props);
@@ -107,7 +109,6 @@ class ExamPage
       <Requirement
         activityInfo={data.activity}
         roadMap={roadMap}
-        submitText={act === examActivity.length - 1 ? 'ส่งคำตอบ' : "ถัดไป"}
         isHidden={isHidden}
       />
       <div className={`${isHidden ? 'hidden' : ''} pt-20 pb-12 col-span-6`}>

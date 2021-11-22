@@ -1,19 +1,25 @@
+import { Content as ContentType } from '@model/Learning';
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { Progress } from 'semantic-ui-react'
 
-class Content extends React.Component<any, any> {
+type ContentProps = RouteComponentProps & {
+  data  :  ContentType
+}
+
+class Content extends React.Component<ContentProps, any> {
   onSelectContent() {
-    this.props.history.replace('/learning/content/' + this.props.id);
+    this.props.history.replace('/learning/content/' + this.props.data.content_id);
   }
   public render(): JSX.Element {
-    const { name, progress, is_lasted } = this.props;
+    const { data } = this.props;
+    const {group_name, progress, is_lasted} = data
     return (
       <>
         <div className='contentlist w-full h-20 mx-auto flex align-middle' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }} onClick={()=>this.onSelectContent()}>
               <div className='font-semibold text-sm md:text-base text-darkPrimary mx-8 md:mx-16 font-bold my-auto'>
-                - {name}
+                - {group_name}
               </div>
               {is_lasted &&
               <div className='flex-none bg-primary px-4 md:px-0 md:w-24 align-middle my-auto  rounded'>

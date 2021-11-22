@@ -10,6 +10,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import Skeleton from '@mui/material/Skeleton';
 
 import LectureViewModel from '@view-model/lecture/LectureViewModel';
+import ILectureViewModel from '@view-model/lecture/ILectureViewModel';
 
 import { LearningStore } from '@store/stores/LearningStore/LearningStore';
 import { AppStore } from '@store/stores/AppStore/AppStore';
@@ -35,7 +36,7 @@ interface LectureProps extends RouteComponentProps <{
 class LecturePage extends React.Component<LectureProps, LectureComponentState>
   implements ILecturePage {
 
-  private lectureViewModel: LectureViewModel;
+  private lectureViewModel: ILectureViewModel;
 
   public constructor(props: any) {
     super(props);

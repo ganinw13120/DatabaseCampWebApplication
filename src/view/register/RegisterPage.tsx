@@ -11,6 +11,7 @@ import validateEmail from '@util/validateEmail';
 import validatePassword from '@util/validatePassword';
 import { AppStore } from '@store/stores/AppStore/AppStore';
 import { AuthStore } from '@store/stores/AuthStore/AuthStore';
+import IAuthViewModel from '@view-model/auth/IAuthViewModel';
 
 export interface IRegisterPage extends BaseView {
   props : RegisterProps
@@ -32,7 +33,7 @@ interface RegisterComponentState {
 class RegisterPage extends Component<RegisterProps, RegisterComponentState>
   implements IRegisterPage {
   
-  private viewModel: RegisterViewModel;
+  private viewModel: IAuthViewModel;
   
   public constructor(props: RegisterProps) {
     super(props);
@@ -133,7 +134,7 @@ class RegisterPage extends Component<RegisterProps, RegisterComponentState>
                     <Button disabled={isLoading} htmlType="submit" className='w-full h-24 bg-primary' style={{height: '100%'}} ghost size='large'><span className='text-base text-white font-light tracking-wider '>สมัครสมาชิก</span></Button>
                   </div>
                   <div className="mt-5 h-14 text-center cursor-pointer">
-                    <span onClick={this.viewModel.onClickLoginButton} className='text-base text-darkPrimary font-light tracking-wider '>เข้าสู่ระบบ</span>
+                    <span onClick={this.viewModel.onChangePage} className='text-base text-darkPrimary font-light tracking-wider '>เข้าสู่ระบบ</span>
                   </div>
                 </div>
               </div>

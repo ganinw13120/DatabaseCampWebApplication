@@ -6,6 +6,7 @@ import Requirement from './components/Requirement';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import ActivityViewModel from '@view-model/activity/ActivityViewModel';
+import IActivityViewModel from '@view-model/activity/IActivityViewModel';
 
 import Matching from './components/Matching';
 import Completion from './components/Completion';
@@ -16,9 +17,9 @@ import { Activity, ActivityAlert, CompletionChoice, MatchingChoice, MultipleChoi
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { LearningStore } from '@store/stores/LearningStore/LearningStore';
-import { AppStore } from '@store/stores/AppStore/AppStore';
-import { AuthStore } from '@store/stores/AuthStore/AuthStore';
+import ILearningStore from '@store/stores/LearningStore/ILearningStore';
+import IAppStore from '@store/stores/AppStore/IAppStore';
+import IAuthStore from '@store/stores/AuthStore/IAuthStore';
 
 import AlertTab from './components/AlertTab';
 import { green } from '@mui/material/colors';
@@ -29,20 +30,20 @@ import Star from '@assets/starProfile.png';
 import SkeletonActivity from './components/SkeletonActivity';
 
 export interface IActivityPage extends BaseView {
-  props : ActivityProps
+  props: ActivityProps
 }
 
 interface ActivityState {
   activityInfo: Activity | null,
-  alert : ActivityAlert | null,
+  alert: ActivityAlert | null,
 }
 
 interface ActivityProps extends RouteComponentProps<{
-    id : string
+  id: string
 }> {
-  learningStore?: LearningStore,
-  appStore?: AppStore,
-  authStore ?: AuthStore  | null
+  learningStore?: ILearningStore,
+  appStore?: IAppStore,
+  authStore?: IAuthStore
 }
 
 @inject('learningStore')
@@ -51,14 +52,14 @@ interface ActivityProps extends RouteComponentProps<{
 @observer
 class ActivityPage extends React.Component<ActivityProps, ActivityState>
   implements IActivityPage {
-  private activityViewModel: ActivityViewModel;
+  private activityViewModel: IActivityViewModel;
   private swal: any;
   constructor(props: any) {
     super(props);
     this.props.appStore?.setPercent(0)
     this.state = {
       activityInfo: null,
-      alert : null
+      alert: null
     }
     this.activityViewModel = new ActivityViewModel();
     this.showHintPopup = this.showHintPopup.bind(this);
@@ -82,8 +83,8 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
       this.setState({ activityInfo: null })
     }
   }
-  
-  showHintPopup(): void {
+
+  private showHintPopup(): void {
     this.swal.fire({
       title: 'ท่านต้องการขอคำใบ้ใช่หรือไม่?',
       text: "การขอคำใบ้จะหักเเต้มที่ได้รับในการทำกิจกรรม",
@@ -101,22 +102,22 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
   public onViewModelChanged(): void {
     this.setState({
       activityInfo: this.activityViewModel.activityInfo,
-      alert : this.activityViewModel.alert
+      alert: this.activityViewModel.alert
     })
   }
   public render(): JSX.Element {
     const { activityInfo, alert } = this.state;
     const { roadMap, isLoading } = this.props.learningStore!.store;
-    const {userData} = this.props.authStore!.store;
+    const { userData } = this.props.authStore!.store;
     return (
       <>
         <div className='xl:grid xl:grid-cols-10 w-full pt-10 h-full'>
           {userData &&
-          <div className='ribbon-points flex z-20 mt-16 md:mt-0'>
-            <img src={Star} alt='points' className='star my-auto mx-10' />
-            <span className='text-white text-xl my-auto mr-5'>{userData?.point.toLocaleString()}</span>
-            <span className='text-white text-lg my-auto mr-5'>Points</span>
-          </div>}
+            <div className='ribbon-points flex z-20 mt-16 md:mt-0'>
+              <img src={Star} alt='points' className='star my-auto mx-10' />
+              <span className='text-white text-xl my-auto mr-5'>{userData?.point.toLocaleString()}</span>
+              <span className='text-white text-lg my-auto mr-5'>Points</span>
+            </div>}
           <Requirement
             onHint={this.showHintPopup}
             activityInfo={activityInfo?.activity}
@@ -148,26 +149,26 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
                 </>
               })()} </> : <SkeletonActivity />
             }
-             <AlertTab alert={alert} />
+            <AlertTab alert={alert} />
             {activityInfo &&
-            <div className='flex w-5/6 mx-auto'>
-              <div className='flex-grow'>
-              </div>
-              <div onClick={() => {if(alert && alert.isSuccess) this.activityViewModel.moveNext(); else this.activityViewModel.onSubmit(); }} className={`relative ${isLoading ? '' : 'hoverable'} flex-none bg-${isLoading ? 'disabledPrimary' : 'primary'} mt-10 text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'loading' : 'pointer'}`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
-                {alert && alert.isSuccess ? 'ถัดไป' : 'ตรวจคำตอบ'}
-                {isLoading && <CircularProgress
-                  size={24}
-                  sx={{
-                    color: green[500],
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    marginTop: '-12px',
-                    marginLeft: '-12px',
-                  }}
-                />}
-              </div>
-            </div>}
+              <div className='flex w-5/6 mx-auto'>
+                <div className='flex-grow'>
+                </div>
+                <div onClick={() => { if (alert && alert.isSuccess) this.activityViewModel.moveNext(); else this.activityViewModel.onSubmit(); }} className={`relative ${isLoading ? '' : 'hoverable'} flex-none bg-${isLoading ? 'disabledPrimary' : 'primary'} mt-10 text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'loading' : 'pointer'}`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+                  {alert && alert.isSuccess ? 'ถัดไป' : 'ตรวจคำตอบ'}
+                  {isLoading && <CircularProgress
+                    size={24}
+                    sx={{
+                      color: green[500],
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      marginTop: '-12px',
+                      marginLeft: '-12px',
+                    }}
+                  />}
+                </div>
+              </div>}
           </div>
         </div>
 

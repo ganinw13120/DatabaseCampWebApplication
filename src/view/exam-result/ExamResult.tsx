@@ -1,6 +1,9 @@
 import { Component } from 'react';
 import BaseView from '@view/BaseView';
+
 import ExamResultViewModel from '@view-model/exam-result/ExamResultViewModel';
+import IExamResultViewModel from '@view-model/exam-result/IExamResultViewModel';
+
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import './profile.css';
@@ -34,7 +37,7 @@ var monthNamesThai = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ
 @observer
 class ExamResultPage extends Component<ExamPageProps, ProfileComponentState>
   implements BaseView {
-  private examResultViewModel: ExamResultViewModel;
+  private examResultViewModel: IExamResultViewModel;
   public constructor(props: any) {
     super(props);
     this.examResultViewModel = new ExamResultViewModel();

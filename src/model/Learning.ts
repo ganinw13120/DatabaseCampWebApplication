@@ -424,12 +424,12 @@ export type ContentGroup = {
  * `group_id` : Content group identifier
  */
 export type Content = {
-    content_id : number,
-    content_name : string,
-    is_lasted ?: boolean,
-    progress : number,
-    group_name ?: string,
-    group_id ?: number,
+    content_id : number
+    content_name : string
+    is_lasted ?: boolean
+    progress : number
+    group_name ?: string
+    group_id ?: number
 }
 
 

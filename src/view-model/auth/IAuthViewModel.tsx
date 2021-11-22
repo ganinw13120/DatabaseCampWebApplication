@@ -6,4 +6,6 @@ export default interface IAuthViewModel extends BaseViewModel {
   displayText: string;
   formRef?: React.RefObject<FormInstance<any>>;
   OnFinish(): Promise<void>;
+  onChangePage() : void;
+  matchPassword  ?(_: any, val: string, callback: any): void
 }

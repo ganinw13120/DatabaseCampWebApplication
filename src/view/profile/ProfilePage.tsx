@@ -9,6 +9,7 @@ import hat from '@assets/hat.png';
 import './profile.css';
 
 import ProfileViewModel from '@view-model/profile/ProfileViewModel';
+import IProfileViewModel from '@view-model/profile/IProfileViewModel';
 
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
@@ -50,7 +51,7 @@ var monthNamesThai = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ
 @observer
 class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
   implements IProfilePage {
-  private profileViewModel: ProfileViewModel;
+  private profileViewModel: IProfileViewModel;
   public constructor(props: any) {
     super(props);
     this.profileViewModel = new ProfileViewModel();

@@ -3,23 +3,16 @@ import HintTab from './HintTab';
 import Skeleton from '@mui/material/Skeleton';
 import { withRouter, RouteComponentProps  } from 'react-router-dom';
 
-import { inject, observer } from 'mobx-react';
-
-import {LearningStore} from '@store/stores/LearningStore/LearningStore';
 import { ActivityInfo, RoadMap } from '@model/Learning';
 
 interface RequirementProps extends RouteComponentProps {
-  learningStore ?: LearningStore,
   onHint?() : void,
   activityInfo : ActivityInfo | undefined,
   roadMap : RoadMap | null,
-  submitText ?: string,
   isHidden ?: boolean,
   isHideHint ?: boolean
 }
 
-@inject('learningStore')
-@observer
 class Requirement extends React.Component<RequirementProps, {}> {
   componentDidMount() {
     this.getDimensions();

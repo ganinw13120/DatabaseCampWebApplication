@@ -7,6 +7,7 @@ export default interface IAuthStore {
   Logout(cb?: any): void,
   Login(email: string, password: string, cb: any): Promise<void>,
   Register(name: string, email: string, password: string, cb: any): Promise<void>,
+  store : Store
 }
 
 export type Store = {

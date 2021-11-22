@@ -44,7 +44,7 @@ export default class RegisterViewModel implements IAuthViewModel {
             }
         )
     }
-    public onClickLoginButton = (): void => {
+    public onChangePage = (): void => {
         this.baseView?.props?.history?.push('/login');
     }
 
