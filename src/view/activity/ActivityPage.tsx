@@ -101,8 +101,8 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
   }
   public onViewModelChanged(): void {
     this.setState({
-      activityInfo: this.activityViewModel.activityInfo,
-      alert: this.activityViewModel.alert
+      activityInfo: this.activityViewModel.getActivityInfo(),
+      alert: this.activityViewModel.getAlert()
     })
   }
   public render(): JSX.Element {

@@ -6,9 +6,9 @@ import { FormInstance } from 'antd/es/form';
 
 export default class LoginViewModel implements IAuthViewModel {
 
-  public formRef?: React.RefObject<FormInstance<any>>;
-  public displayText: string;
-  public isLoading: boolean;
+  private formRef: React.RefObject<FormInstance<any>>;
+  private displayText: string;
+  private isLoading: boolean;
 
   private baseView?: ILoginPage;
 
@@ -16,6 +16,18 @@ export default class LoginViewModel implements IAuthViewModel {
     this.isLoading = false;
     this.displayText = '';
     this.formRef = React.createRef<FormInstance>();
+  }
+
+  public getFormRef(): React.RefObject<FormInstance<any>> {
+    return this.formRef
+  }
+
+  public getDisplayText(): string {
+    return this.displayText;
+  }
+
+  public getIsLoadng(): boolean {
+    return this.isLoading;
   }
 
   public attachView = (baseView: ILoginPage): void => {

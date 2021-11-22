@@ -46,8 +46,8 @@ class LoginPage extends Component<LoginProps, LoginComponentState>
 
     
     this.state = {
-      displayText : loginViewModel.displayText,
-      isLoading : loginViewModel.isLoading
+      displayText : loginViewModel.getDisplayText(),
+      isLoading : loginViewModel.getIsLoadng()
     }
   }
   
@@ -58,8 +58,8 @@ class LoginPage extends Component<LoginProps, LoginComponentState>
 
   public onViewModelChanged(): void {
     this.setState({
-      displayText : this.loginViewModel.displayText,
-      isLoading : this.loginViewModel.isLoading
+      displayText : this.loginViewModel.getDisplayText(),
+      isLoading : this.loginViewModel.getIsLoadng()
     })
   }
 
@@ -68,7 +68,7 @@ class LoginPage extends Component<LoginProps, LoginComponentState>
     return (
       <>
         <Form
-          ref={this.loginViewModel.formRef}
+          ref={this.loginViewModel.getFormRef()}
           name="basic"
           onFinish={this.loginViewModel.OnFinish}
           autoComplete="off"

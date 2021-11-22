@@ -12,22 +12,23 @@ import Skeleton from '@mui/material/Skeleton';
 import LectureViewModel from '@view-model/lecture/LectureViewModel';
 import ILectureViewModel from '@view-model/lecture/ILectureViewModel';
 
-import { LearningStore } from '@store/stores/LearningStore/LearningStore';
-import { AppStore } from '@store/stores/AppStore/AppStore';
+import ILearningStore from '@store/stores/LearningStore/ILearningStore';
+import IAppStore from '@store/stores/AppStore/IAppStore';
+import { Lecture } from '@model/Learning';
 
 export interface ILecturePage extends BaseView {
   props : LectureProps
 }
 
 interface LectureComponentState {
-  lectureInfo : any
+  lectureInfo : Lecture | null
 }
 
 interface LectureProps extends RouteComponentProps <{
   id : string
 }> {
-  learningStore ?: LearningStore,
-  appStore ?: AppStore,
+  learningStore ?: ILearningStore
+  appStore ?: IAppStore
 }
 
 @inject('learningStore')
@@ -56,11 +57,8 @@ class LecturePage extends React.Component<LectureProps, LectureComponentState>
 
   public onViewModelChanged(): void {
     this.setState({
-      lectureInfo: this.lectureViewModel.lectureInfo
+      lectureInfo: this.lectureViewModel.getLectureInfo()
     })
-  }
-
-  onFinishFailed = () => {
   }
 
   public render(): JSX.Element {
