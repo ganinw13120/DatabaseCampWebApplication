@@ -6,6 +6,6 @@ export default interface IPointRankingStore {
 }
 
 export type Store = {
-    data: Ranking | null,
+    data: Ranking | null
     isLoading: boolean
 }

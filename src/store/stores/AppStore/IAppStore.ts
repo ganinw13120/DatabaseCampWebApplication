@@ -12,8 +12,8 @@ export default interface IAppStore {
 }
 
 export type Store = {
-  isExpand : boolean,
-  progressPercent : number,
+  isExpand : boolean
+  progressPercent : number
   stepper : Stepper | null
 }
 
