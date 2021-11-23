@@ -11,8 +11,8 @@ import IExamViewModel from '@view-model/exam/IExamViewModel';
 
 import Requirement from '../activity/components/Requirement';
 
-import { AppStore } from '@store/stores/AppStore/AppStore';
-import { ExaminationStore } from '@store/stores/ExaminationStore/ExaminationStore';
+import IAppStore from '@store/stores/AppStore/IAppStore';
+import IExaminationStore from '@store/stores/ExaminationStore/IExaminationStore';
 
 import { ActivityAlert, CompletionChoice, Exam, ExamActivity, ExamType, MatchingChoice, MultipleChoice, RoadMap } from '@model/Learning';
 import Matching from '../activity/components/Matching';
@@ -36,8 +36,8 @@ interface ExamPageState {
 interface ExamPageProps extends RouteComponentProps<{
   id : string
 }> {
-  appStore?: AppStore,
-  examinationStore?: ExaminationStore,
+  appStore?: IAppStore,
+  examinationStore?: IExaminationStore,
 }
 
 @inject('examinationStore')
