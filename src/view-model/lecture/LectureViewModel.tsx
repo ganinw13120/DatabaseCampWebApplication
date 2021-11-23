@@ -1,38 +1,53 @@
 import ILectureViewModel from './ILectureViewModel';
 import { ILecturePage } from '@view/lecture/LecturePage';
 import { notification } from 'antd';
-import { RoadMap } from '@model/Learning';
+import { Lecture, RoadMap } from '@model/Learning';
 import generateStepper, { generateEmptyStepper } from '@util/generateStepper';
 
 export default class LectureViewModel implements ILectureViewModel {
   private baseView?: ILecturePage;
-  public lectureInfo: any;
-  constructor () {
+  private lectureInfo: Lecture | null;
+
+  constructor() {
     this.onClickNext = this.onClickNext.bind(this);
+    this.lectureInfo = null;
   }
-  public attachView = async (baseView: ILecturePage): Promise<any> => {
-    this.baseView = baseView;
+
+  public getLectureInfo(): Lecture | null {
+    return this.lectureInfo;
+  }
+
+  private async fetchLectureInfo(): Promise<void> {
+    const baseView = this.baseView;
+    if (!baseView) return;
     const contentID = parseInt(baseView.props.match.params.id);
     if (!contentID) baseView.props.history.replace('/overview')
     baseView.props.appStore!.setStepper(generateEmptyStepper())
     baseView?.props.appStore!.setPercent(40)
-    baseView.props.learningStore!.FetchRoadmap(contentID,(res : RoadMap)=>{
+    baseView.props.learningStore!.FetchRoadmap(contentID, (res: RoadMap) => {
       baseView?.props.appStore?.addPercent(30);
       const stepper = generateStepper(res, 0, true);
-      stepper.onNext = this.onClickNext ;
+      stepper.onNext = this.onClickNext;
       baseView.props.appStore!.setStepper(stepper)
     })
-    baseView.props.learningStore!.FetchLecture(contentID, (res: any) => {
+    baseView.props.learningStore!.FetchLecture(contentID, (res: Lecture) => {
       baseView?.props.appStore?.addPercent(30)
       this.lectureInfo = res;
       this.baseView?.onViewModelChanged()
     })
-  };
 
-  public detachView = (): void => {
+  }
+
+  public attachView(baseView: ILecturePage): void {
+    this.baseView = baseView;
+    this.fetchLectureInfo();
+  }
+
+  public detachView(): void {
     this.baseView = undefined;
-  };
-  public onClickNext = (): void => {
+  }
+
+  public onClickNext (): void  {
     if (!this.baseView) return;
     const { roadMap } = this.baseView.props.learningStore!.store;
     if (!roadMap) return;

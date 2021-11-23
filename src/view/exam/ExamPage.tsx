@@ -67,10 +67,10 @@ class ExamPage
 
   public onViewModelChanged(): void {
     this.setState({
-      exam: this.examViewModel.exam,
-      currentActivity: this.examViewModel.currentActivity,
-      alert: this.examViewModel.alert,
-      isLoading: this.examViewModel.isLoading
+      exam: this.examViewModel.getExam(),
+      currentActivity: this.examViewModel.getCurrentActivity(),
+      alert: this.examViewModel.getAlert(),
+      isLoading: this.examViewModel.getIsLoading()
     })
   }
 
@@ -146,7 +146,7 @@ class ExamPage
           <div className='flex w-5/6 mx-auto'>
             <div className='flex-grow'>
             </div>
-            <div onClick={() => { this.examViewModel.obSubmitActivity() }} className={`relative ${isLoading ? '' : 'hoverable'} flex-none bg-${isLoading ? 'disabledPrimary' : 'primary'} mt-10 text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'loading' : 'pointer'}`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+            <div onClick={() => { this.examViewModel.SubmitActivity() }} className={`relative ${isLoading ? '' : 'hoverable'} flex-none bg-${isLoading ? 'disabledPrimary' : 'primary'} mt-10 text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'loading' : 'pointer'}`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
               {act === examActivity.length - 1 ? 'ส่งคำตอบ' : "ถัดไป"}
               {isLoading && <CircularProgress
                 size={24}

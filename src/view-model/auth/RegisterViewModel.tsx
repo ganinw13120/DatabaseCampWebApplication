@@ -7,9 +7,9 @@ import { IRegisterPage } from '@view/register/RegisterPage';
 
 export default class RegisterViewModel implements IAuthViewModel {
 
-    public formRef?: React.RefObject<FormInstance<any>>;
-    public displayText: string;
-    public isLoading: boolean;
+    private formRef: React.RefObject<FormInstance<any>>;
+    private displayText: string;
+    private isLoading: boolean;
 
     private baseView?: IRegisterPage;
 
@@ -17,6 +17,18 @@ export default class RegisterViewModel implements IAuthViewModel {
         this.isLoading = false;
         this.displayText = '';
         this.formRef = React.createRef<FormInstance>();
+    }
+
+    public getFormRef(): React.RefObject<FormInstance<any>> {
+        return this.formRef
+    }
+
+    public getDisplayText(): string {
+        return this.displayText;
+    }
+
+    public getIsLoadng(): boolean {
+        return this.isLoading;
     }
 
     public attachView = (baseView: IRegisterPage): void => {

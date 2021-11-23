@@ -45,8 +45,8 @@ class RegisterPage extends Component<RegisterProps, RegisterComponentState>
 
     
     this.state = {
-      displayText : viewModel.displayText,
-      isLoading : viewModel.isLoading
+      displayText : viewModel.getDisplayText(),
+      isLoading : viewModel.getIsLoadng()
     }
   }
   
@@ -57,8 +57,8 @@ class RegisterPage extends Component<RegisterProps, RegisterComponentState>
 
   public onViewModelChanged(): void {
     this.setState({
-      displayText : this.viewModel.displayText,
-      isLoading : this.viewModel.isLoading
+      displayText : this.viewModel.getDisplayText(),
+      isLoading : this.viewModel.getIsLoadng()
     })
   }
 
@@ -67,7 +67,7 @@ class RegisterPage extends Component<RegisterProps, RegisterComponentState>
     return (
       <>
         <Form
-          ref={this.viewModel.formRef}
+          ref={this.viewModel.getFormRef()}
           name="basic"
           onFinish={this.viewModel.OnFinish}
           autoComplete="off"

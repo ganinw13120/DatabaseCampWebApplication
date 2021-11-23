@@ -14,23 +14,27 @@ import Skeleton from '@mui/material/Skeleton';
 import HeaderCard from "./components/HeaderCard";
 import HeaderSkeleton from "./components/HeaderSkeleton";
 
-import {AppStore} from '@store/stores/AppStore/AppStore';
-import {ExaminationStore} from '@store/stores/ExaminationStore/ExaminationStore';
+import IAppStore from '@store/stores/AppStore/IAppStore';
+import IExaminationStore from '@store/stores/ExaminationStore/IExaminationStore';
+
+export interface IExamOverviewPage extends BaseView {
+  props : ExamOverviewProps
+}
 
 interface ExamOverviewComponentState {}
 
 interface ExamOverviewProps extends RouteComponentProps {
-  appStore ?: AppStore,
-  examinationStore ?: ExaminationStore,
+  appStore ?: IAppStore,
+  examinationStore ?: IExaminationStore,
 }
 
 @inject('examinationStore')
 @inject('appStore')
 @observer
 
-class OverviewPage
+class ExamOverviewPage
   extends React.Component<ExamOverviewProps, ExamOverviewComponentState>
-  implements BaseView
+  implements IExamOverviewPage
 {
   private examOverviewViewModel: IExamOverviewViewModel;
 
@@ -94,4 +98,4 @@ class OverviewPage
     );
   }
 }
-export default withRouter(OverviewPage);
+export default withRouter(ExamOverviewPage);

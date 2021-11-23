@@ -11,21 +11,27 @@ import './profile.css';
 import Alerticon from '@assets/alerticon.svg';
 import SuccessIcon from '@assets/alertsuccess.svg';
 
-import { AppStore } from '@store/stores/AppStore/AppStore';
-import { ExaminationStore } from '@store/stores/ExaminationStore/ExaminationStore';
-import { AuthStore } from '@store/stores/AuthStore/AuthStore';
+import  IAppStore  from '@store/stores/AppStore/IAppStore';
+import  IExaminationStore  from '@store/stores/ExaminationStore/IExaminationStore';
+import  IAuthStore  from '@store/stores/AuthStore/IAuthStore';
 import { ExamResult } from '@model/Learning';
 
 import { ExamType } from '@model/Learning';
 
-export interface ProfileComponentState {
+export interface IExamResultPage extends BaseView {
+ props : ExamResultProps
+}
+
+interface ExamResultState {
   data: ExamResult | null,
 }
 
-interface ExamPageProps extends RouteComponentProps {
-  examinationStore?: ExaminationStore,
-  authStore?: AuthStore,
-  appStore?: AppStore,
+interface ExamResultProps extends RouteComponentProps <{
+  id : string
+}> {
+  examinationStore?: IExaminationStore 
+  authStore?: IAuthStore 
+  appStore?: IAppStore 
 }
 
 var monthNamesThai = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.",
@@ -35,8 +41,8 @@ var monthNamesThai = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ
 @inject('authStore')
 @inject('appStore')
 @observer
-class ExamResultPage extends Component<ExamPageProps, ProfileComponentState>
-  implements BaseView {
+class ExamResultPage extends Component<ExamResultProps, ExamResultState>
+  implements IExamResultPage {
   private examResultViewModel: IExamResultViewModel;
   public constructor(props: any) {
     super(props);
@@ -64,11 +70,8 @@ class ExamResultPage extends Component<ExamPageProps, ProfileComponentState>
 
   public onViewModelChanged(): void {
     this.setState({
-      data : this.examResultViewModel.data
+      data : this.examResultViewModel.getData()
     })
-  }
-
-  onFinishFailed = () => {
   }
 
   public render(): JSX.Element {

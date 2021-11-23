@@ -43,7 +43,7 @@ export default class Completion extends Component<CompletionProps, CompletionPag
   public onHoverQuestionExit(): void {
     this.setState({ hoverQuestion: null });
   }
-  private updateQuestionState(id : number, isFilled : boolean): void {
+  public updateQuestionState(id : number, isFilled : boolean): void {
     const { questions } = this.state;
     let temp = [...questions];
     ((obj) => {

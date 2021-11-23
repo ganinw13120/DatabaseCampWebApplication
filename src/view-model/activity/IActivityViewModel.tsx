@@ -2,8 +2,9 @@ import { Activity, ActivityAlert, Answer } from '@model/Learning';
 import BaseViewModel from '@view-model/BaseViewModel';
 
 export default interface IActivityViewModel extends BaseViewModel {
-    alert : ActivityAlert | null
-    activityInfo : Activity | null
+    getAlert () : ActivityAlert | null
+    getActivityInfo() : Activity | null
+
     onSubmit () : void
     moveNext () : void
     onHint () : Promise<any>

@@ -16,9 +16,9 @@ import HeaderCard from "./components/HeaderCard";
 import HeaderSkeleton from "./components/HeaderSkeleton";
 import SkeletonCard from "./components/SkeletonCard";
 
-import { AppStore } from '@store/stores/AppStore/AppStore';
-import { OverviewStore } from '@store/stores/OverviewStore/OverviewStore';
-import { AuthStore } from '@store/stores/AuthStore/AuthStore';
+import IAppStore from '@store/stores/AppStore/IAppStore';
+import IOverviewStore from '@store/stores/OverviewStore/IOverviewStore';
+import IAuthStore from '@store/stores/AuthStore/IAuthStore';
 
 import { Overview } from '@model/Learning';
 
@@ -31,9 +31,9 @@ interface OverviewState {
 }
 
 interface OverviewProps extends RouteComponentProps {
-  appStore?: AppStore,
-  overviewStore?: OverviewStore,
-  authStore?: AuthStore,
+  appStore?: IAppStore,
+  overviewStore?: IOverviewStore,
+  authStore?: IAuthStore,
 }
 
 @inject('overviewStore')
@@ -60,7 +60,7 @@ class OverviewPage
 
   public onViewModelChanged(): void {
     this.setState({
-      data: this.overviewViewModel.data
+      data: this.overviewViewModel.getData()
     })
   }
 
