@@ -33,10 +33,10 @@ class Sidebar extends React.Component <OverviewProps, SidebarState>{
   }
   onLogout() {
     this.props.authStore!.Logout();
-    this.props.history.replace('/login');
+    this.props.history.push('/login');
   }
   onClickPage(url : string): void {
-    this.props.history.replace('/' + url);
+    this.props.history.push('/' + url);
   }
   setMobileExpand (target : boolean) : void {
     this.setState({

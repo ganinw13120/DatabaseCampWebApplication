@@ -14,7 +14,7 @@ class HeaderCard extends React.Component<ExamCardProps, any>{
   private onClickContinue () : void {
     const {exam} = this.props;
     const {exam_id} = exam;
-    this.props.history.replace('/examination/' + exam_id);
+    this.props.history.push('/examination/' + exam_id);
 
   }
   public render(): JSX.Element {

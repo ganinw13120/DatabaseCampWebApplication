@@ -15,7 +15,7 @@ class RankingItem extends React.Component<Props> {
     this.onInspectPerson = this.onInspectPerson.bind(this)
   }
   onInspectPerson () : void {
-    this.props.history.replace('/profile/' + this.props.data.user_id)
+    this.props.history.push('/profile/' + this.props.data.user_id)
   }
   public render(): JSX.Element {
     const data = this.props.data;

@@ -53,7 +53,7 @@ export default class LectureViewModel implements ILectureViewModel {
     if (!roadMap) return;
     if (roadMap.items.length !== 0) {
       const nextActivity = roadMap.items.sort((a: any, b: any) => a.order - b.order)[0];
-      this.baseView?.props.history.replace('/learning/activity/' + nextActivity.activity_id);
+      this.baseView?.props.history.push('/learning/activity/' + nextActivity.activity_id);
     } else {
       notification['error']({
         message: "โอ้ววว ไม่นะ",

@@ -10,7 +10,7 @@ type ContentProps = RouteComponentProps & {
 
 class Content extends React.Component<ContentProps, any> {
   onSelectContent() {
-    this.props.history.replace('/learning/content/' + this.props.data.content_id);
+    this.props.history.push('/learning/content/' + this.props.data.content_id);
   }
   public render(): JSX.Element {
     const { data } = this.props;
