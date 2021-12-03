@@ -17,6 +17,8 @@ import HeaderSkeleton from "./components/HeaderSkeleton";
 import IAppStore from '@store/stores/AppStore/IAppStore';
 import IExaminationStore from '@store/stores/ExaminationStore/IExaminationStore';
 
+import {SIDEBAR_EXAMINATION} from '@constant/text';
+
 export interface IExamOverviewPage extends BaseView {
   props : ExamOverviewProps
 }
@@ -71,7 +73,7 @@ class ExamOverviewPage
                   <span className="w-full bg-darkPrimary">..</span>
                 </div>
                 <div className="text-3xl text-darkPrimary font-semibold tracking-wider pt-6">
-                  <span>การทดสอบ</span>
+                  <span>{SIDEBAR_EXAMINATION}</span>
                 </div>
               </>
             )}

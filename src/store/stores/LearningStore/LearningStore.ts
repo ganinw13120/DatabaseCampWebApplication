@@ -6,6 +6,7 @@ import LearningRepository from '@repository/app/LearningRepository';
 
 import { RoadMap, Lecture, Activity, Hint, Answer, CompletionAnswer, ActivityAlert } from '@model/Learning';
 import ILearningStore, { Store } from './ILearningStore';
+import { ACTIVITY_SUCCESS, ACTIVITY_WARNING_ON_EMPTY, ACTIVITY_WARNING_ON_UNCOMPLETE, ACTIVITY_WRONG } from '@constant/text';
 
 export class LearningStore implements ILearningStore {
   rootStore: RootStore; // contains the root of store (outest mobx)
@@ -78,7 +79,7 @@ export class LearningStore implements ILearningStore {
       this.store.isLoading = false;
       const alert: ActivityAlert = {
         isSuccess: false,
-        feedback: 'กรุณาทำแบบฝึกหัดก่อนตรวจคำตอบ'
+        feedback: ACTIVITY_WARNING_ON_EMPTY
       }
       cb?.(alert)
       return;
@@ -100,7 +101,7 @@ export class LearningStore implements ILearningStore {
     this.store.isLoading = false;
     const alert: ActivityAlert = {
       isSuccess: false,
-      feedback: message ? message : 'คำตอบไม่ถูกต้อง'
+      feedback: message ? message : ACTIVITY_WRONG
     }
     cb?.(alert);
   }
@@ -110,7 +111,7 @@ export class LearningStore implements ILearningStore {
     this.store.isLoading = false;
     const alert: ActivityAlert = {
       isSuccess: true,
-      feedback: message ? message : 'ถูกต้อง'
+      feedback: message ? message : ACTIVITY_SUCCESS
     }
     cb?.(alert);
   }
@@ -150,7 +151,7 @@ export class LearningStore implements ILearningStore {
     let res: any = [];
     result.forEach((e: any) => {
       if (!e[0] || !e[1]) {
-        this.rejectAnswer(cb, 'กรุณาทำแบบฝึกหัดให้ครบทุกข้อ');
+        this.rejectAnswer(cb, ACTIVITY_WARNING_ON_EMPTY);
         return;
       }
       res.push({
@@ -178,7 +179,7 @@ export class LearningStore implements ILearningStore {
     const { token } = this.rootStore.authStore.store;
     result.forEach((e: any) => {
       if (!e.content) {
-        this.rejectAnswer(cb, 'กรุณาทำแบบฝึกหัดให้ครบทุกข้อ');
+        this.rejectAnswer(cb, ACTIVITY_WARNING_ON_UNCOMPLETE);
         return;
       }
     })
