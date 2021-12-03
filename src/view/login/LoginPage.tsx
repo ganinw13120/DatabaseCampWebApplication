@@ -27,7 +27,7 @@ interface LoginComponentState {
 }
 
 @inject('appStore')
-  
+@inject('authStore')
 
 @observer
 class LoginPage extends Component<LoginProps, LoginComponentState>
