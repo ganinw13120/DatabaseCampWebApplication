@@ -27,7 +27,7 @@ class HeaderCard extends React.Component<ExamCardProps, any>{
             <div className={`bg-${isEnabled ? 'primary' : 'disabledPrimary'} w-full h-20 mx-auto flex align-middle`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
             <div className={`flex-none bg-white h-3/6 px-2 md:px-6 align-middle my-auto ml-3 md:ml-7 rounded  ${isEnabled ? 'continuebtn cursor-pointer' : ''}`} onClick={() => { if(isEnabled) this.onClickContinue () }}>
                 <div className={`font-semibold ${!isEnabled ? 'text-grayPrimary' : ''} text-sm md:text-lg`} style={{ marginTop: 8 }}>
-                  เริ่มทำแบบทดดสอบ
+                  เริ่มทำแบบทดสอบ
                 </div>
               </div>
               <div className='flex-none my-auto ml-5 text-white text-base md:text-xl tracking-wider'>
