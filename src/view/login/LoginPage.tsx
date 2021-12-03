@@ -9,6 +9,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import validateEmail from '@util/validateEmail';
 import IAppStore from '@store/stores/AppStore/IAppStore';
+import IAuthStore from '@store/stores/AuthStore/IAuthStore';
 import IAuthViewModel from '@view-model/auth/IAuthViewModel';
 
 export interface ILoginPage extends BaseView {
@@ -17,6 +18,7 @@ export interface ILoginPage extends BaseView {
 
 interface LoginProps extends RouteComponentProps {
   appStore ?: IAppStore
+  authStore ?: IAuthStore
 }
 
 interface LoginComponentState {
