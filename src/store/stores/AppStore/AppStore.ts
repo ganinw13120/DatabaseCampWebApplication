@@ -24,6 +24,12 @@ export class AppStore implements IAppStore {
     this.store.isExpand = isExpand;
   }
   
+  /**
+   * Store for storing datas
+   *
+   * @remarks
+   * This method is part of app store, manipulating application.
+   */
   @observable
   store : Store = {
     isExpand : false,

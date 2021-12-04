@@ -9,7 +9,7 @@ import RootStore from '../../RootStore';
 import UserRepository from '@repository/app/UserRepository';
 import IUserRepository from '@repository/app/IUserRepository';
 
-import {Ranking} from '@model/User';
+import { Ranking } from '@model/User';
 import IPointRankingStore, { Store } from './IPointRankingStore';
 
 
@@ -23,10 +23,16 @@ export class PointRankingStore implements IPointRankingStore {
     this.userRepository = new UserRepository();
   }
 
+  /**
+   * Store for storing datas
+   *
+   * @remarks
+   * This method is part of point ranking store, manipulating point ranking and point ranking'data.
+   */
   @observable
-  public store : Store = {
-      data: null,
-      isLoading : true,
+  public store: Store = {
+    data: null,
+    isLoading: true,
   }
 
   /**
@@ -51,7 +57,7 @@ export class PointRankingStore implements IPointRankingStore {
    * This method is part of point ranking store, manipulating point ranking and point ranking'data.
    */
   @action.bound
-  private onFetchRankingSuccess (res : Ranking) : void {
+  private onFetchRankingSuccess(res: Ranking): void {
     this.store.data = res;
     this.store.isLoading = false;
 

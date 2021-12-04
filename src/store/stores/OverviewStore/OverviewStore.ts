@@ -9,7 +9,7 @@ import RootStore from '../../RootStore';
 import LearningRepository from '@repository/app/LearningRepository';
 import ILearningRepository from '@repository/app/ILearningRepository';
 
-import {Overview} from '@model/Learning';
+import { Overview } from '@model/Learning';
 import IOverviewStore from './IOverviewStore';
 
 export class OverviewStore implements IOverviewStore {
@@ -35,7 +35,7 @@ export class OverviewStore implements IOverviewStore {
   @action.bound
   public async FetchOverview(): Promise<Overview | null> {
     const { token } = this.rootStore.authStore.store;
-    const res = await this.learningRepository.fetchOverview(token).then((res : Overview)=>{return res;}).catch((res) => {
+    const res = await this.learningRepository.fetchOverview(token).then((res: Overview) => { return res; }).catch((res) => {
       console.log(res)
       return null;
     })

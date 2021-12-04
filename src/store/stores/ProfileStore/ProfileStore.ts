@@ -35,11 +35,11 @@ export class ProfileStore implements IProfileStore {
    * @param onError on error callback function
    */
   @action
-  public FetchUserProfile(userId : number, onSuccess: (res : User) => void, onError : () => void) {
+  public FetchUserProfile(userId: number, onSuccess: (res: User) => void, onError: () => void) {
     const { token } = this.rootStore.authStore.store;
-    this.userRepository.fetchProfile(token, userId).then((res)=>{
+    this.userRepository.fetchProfile(token, userId).then((res) => {
       onSuccess?.(res)
-    }).catch(()=>{
+    }).catch(() => {
       onError?.();
     })
   }
@@ -55,9 +55,9 @@ export class ProfileStore implements IProfileStore {
    * @param onSuccess on success callback function
    */
   @action.bound
-  public async UpdateName(name : string, onSuccess : any) : Promise<any> {
+  public async UpdateName(name: string, onSuccess: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
-    const res = await this.userRepository.updateName(token, name).then((res)=>{
+    const res = await this.userRepository.updateName(token, name).then((res) => {
       this.rootStore.authStore.UpdateUserName(name);
       return res;
     })

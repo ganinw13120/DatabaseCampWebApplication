@@ -25,6 +25,12 @@ export class ExaminationStore implements IExaminationStore {
     this.learningRepository = learningRepository;
   }
 
+  /**
+   * Store for storing datas
+   *
+   * @remarks
+   * This method is part of examination store, manipulating examination and examination'data.
+   */
   @observable
   store : Store = {
       data: null,

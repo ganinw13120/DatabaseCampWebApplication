@@ -35,6 +35,12 @@ export class AuthStore implements IAuthStore {
     }
   }
 
+  /**
+   * Store for storing datas
+   *
+   * @remarks
+   * This method is part of authentication store, manipulating authentication and user'data.
+   */
   @observable
   store: Store = {
     isLoading: false,

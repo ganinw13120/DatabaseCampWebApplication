@@ -25,6 +25,12 @@ export class LearningStore implements ILearningStore {
     makeObservable(this)
   }
 
+  /**
+   * Store for storing datas
+   *
+   * @remarks
+   * This method is part of learning store, manipulating learning and learning'data.
+   */
   @observable
   store: Store = {
     roadMap: null,
