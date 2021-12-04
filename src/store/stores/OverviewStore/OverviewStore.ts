@@ -7,13 +7,14 @@ import { makeObservable, action } from 'mobx';
 import RootStore from '../../RootStore';
 
 import LearningRepository from '@repository/app/LearningRepository';
+import ILearningRepository from '@repository/app/ILearningRepository';
 
 import {Overview} from '@model/Learning';
 import IOverviewStore from './IOverviewStore';
 
 export class OverviewStore implements IOverviewStore {
   rootStore: RootStore; // contains the root of store (outest mobx)
-  private learningRepository: LearningRepository;
+  private learningRepository: ILearningRepository;
 
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;

@@ -1,4 +1,4 @@
-import { Component, ReactElement } from 'react';
+import React, { Component, ReactElement } from 'react';
 
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
@@ -26,11 +26,11 @@ export default class Example extends Component<{}, {}> {
                 {(()=>{
                   const imgList : ReactElement[] = [];
                   images.forEach((e: any, key : number) => {
-                    imgList.push(<>
+                    imgList.push(<React.Fragment key={key}>
                       <div>
                         <img alt='example' src={e.url} key={key} />
                       </div>
-                    </>)
+                    </React.Fragment>)
                   })
                   return imgList;
                 })()}

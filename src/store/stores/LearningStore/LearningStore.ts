@@ -3,6 +3,7 @@ import { makeObservable, observable, action } from 'mobx';
 import RootStore from '../../RootStore';
 
 import LearningRepository from '@repository/app/LearningRepository';
+import ILearningRepository from '@repository/app/ILearningRepository';
 
 import { RoadMap, Lecture, Activity, Hint, Answer, CompletionAnswer, ActivityAlert } from '@model/Learning';
 import ILearningStore, { Store } from './ILearningStore';
@@ -10,7 +11,7 @@ import { ACTIVITY_SUCCESS, ACTIVITY_WARNING_ON_EMPTY, ACTIVITY_WARNING_ON_UNCOMP
 
 export class LearningStore implements ILearningStore {
   rootStore: RootStore; // contains the root of store (outest mobx)
-  private learningRepository: LearningRepository;
+  private learningRepository: ILearningRepository;
 
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;

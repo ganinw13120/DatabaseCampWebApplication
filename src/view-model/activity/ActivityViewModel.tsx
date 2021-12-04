@@ -136,9 +136,8 @@ export default class ActivityViewModel implements IActivityViewModel {
   }
 
   private getNextActivityId(): number | null {
-    if (!this.activityInfo) return null;
     const { roadMap } = this.baseView?.props.learningStore!.store!;
-    if (!roadMap) return null;
+    if (!roadMap || !this.activityInfo) return null;
     const currentActivityId = this.activityInfo!.activity.activity_id;
     const currentOrder = roadMap.items.find((e: any) => e.activity_id === currentActivityId)?.order;
     if (!currentOrder) return null;
@@ -152,9 +151,8 @@ export default class ActivityViewModel implements IActivityViewModel {
   }
 
   private getPrevActivityId(): number | null {
-    if (!this.activityInfo) return null;
     const { roadMap } = this.baseView?.props.learningStore!.store!;
-    if (!roadMap) return null;
+    if (!roadMap || !this.activityInfo) return null;
     const currentActivityId = this.activityInfo!.activity.activity_id;
     const currentOrder = roadMap.items.find((e: any) => e.activity_id === currentActivityId)?.order;
     if (!currentOrder) return null;

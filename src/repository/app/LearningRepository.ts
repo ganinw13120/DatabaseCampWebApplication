@@ -1,3 +1,8 @@
+// LearningRepository.ts
+/**
+ * This file is a part of repository, used to conenct with services which related to learning.
+*/
+
 import axios from 'axios';
 import { API_BASE_URL } from '../../constant/constant';
 

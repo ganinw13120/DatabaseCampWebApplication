@@ -1,3 +1,7 @@
+// AuthRepository.ts
+/**
+ * This file is a part of repository, used to conenct with services which related to authentication. 
+*/
 import IAuthRepository from './IAuthRepository';
 
 import axios from 'axios';

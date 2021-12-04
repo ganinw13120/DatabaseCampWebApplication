@@ -1,7 +1,7 @@
-import { User, AuthUser } from "@model/User";
+import { User, AuthUser, Ranking } from "@model/User";
 
 export default interface IUserReposirory {
-    VerifyToken(token: string) : Promise<User>;
-    Login(data: any): Promise<AuthUser>;
-    Register(data: any): Promise<AuthUser>;
+    fetchPointRanking(token: string) : Promise<Ranking>
+    fetchProfile(token: string, userID: number) : Promise<User>
+    updateName(token: string, name: string) : Promise<any>
 }

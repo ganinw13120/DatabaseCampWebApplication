@@ -1,9 +1,14 @@
+// UserRepository.ts
+/**
+ * This file is a part of repository, used to conenct with services which related to users.
+*/
 import axios from 'axios';
 import { API_BASE_URL } from '@constant/constant';
 
 import { Ranking, User } from '@model/User';
+import IUserReposirory from './IUserRepository';
 
-export default class LearningRepository {
+export default class UserRepository implements IUserReposirory {
   
   /**
    * Fetch `Point` information of all users shown on point ranking page.

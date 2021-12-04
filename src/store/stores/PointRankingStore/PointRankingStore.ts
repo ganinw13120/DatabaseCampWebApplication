@@ -7,6 +7,7 @@ import { makeObservable, observable, action } from 'mobx';
 import RootStore from '../../RootStore';
 
 import UserRepository from '@repository/app/UserRepository';
+import IUserRepository from '@repository/app/IUserRepository';
 
 import {Ranking} from '@model/User';
 import IPointRankingStore, { Store } from './IPointRankingStore';
@@ -14,7 +15,7 @@ import IPointRankingStore, { Store } from './IPointRankingStore';
 
 export class PointRankingStore implements IPointRankingStore {
   rootStore: RootStore; // contains the root of store (outest mobx)
-  private userRepository: UserRepository;
+  private userRepository: IUserRepository;
 
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;

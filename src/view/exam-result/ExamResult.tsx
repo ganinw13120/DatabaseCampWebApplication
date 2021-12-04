@@ -81,13 +81,13 @@ class ExamResultPage extends Component<ExamResultProps, ExamResultState>
     const timeString = date ? date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0') + ':' + date.getSeconds().toString().padStart(2, '0') : '';
     return (
       <>{ data &&
-        <div className='w-full h-auto m-auto'>
+        <div className='w-full h-auto m-auto '>
           <div className='my-36 mx-auto text-center h-1/4'>
             <img src={data.is_passed ? SuccessIcon : Alerticon} alt='alert' className='m-auto my-auto h-72 py-10' />
             {data.is_passed ?
             <h1 className='font-prompt text-3xl md:text-5xl my-10'>ยินดีด้วย!</h1> :
             <h1 className='font-prompt text-3xl md:text-5xl my-10'>ขอเเสดงความเสียใจ</h1>}
-            <h1 className='font-prompt text-xl md:text-4xl font-light'>คุณ{data.is_passed ? '' : 'ไม่'}ผ่านด้วยคะแนน {`${data.score.toLocaleString()}`} คะแนน</h1>
+            <h1 className='font-prompt text-xl md:text-4xl'>คุณ{data.is_passed ? '' : 'ไม่'}ผ่านด้วยคะแนน {`${data.score.toLocaleString()}`} คะแนน</h1>
             <h1 className='font-prompt text-lg md:text-2xl font-light my-10'>ข้อสอบชุด : {data.exam_type === ExamType.MINI ? data.content_group_name : data.exam_type === ExamType.POST ? 'Final Examination' : 'แบบทดสอบก่อนเรียน'}</h1>
             <h1 className='font-prompt text-lg md:text-2xl font-light my-10'>เมื่อวันที่ : {dateString}</h1>
             <h1 className='font-prompt text-lg md:text-2xl font-light my-10'>ณ เวลา : {timeString}</h1>

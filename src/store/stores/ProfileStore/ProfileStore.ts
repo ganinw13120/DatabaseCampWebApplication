@@ -7,13 +7,14 @@ import { makeObservable, action } from 'mobx';
 import RootStore from '../../RootStore';
 
 import UserRepository from '@repository/app/UserRepository';
+import IUserRepository from '@repository/app/IUserRepository';
 
 import IProfileStore from './IProfileStore';
 import { User } from '@root/model/User';
 
 export class ProfileStore implements IProfileStore {
   rootStore: RootStore; // contains the root of store (outest mobx)
-  private userRepository: UserRepository;
+  private userRepository: IUserRepository;
 
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;

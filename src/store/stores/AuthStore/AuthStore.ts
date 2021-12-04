@@ -5,6 +5,7 @@
 import { makeObservable, observable, action } from 'mobx';
 
 import AuthRepository from '@repository/auth/AuthRepository';
+import IAuthRepository from '@repository/auth/IAuthRepository';
 
 import RootStore from '../../RootStore';
 
@@ -15,7 +16,7 @@ import IAuthStore, { Store } from './IAuthStore';
 export class AuthStore implements IAuthStore {
   rootStore; // contains the root of store (outest mobx)
 
-  private authRepository: AuthRepository;
+  private authRepository: IAuthRepository;
 
   constructor(rootStore: RootStore) {
 
