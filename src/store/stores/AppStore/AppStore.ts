@@ -1,6 +1,6 @@
 // AppStore.ts
 /**
- * This file used to be a store for application of mobx store, functions, and data related to functionality of application.
+ * This file used to be a store about application of mobx store, functions, and data related to functionality of application.
 */
 import { makeObservable, observable, action } from 'mobx';
 import { Stepper } from '@model/App';

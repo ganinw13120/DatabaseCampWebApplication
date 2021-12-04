@@ -1,3 +1,7 @@
+// LearningStore.ts
+/**
+ * This file used to be a store about learning of mobx store, functions, and data related to learning module.
+*/
 import { makeObservable, observable, action } from 'mobx';
 
 import RootStore from '../../RootStore';
@@ -25,27 +29,43 @@ export class LearningStore implements ILearningStore {
   store: Store = {
     roadMap: null,
     activityInfo: null,
-    lectureInfo: null,
     hint: [],
     isLoading: false,
     hintRoadMap: []
   }
 
   /**
-  * Gets script version
-  * @param fileName
-  * @returns script version
-  */
+   * On user enter learning flow, fetch learning roadmap.
+   *
+   * @remarks
+   * This method is part of learning store, manipulating learning and learning'data.
+   *
+   * @param contentID content identifier
+   * 
+   * @param onSuccess on fetching success callback function
+   * 
+   * @param onError on fetching error callback function
+   */
   @action.bound
-  public async FetchRoadmap(contentID: number, cb?: any, onError?: () => void): Promise<any> {
+  public async FetchRoadmap(contentID: number, onSuccess ?: any, onError?: () => void): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     const res = await this.learningRepository.fetchRoadmap(token, contentID).then(this.onRoadmapFetchSuccess).catch((res) => {
       return null;
     });
-    if (res && res.content_id !== 0) cb?.(res);
+    if (res && res.content_id !== 0) onSuccess?.(res);
     else onError?.()
   }
 
+  /**
+   * On fetching roadmap success
+   *
+   * @remarks
+   * This method is part of learning store, manipulating learning and learning'data.
+   *
+   * @param res roadmap information
+   * 
+   * @return Roadmap information
+   */
   @action.bound
   private onRoadmapFetchSuccess(res: RoadMap): RoadMap {
     if (!res.items) res.items = [];
@@ -53,7 +73,18 @@ export class LearningStore implements ILearningStore {
     return res;
   }
 
-
+  /**
+   * On user enter activity page, fetching activity information
+   *
+   * @remarks
+   * This method is part of learning store, manipulating learning and learning'data.
+   *
+   * @param activityID activity indentifier
+   * 
+   * @param onSuccess on fetching success callback function
+   * 
+   * @param onError on fetching error callback function
+   */
   @action.bound
   public async FetchActivity(activityID: number,  onSuccess : (res : Activity) => void , onError : () => void): Promise<any> {
     this.store.hint = [];
@@ -71,6 +102,16 @@ export class LearningStore implements ILearningStore {
     }
   }
 
+  /**
+   * On fetching activity success
+   *
+   * @remarks
+   * This method is part of learning store, manipulating learning and learning'data.
+   *
+   * @param res activity information
+   * 
+   * @return Activity information
+   */
   @action.bound
   private onFetchActivitySuccess(res: Activity): Activity {
     console.log('success')
@@ -80,8 +121,18 @@ export class LearningStore implements ILearningStore {
     return res;
   }
 
+  /**
+   * On user enter activity page, fetching activity information
+   *
+   * @remarks
+   * This method is part of learning store, manipulating learning and learning'data.
+   *
+   * @param activityID activity indentifier
+   * 
+   * @param cb callback function
+   */
   @action.bound
-  public async SubmitActivity(result: Answer, cb: any): Promise<any> {
+  public async SubmitActivity(result: Answer, cb : (res : ActivityAlert) => void): Promise<any> {
     const { activityInfo } = this.store;
     if (!activityInfo) return;
     if (!result) {
@@ -105,6 +156,16 @@ export class LearningStore implements ILearningStore {
     }
   }
 
+  /**
+   * On activity result wrong, rejecting submittion
+   *
+   * @remarks
+   * This method is part of learning store, manipulating learning and learning'data.
+   * 
+   * @param cb callback function
+   * 
+   * @param message custom message (If any)
+   */
   @action.bound
   private rejectAnswer(cb: any, message?: string): void {
     this.store.isLoading = false;
@@ -115,6 +176,16 @@ export class LearningStore implements ILearningStore {
     cb?.(alert);
   }
 
+  /**
+   * On activity result correct, alert success
+   *
+   * @remarks
+   * This method is part of learning store, manipulating learning and learning'data.
+   * 
+   * @param cb callback function
+   * 
+   * @param message custom message (If any)
+   */
   @action.bound
   private successAnswer(cb: any, message?: string): void {
     this.store.isLoading = false;
@@ -125,6 +196,14 @@ export class LearningStore implements ILearningStore {
     cb?.(alert);
   }
 
+  /**
+   * On activity result changed, update roadmap's status to learned
+   *
+   * @remarks
+   * This method is part of learning store, manipulating learning and learning'data.
+   * 
+   * @param activity_id target activity identifire
+   */
   @action.bound
   private updateRoadMapStatus(activity_id: number): void {
     let temp = this.store.roadMap;
@@ -136,6 +215,18 @@ export class LearningStore implements ILearningStore {
     this.store.roadMap!.items = items;
   }
 
+  /**
+   * Check multiple choice answer, then verify answer
+   *
+   * @remarks
+   * This method is part of learning store, manipulating learning and learning'data.
+   * 
+   * @param activityID target activity identifire
+   * 
+   * @param result activity answer
+   * 
+   * @param cb callback function
+   */
   @action.bound
   private async checkMultiple(activityID: number, result: number, cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
@@ -154,6 +245,18 @@ export class LearningStore implements ILearningStore {
     });
   }
 
+  /**
+   * Check matching choice answer, then verify answer
+   *
+   * @remarks
+   * This method is part of learning store, manipulating learning and learning'data.
+   * 
+   * @param activityID target activity identifire
+   * 
+   * @param result activity answer
+   * 
+   * @param cb callback function
+   */
   @action.bound
   private async checkMatching(activityID: number, result: string[][], cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
@@ -183,6 +286,18 @@ export class LearningStore implements ILearningStore {
     });
   }
 
+  /**
+   * Check completion choice answer, then verify answer
+   *
+   * @remarks
+   * This method is part of learning store, manipulating learning and learning'data.
+   * 
+   * @param activityID target activity identifire
+   * 
+   * @param result activity answer
+   * 
+   * @param cb callback function
+   */
   @action.bound
   private async checkCompletion(activityID: number, result: CompletionAnswer[], cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
@@ -207,6 +322,13 @@ export class LearningStore implements ILearningStore {
     });
   }
 
+
+  /**
+   * Cler activity information from store
+   *
+   * @remarks
+   * This method is part of learning store, manipulating learning and learning'data.
+   */
   @action.bound
   public clearActivity(): void {
     this.store.activityInfo = null;
@@ -215,6 +337,12 @@ export class LearningStore implements ILearningStore {
     this.store.isLoading = false;
   }
 
+  /**
+   * On user calling hint, fetching next hint
+   *
+   * @remarks
+   * This method is part of learning store, manipulating learning and learning'data.
+   */
   @action.bound
   public async getHint(): Promise<any> {
     this.store.isLoading = true;
@@ -229,8 +357,18 @@ export class LearningStore implements ILearningStore {
     return res;
   }
 
+  /**
+   * On fetching hint success
+   *
+   * @remarks
+   * This method is part of learning store, manipulating learning and learning'data.
+   * 
+   * @param res Hint information
+   * 
+   * @returns message alert to user, null due to success action
+   */
   @action.bound
-  private onGetHintSuccess(res: Hint): Hint | null {
+  private onGetHintSuccess(res: Hint) : null {
     const { hint } = this.store;
     let temp = [...hint];
     temp.push(res);
@@ -240,10 +378,21 @@ export class LearningStore implements ILearningStore {
     return null;
   }
 
+  /**
+   * On user enter lecture page, fetching lecture information
+   *
+   * @remarks
+   * This method is part of learning store, manipulating learning and learning'data.
+   * 
+   * @param contentID lecture's content identifier
+   * 
+   * @param onSuccess on fetching success callback function
+   * 
+   * @param onError on fetching error callback function
+   */
   @action.bound
   public async FetchLecture(contentID: number, onSuccess : (res : Lecture) => void , onError : () => void): Promise<any> {
     this.store.activityInfo = null;
-    this.store.lectureInfo = null;
     const { token } = this.rootStore.authStore.store;
     const res = await this.learningRepository.fetchLecture(token, contentID).then(this.onLectureFetchSuccess).catch((res) => {
       console.log(res);
@@ -257,9 +406,20 @@ export class LearningStore implements ILearningStore {
   
   }
 
+  /**
+   * On fetching lecture success, and return lecture information.
+   *
+   * @remarks
+   * This method is part of learning store, manipulating learning and learning'data.
+   * 
+   * @param contentID lecture's content identifier
+   * 
+   * @param onSuccess on fetching success callback function
+   * 
+   * @param onError on fetching error callback function
+   */
   @action.bound
   private onLectureFetchSuccess(res: Lecture): Lecture {
-    this.store.lectureInfo = res;
     return res;
   }
 }

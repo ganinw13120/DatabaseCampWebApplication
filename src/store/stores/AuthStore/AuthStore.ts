@@ -1,6 +1,6 @@
 // AuthStore.ts
 /**
- * This file used to be a store for authentication of mobx store, functions, and data related to authentication.
+ * This file used to be a store about authentication of mobx store, functions, and data related to authentication.
 */
 import { makeObservable, observable, action } from 'mobx';
 

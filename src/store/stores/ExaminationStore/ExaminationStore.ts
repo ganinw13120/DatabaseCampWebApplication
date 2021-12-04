@@ -1,6 +1,6 @@
 // ExaminationStore.ts
 /**
- * This file used to be a store for eamination of mobx store, functions, and data related to examination module.
+ * This file used to be a store about eamination of mobx store, functions, and data related to examination module.
 */
 import { makeObservable, observable, action } from 'mobx';
 

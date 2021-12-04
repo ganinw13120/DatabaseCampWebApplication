@@ -1,6 +1,6 @@
 // ProfileStore.ts
 /**
- * This file used to be a store for profile page in application of mobx store, functions, and data related to profile module.
+ * This file used to be a store about profile page in application of mobx store, functions, and data related to profile module.
 */
 import { makeObservable, action } from 'mobx';
 
@@ -22,6 +22,18 @@ export class ProfileStore implements IProfileStore {
     this.userRepository = new UserRepository();
   }
 
+  /**
+   * On user enter profile page, fetching target profile
+   *
+   * @remarks
+   * This method is part of profile store, manipulating profile and profile'data.
+   * 
+   * @param userId target user's indentifier
+   * 
+   * @param onSuccess on success callback function
+   * 
+   * @param onError on error callback function
+   */
   @action
   public FetchUserProfile(userId : number, onSuccess: (res : User) => void, onError : () => void) {
     const { token } = this.rootStore.authStore.store;
@@ -32,13 +44,23 @@ export class ProfileStore implements IProfileStore {
     })
   }
 
+  /**
+   * On user changes profile's name, updating user's name
+   *
+   * @remarks
+   * This method is part of profile store, manipulating profile and profile'data.
+   * 
+   * @param name new user's name
+   * 
+   * @param onSuccess on success callback function
+   */
   @action.bound
-  public async UpdateName(name : string, cb : any) : Promise<any> {
+  public async UpdateName(name : string, onSuccess : any) : Promise<any> {
     const { token } = this.rootStore.authStore.store;
     const res = await this.userRepository.updateName(token, name).then((res)=>{
       this.rootStore.authStore.UpdateUserName(name);
       return res;
     })
-    cb?.(res)
+    onSuccess?.(res)
   }
 }

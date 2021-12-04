@@ -1,6 +1,6 @@
 // OverviewStore.ts
 /**
- * This file used to be a store for overview page in application of mobx store, functions, and data related to overview module.
+ * This file used to be a store about overview page in application of mobx store, functions, and data related to overview module.
 */
 import { makeObservable, action } from 'mobx';
 
@@ -24,6 +24,14 @@ export class OverviewStore implements IOverviewStore {
 
   }
 
+  /**
+   * On user enter overview page, fetching overview information
+   *
+   * @remarks
+   * This method is part of overview store, manipulating overview and overview'data.
+   *
+   * @returns Overview information
+   */
   @action.bound
   public async FetchOverview(): Promise<Overview | null> {
     const { token } = this.rootStore.authStore.store;

@@ -1,6 +1,6 @@
 // PointRankingStore.ts
 /**
- * This file used to be a store for point ranking in application of mobx store, functions, and data related to point ranking module.
+ * This file used to be a store about point ranking in application of mobx store, functions, and data related to point ranking module.
 */
 import { makeObservable, observable, action } from 'mobx';
 
@@ -29,6 +29,12 @@ export class PointRankingStore implements IPointRankingStore {
       isLoading : true,
   }
 
+  /**
+   * On user enter point ranking page, fetching ranking information and stores into store
+   *
+   * @remarks
+   * This method is part of point ranking store, manipulating point ranking and point ranking'data.
+   */
   @action.bound
   public async fatchRanking(): Promise<any> {
     const { token } = this.rootStore.authStore.store;
@@ -38,6 +44,12 @@ export class PointRankingStore implements IPointRankingStore {
     return;
   }
 
+  /**
+   * On ranking fetching success, stores into store
+   *
+   * @remarks
+   * This method is part of point ranking store, manipulating point ranking and point ranking'data.
+   */
   @action.bound
   private onFetchRankingSuccess (res : Ranking) : void {
     this.store.data = res;
