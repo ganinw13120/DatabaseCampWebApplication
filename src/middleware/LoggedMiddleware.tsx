@@ -1,3 +1,7 @@
+// LoggedMiddleware.tsx
+/**
+ * This file used be middleware for checking authentication state.
+*/
 import { inject, observer  } from "mobx-react"
 import { observe  } from "mobx"
 import { Component } from "react"
@@ -18,6 +22,11 @@ class LoggedMiddleware extends Component<LoggedMiddlewareProps, {}> {
       this.checkUser();
     })
   }
+
+  /**
+   * Check user authentication state, validating user's authentication
+   * push back to login if user is not logged in
+   */
   checkUser() {
     const { isLoading, userData, token } = this.props.authStore!.store;
     if ((!isLoading && !userData) || (!isLoading && !token)) {

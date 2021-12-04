@@ -1,3 +1,8 @@
+// App.ts
+/**
+ * This file used to store model using in application, related to application.
+*/
+
 /**
  * Store `Stepper` information shown on stepper.
  *

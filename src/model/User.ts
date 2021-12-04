@@ -1,3 +1,8 @@
+// User.ts
+/**
+ * This file used to store model using in application, related to users.
+*/
+
 /**
  * Store `Ranking` information shown on point ranking page.
  *

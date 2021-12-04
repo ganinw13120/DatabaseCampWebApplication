@@ -1,3 +1,8 @@
+// Learning.ts
+/**
+ * This file used to store model using in application, related to learning.
+*/
+
 /**
  * Store `Lecture` information for single lecutre.
  *

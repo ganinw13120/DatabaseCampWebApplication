@@ -1,3 +1,7 @@
+// text.ts
+/**
+ * This file used to store text using in application user's interface.
+*/
 export const WARNING_HINT_TITLE = 'ท่านต้องการขอคำใบ้ใช่หรือไม่'
 export const WARNING_HINT_DESCRIPTION = 'การขอคำใบ้จะหักเเต้มที่ได้รับในการทำกิจกรรม'
 export const WARNING_HINT_ACCEPT = 'ตกลง'
