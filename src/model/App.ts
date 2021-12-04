@@ -10,9 +10,9 @@
  * `onPrev` : Function which will be trigger on click previous
  */
 export type Stepper = {
-    steps : Step[],
-    currentStep : number,
-    onNext ?() : void,
+    steps : Step[]
+    currentStep : number
+    onNext ?() : void
     onPrev ?() : void
 }
 
@@ -22,5 +22,5 @@ export type Stepper = {
 export enum Step {
     Lecture,
     Activity = 1,
-    UnCompleteActivity,
+    UnCompleteActivity
 }

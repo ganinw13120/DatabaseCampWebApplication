@@ -6,7 +6,7 @@
  * `user_ranking` : User Ranking information for requested user
  */
 export type Ranking = {
-    leader_board: UserRanking[],
+    leader_board: UserRanking[]
     user_ranking: UserRanking
 }
 
@@ -22,9 +22,9 @@ export type Ranking = {
  * `user_id : User's identifier
  */
 export type UserRanking = {
-    name: string,
-    point: number,
-    ranking: number,
+    name: string
+    point: number
+    ranking: number
     user_id: number
 }
 
@@ -44,12 +44,12 @@ export type UserRanking = {
  * `user_id` : User's identifier
  */
 export type User = {
-    activity_count: number,
-    badges: Badge[],
-    created_timestamp: string,
-    name: string,
-    point: number,
-    user_id: number,
+    activity_count: number
+    badges: Badge[]
+    created_timestamp: string
+    name: string
+    point: number
+    user_id: number
 }
 
 /**
@@ -62,8 +62,8 @@ export type User = {
  * `updated_timestamp` : User's updated timestamp information
  */
 export type AuthUser = User & {
-    access_token: string,
-    email: string,
+    access_token: string
+    email: string
     updated_timestamp: string
 }
 
@@ -79,8 +79,8 @@ export type AuthUser = User & {
  * `badge_name` : Badege's name
  */
 export type Badge = {
-    badge_id: number,
-    icon_path: string,
-    is_collect: boolean,
+    badge_id: number
+    icon_path: string
+    is_collect: boolean
     name: string
 }

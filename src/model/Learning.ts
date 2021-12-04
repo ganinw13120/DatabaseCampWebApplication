@@ -8,8 +8,8 @@
  * `video_link` : Temporary url for lecture's video
  */
 export type Lecture = {
-    contend_id : number,
-    content_name : string,
+    contend_id : number
+    content_name : string
     video_link : string
 }
 
@@ -25,8 +25,8 @@ export type Lecture = {
  * `items` : Contain activities data in content
  */
 export type RoadMap = {
-    content_id : number,
-    content_name : string,
+    content_id : number
+    content_name : string
     items : RoadMapItem[]
 }
 
@@ -40,8 +40,8 @@ export type RoadMap = {
  * `order` : Identify ordering between each activity
  */
 export type RoadMapItem = {
-    activity_id : number,
-    is_learned : boolean,
+    activity_id : number
+    is_learned : boolean
     order : number
 }
 
@@ -52,11 +52,11 @@ export type RoadMapItem = {
  *
  * `hint` : Hint information for activity
  *
- * `choice` : Choice for activity, depends on `activty type_
+ * `choice` : Choice for activity depends on `activty type_
  */
 export type Activity = {
-    activity : ActivityInfo,
-    hint : ActivityHint,
+    activity : ActivityInfo
+    hint : ActivityHint
     choice : MatchingChoice | MultipleChoice[] | CompletionChoice
 }
 
@@ -76,12 +76,12 @@ export type Activity = {
  * `story` : Story requirement for this acitivity
  */
 export type ActivityInfo = {
-    activity_id : number,
-    activity_order : number,
-    activity_type_id : number,
-    content_id : number,
-    point : number,
-    question : string,
+    activity_id : number
+    activity_order : number
+    activity_type_id : number
+    content_id : number
+    point : number
+    question : string
     story : string
 }
 
@@ -95,8 +95,8 @@ export type ActivityInfo = {
  * `hint_roadmap` : Contains hints for activity
  */
 export type ActivityHint = {
-    total_hint : number,
-    used_hints : Hint[],
+    total_hint : number
+    used_hints : Hint[]
     hint_roadmap : HintRoadMap[]
 }
 
@@ -108,7 +108,7 @@ export type ActivityHint = {
  * `reduce_point` : Amount of points will be reduce on using hint
  */
 export type HintRoadMap = {
-    level : number,
+    level : number
     reduce_point : number
 }
 
@@ -117,7 +117,7 @@ export type HintRoadMap = {
  *
  * `activity_id` : Activity id for hint
  *
- * `content` : Content for hint, as a HTML
+ * `content` : Content for hint as a HTML
  *
  * `hint_id` : Hint identifier
  *
@@ -126,11 +126,11 @@ export type HintRoadMap = {
  * `point_reduce` : Amount of points reduce on this hint
  */
 export type Hint = {
-    activity_id : number,
-    content : string,
-    hint_id : number,
-    level : number,
-    point_reduce : number,
+    activity_id : number
+    content : string
+    hint_id : number
+    level : number
+    point_reduce : number
 }
 
 /**
@@ -142,7 +142,7 @@ export type Hint = {
  *
  */
 export type MatchingChoice = {
-    items_left : string[],
+    items_left : string[]
     items_right : string[]
 }
 
@@ -155,7 +155,7 @@ export type MatchingChoice = {
  *
  */
 export type MultipleChoice = {
-    content : string,
+    content : string
     multiple_choice_id : number
 }
 
@@ -168,7 +168,7 @@ export type MultipleChoice = {
  *
  */
 export type CompletionChoice = {
-    contents : string[],
+    contents : string[]
     questions : CompletionQuestion[]
 }
 
@@ -182,9 +182,9 @@ export type CompletionChoice = {
  * `id` : Identifier for question
  */
 export type CompletionQuestion = {
-    first : string,
-    last : string,
-    id : number,
+    first : string
+    last : string
+    id : number
 }
 
 /**
@@ -195,12 +195,12 @@ export type CompletionQuestion = {
  * `content` : Answer for this choice
  */
 export type CompletionAnswer = {
-    completion_choice_id : number,
+    completion_choice_id : number
     content : string | null
 }
 
 /**
- * Store `Answer` information for Activity can be completion, multiple, matching.
+ * Store `Answer` information for Activity can be completion multiple matching.
  *
  * Depends on `acitivty type` .
  */
@@ -211,13 +211,13 @@ export type Answer = CompletionAnswer[] | string[][] | number | null
  *
  * `activity_id` : Identifier of activity
  *
- * `is_correct` : Activity result (Correct, Wrong)
+ * `is_correct` : Activity result (Correct Wrong)
  *
  * `updated_point` : User's points after checking activity
  */
 export type ActivityResult = {
-    activity_id : number,
-    is_correct : boolean,
+    activity_id : number
+    is_correct : boolean
     updated_point : number
 }
 
@@ -231,8 +231,8 @@ export type ActivityResult = {
  * `final_exam` : Exam_information for Final-Exam
  */
 export type ExaminationOverview = {
-    pre_exam : ExamOverviewInfo,
-    mini_exam : ExamOverviewInfo[],
+    pre_exam : ExamOverviewInfo
+    mini_exam : ExamOverviewInfo[]
     final_exam : ExamOverviewInfo
 }
 
@@ -245,19 +245,19 @@ export type ExaminationOverview = {
  *
  * `results` : Previous result for examination (if has)
  *
- * `content_group_id` : Content for examination group (null if type is pre, final examination)
+ * `content_group_id` : Content for examination group (null if type is pre final examination)
  *
- * `content_group_name` : Content name for examination group (null if type is pre, final examination)
+ * `content_group_name` : Content name for examination group (null if type is pre final examination)
  *
  * `can_do` : Can user acccess this examination
  */
 export type ExamOverviewInfo = {
-    exam_id : number,
-    exam_type : ExamType,
-    results : ExamResult[] | null,
-    content_group_id ?: number,
-    content_group_name ?: string,
-    can_do  :boolean,
+    exam_id : number
+    exam_type : ExamType
+    results : ExamResult[] | null
+    content_group_id ?: number
+    content_group_name ?: string
+    can_do  :boolean
 }
 
 /**
@@ -277,7 +277,7 @@ export enum ExamType {
  * `acitivities` : Examination's acitivity on this exam
  */
 export type Exam = {
-    exam : ExamInfo ,
+    exam : ExamInfo 
     activities : ExamActivity[]
 }
 
@@ -286,10 +286,10 @@ export type Exam = {
  *
  * `acitivity` : Activity infomation
  *
- * `choice` : Choice for activity, depends on `activty type_
+ * `choice` : Choice for activity depends on `activty type_
  */
 export type ExamActivity = {
-    activity : ActivityInfo,
+    activity : ActivityInfo
     choice : MatchingChoice | MultipleChoice[] | CompletionChoice
 }
 
@@ -311,12 +311,12 @@ export type ExamActivity = {
  * `badge_id` : Badge for this examination
  */
 export type ExamInfo = {
-    exam_id : number,
-    exam_type : ExamType,
-    instruction : string,
-    created_timestamp : string,
-    content_group_id : number,
-    content_group_name : string,
+    exam_id : number
+    exam_type : ExamType
+    instruction : string
+    created_timestamp : string
+    content_group_id : number
+    content_group_name : string
     badge_id : number
 }
 
@@ -328,7 +328,7 @@ export type ExamInfo = {
  * `activitiest` : List of answer for every acitivties
  */
 export type ExamAnswer = {
-    exam_id : number,
+    exam_id : number
     activities : ExamAnswerActivity[]
 }
 
@@ -340,7 +340,7 @@ export type ExamAnswer = {
  * `answer` : Answer for activity
  */
 export type ExamAnswerActivity = {
-    activity_id : number,
+    activity_id : number
     answer : Answer
 }
 
@@ -352,7 +352,7 @@ export type ExamAnswerActivity = {
  * `isSuccess` : Result of acitvity
  */
 export type ActivityAlert = {
-    feedback : string,
+    feedback : string
     isSuccess : boolean
 }
 
@@ -374,12 +374,12 @@ export type ActivityAlert = {
  * `is_passed` : Is result pass criteria
  */
 export type ExamResult = {
-    exam_id : number,
-    content_group_name : string,
-    exam_type : ExamType,
-    exam_result_id : number,
-    created_timestamp : string,
-    score : number,
+    exam_id : number
+    content_group_name : string
+    exam_type : ExamType
+    exam_result_id : number
+    created_timestamp : string
+    score : number
     is_passed : boolean
 }
 
@@ -400,12 +400,12 @@ export type ExamResult = {
  * `progress` : Progression on content to user
  */
 export type ContentGroup = {
-    contents : Content[],
-    group_id : number,
-    group_name : string,
-    is_lasted : boolean,
-    is_recommend : boolean,
-    progress : number,
+    contents : Content[]
+    group_id : number
+    group_name : string
+    is_lasted : boolean
+    is_recommend : boolean
+    progress : number
 }
 
 /**
@@ -441,6 +441,6 @@ export type Content = {
  * `content_group_overview` : All content groups list on overview page
  */
 export type Overview = {
-    lasted_group : Content,
+    lasted_group : Content
     content_group_overview : ContentGroup[]
 }
