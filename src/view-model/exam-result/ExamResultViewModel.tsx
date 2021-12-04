@@ -17,7 +17,10 @@ export default class ActivityViewModel implements IProfileViewModel {
     const baseView = this.baseView;
     if (!baseView) return;
     const exam_id = parseInt(baseView.props.match.params.id);
-    if (!exam_id) baseView.props.history.replace('/examination');
+    if (!exam_id) {
+      baseView.props.history.replace('/examination');
+      return;
+    }
     baseView?.props.appStore?.setPercent(40)
     const res = await baseView?.props.examinationStore!.FetchResult(exam_id)
     baseView?.props.appStore?.setPercent(100)

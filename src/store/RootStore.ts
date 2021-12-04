@@ -1,3 +1,7 @@
+// RootStore.ts
+/**
+ * This file used as a root of mobx store, containing all stores.
+*/
 import { AuthStore } from "./stores/AuthStore/AuthStore";
 import { AppStore } from "./stores/AppStore/AppStore";
 import { OverviewStore } from "./stores/OverviewStore/OverviewStore";

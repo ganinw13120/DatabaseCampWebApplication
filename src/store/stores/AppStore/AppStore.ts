@@ -1,3 +1,7 @@
+// AppStore.ts
+/**
+ * This file used to be a store for application of mobx store, functions, and data related to functionality of application.
+*/
 import { makeObservable, observable, action } from 'mobx';
 import { Stepper } from '@model/App';
 import RootStore from '../../RootStore';
@@ -27,17 +31,42 @@ export class AppStore implements IAppStore {
     stepper : null
   }
 
+
+  /**
+   * Set progress bar percent.
+   *
+   * @remarks
+   * This method is part of app store, manipulating application.
+   *
+   * @param percent percent of progress bar
+   */
   @action.bound
   public setPercent(percent: number): void {
     this.store.progressPercent = percent;
   }
 
+  /**
+   * Add progress bar percent.
+   *
+   * @remarks
+   * This method is part of app store, manipulating application.
+   *
+   * @param percent percent of progress bar
+   */
   @action.bound
   public addPercent(percent: number): void {
     const {progressPercent} = this.store;
     this.store.progressPercent = progressPercent + percent;
   }
 
+  /**
+   * Set sidebar expansion with delay 10 ms.
+   *
+   * @remarks
+   * This method is part of app store, manipulating application.
+   *
+   * @param type is sidebar will be expand or hide
+   */
   @action.bound
   public setExpandWithDelay(type: boolean): void {
     setTimeout(() => {
@@ -45,16 +74,39 @@ export class AppStore implements IAppStore {
     }, 10);
   }
 
+  /**
+   * Set sidebar expansion right away.
+   *
+   * @remarks
+   * This method is part of app store, manipulating application.
+   *
+   * @param type is sidebar will be expand or hide
+   */
   @action.bound
   public setExpand(type: boolean): void {
     this.store.isExpand = type;
   }
 
+  /**
+   * Set stepper information.
+   *
+   * @remarks
+   * This method is part of app store, manipulating application.
+   *
+   * @param data for stepper
+   */
   @action.bound
   public setStepper(data : Stepper) : void {
+    console.log(data);
     this.store.stepper = data;
   }
 
+  /**
+   * Hide stepper
+   *
+   * @remarks
+   * This method is part of app store, manipulating application.
+   */
   @action.bound
   public hideStepper() : void {
     this.store.stepper = null;

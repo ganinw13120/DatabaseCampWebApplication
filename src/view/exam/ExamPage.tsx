@@ -22,7 +22,7 @@ import AlertTab from '../activity/components/AlertTab';
 import { CircularProgress } from '@mui/material';
 import { green } from '@mui/material/colors';
 
-import {EXAMINATION_INSTRUCTION, EXAMINATION_BACK, EXAMINATION_START} from '@constant/text';
+import {EXAMINATION_INSTRUCTION_TITLE, EXAMINATION_BACK_BUTTON, EXAMINATION_START} from '@constant/text';
 
 export interface IExamPage extends BaseView {
   props : ExamPageProps
@@ -210,7 +210,7 @@ class Instruction extends Component<InstructionProps, any> {
             <span className="w-full bg-darkPrimary">..</span>
           </div>
           <div className="text-3xl text-darkPrimary font-semibold tracking-wider pt-6 ml-7">
-            <span>{EXAMINATION_INSTRUCTION}</span>
+            <span>{EXAMINATION_INSTRUCTION_TITLE}</span>
           </div>
         </div>
         <div className='my-auto'>
@@ -223,7 +223,7 @@ class Instruction extends Component<InstructionProps, any> {
         <div className='flex'>
           <div className='flex-grow'></div>
           <div onClick={() => { this.props.returnOverview(); }} className={`w-64 text-center mt-32 border-gray gray-hoverable  mx-8 border text-darkPrimary text-lg font-medium py-4 px-10 tracking-wider rounded-xl cursor-pointer`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
-            {EXAMINATION_BACK}
+            {EXAMINATION_BACK_BUTTON}
           </div>
           <div onClick={() => { this.props.onNext?.() }} className={`w-64 text-center mt-32 hoverable  mx-8 bg-primary text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-pointer`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
             {EXAMINATION_START}

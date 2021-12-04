@@ -24,5 +24,5 @@ export const EXAMINATION_START = 'เริ่มทำแบบทดสอบ'
 export const EXAMINATION_PASS = 'ผ่านเเล้ว'
 export const EXAMINATION_NOT_PASS = 'ยังไม่ผ่าน'
 
-export const EXAMINATION_INSTRUCTION = 'คำชี้เเจง'
-export const EXAMINATION_BACK = 'ย้อนกลับ'
+export const EXAMINATION_INSTRUCTION_TITLE = 'คำชี้เเจง'
+export const EXAMINATION_BACK_BUTTON = 'ย้อนกลับ'

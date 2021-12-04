@@ -1,3 +1,7 @@
+// PointRankingStore.ts
+/**
+ * This file used to be a store for point ranking in application of mobx store, functions, and data related to point ranking module.
+*/
 import { makeObservable, observable, action } from 'mobx';
 
 import RootStore from '../../RootStore';

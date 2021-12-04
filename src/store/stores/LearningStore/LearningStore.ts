@@ -1,3 +1,7 @@
+// LearningStore.ts
+/**
+ * This file used to be a store for learning in application of mobx store, functions, and data related to learning module.
+*/
 import { makeObservable, observable, action } from 'mobx';
 
 import RootStore from '../../RootStore';
@@ -36,10 +40,10 @@ export class LearningStore implements ILearningStore {
   * @returns script version
   */
   @action.bound
-  public async FetchRoadmap(contentID: number, cb: any): Promise<any> {
+  public async FetchRoadmap(contentID: number, cb: (res : RoadMap | null) => void): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     const res = await this.learningRepository.fetchRoadmap(token, contentID).then(this.onRoadmapFetchSuccess).catch((res) => {
-      console.log(res)
+      return null;
     });
     cb?.(res);
   }

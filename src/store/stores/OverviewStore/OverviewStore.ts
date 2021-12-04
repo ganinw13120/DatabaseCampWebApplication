@@ -1,3 +1,7 @@
+// OverviewStore.ts
+/**
+ * This file used to be a store for overview page in application of mobx store, functions, and data related to overview module.
+*/
 import { makeObservable, action } from 'mobx';
 
 import RootStore from '../../RootStore';

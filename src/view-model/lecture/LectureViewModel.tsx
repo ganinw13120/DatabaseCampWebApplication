@@ -21,10 +21,17 @@ export default class LectureViewModel implements ILectureViewModel {
     const baseView = this.baseView;
     if (!baseView) return;
     const contentID = parseInt(baseView.props.match.params.id);
-    if (!contentID) baseView.props.history.replace('/overview')
+    if (!contentID) {
+      baseView.props.history.replace('/overview');
+      return;
+    }
     baseView.props.appStore!.setStepper(generateEmptyStepper())
     baseView?.props.appStore!.setPercent(40)
-    baseView.props.learningStore!.FetchRoadmap(contentID, (res: RoadMap) => {
+    baseView.props.learningStore!.FetchRoadmap(contentID, (res : RoadMap | null) => {
+      if (!res) {
+        baseView.props.history.replace('/overview');
+        return;
+      }
       baseView?.props.appStore?.addPercent(30);
       const stepper = generateStepper(res, 0, true);
       stepper.onNext = this.onClickNext;

@@ -45,7 +45,10 @@ export default class ExamViewModel implements IExamViewModel {
 
     baseView?.props.appStore?.setPercent(40);
     const examId = parseInt(baseView.props.match.params?.id);
-    if (!examId) baseView.props.history.replace('/examination/overview');
+    if (!examId) {
+      baseView.props.history.replace('/examination/overview');
+      return;
+    }
     baseView.props.examinationStore!.FetchExam(examId).then((res: Exam | null) => {
       if (!res) {
         baseView.props.history.replace('/examination/overview');

@@ -1,3 +1,7 @@
+// ExaminationStore.ts
+/**
+ * This file used to be a store for eamination of mobx store, functions, and data related to examination module.
+*/
 import { makeObservable, observable, action } from 'mobx';
 
 import RootStore from '../../RootStore';
@@ -25,6 +29,16 @@ export class ExaminationStore implements IExaminationStore {
       data: null,
   }
 
+  /**
+   * On user enter examination page, start fetching examination
+   *
+   * @remarks
+   * This method is part of examination store, manipulating examination and examination'data.
+   *
+   * @param examId exam's identifier
+   *
+   * @return Examination information
+   */
   @action.bound
   public async FetchExam(examId : number) : Promise<Exam | null> {
     const { token } = this.rootStore.authStore.store;

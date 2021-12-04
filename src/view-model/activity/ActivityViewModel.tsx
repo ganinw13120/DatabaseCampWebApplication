@@ -32,7 +32,10 @@ export default class ActivityViewModel implements IActivityViewModel {
     const baseView = this.baseView;
     if (!baseView) return;
     const activityID = parseInt(baseView.props.match.params?.id);
-    if (!activityID) baseView.props.history.replace('/overview')
+    if (!activityID) {
+      baseView.props.history.replace('/overview');
+      return;
+    }
     if (!baseView.props.learningStore!.store.roadMap) baseView.props.appStore!.setStepper(generateEmptyStepper())
     else {
       this.generateStepperFromStore();
@@ -51,7 +54,11 @@ export default class ActivityViewModel implements IActivityViewModel {
       if (!res) return
       if (!baseView.props.learningStore!.store.roadMap) {
         const { content_id: contentId } = res.activity;
-        baseView.props.learningStore!.FetchRoadmap(contentId, (res: RoadMap) => {
+        baseView.props.learningStore!.FetchRoadmap(contentId, (res: RoadMap | null) => {
+          if (!res) {
+            baseView.props.history.replace('/overview');
+            return;
+          }
           baseView?.props.appStore?.setPercent(100)
           const stepper = generateStepper(res, this.getCurrentActivityOrder(res), true);
           stepper.onNext = this.moveNext;
