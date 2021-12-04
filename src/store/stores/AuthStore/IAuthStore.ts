@@ -11,7 +11,7 @@ export default interface IAuthStore {
 }
 
 export type Store = {
-  userData: User | null,
-  token: string,
-  isLoading: boolean,
+  userData: User | null
+  token: string
+  isLoading: boolean
 }

@@ -103,9 +103,9 @@ export default class ActivityViewModel implements IActivityViewModel {
     this.baseView?.props.learningStore!.clearActivity();
     const next = this.getNextActivityId();
     if (!next) {
-      this.baseView?.props.history.replace('/overview')
+      this.baseView?.props.history.push('/overview')
     } else {
-      this.baseView?.props.history.replace(`/learning/activity/${next}`)
+      this.baseView?.props.history.push(`/learning/activity/${next}`)
     }
   }
   private movePrev(): void {
@@ -118,11 +118,11 @@ export default class ActivityViewModel implements IActivityViewModel {
     if (!prev) {
       const content_id = this.activityInfo?.activity.content_id;
       if (!content_id)
-        this.baseView?.props.history.replace('/overview')
+        this.baseView?.props.history.push('/overview')
       else
-        this.baseView?.props.history.replace('/learning/content/' + content_id)
+        this.baseView?.props.history.push('/learning/content/' + content_id)
     } else {
-      this.baseView?.props.history.replace(`/learning/activity/${prev}`)
+      this.baseView?.props.history.push(`/learning/activity/${prev}`)
     }
   }
 

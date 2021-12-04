@@ -11,7 +11,7 @@ interface HeaderCardProps extends RouteComponentProps {
 class HeaderCard extends React.Component<HeaderCardProps, {}>{
   private onClickContinue () : void {
     const {content_id} = this.props.data;
-    this.props.history.replace('/learning/content/' + content_id);
+    this.props.history.push('/learning/content/' + content_id);
   }
   public render(): JSX.Element {
     const { content_name, group_name, progress  } = this.props.data;

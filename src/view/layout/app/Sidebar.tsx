@@ -12,6 +12,8 @@ import Tooltip from '@mui/material/Tooltip';
 import { AppStore } from "@store/stores/AppStore/AppStore";
 import { AuthStore } from '@store/stores/AuthStore/AuthStore';
 
+import {SIDEBAR_OVERVIEW, SIDEBAR_EXAMINATION, SIDEBAR_RANKING, SIDEBAR_LOGOUT, SIDEBAR_CLOSE} from '@constant/text';
+
 interface SidebarState {
   isMobileExpand: boolean
 }
@@ -33,10 +35,10 @@ class Sidebar extends React.Component <OverviewProps, SidebarState>{
   }
   onLogout() {
     this.props.authStore!.Logout();
-    this.props.history.replace('/login');
+    this.props.history.push('/login');
   }
   onClickPage(url : string): void {
-    this.props.history.replace('/' + url);
+    this.props.history.push('/' + url);
   }
   setMobileExpand (target : boolean) : void {
     this.setState({
@@ -55,10 +57,10 @@ class Sidebar extends React.Component <OverviewProps, SidebarState>{
           <img src={HalfRightLogo} alt="Logo" className='m-auto w-auto h-14' style={{transition: "all 1s", opacity : isExpand ? 1 : 0, width : isExpand ? '' : ''}}/>
         </div>
         <div className="pt-5 grid grid-rows-3 gap-5">
-          <SideItem isExpand={isExpand} text='ภาพรวมเนื้อหา' icon={<AppstoreOutlined style={{ fontSize: 25 }} />} onClick={() => { this.onClickPage('overview') }} />
+          <SideItem isExpand={isExpand} text={SIDEBAR_OVERVIEW} icon={<AppstoreOutlined style={{ fontSize: 25 }} />} onClick={() => { this.onClickPage('overview') }} />
           
-          <SideItem isExpand={isExpand} text='การทดสอบ'  icon={<FileTextOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('examination/overview') }}/>
-          <SideItem  isExpand={isExpand} text='จัดลำดับคะแนน'  icon={<BarsOutlined  style={{fontSize:25}} />} onClick={() => { this.onClickPage('ranking') }}/>
+          <SideItem isExpand={isExpand} text={SIDEBAR_EXAMINATION}  icon={<FileTextOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('examination/overview') }}/>
+          <SideItem  isExpand={isExpand} text={SIDEBAR_RANKING}  icon={<BarsOutlined  style={{fontSize:25}} />} onClick={() => { this.onClickPage('ranking') }}/>
         </div>
         <div className='absolute bottom-0 mb-8' style={{...widthBoxStyle, transition: "width 1s"}}>
           <div className='w-12 h-24'>
@@ -69,7 +71,7 @@ class Sidebar extends React.Component <OverviewProps, SidebarState>{
             </div>
           </div>
           <SideItem className='z-10' isExpand={isExpand} text={userData?.name} icon={<UserOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('profile/' + userData?.user_id) }}/>
-          <SideItem className='z-10' isExpand={isExpand} text='ออกจากระบบ' icon={<LogoutOutlined style={{ fontSize: 25 }}/>}  onClick={() => { this.onLogout();}} />
+          <SideItem className='z-10' isExpand={isExpand} text={SIDEBAR_LOGOUT} icon={<LogoutOutlined style={{ fontSize: 25 }}/>}  onClick={() => { this.onLogout();}} />
         </div>
       </div>
       <div className='bg-primary md:hidden px-8 py-4 w-full' style={{boxShadow: '0 2px 2px rgba(0, 0, 0, 0.25)'}}>
@@ -83,12 +85,12 @@ class Sidebar extends React.Component <OverviewProps, SidebarState>{
           <img src={HalfRightLogo} alt="Logo" className='mr-auto w-auto h-14' style={{transition: "all 1s", opacity : isExpand ? 1 : 0, width : isExpand ? '' : ''}}/>
         </div>
         <div className="pt-5 grid grid-rows-3 gap-5">
-          <SideItem isExpand={true} text='ภาพรวมเนื้อหา' icon={<AppstoreOutlined style={{ fontSize: 25 }} />} onClick={() => { this.onClickPage('overview');this.setMobileExpand(false); }} />
-          <SideItem isExpand={true} text='การทดสอบ'  icon={<FileTextOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('examination/overview');this.setMobileExpand(false); }}/>
-          <SideItem  isExpand={true} text='จัดลำดับคะแนน'  icon={<BarsOutlined  style={{fontSize:25}} />} onClick={() => { this.onClickPage('ranking');this.setMobileExpand(false); }}/>
+          <SideItem isExpand={true} text={SIDEBAR_OVERVIEW} icon={<AppstoreOutlined style={{ fontSize: 25 }} />} onClick={() => { this.onClickPage('overview');this.setMobileExpand(false); }} />
+          <SideItem isExpand={true} text={SIDEBAR_EXAMINATION}  icon={<FileTextOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('examination/overview');this.setMobileExpand(false); }}/>
+          <SideItem  isExpand={true} text={SIDEBAR_RANKING}  icon={<BarsOutlined  style={{fontSize:25}} />} onClick={() => { this.onClickPage('ranking');this.setMobileExpand(false); }}/>
           <SideItem className='z-10' isExpand={true} text={userData?.name} icon={<UserOutlined  style={{fontSize:25}} />}  onClick={() => { this.onClickPage('profile/' + userData?.user_id);this.setMobileExpand(false); }}/>
-          <SideItem className='z-10' isExpand={true} text='ออกจากระบบ' icon={<LogoutOutlined style={{ fontSize: 25 }}/>}  onClick={() => { this.onLogout();}} />
-          <SideItem className='z-10' isExpand={true} text='ปิดหน้าต่าง' icon={<CloseOutlined  style={{ fontSize: 25 }} className='my-auto'   />}  onClick={()=>{this.setMobileExpand(false); }} />
+          <SideItem className='z-10' isExpand={true} text={SIDEBAR_LOGOUT} icon={<LogoutOutlined style={{ fontSize: 25 }}/>}  onClick={() => { this.onLogout();}} />
+          <SideItem className='z-10' isExpand={true} text={SIDEBAR_CLOSE} icon={<CloseOutlined  style={{ fontSize: 25 }} className='my-auto'   />}  onClick={()=>{this.setMobileExpand(false); }} />
         </div>
       </div>
     </>

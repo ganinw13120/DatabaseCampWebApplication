@@ -22,6 +22,8 @@ import IAuthStore from '@store/stores/AuthStore/IAuthStore';
 
 import { Overview } from '@model/Learning';
 
+import {SIDEBAR_OVERVIEW} from '@constant/text';
+
 export interface IOverview extends BaseView {
   props: OverviewProps,
 }
@@ -88,7 +90,7 @@ class OverviewPage
                   <span className="w-full bg-darkPrimary">..</span>
                 </div>
                 <div className="text-3xl text-darkPrimary font-semibold tracking-wider pt-6">
-                  <span>ภาพรวมเนื้อหา</span>
+                  <span>{SIDEBAR_OVERVIEW}</span>
                 </div>
               </>
             )}

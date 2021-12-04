@@ -11,8 +11,8 @@ import IExamViewModel from '@view-model/exam/IExamViewModel';
 
 import Requirement from '../activity/components/Requirement';
 
-import { AppStore } from '@store/stores/AppStore/AppStore';
-import { ExaminationStore } from '@store/stores/ExaminationStore/ExaminationStore';
+import IAppStore from '@store/stores/AppStore/IAppStore';
+import IExaminationStore from '@store/stores/ExaminationStore/IExaminationStore';
 
 import { ActivityAlert, CompletionChoice, Exam, ExamActivity, ExamType, MatchingChoice, MultipleChoice, RoadMap } from '@model/Learning';
 import Matching from '../activity/components/Matching';
@@ -21,6 +21,8 @@ import Completion from '../activity/components/Completion';
 import AlertTab from '../activity/components/AlertTab';
 import { CircularProgress } from '@mui/material';
 import { green } from '@mui/material/colors';
+
+import {EXAMINATION_INSTRUCTION, EXAMINATION_BACK, EXAMINATION_START} from '@constant/text';
 
 export interface IExamPage extends BaseView {
   props : ExamPageProps
@@ -36,8 +38,8 @@ interface ExamPageState {
 interface ExamPageProps extends RouteComponentProps<{
   id : string
 }> {
-  appStore?: AppStore,
-  examinationStore?: ExaminationStore,
+  appStore?: IAppStore,
+  examinationStore?: IExaminationStore,
 }
 
 @inject('examinationStore')
@@ -166,7 +168,7 @@ class ExamPage
   }
 
   private returnOverview(): void {
-    return this.props.history.replace('/examination/overview');
+    return this.props.history.push('/examination/overview');
   }
 
   public render(): JSX.Element {
@@ -208,7 +210,7 @@ class Instruction extends Component<InstructionProps, any> {
             <span className="w-full bg-darkPrimary">..</span>
           </div>
           <div className="text-3xl text-darkPrimary font-semibold tracking-wider pt-6 ml-7">
-            <span>คำชี้เเจง</span>
+            <span>{EXAMINATION_INSTRUCTION}</span>
           </div>
         </div>
         <div className='my-auto'>
@@ -221,10 +223,10 @@ class Instruction extends Component<InstructionProps, any> {
         <div className='flex'>
           <div className='flex-grow'></div>
           <div onClick={() => { this.props.returnOverview(); }} className={`w-64 text-center mt-32 border-gray gray-hoverable  mx-8 border text-darkPrimary text-lg font-medium py-4 px-10 tracking-wider rounded-xl cursor-pointer`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
-            ย้อนกลับ
+            {EXAMINATION_BACK}
           </div>
           <div onClick={() => { this.props.onNext?.() }} className={`w-64 text-center mt-32 hoverable  mx-8 bg-primary text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-pointer`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
-            เริ่มทำแบบทดสอบ
+            {EXAMINATION_START}
           </div>
           <div className='flex-grow'></div>
         </div>

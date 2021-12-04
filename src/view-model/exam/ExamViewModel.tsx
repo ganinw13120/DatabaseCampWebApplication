@@ -114,7 +114,7 @@ export default class ExamViewModel implements IExamViewModel {
       this.isLoading = true;
       this.baseView?.onViewModelChanged();
       this.baseView?.props.examinationStore!.submitExam(this.result, this.exam, (res: any) => {
-        this.baseView?.props.history.replace('/examination/result/' + res.exam_result_id);
+        this.baseView?.props.history.push('/examination/result/' + res.exam_result_id);
       })
     }
     this.setStepper();

@@ -43,7 +43,15 @@ export default class MultipleChoiceComponent extends Component<MultipleChoicePro
     );
   }
 }
-class Choice extends Component<any, any> {
+
+type ChoiceProps = {
+  selected : number | null
+  handleSelect (id : number) : void
+  id : number
+  displayText : string
+}
+
+class Choice extends Component<ChoiceProps, {}> {
   public render () : JSX.Element {
     const { selected, handleSelect, id, displayText } = this.props;
     return (<>

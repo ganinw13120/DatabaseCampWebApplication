@@ -10,6 +10,7 @@ import { Hint, HintRoadMap } from '@model/Learning';
 import Tooltip from '@mui/material/Tooltip';
 
 import parse from 'html-react-parser';
+import { HINT_HEADER_TEXT } from '@constant/text';
 
 
 interface HintProps {
@@ -97,7 +98,7 @@ class NextHintHeader extends Component<NextHintHeaderProps, {}> {
       <Tooltip title={isEnabled ? `Show Hint` : 'Point ไม่เพียงพอ'} placement="top">
         <div className={`px-2 pr-5 hint-tab flex py-2 ${isEnabled ? 'active-hint ' : ' disabled-hint'}`} onClick={() => { if (isEnabled) onHint() }}>
           <img src={ActiveBulb} alt='hint' className='h-10 my-auto mr-2' />
-          <span className='my-auto'>Show Hint</span>
+          <span className='my-auto'>{HINT_HEADER_TEXT}</span>
           <span className='font-normal text-base ml-3 my-auto'>(-{reduce_point} points)</span>
         </div>
       </Tooltip>

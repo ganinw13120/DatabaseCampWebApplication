@@ -10,16 +10,16 @@ type ContentProps = RouteComponentProps & {
 
 class Content extends React.Component<ContentProps, any> {
   onSelectContent() {
-    this.props.history.replace('/learning/content/' + this.props.data.content_id);
+    this.props.history.push('/learning/content/' + this.props.data.content_id);
   }
   public render(): JSX.Element {
     const { data } = this.props;
-    const {group_name, progress, is_lasted} = data
+    const {content_name, progress, is_lasted} = data
     return (
       <>
         <div className='contentlist w-full h-20 mx-auto flex align-middle' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }} onClick={()=>this.onSelectContent()}>
               <div className='font-semibold text-sm md:text-base text-darkPrimary mx-8 md:mx-16 font-bold my-auto'>
-                - {group_name}
+                - {content_name}
               </div>
               {is_lasted &&
               <div className='flex-none bg-primary px-4 md:px-0 md:w-24 align-middle my-auto  rounded'>

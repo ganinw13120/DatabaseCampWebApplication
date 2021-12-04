@@ -11,6 +11,8 @@ import Header from "@view/layout/app/Header";
 import { RouteComponentProps, withRouter } from "react-router";
 import { AppStore } from "@store/stores/AppStore/AppStore";
 import { PointRankingStore } from "@store/stores/PointRankingStore/PointRankingStore";
+import {SIDEBAR_RANKING} from '@constant/text';
+
 
 export interface IPointRanking extends BaseView {
   props : PointRankingProps
@@ -53,7 +55,7 @@ class PointRankingPage
     return (
       <>
         <div className="font-prompt w-full p-12 px-10">
-          <Header text='จัดลำดับคะแนน' />
+          <Header text={SIDEBAR_RANKING} />
           <div className="mt-10">
             {data &&
             <RankingItem

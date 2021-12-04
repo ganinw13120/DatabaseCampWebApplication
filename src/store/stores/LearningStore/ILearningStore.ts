@@ -10,10 +10,10 @@ export default interface ILearningStore {
     store: Store
 }
 export type Store = {
-    roadMap: RoadMap | null,
-    activityInfo: Activity | null,
-    lectureInfo: Lecture | null,
-    hint: Hint[],
-    hintRoadMap: HintRoadMap[],
+    roadMap: RoadMap | null
+    activityInfo: Activity | null
+    lectureInfo: Lecture | null
+    hint: Hint[]
+    hintRoadMap: HintRoadMap[]
     isLoading: boolean
 }

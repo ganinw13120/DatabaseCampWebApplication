@@ -9,5 +9,5 @@ export default interface IExaminationStore {
 }
 
 export type Store = {
-    data: ExaminationOverview | null,
+    data: ExaminationOverview | null
 }

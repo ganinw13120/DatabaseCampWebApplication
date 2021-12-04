@@ -29,6 +29,8 @@ import Star from '@assets/starProfile.png';
 
 import SkeletonActivity from './components/SkeletonActivity';
 
+import {ACTIVITY_NEXT, ACTIVITY_SUBMIT, ACTIVITY_TITLE, WARNING_HINT_TITLE, WARNING_HINT_DESCRIPTION, WARNING_HINT_ACCEPT, WARNING_HINT_CANCLE} from '@constant/text';
+
 export interface IActivityPage extends BaseView {
   props: ActivityProps
 }
@@ -86,14 +88,14 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
 
   private showHintPopup(): void {
     this.swal.fire({
-      title: 'ท่านต้องการขอคำใบ้ใช่หรือไม่?',
-      text: "การขอคำใบ้จะหักเเต้มที่ได้รับในการทำกิจกรรม",
+      title: WARNING_HINT_TITLE,
+      text: WARNING_HINT_DESCRIPTION,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#005FB7',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'ตกลง',
-      cancelButtonText: 'ยกเลิก',
+      confirmButtonText: WARNING_HINT_ACCEPT,
+      cancelButtonText: WARNING_HINT_CANCLE,
     }).then((result: any) => {
       if (result.isConfirmed)
         this.activityViewModel.onHint()
@@ -129,7 +131,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
                 <span className='w-full h-full bg-darkPrimary'>..</span>
               </div>
               <div className='w-auto py-6 -mx-4'>
-                <span className=' text-3xl text-darkPrimary font-semibold tracking-wider'>กิจกรรม {roadMap && roadMap.items.length !== 0 && activityInfo ? `(${roadMap!.items.find((e: any) => e.activity_id === activityInfo?.activity?.activity_id)!.order}/${roadMap.items.length})` : ''} </span> <span className=' text-lg text-success font-semibold tracking-wider'> {activityInfo ? ` + ${activityInfo.activity.point} Points` : ''} </span>
+                <span className=' text-3xl text-darkPrimary font-semibold tracking-wider'>{ACTIVITY_TITLE} {roadMap && roadMap.items.length !== 0 && activityInfo ? `(${roadMap!.items.find((e: any) => e.activity_id === activityInfo?.activity?.activity_id)!.order}/${roadMap.items.length})` : ''} </span> <span className=' text-lg text-success font-semibold tracking-wider'> {activityInfo ? ` + ${activityInfo.activity.point} Points` : ''} </span>
               </div>
             </div>
             {
@@ -155,7 +157,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
                 <div className='flex-grow'>
                 </div>
                 <div onClick={() => { if (alert && alert.isSuccess) this.activityViewModel.moveNext(); else this.activityViewModel.onSubmit(); }} className={`relative ${isLoading ? '' : 'hoverable'} flex-none bg-${isLoading ? 'disabledPrimary' : 'primary'} mt-10 text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'loading' : 'pointer'}`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
-                  {alert && alert.isSuccess ? 'ถัดไป' : 'ตรวจคำตอบ'}
+                  {alert && alert.isSuccess ? ACTIVITY_NEXT : ACTIVITY_SUBMIT}
                   {isLoading && <CircularProgress
                     size={24}
                     sx={{

@@ -8,8 +8,8 @@ import { inject, observer } from 'mobx-react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import validateEmail from '@util/validateEmail';
-import { AppStore } from '@store/stores/AppStore/AppStore';
-import { AuthStore } from '@store/stores/AuthStore/AuthStore';
+import IAppStore from '@store/stores/AppStore/IAppStore';
+import IAuthStore from '@store/stores/AuthStore/IAuthStore';
 import IAuthViewModel from '@view-model/auth/IAuthViewModel';
 
 export interface ILoginPage extends BaseView {
@@ -17,8 +17,8 @@ export interface ILoginPage extends BaseView {
 }
 
 interface LoginProps extends RouteComponentProps {
-  appStore ?: AppStore,
-  authStore ?: AuthStore
+  appStore ?: IAppStore
+  authStore ?: IAuthStore
 }
 
 interface LoginComponentState {
@@ -26,9 +26,8 @@ interface LoginComponentState {
   displayText : string
 }
 
-@inject('authStore')
 @inject('appStore')
-  
+@inject('authStore')
 
 @observer
 class LoginPage extends Component<LoginProps, LoginComponentState>
