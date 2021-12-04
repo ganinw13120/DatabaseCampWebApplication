@@ -1,3 +1,8 @@
+// LandingPage.tsx
+/**
+ * This file contains components, relaed to landing page.
+*/
+
 import { Component } from 'react';
 import './landing.css';
 import Navbar from './components/Navbar';
@@ -21,9 +26,18 @@ export default class LandingPage extends Component<LandingComponentProps, {}> {
     super(props);
     this.props.appStore?.setPercent(0)
   }
+
+  /**
+   * On component did mount, set application store, and attach view-model
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   componentDidMount() {
     this.props.appStore?.setPercent(100)
   }
+  
   public render(): JSX.Element {
     return (
       <>

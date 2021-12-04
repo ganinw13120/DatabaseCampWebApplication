@@ -1,3 +1,8 @@
+// Requirement.tsx
+/**
+ * This file contains components, related to requirement section in activity.
+*/
+
 import React from 'react';
 import HintTab from './HintTab';
 import Skeleton from '@mui/material/Skeleton';
@@ -16,16 +21,6 @@ interface RequirementProps extends RouteComponentProps {
 }
 
 class Requirement extends React.Component<RequirementProps, {}> {
-  componentDidMount() {
-    this.getDimensions();
-    window.addEventListener('resize', this.getDimensions);
-  }
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.getDimensions);
-  }
-  getDimensions = () => {
-    this.setState({ width: window.innerWidth });
-  }
   public render(): JSX.Element {
     const { onHint, activityInfo, roadMap, isHidden } = this.props;
     return (<>

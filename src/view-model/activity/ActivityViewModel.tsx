@@ -1,3 +1,8 @@
+// ActivityViewModel.tsx
+/**
+ * This file contains view-model, related to activity page.
+*/
+
 import IActivityViewModel from './IActivityViewModel';
 import { notification } from 'antd';
 
@@ -20,14 +25,36 @@ export default class ActivityViewModel implements IActivityViewModel {
     this.movePrev = this.movePrev.bind(this);
   }
 
+  /**
+   * Get activity information
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   *
+   * @returns Activity information
+   */
   public getActivityInfo(): Activity | null {
     return this.activityInfo;
   }
 
+  /**
+   * Get activity alert
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   *
+   * @returns Activity alert information
+   */
   public getAlert(): ActivityAlert | null {
     return this.alert;
   }
 
+  /**
+   * fetch activity information, then update to view
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
   private fetchActivity(): void {
     const baseView = this.baseView;
     if (!baseView) return;
@@ -74,11 +101,23 @@ export default class ActivityViewModel implements IActivityViewModel {
     })
   }
 
+  /**
+   * On attach view, initailize view-model
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
   public attachView = async (baseView: IActivityPage): Promise<any> => {
     this.baseView = baseView;
     this.fetchActivity();
-  };
+  }
 
+  /**
+   * Generate stepper from roadmap data in store
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
   private generateStepperFromStore(): void {
     const roadMap = this.baseView!.props.learningStore!.store.roadMap;
     if (!roadMap) return;
@@ -88,6 +127,12 @@ export default class ActivityViewModel implements IActivityViewModel {
     this.baseView?.props.appStore!.setStepper(stepper)
   }
 
+  /**
+   * On user submit activity
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
   public onSubmit = (): void => {
     if (!this.baseView) return;
     const { isLoading } = this.baseView.props.learningStore!.store;
@@ -99,11 +144,27 @@ export default class ActivityViewModel implements IActivityViewModel {
     })
   }
 
+  /**
+   * Get current activity order
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   * 
+   * @param roadMap Roadmap information
+   * 
+   * @returns Current activity index in roadmap
+   */
   private getCurrentActivityOrder(roadMap: RoadMap): number {
     const activiyId = this.activityInfo?.activity.activity_id;
     return roadMap.items.find(e => e.activity_id === activiyId) ? roadMap.items.find(e => e.activity_id === activiyId)!.order : 1;
   }
 
+  /**
+   * Move to next activity
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
   public moveNext(): void {
     if (!this.activityInfo) return;
     this.result = null;
@@ -117,6 +178,13 @@ export default class ActivityViewModel implements IActivityViewModel {
       this.baseView?.props.history.push(`/learning/activity/${next}`)
     }
   }
+
+  /**
+   * Move to previous activity
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
   private movePrev(): void {
     if (!this.activityInfo) return;
     this.result = null;
@@ -135,6 +203,12 @@ export default class ActivityViewModel implements IActivityViewModel {
     }
   }
 
+  /**
+   * Get next activity id from roadmap in store
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
   private getNextActivityId(): number | null {
     const { roadMap } = this.baseView?.props.learningStore!.store!;
     if (!roadMap || !this.activityInfo) return null;
@@ -150,6 +224,12 @@ export default class ActivityViewModel implements IActivityViewModel {
     }
   }
 
+  /**
+   * Get previous activity id from roadmap in store
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
   private getPrevActivityId(): number | null {
     const { roadMap } = this.baseView?.props.learningStore!.store!;
     if (!roadMap || !this.activityInfo) return null;
@@ -165,7 +245,12 @@ export default class ActivityViewModel implements IActivityViewModel {
     }
   }
 
-
+  /**
+   * Get user request for hint
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
   public async onHint(): Promise<any> {
     if (!this.baseView) return;
     const { isLoading } = this.baseView.props.learningStore!.store;
@@ -182,10 +267,24 @@ export default class ActivityViewModel implements IActivityViewModel {
     }
   }
 
+  /**
+   * On user update activity's answer, update answer data
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   * 
+   * @param result activity's answer
+   */
   public updateResult = (result: Answer): void => {
     this.result = result;
   }
 
+  /**
+   * On view detach, remove view
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
   public detachView = (): void => {
     this.baseView = undefined;
   };

@@ -1,3 +1,8 @@
+// LecturePage.tsx
+/**
+ * This file contains components, relaed to lecture page.
+*/
+
 import React from 'react';
 import BaseView from '@view/BaseView';
 import { SourceInfo } from 'plyr';
@@ -47,6 +52,14 @@ class LecturePage extends React.Component<LectureProps, LectureComponentState>
     }
   }
 
+
+  /**
+   * On component did mount, set application store, and attach view-model
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public componentDidMount(): void {
     this.lectureViewModel.attachView(this);
     const {isExpand} = this.props.appStore!.store;
@@ -55,6 +68,13 @@ class LecturePage extends React.Component<LectureProps, LectureComponentState>
     }
   }
 
+  /**
+   * On view-model changes, update view states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public onViewModelChanged(): void {
     this.setState({
       lectureInfo: this.lectureViewModel.getLectureInfo()

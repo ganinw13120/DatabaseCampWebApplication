@@ -1,3 +1,7 @@
+// ActivityPage.tsx
+/**
+ * This file contains components, related to activity pages.
+*/
 import React from 'react';
 import BaseView from '@view/BaseView';
 import './activity.css';
@@ -29,7 +33,7 @@ import Star from '@assets/starProfile.png';
 
 import SkeletonActivity from './components/SkeletonActivity';
 
-import {ACTIVITY_NEXT, ACTIVITY_SUBMIT, ACTIVITY_TITLE, WARNING_HINT_TITLE, WARNING_HINT_DESCRIPTION, WARNING_HINT_ACCEPT, WARNING_HINT_CANCLE} from '@constant/text';
+import { ACTIVITY_NEXT, ACTIVITY_SUBMIT, ACTIVITY_TITLE, WARNING_HINT_TITLE, WARNING_HINT_DESCRIPTION, WARNING_HINT_ACCEPT, WARNING_HINT_CANCLE } from '@constant/text';
 
 export interface IActivityPage extends BaseView {
   props: ActivityProps
@@ -67,8 +71,15 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
     this.showHintPopup = this.showHintPopup.bind(this);
     this.swal = withReactContent(Swal);
   }
+  
+  /**
+   * On component did mount, set application information, and attach view-model
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public componentDidMount(): void {
-
     this.props.appStore!.setExpand(false)
     this.activityViewModel.attachView(this);
     const { isExpand } = this.props.appStore!.store;
@@ -77,6 +88,13 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
     }
   }
 
+  /**
+   * On component did update, reattach view-model due to changes of properties.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   componentDidUpdate(): void {
     let { activityInfo } = this.state;
     const activityID = this.props.match.params.id;
@@ -86,6 +104,13 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
     }
   }
 
+  /**
+   * On user request hint, show hint popups.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   private showHintPopup(): void {
     this.swal.fire({
       title: WARNING_HINT_TITLE,
@@ -101,12 +126,21 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
         this.activityViewModel.onHint()
     })
   }
+  
+  /**
+   * On view-model changes, update view states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public onViewModelChanged(): void {
     this.setState({
       activityInfo: this.activityViewModel.getActivityInfo(),
       alert: this.activityViewModel.getAlert()
     })
   }
+  
   public render(): JSX.Element {
     const { activityInfo, alert } = this.state;
     const { roadMap, isLoading } = this.props.learningStore!.store;

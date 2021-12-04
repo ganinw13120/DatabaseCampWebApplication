@@ -1,3 +1,8 @@
+// OverviewPage.tsx
+/**
+ * This file contains components, relaed to content in overview page.
+*/
+
 import { Content as ContentType } from '@model/Learning';
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -9,6 +14,14 @@ type ContentProps = RouteComponentProps & {
 }
 
 class Content extends React.Component<ContentProps, any> {
+
+  /**
+   * On user select content, load content
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   onSelectContent() {
     this.props.history.push('/learning/content/' + this.props.data.content_id);
   }

@@ -1,3 +1,8 @@
+// HeaderCard.tsx
+/**
+ * This file contains components, relaed to header card in overview page.
+*/
+
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Progress } from 'semantic-ui-react'
@@ -9,6 +14,14 @@ interface HeaderCardProps extends RouteComponentProps {
 }
 
 class HeaderCard extends React.Component<HeaderCardProps, {}>{
+
+  /**
+   * On user click continue, load content
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   private onClickContinue () : void {
     const {content_id} = this.props.data;
     this.props.history.push('/learning/content/' + content_id);

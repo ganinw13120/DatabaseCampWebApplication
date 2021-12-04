@@ -37,7 +37,6 @@ export class AppStore implements IAppStore {
     stepper : null
   }
 
-
   /**
    * Set progress bar percent.
    *

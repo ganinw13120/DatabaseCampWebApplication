@@ -1,9 +1,14 @@
+// ExaminationResultViewModel.tsx
+/**
+ * This file contains view-model, related to examination result page.
+*/
+
 import IProfileViewModel from './IExamResultViewModel';
-import {IExamResultPage} from '@view/exam-result/ExamResult';
+import {IExamResultPage} from '@root/view/exam-result/ExamResultPage';
 
 import { ExamResult } from '@model/Learning';
 
-export default class ActivityViewModel implements IProfileViewModel {
+export default class ExaminationResultViewModel implements IProfileViewModel {
   private data : ExamResult | null;
 
   private baseView : IExamResultPage | null;
@@ -13,6 +18,12 @@ export default class ActivityViewModel implements IProfileViewModel {
     this.baseView = null;
   }
 
+  /**
+   * On user enter examination result page, fetch examination result information, update to view
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
   private async fetchData () : Promise<void> {
     const baseView = this.baseView;
     if (!baseView) return;
@@ -29,17 +40,37 @@ export default class ActivityViewModel implements IProfileViewModel {
 
   }
 
+  /**
+   * Get examination result data
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   * 
+   * @returns Examination result data
+   */
   public getData () : ExamResult | null {
     return this.data;
   }
 
+  /**
+   * On attach view, initailize view-model
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
   public async attachView  (baseView: IExamResultPage): Promise<any> {
     this.baseView = baseView;
     this.fetchData();
-  };
+  }
 
+  /**
+   * On view detach, remove view
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
   public detachView (): void {
     this.baseView = null;
-  };
+  }
 
 }

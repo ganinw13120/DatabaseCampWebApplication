@@ -1,3 +1,8 @@
+// ChoiceBox.tsx
+/**
+ * This file contains components, related to choice box in word dragging type of activity.
+*/
+
 import { Component, ReactElement } from 'react';
 import Draggable from 'react-draggable';
 import React from 'react';
@@ -7,14 +12,14 @@ export default class ChoiceBox extends Component<any, any> {
     const { snapPos, removeSnap, list } = this.props;
     const func = {
       snapPos: snapPos,
-      removeSnap : removeSnap
+      removeSnap: removeSnap
     }
-    let choiceList : ReactElement[] = [];
+    let choiceList: ReactElement[] = [];
     list.forEach((e: any, key: number) => {
       choiceList.push(<Choice key={key} displayText={e} func={func} />)
     })
     return (<>
-      <div className='rounded-lg border border-gray bg-white w-5/6 h-auto mx-auto p-6 grid grid-cols-4 gap-y-6 mb-10' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+      <div className='rounded-lg border border-gray bg-white w-5/6 h-auto mx-auto p-6 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-6 mb-10' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
         {choiceList}
       </div>
     </>)
@@ -25,9 +30,18 @@ type ChoiceProps = {
   displayText: string,
   func: any
 }
+
+/**
+* Dragable choices, used in draggable activity.
+* 
+* @remarks
+* This is a part of view component.
+*/
 class Choice extends React.Component<ChoiceProps, any> {
   private ref: React.Ref<HTMLDivElement>;
   private originalRef: any;
+  private observer: any;
+
   constructor(props: any) {
     super(props);
     this.state = {
@@ -35,50 +49,97 @@ class Choice extends React.Component<ChoiceProps, any> {
       posX: 0,
       posY: 0,
       boxRef: null,
-      boxID : null,
+      boxID: null,
     }
     this.onStartDrag = this.onStartDrag.bind(this);
     this.onStopDrag = this.onStopDrag.bind(this);
     this.ref = React.createRef<HTMLDivElement>();
     this.originalRef = React.createRef<HTMLDivElement>();
     this.onWidthChange = this.onWidthChange.bind(this);
+
+
+    this.observer = new ResizeObserver(() => {
+      this.onWidthChange()
+    })
   }
+
+  /**
+   * On component did mount, observe width changes.
+   * 
+   * @remarks
+   * This is a part of view component.
+  */
   componentDidMount() {
-    window.addEventListener('resize', this.onWidthChange);
+    this.observer.observe(this.originalRef.current)
   }
+
+  /**
+   * On component did mount, unobserve width changes.
+   * 
+   * @remarks
+   * This is a part of view component.
+  */
   componentWillUnmount() {
-    window.removeEventListener('resize', this.onWidthChange);
+    this.observer.unobserve(this.originalRef.current)
   }
+
+  /**
+   * On width changes, recalculate position to adjusted.
+   * 
+   * @remarks
+   * This is a part of view component.
+  */
   onWidthChange = () => {
     const { boxRef } = this.state;
     if (boxRef) {
-      const { x,y } = this.calculateCoordination(boxRef);
+      const { x, y } = this.calculateCoordination(boxRef);
       this.setState({ posX: x, posY: y });
     }
   }
-  calculateCoordination = (boxRef: any): {x : number , y : number}=> {
+
+  /**
+   * Calculate coordination that choice box should be move to.
+   * 
+   * @remarks
+   * This is a part of view component.
+  */
+  calculateCoordination = (boxRef: any): { x: number, y: number } => {
     const { x, y } = this.originalRef?.current.getBoundingClientRect();
     const { x: newX, y: newY } = boxRef?.current.getBoundingClientRect();
     return {
       x: newX - x, y: newY - y
     }
   }
+
+  /**
+   * On start dragging, update state.
+   * 
+   * @remarks
+   * This is a part of view component.
+  */
   onStartDrag(): void {
     this.setState({ isDragging: true });
   }
+
+  /**
+   * On stop dragging, update state.
+   * 
+   * @remarks
+   * This is a part of view component.
+  */
   onStopDrag(): void {
     const { func, displayText } = this.props;
-    const {snapPos, removeSnap} = func
+    const { snapPos, removeSnap } = func
     const { boxID } = this.state;
-    if(boxID) removeSnap(boxID, displayText);
+    if (boxID) removeSnap(boxID, displayText);
     const res = snapPos(displayText);
     if (res) {
       const { boxRef, boxID } = res;
       const { x, y } = this.calculateCoordination(boxRef);
-      this.setState({ isDragging: false, posX : x, posY : y, boxRef : boxRef, boxID : boxID });
+      this.setState({ isDragging: false, posX: x, posY: y, boxRef: boxRef, boxID: boxID });
     }
     else {
-      this.setState({ isDragging: false, posX: 0, posY: 0, boxRef : null, boxID : null });
+      this.setState({ isDragging: false, posX: 0, posY: 0, boxRef: null, boxID: null });
     }
   }
   public render(): JSX.Element {

@@ -1,3 +1,8 @@
+// OverviewPage.tsx
+/**
+ * This file contains components, relaed to overview page.
+*/
+
 import React, { ReactElement } from 'react';
 import BaseView from '@view/BaseView';
 import 'semantic-ui-css/semantic.min.css'
@@ -60,12 +65,27 @@ class OverviewPage
     this.overviewViewModel = overviewViewModel;
   }
 
+  /**
+   * On view-model changes, update view states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public onViewModelChanged(): void {
     this.setState({
       data: this.overviewViewModel.getData()
     })
   }
 
+
+  /**
+   * On component did mount, set application store, and attach view-model
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public componentDidMount(): void {
     const { isExpand } = this.props.appStore!.store;
     if (!isExpand) {

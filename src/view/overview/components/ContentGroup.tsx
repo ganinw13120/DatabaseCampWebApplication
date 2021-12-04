@@ -1,3 +1,8 @@
+// ContentGroup.tsx
+/**
+ * This file contains components, relaed to contentGroup in overview page.
+*/
+
 import React from 'react';
 
 import Content from './Content';

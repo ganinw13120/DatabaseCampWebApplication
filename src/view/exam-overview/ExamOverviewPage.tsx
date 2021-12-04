@@ -1,3 +1,8 @@
+// ExamOverviewPage.tsx
+/**
+ * This file contains components, related examination overview page.
+*/
+
 import React, { ReactElement } from 'react';
 import BaseView from '@view/BaseView';
 import 'semantic-ui-css/semantic.min.css'
@@ -48,8 +53,23 @@ class ExamOverviewPage
     this.examOverviewViewModel = overviewViewModel;
   }
 
+  /**
+   * On view-model changes, update view states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public onViewModelChanged(): void {}
 
+
+  /**
+   * On component did mount, set application store, and attach view-model
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public componentDidMount(): void {
     const { isExpand } = this.props.appStore!.store ;
     if (!isExpand) {

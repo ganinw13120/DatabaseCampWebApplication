@@ -1,3 +1,8 @@
+// LoginPage.tsx
+/**
+ * This file contains components, relaed to login page.
+*/
+
 import { Component } from 'react';
 import BaseView from '@view/BaseView';
 import FullLogo from '@assets/high-res-full-logo.png';
@@ -50,11 +55,26 @@ class LoginPage extends Component<LoginProps, LoginComponentState>
     }
   }
   
+
+  /**
+   * On component did mount, set application store, and attach view-model
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public componentDidMount(): void {
     this.loginViewModel.attachView(this);
     this.props.appStore?.setPercent(100)
   }
 
+  /**
+   * On view-model changes, update view states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public onViewModelChanged(): void {
     this.setState({
       displayText : this.loginViewModel.getDisplayText(),

@@ -1,3 +1,7 @@
+// Title.tsx
+/**
+ * This file contains components, related title on error page.
+*/
 import React from 'react';
 
 export default class Title extends React.Component<any, any> {

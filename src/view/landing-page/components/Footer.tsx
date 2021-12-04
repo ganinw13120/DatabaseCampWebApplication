@@ -1,3 +1,8 @@
+// Example.tsx
+/**
+ * This file contains components, relaed to footer section in landing page.
+*/
+
 import React from 'react';
 
 import FullLogo from "@assets/full-logo.png";

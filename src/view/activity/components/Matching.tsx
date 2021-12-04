@@ -1,3 +1,8 @@
+// Matching.tsx
+/**
+ * This file contains components, related to matching choice in activity.
+*/
+
 import { Component, ReactElement } from 'react';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -38,12 +43,41 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
     this.removeSnap = this.removeSnap.bind(this);
     this.appendRef = this.appendRef.bind(this);
   }
+  
+  /**
+   * On user hovering question, update states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   * 
+   * @param id question's indentifire
+  */
   public onHoverQuestionEnter(id: string): void {
     this.setState({ hoverQuestion: id });
   }
+
+  /**
+   * On user exit hovering question, update states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   * 
+   * @param id question's indentifire
+  */
   public onHoverQuestionExit(): void {
     this.setState({ hoverQuestion: null });
   }
+
+  /**
+   * On user interact with question, update question state.
+   * 
+   * @remarks
+   * This is a part of view component.
+   * 
+   * @param id id of choice
+   * 
+   * @param isFilled is choice is filled
+  */
   public updateQuestionState(id : string, isFilled : boolean): void {
     const { questions } = this.state;
     let temp = [...questions];
@@ -55,6 +89,17 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
       questions : temp
     })
   }
+
+  /**
+   * On user release question, check for snap points, return if any.
+   * 
+   * @remarks
+   * This is a part of view component.
+   * 
+   * @param text text on dragable choice
+   * 
+   * @return if there is any enabled snap point, move choice to snap
+  */
   public snapPos(text : string): any | null {
     const { questions, hoverQuestion } = this.state;
     if (hoverQuestion) {
@@ -77,6 +122,17 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
     }
     return null;
   }
+
+  /**
+   * On user remove choice from snaping point
+   * 
+   * @remarks
+   * This is a part of view component.
+   * 
+   * @param id choice identifier
+   * 
+   * @param displayText text on removed choice
+  */
   public removeSnap(id: string, displayText : string): void {
     const { questions,result } = this.state;
     let temp = [...result];
@@ -89,6 +145,15 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
     this.props.updateResult(temp);
     this.updateQuestionState(id, false);
   }
+
+  /**
+   * On component mount, append question snap point references.
+   * 
+   * @remarks
+   * This is a part of view component.
+   * 
+   * @param quest question box information
+  */
   public appendRef(quest: QuestionBox): void {
     this.setState((prev: MatchingPageState) => {
       prev.result[quest.pairId - 1] = [];
@@ -96,6 +161,7 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
       return prev;
     })
   }
+  
   public render(): JSX.Element {
     const func = { enter: this.onHoverQuestionEnter, exit: this.onHoverQuestionExit, append: this.appendRef };
     const { info } = this.props;

@@ -1,3 +1,8 @@
+// HintTab.tsx
+/**
+ * This file contains components, related to hint tab in requirement section.
+*/
+
 import { Component, ReactElement } from 'react';
 
 import { inject, observer } from 'mobx-react';
@@ -26,7 +31,7 @@ interface HintState {
 @inject('learningStore')
 @inject('authStore')
 @observer
-export default class Hintbox extends Component<HintProps, HintState> {
+export default class HintTab extends Component<HintProps, HintState> {
   constructor(props: HintProps) {
     super(props);
     this.state = {
@@ -34,11 +39,21 @@ export default class Hintbox extends Component<HintProps, HintState> {
     }
     this.selectTab = this.selectTab.bind(this);
   }
+
+  /**
+   * On user select hint tab, update state
+   * 
+   * @remarks
+   * This is a part of view component.
+   * 
+   * @param tab target tab index
+  */
   private selectTab(tab: number): void {
     this.setState({
       currentTab: tab
     })
   }
+  
   public render(): JSX.Element {
     const { hint, hintRoadMap } = this.props.learningStore!.store;
     const { currentTab } = this.state;

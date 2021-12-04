@@ -120,7 +120,6 @@ export class LearningStore implements ILearningStore {
    */
   @action.bound
   private onFetchActivitySuccess(res: Activity): Activity {
-    console.log('success')
     this.store.hint = res.hint.used_hints ? res.hint.used_hints : [];
     this.store.hintRoadMap = res.hint.hint_roadmap ? res.hint.hint_roadmap : [];
     this.store.activityInfo = res;

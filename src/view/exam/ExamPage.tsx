@@ -1,3 +1,8 @@
+// ExamPage.tsx
+/**
+ * This file contains components, related examination.
+*/
+
 import { Component, ReactElement, Fragment } from 'react';
 import BaseView from '@view/BaseView';
 import 'semantic-ui-css/semantic.min.css'
@@ -22,10 +27,10 @@ import AlertTab from '../activity/components/AlertTab';
 import { CircularProgress } from '@mui/material';
 import { green } from '@mui/material/colors';
 
-import {EXAMINATION_INSTRUCTION_TITLE, EXAMINATION_BACK_BUTTON, EXAMINATION_START} from '@constant/text';
+import { EXAMINATION_INSTRUCTION_TITLE, EXAMINATION_BACK_BUTTON, EXAMINATION_START } from '@constant/text';
 
 export interface IExamPage extends BaseView {
-  props : ExamPageProps
+  props: ExamPageProps
 }
 
 interface ExamPageState {
@@ -36,7 +41,7 @@ interface ExamPageState {
 }
 
 interface ExamPageProps extends RouteComponentProps<{
-  id : string
+  id: string
 }> {
   appStore?: IAppStore,
   examinationStore?: IExaminationStore,
@@ -67,6 +72,13 @@ class ExamPage
 
   }
 
+  /**
+   * On view-model changes, update view states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public onViewModelChanged(): void {
     this.setState({
       exam: this.examViewModel.getExam(),
@@ -76,6 +88,13 @@ class ExamPage
     })
   }
 
+  /**
+   * On component did mount, set application store, and attach view-model
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public componentDidMount(): void {
     const { isExpand } = this.props.appStore!.store;
     if (isExpand) {
@@ -84,16 +103,20 @@ class ExamPage
     this.examViewModel.attachView(this);
   }
 
-  componentDidUpdate(): void {
-    // let { exam } = this.state;
-    // const examId = this.props.match.params.id;
-    // if (examId && exam?.exam.exam_id.toString() !== examId) {
-    //   this.examViewModel.attachView(this);
-    //   this.setState({ exam: null })
-    // }
-  }
-
-  private getCurrentActivity(act: number, currentActivity: number): ReactElement | null {
+  /**
+   * On user's enter examination, generating all activity.
+   * 
+   * @remarks
+   * This is a part of view component.
+   * 
+   * @param act activity's identifier
+   * 
+   * @param currentActivity current activity index
+   * 
+   * @return Activity react element
+   *
+   */
+  private getActivityElement(act: number, currentActivity: number): ReactElement | null {
     const { exam, alert, isLoading } = this.state;
     if (!exam) return null;
     const examActivity: ExamActivity[] = exam?.activities;
@@ -167,6 +190,12 @@ class ExamPage
     </Fragment>)
   }
 
+  /**
+   * Return user to overview page.
+   * 
+   * @remarks
+   * This is a part of view component.
+   */
   private returnOverview(): void {
     return this.props.history.push('/examination/overview');
   }
@@ -181,7 +210,7 @@ class ExamPage
             const examList: ReactElement[] = [];
             let i = 0;
             while (i < exam!.activities.length) {
-              const exam = this.getCurrentActivity(i, currentActivity)
+              const exam = this.getActivityElement(i, currentActivity)
               if (exam) examList.push(exam);
               i++;
             }
@@ -200,6 +229,12 @@ interface InstructionProps {
   returnOverview(): void
 }
 
+/**
+ * Examination's instruction shown to user before starting examination.
+ * 
+ * @remarks
+ * This is a part of view component.
+ */
 class Instruction extends Component<InstructionProps, any> {
   render(): JSX.Element {
     return (<>

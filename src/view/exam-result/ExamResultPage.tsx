@@ -1,3 +1,8 @@
+// ExamResultPage.tsx
+/**
+ * This file contains components, relaed to examination result page.
+*/
+
 import { Component } from 'react';
 import BaseView from '@view/BaseView';
 
@@ -51,6 +56,14 @@ class ExamResultPage extends Component<ExamResultProps, ExamResultState>
       data: null,
     }
   }
+  
+  /**
+   * On component did update, reload view-model if property changes
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   componentDidUpdate(): void {
     const { data } = this.state;
     const exam_result_id = (this.props.match.params as any).id;
@@ -59,6 +72,14 @@ class ExamResultPage extends Component<ExamResultProps, ExamResultState>
     }
   }
 
+
+  /**
+   * On component did mount, set application store, and attach view-model
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public componentDidMount(): void {
     const { isExpand } = this.props.appStore!.store ;
     if (!isExpand) {
@@ -68,6 +89,13 @@ class ExamResultPage extends Component<ExamResultProps, ExamResultState>
     this.examResultViewModel.attachView(this);
   }
 
+  /**
+   * On view-model changes, update view states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public onViewModelChanged(): void {
     this.setState({
       data : this.examResultViewModel.getData()

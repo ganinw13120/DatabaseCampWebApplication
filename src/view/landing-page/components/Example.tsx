@@ -1,8 +1,16 @@
+// Example.tsx
+/**
+ * This file contains components, relaed to example section in landing page.
+*/
+
 import React, { Component, ReactElement } from 'react';
 
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
 
+/**
+ * Images list display on image sldie.
+ */
 const images = [
   { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/lecture.PNG" },
   { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/255320565_585943135947303_7779091040160912802_n.png" },
