@@ -109,9 +109,9 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
    *
    */
   public onViewModelChanged(): void {
-    const alertText = this.profileViewModel.alertText;
+    const alertText = this.profileViewModel.getAlertText();
     this.setState({
-      data: this.profileViewModel.profileData,
+      data: this.profileViewModel.getProfileData(),
       isShowModal: alertText !== '',
       textAlertModal: alertText
     })
@@ -174,7 +174,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
           <div className='font-prompt gap-9'>
             <div className='mb-10'>เปลี่ยนชื่อ </div>
             <Form
-              ref={this.profileViewModel.formRef}
+              ref={this.profileViewModel.getFormRef()}
               name="basic"
               autoComplete="off"
               className='mt-10'
