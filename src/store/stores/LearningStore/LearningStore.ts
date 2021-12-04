@@ -1,7 +1,3 @@
-// LearningStore.ts
-/**
- * This file used to be a store for learning in application of mobx store, functions, and data related to learning module.
-*/
 import { makeObservable, observable, action } from 'mobx';
 
 import RootStore from '../../RootStore';
@@ -40,12 +36,13 @@ export class LearningStore implements ILearningStore {
   * @returns script version
   */
   @action.bound
-  public async FetchRoadmap(contentID: number, cb: (res : RoadMap | null) => void): Promise<any> {
+  public async FetchRoadmap(contentID: number, cb?: any, onError?: () => void): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     const res = await this.learningRepository.fetchRoadmap(token, contentID).then(this.onRoadmapFetchSuccess).catch((res) => {
       return null;
     });
-    cb?.(res);
+    if (res && res.content_id !== 0) cb?.(res);
+    else onError?.()
   }
 
   @action.bound
@@ -57,18 +54,25 @@ export class LearningStore implements ILearningStore {
 
 
   @action.bound
-  public async FetchActivity(activityID: number, cb: any): Promise<any> {
+  public async FetchActivity(activityID: number,  onSuccess : (res : Activity) => void , onError : () => void): Promise<any> {
     this.store.hint = [];
     this.store.activityInfo = null;
     const { token } = this.rootStore.authStore.store;
     const res = await this.learningRepository.fetchActivity(token, activityID).then(this.onFetchActivitySuccess).catch((res) => {
       console.log(res)
+      return null;
     })
-    cb?.(res as Activity);
+    if (res) {
+      onSuccess?.(res as Activity);
+    }
+    else {
+      onError?.();
+    }
   }
 
   @action.bound
   private onFetchActivitySuccess(res: Activity): Activity {
+    console.log('success')
     this.store.hint = res.hint.used_hints ? res.hint.used_hints : [];
     this.store.hintRoadMap = res.hint.hint_roadmap ? res.hint.hint_roadmap : [];
     this.store.activityInfo = res;
@@ -132,7 +136,7 @@ export class LearningStore implements ILearningStore {
   }
 
   @action.bound
-  private async checkMultiple(activityID : number, result : number, cb: any): Promise<any> {
+  private async checkMultiple(activityID: number, result: number, cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     this.learningRepository.checkMultiple(token, activityID, result).then((res: any) => {
       const { is_correct } = res;
@@ -150,7 +154,7 @@ export class LearningStore implements ILearningStore {
   }
 
   @action.bound
-  private async checkMatching(activityID : number, result : string[][], cb: any): Promise<any> {
+  private async checkMatching(activityID: number, result: string[][], cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     let res: any = [];
     result.forEach((e: any) => {
@@ -179,7 +183,7 @@ export class LearningStore implements ILearningStore {
   }
 
   @action.bound
-  private async checkCompletion(activityID : number, result : CompletionAnswer[], cb: any): Promise<any> {
+  private async checkCompletion(activityID: number, result: CompletionAnswer[], cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     result.forEach((e: any) => {
       if (!e.content) {
@@ -236,14 +240,20 @@ export class LearningStore implements ILearningStore {
   }
 
   @action.bound
-  public async FetchLecture(contentID: number, cb: any): Promise<any> {
+  public async FetchLecture(contentID: number, onSuccess : (res : Lecture) => void , onError : () => void): Promise<any> {
     this.store.activityInfo = null;
     this.store.lectureInfo = null;
     const { token } = this.rootStore.authStore.store;
     const res = await this.learningRepository.fetchLecture(token, contentID).then(this.onLectureFetchSuccess).catch((res) => {
-      console.log(res)
+      console.log(res);
+      return null;
     })
-    cb?.(res);
+    if (res)
+      onSuccess?.(res);
+    else {
+      onError?.();
+    }
+  
   }
 
   @action.bound

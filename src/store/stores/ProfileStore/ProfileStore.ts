@@ -9,6 +9,7 @@ import RootStore from '../../RootStore';
 import UserRepository from '@repository/app/UserRepository';
 
 import IProfileStore from './IProfileStore';
+import { User } from '@root/model/User';
 
 export class ProfileStore implements IProfileStore {
   rootStore: RootStore; // contains the root of store (outest mobx)
@@ -21,10 +22,12 @@ export class ProfileStore implements IProfileStore {
   }
 
   @action
-  public FetchUserProfile(userId : number, cb : any) {
+  public FetchUserProfile(userId : number, onSuccess: (res : User) => void, onError : () => void) {
     const { token } = this.rootStore.authStore.store;
     this.userRepository.fetchProfile(token, userId).then((res)=>{
-        cb?.(res)
+      onSuccess?.(res)
+    }).catch(()=>{
+      onError?.();
     })
   }
 

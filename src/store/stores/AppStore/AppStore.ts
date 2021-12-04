@@ -97,7 +97,6 @@ export class AppStore implements IAppStore {
    */
   @action.bound
   public setStepper(data : Stepper) : void {
-    console.log(data);
     this.store.stepper = data;
   }
 

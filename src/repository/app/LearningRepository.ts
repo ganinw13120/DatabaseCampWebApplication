@@ -21,13 +21,13 @@ export default class LearningRepository implements ILearningRepository {
    */
   public async fetchExamResult(token: string, exam_id : number) : Promise<ExamResult> {
     return new Promise((resolve, reject) => {
-      axios.get<ExamResult>(`${API_BASE_URL}/exam/result/${exam_id}` , {
+      axios.get(`${API_BASE_URL}/exam/result/${exam_id}` , {
         headers: {
           'Authorization': `Bearer ${token}`,
         }
       }).then(res => {
         const { data } = res;
-        resolve(data)
+        resolve(data as ExamResult)
       }).catch(res=>{
         reject(res.message)
       })
@@ -75,13 +75,13 @@ export default class LearningRepository implements ILearningRepository {
    */
   public async fetchExam(token: string, examId : number) : Promise<Exam> {
     return new Promise((resolve, reject) => {
-      axios.get<Exam>(`${API_BASE_URL}/exam/proposition/${examId}`, {
+      axios.get(`${API_BASE_URL}/exam/proposition/${examId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         }
       }).then(res => {
         const { data } = res;
-        resolve(data)
+        resolve(data as Exam)
       }).catch(res=>{
         reject(res.message)
       })
@@ -100,13 +100,13 @@ export default class LearningRepository implements ILearningRepository {
    */
   public async fetchExamOverview(token: string) : Promise<ExaminationOverview> {
     return new Promise((resolve, reject) => {
-      axios.get<ExaminationOverview>(`${API_BASE_URL}/exam/overview`, {
+      axios.get(`${API_BASE_URL}/exam/overview`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         }
       }).then(res => {
         const { data } = res;
-        resolve(data)
+        resolve(data as ExaminationOverview)
       }).catch(res=>{
         reject(res.message)
       })
@@ -250,13 +250,13 @@ export default class LearningRepository implements ILearningRepository {
    */
   public async fetchRoadmap(token: string, contentId : number): Promise<RoadMap> {
     return new Promise((resolve, reject) => {
-      axios.get<RoadMap>(`${API_BASE_URL}/learning/content/roadmap/${contentId}`, {
+      axios.get(`${API_BASE_URL}/learning/content/roadmap/${contentId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         }
       }).then(res => {
         const { data } = res;
-        resolve(data)
+        resolve(data as RoadMap)
       }).catch(res=>{
         reject(res.message)
       })
@@ -277,13 +277,13 @@ export default class LearningRepository implements ILearningRepository {
    */
   public async fetchLecture(token: string, contentId : number): Promise<Lecture> {
     return new Promise((resolve, reject) => {
-      axios.get<Lecture>(`${API_BASE_URL}/learning/video/${contentId}`, {
+      axios.get(`${API_BASE_URL}/learning/video/${contentId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         }
       }).then(res => {
         const { data } = res;
-        resolve(data)
+        resolve(data as Lecture)
       }).catch(res=>{
         reject(res.message)
       })
@@ -304,13 +304,13 @@ export default class LearningRepository implements ILearningRepository {
    */
   public async fetchActivity(token: string, activityId : number): Promise<Activity> {
     return new Promise((resolve, reject) => {
-      axios.get<Activity>(`${API_BASE_URL}/learning/activity/${activityId}`, {
+      axios.get(`${API_BASE_URL}/learning/activity/${activityId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         }
       }).then(res => {
         const { data } = res;
-        resolve(data)
+        resolve(data as Activity)
       }).catch(res=>{
         reject(res.message)
       })
@@ -329,13 +329,13 @@ export default class LearningRepository implements ILearningRepository {
    */
   public async fetchOverview(token: string) : Promise<Overview> {
     return new Promise((resolve, reject) => {
-      axios.get<Overview>(`${API_BASE_URL}/learning/overview`, {
+      axios.get(`${API_BASE_URL}/learning/overview`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         }
       }).then(res => {
         const { data } = res;
-        resolve(data)
+        resolve(data as Overview)
       }).catch(res=>{
         reject(res.message)
       })

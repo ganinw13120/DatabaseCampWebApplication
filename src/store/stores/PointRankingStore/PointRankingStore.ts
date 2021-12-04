@@ -32,7 +32,7 @@ export class PointRankingStore implements IPointRankingStore {
   public async fatchRanking(): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     await this.userRepository.fetchPointRanking(token).then(this.onFetchRankingSuccess).catch((res) => {
-      console.log(res)
+      return res;
     })
     return;
   }

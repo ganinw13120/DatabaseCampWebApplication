@@ -31,6 +31,9 @@ export default class ActivityViewModel implements IProfileViewModel {
       this.profileData = res;
       this.baseView?.props.appStore?.setPercent(100)
       this.baseView?.onViewModelChanged();
+    }, ()=>{
+      baseView.props.history.replace('/overview');
+      return;
     })
   };
 
