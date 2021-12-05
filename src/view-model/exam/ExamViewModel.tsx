@@ -93,6 +93,7 @@ export default class ExamViewModel implements IExamViewModel {
       return;
     }
     baseView.props.examinationStore!.FetchExam(examId).then((res: Exam | null) => {
+      if (!this.baseView) return;
       if (!res) {
         baseView.props.history.replace('/examination/overview');
         return;
