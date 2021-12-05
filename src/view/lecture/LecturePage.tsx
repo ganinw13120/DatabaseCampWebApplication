@@ -81,6 +81,17 @@ class LecturePage extends React.Component<LectureProps, LectureComponentState>
     })
   }
 
+  /**
+   * On component will unmount, detach view.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
+  public componentWillUnmount () : void {
+    this.lectureViewModel.detachView();
+  }
+
   public render(): JSX.Element {
     const { lectureInfo } = this.state;
     const sourceInfo : SourceInfo | null = lectureInfo ? {

@@ -131,13 +131,13 @@ class Sidebar extends React.Component <OverviewProps, SidebarState>{
           <SideItem className='z-10' isExpand={isExpand} text={SIDEBAR_LOGOUT} icon={<LogoutOutlined style={{ fontSize: 25 }}/>}  onClick={() => { this.showLogoutPopup();}} />
         </div>
       </div>
-      <div className='bg-primary md:hidden px-8 py-4 w-full'>
+      <div className={`bg-primary ${isMobileExpand ? 'hidden' : ''} md:hidden px-8 py-4 w-full`}>
         <div  className='my-auto text-white' >
         <MenuOutlined  style={{ fontSize: 40 }} onClick={()=>{this.setMobileExpand(!isMobileExpand);}}/>
         </div>
       </div>
-      <div className={`absolute ${isMobileExpand ? ' ' : 'hidden'} md:hidden top-0 h-screen bg-primary w-full transition-all z-50`} >
-        <div className={`cursor-pointer flex flex-none inline h-auto pb-7 mt-7 w-8/12 mx-auto ${isExpand ? '' : 'pl-3'} `} style={{borderBottom:'0.5px solid #BBBFC0', transition: "all 0.5s"}} onClick={() => { this.onClickPage('overview') }}>
+      <div className={`absolute ${isMobileExpand ? ' ' : 'hidden'} sticky md:hidden top-0 h-screen bg-primary w-full transition-all z-50`} >
+        <div className={`cursor-pointer flex flex-none inline h-auto pb-7 pt-7 w-8/12 mx-auto ${isExpand ? '' : 'pl-3'} `} style={{borderBottom:'0.5px solid #BBBFC0', transition: "all 0.5s"}} onClick={() => { this.onClickPage('overview') }}>
           <img src={HalfLeftLogo} alt="Logo" className='ml-auto w-auto h-16' />
           <img src={HalfRightLogo} alt="Logo" className='mr-auto w-auto h-14' style={{transition: "all 1s", opacity : isExpand ? 1 : 0, width : isExpand ? '' : ''}}/>
         </div>
