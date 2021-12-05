@@ -47,10 +47,11 @@ export default class LectureViewModel implements ILectureViewModel {
     baseView.props.appStore!.setStepper(generateEmptyStepper())
     baseView?.props.appStore!.setPercent(40)
     baseView.props.learningStore!.FetchRoadmap(contentID, (res : RoadMap) => {
-      baseView?.props.appStore?.addPercent(30);
+      if (!this.baseView) return;
+      this.baseView?.props.appStore?.addPercent(30);
       const stepper = generateStepper(res, 0, true);
       stepper.onNext = this.onClickNext;
-      baseView.props.appStore!.setStepper(stepper)
+      this.baseView.props.appStore!.setStepper(stepper)
     }, () => {
       baseView.props.history.replace('/overview');
       return;

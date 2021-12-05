@@ -105,6 +105,17 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
   }
 
   /**
+   * On component will unmount, detach view.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
+  componentWillUnmount(): void {
+    this.activityViewModel.detachView();
+  }
+
+  /**
    * On user request hint, show hint popups.
    * 
    * @remarks

@@ -78,17 +78,19 @@ export default class ActivityViewModel implements IActivityViewModel {
       this.activityInfo = res;
       baseView?.onViewModelChanged()
       baseView?.props.appStore?.setPercent(70)
-      if (!res) return
+      if (!res || !this.baseView) return
       if (!baseView.props.learningStore!.store.roadMap) {
         const { content_id: contentId } = res.activity;
         baseView.props.learningStore!.FetchRoadmap(contentId, (res: RoadMap) => {
-          baseView.props.appStore?.setPercent(100)
+          if (!this.baseView) return;
+          console.log(this.baseView)
+          this.baseView.props.appStore?.setPercent(100)
           const stepper = generateStepper(res, this.getCurrentActivityOrder(res), true);
           stepper.onNext = this.moveNext;
           stepper.onPrev = this.movePrev;
-          baseView.props.appStore!.setStepper(stepper)
+          this.baseView.props.appStore!.setStepper(stepper)
         }, () => {
-          baseView.props.history.replace('/overview');
+          this.baseView?.props.history.replace('/overview');
           return;
         })
       } else {

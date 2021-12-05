@@ -102,6 +102,17 @@ class ExamPage
   }
 
   /**
+   * On component will unmount, detach view.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
+   public componentWillUnmount () : void {
+    this.examViewModel.detachView();
+  }
+
+  /**
    * On user's enter examination, generating all activity.
    * 
    * @remarks

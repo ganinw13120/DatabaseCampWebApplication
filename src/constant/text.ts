@@ -26,7 +26,7 @@ export const STEPPER_NEXT = 'Next'
 export const STEPPER_BACK = 'Back'
 export const SIDEBAR_OVERVIEW = 'ภาพรวมเนื้อหา'
 export const SIDEBAR_EXAMINATION = 'การทดสอบ'
-export const SIDEBAR_RANKING = 'จัดลำดับคำแนน'
+export const SIDEBAR_RANKING = 'จัดลำดับคะแนน'
 export const SIDEBAR_LOGOUT = 'ออกจากระบบ'
 export const SIDEBAR_CLOSE = 'ปิดหน้าต่าง'
 
