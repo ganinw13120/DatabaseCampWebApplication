@@ -6,7 +6,7 @@
 import React, { ReactElement } from 'react';
 import BaseView from '@view/BaseView';
 import 'semantic-ui-css/semantic.min.css'
-import './Bar.css'
+import '@view/overview/Bar.css';
 import './overview.css'
 import { inject, observer } from 'mobx-react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';

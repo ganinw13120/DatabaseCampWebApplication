@@ -11,7 +11,6 @@ import IExamResultViewModel from '@view-model/exam-result/IExamResultViewModel';
 
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
-import './profile.css';
 
 import Alerticon from '@assets/alerticon.svg';
 import SuccessIcon from '@assets/alertsuccess.svg';
