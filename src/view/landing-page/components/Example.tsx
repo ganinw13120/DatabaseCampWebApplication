@@ -12,12 +12,12 @@ import 'react-awesome-slider/dist/styles.css';
  * Images list display on image sldie.
  */
 const images = [
-  { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/lecture.PNG" },
-  { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/255320565_585943135947303_7779091040160912802_n.png" },
-  { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/255333815_429245658552866_8449361491653152883_n.png" },
-  { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/255487567_311424903877521_1895775101799180789_n.png" },
-  { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/255876676_976203003104708_3235251087368652750_n.png" },
-  { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/255370667_272475894807346_8730018879687982747_n.png" },
+  { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/1.png" },
+  { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/2.png" },
+  { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/3.png" },
+  { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/4.png" },
+  { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/5.png" },
+  { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/6.png" },
 ];
 
 export default class Example extends Component<{}, {}> {
