@@ -1,3 +1,6 @@
+# Dockerfile 
+# Used to build application into image, with configuration, build and serve on production
+
 FROM node:16-alpine
 
 RUN mkdir -p /usr/src/app
