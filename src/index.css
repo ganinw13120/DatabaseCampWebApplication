@@ -1,3 +1,6 @@
+/* index.css */
+/* Set store style for user interface, used to defined global style */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
