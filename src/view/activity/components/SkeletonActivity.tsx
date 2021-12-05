@@ -1,3 +1,8 @@
+// SkeletonActivity.tsx
+/**
+ * This file contains components, related to skeleton of activities.
+*/
+
 import { Component } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 export default class SkeletonActivity extends Component<{}, {}>{

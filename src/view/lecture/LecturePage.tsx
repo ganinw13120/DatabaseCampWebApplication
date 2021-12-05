@@ -1,3 +1,8 @@
+// LecturePage.tsx
+/**
+ * This file contains components, relaed to lecture page.
+*/
+
 import React from 'react';
 import BaseView from '@view/BaseView';
 import { SourceInfo } from 'plyr';
@@ -10,23 +15,25 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import Skeleton from '@mui/material/Skeleton';
 
 import LectureViewModel from '@view-model/lecture/LectureViewModel';
+import ILectureViewModel from '@view-model/lecture/ILectureViewModel';
 
-import { LearningStore } from '@store/stores/LearningStore/LearningStore';
-import { AppStore } from '@store/stores/AppStore/AppStore';
+import ILearningStore from '@store/stores/LearningStore/ILearningStore';
+import IAppStore from '@store/stores/AppStore/IAppStore';
+import { Lecture } from '@model/Learning';
 
 export interface ILecturePage extends BaseView {
   props : LectureProps
 }
 
 interface LectureComponentState {
-  lectureInfo : any
+  lectureInfo : Lecture | null
 }
 
 interface LectureProps extends RouteComponentProps <{
   id : string
 }> {
-  learningStore ?: LearningStore,
-  appStore ?: AppStore,
+  learningStore ?: ILearningStore
+  appStore ?: IAppStore
 }
 
 @inject('learningStore')
@@ -35,7 +42,7 @@ interface LectureProps extends RouteComponentProps <{
 class LecturePage extends React.Component<LectureProps, LectureComponentState>
   implements ILecturePage {
 
-  private lectureViewModel: LectureViewModel;
+  private lectureViewModel: ILectureViewModel;
 
   public constructor(props: any) {
     super(props);
@@ -45,6 +52,14 @@ class LecturePage extends React.Component<LectureProps, LectureComponentState>
     }
   }
 
+
+  /**
+   * On component did mount, set application store, and attach view-model
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public componentDidMount(): void {
     this.lectureViewModel.attachView(this);
     const {isExpand} = this.props.appStore!.store;
@@ -53,13 +68,17 @@ class LecturePage extends React.Component<LectureProps, LectureComponentState>
     }
   }
 
+  /**
+   * On view-model changes, update view states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public onViewModelChanged(): void {
     this.setState({
-      lectureInfo: this.lectureViewModel.lectureInfo
+      lectureInfo: this.lectureViewModel.getLectureInfo()
     })
-  }
-
-  onFinishFailed = () => {
   }
 
   public render(): JSX.Element {

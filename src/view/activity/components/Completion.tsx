@@ -1,3 +1,8 @@
+// Completion.tsx
+/**
+ * This file contains components, related to completion choice in activity.
+*/
+
 import { Component, ReactElement } from 'react';
 import React from 'react';
 
@@ -37,13 +42,41 @@ export default class Completion extends Component<CompletionProps, CompletionPag
     this.appendRef = this.appendRef.bind(this);
   }
 
+  /**
+   * On user hovering question, update states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   * 
+   * @param id question's indentifire
+  */
   public onHoverQuestionEnter(id: number): void {
     this.setState({ hoverQuestion: id });
   }
+
+  /**
+   * On user exit hovering question, update states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   * 
+   * @param id question's indentifire
+  */
   public onHoverQuestionExit(): void {
     this.setState({ hoverQuestion: null });
   }
-  private updateQuestionState(id : number, isFilled : boolean): void {
+
+  /**
+   * On user interact with question, update question state.
+   * 
+   * @remarks
+   * This is a part of view component.
+   * 
+   * @param id id of choice
+   * 
+   * @param isFilled is choice is filled
+  */
+  public updateQuestionState(id : number, isFilled : boolean): void {
     const { questions } = this.state;
     let temp = [...questions];
     ((obj) => {
@@ -54,6 +87,17 @@ export default class Completion extends Component<CompletionProps, CompletionPag
       questions : temp
     })
   }
+
+  /**
+   * On user release question, check for snap points, return if any.
+   * 
+   * @remarks
+   * This is a part of view component.
+   * 
+   * @param text text on dragable choice
+   * 
+   * @return if there is any enabled snap point, move choice to snap
+  */
   public snapPos(text : string): any | null {
     const { questions, hoverQuestion } = this.state;
     if (hoverQuestion) {
@@ -78,6 +122,15 @@ export default class Completion extends Component<CompletionProps, CompletionPag
     }
     return null;
   }
+
+  /**
+   * On user remove choice from snaping point
+   * 
+   * @remarks
+   * This is a part of view component.
+   * 
+   * @param id choice identifier
+  */
   public removeSnap(id : number): void {
     const { questions,result } = this.state;
     const question = questions.find(e => e.id === id);
@@ -92,6 +145,15 @@ export default class Completion extends Component<CompletionProps, CompletionPag
     this.props.updateResult(temp);
     this.updateQuestionState(id, false);
   }
+
+  /**
+   * On component mount, append question snap point references.
+   * 
+   * @remarks
+   * This is a part of view component.
+   * 
+   * @param quest question box information
+  */
   public appendRef(quest: QuestionBox): void {
     this.setState((prev: CompletionPageState) => {
       prev.questions.push(quest);
@@ -102,6 +164,7 @@ export default class Completion extends Component<CompletionProps, CompletionPag
       return prev;
     })
   }
+  
   public render(): JSX.Element {
     const func = { enter: this.onHoverQuestionEnter, exit: this.onHoverQuestionExit, append: this.appendRef };
     const { info } = this.props;

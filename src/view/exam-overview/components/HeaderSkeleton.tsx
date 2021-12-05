@@ -1,3 +1,8 @@
+// HeaderSkeleton.tsx
+/**
+ * This file contains components, skeleton used in examination overview page.
+*/
+
 import React from 'react';
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';

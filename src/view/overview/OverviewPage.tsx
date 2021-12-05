@@ -1,11 +1,19 @@
-import React from 'react';
+// OverviewPage.tsx
+/**
+ * This file contains components, relaed to overview page.
+*/
+
+import React, { ReactElement } from 'react';
 import BaseView from '@view/BaseView';
 import 'semantic-ui-css/semantic.min.css'
-import './Bar.css'
+import '@view/overview/Bar.css';
 import './overview.css'
 import { inject, observer } from 'mobx-react';
-import { withRouter, RouteComponentProps  } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+
 import OverviewViewModel from '@view-model/overview/OverviewViewModel';
+import IOverviewViewModel from '@view-model/overview/IOverviewViewModel';
+
 import Skeleton from '@mui/material/Skeleton';
 
 import ContentGroup from "./components/ContentGroup";
@@ -13,24 +21,26 @@ import HeaderCard from "./components/HeaderCard";
 import HeaderSkeleton from "./components/HeaderSkeleton";
 import SkeletonCard from "./components/SkeletonCard";
 
-import {AppStore} from '@store/stores/AppStore/AppStore';
-import {OverviewStore} from '@store/stores/OverviewStore/OverviewStore';
-import { AuthStore } from '@store/stores/AuthStore/AuthStore';
+import IAppStore from '@store/stores/AppStore/IAppStore';
+import IOverviewStore from '@store/stores/OverviewStore/IOverviewStore';
+import IAuthStore from '@store/stores/AuthStore/IAuthStore';
 
-import {Overview} from '@model/Learning';
+import { Overview } from '@model/Learning';
+
+import {SIDEBAR_OVERVIEW} from '@constant/text';
 
 export interface IOverview extends BaseView {
-  props : OverviewProps,
+  props: OverviewProps,
 }
 
 interface OverviewState {
-  data : Overview | null
+  data: Overview | null
 }
 
 interface OverviewProps extends RouteComponentProps {
-  appStore ?: AppStore,
-  overviewStore ?: OverviewStore,
-  authStore ?: AuthStore,
+  appStore?: IAppStore,
+  overviewStore?: IOverviewStore,
+  authStore?: IAuthStore,
 }
 
 @inject('overviewStore')
@@ -40,9 +50,8 @@ interface OverviewProps extends RouteComponentProps {
 
 class OverviewPage
   extends React.Component<OverviewProps, OverviewState>
-  implements IOverview
-{
-  private overviewViewModel: OverviewViewModel;
+  implements IOverview {
+  private overviewViewModel: IOverviewViewModel;
 
   public constructor(props: any) {
     super(props);
@@ -50,20 +59,35 @@ class OverviewPage
     const overviewViewModel = new OverviewViewModel();
 
     this.state = {
-      data : null
+      data: null
     }
 
     this.overviewViewModel = overviewViewModel;
   }
 
+  /**
+   * On view-model changes, update view states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public onViewModelChanged(): void {
     this.setState({
-      data : this.overviewViewModel.data
+      data: this.overviewViewModel.getData()
     })
   }
 
+
+  /**
+   * On component did mount, set application store, and attach view-model
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public componentDidMount(): void {
-    const { isExpand } = this.props.appStore!.store ;
+    const { isExpand } = this.props.appStore!.store;
     if (!isExpand) {
       this.props.appStore!.setExpandWithDelay(true)
     }
@@ -73,7 +97,7 @@ class OverviewPage
 
   public render(): JSX.Element {
     const { data } = this.state;
-    const {userData} = this.props.authStore!.store;
+    const { userData } = this.props.authStore!.store;
     return (
       <>
         <div className="font-prompt w-full p-12 px-10">
@@ -86,7 +110,7 @@ class OverviewPage
                   <span className="w-full bg-darkPrimary">..</span>
                 </div>
                 <div className="text-3xl text-darkPrimary font-semibold tracking-wider pt-6">
-                  <span>ภาพรวมเนื้อหา</span>
+                  <span>{SIDEBAR_OVERVIEW}</span>
                 </div>
               </>
             )}
@@ -98,18 +122,18 @@ class OverviewPage
               <Skeleton variant="text" className="w-full" />
             )}
           </div>
-          {!data  ? <HeaderSkeleton variant="h1" /> : data.lasted_group && <HeaderCard data={data.lasted_group}/> }
+          {!data ? <HeaderSkeleton variant="h1" /> : data.lasted_group && <HeaderCard data={data.lasted_group} />}
           {!data ? (
             <SkeletonCard />
           ) : (
             <>
               {(() => {
-                let cardList: any = [];
+                let cardList: ReactElement[] = [];
                 const { content_group_overview } = data;
                 content_group_overview
                   .slice()
                   .sort((a: any, b: any) => a.group_id - b.group_id)
-                  .forEach((item: any, key: number) => {
+                  .forEach((item, key: number) => {
                     cardList.push(<ContentGroup data={item} key={key} />);
                   });
                 return cardList;

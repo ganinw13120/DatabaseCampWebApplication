@@ -1,3 +1,10 @@
+// App.ts
+/**
+ * This file used to store model using in application, related to application.
+*/
+
+import { ReactElement } from "react"
+
 /**
  * Store `Stepper` information shown on stepper.
  *
@@ -10,10 +17,10 @@
  * `onPrev` : Function which will be trigger on click previous
  */
 export type Stepper = {
-    steps : Step[],
-    currentStep : number,
-    onNext ?() : void,
-    onPrev ?() : void
+    steps: Step[]
+    currentStep: number
+    onNext?(): void
+    onPrev?(): void
 }
 
 /**
@@ -22,5 +29,11 @@ export type Stepper = {
 export enum Step {
     Lecture,
     Activity = 1,
-    UnCompleteActivity,
+    UnCompleteActivity
+}
+
+
+export interface Routes {
+    url: string,
+    page: ReactElement,
 }

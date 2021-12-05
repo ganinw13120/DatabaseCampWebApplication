@@ -1,8 +1,13 @@
+// ExaminationStore.ts
+/**
+ * This file used to be a store about eamination of mobx store, functions, and data related to examination module.
+*/
 import { makeObservable, observable, action } from 'mobx';
 
 import RootStore from '../../RootStore';
 
 import LearningRepository from '@repository/app/LearningRepository';
+import ILearningRepository from '@repository/app/ILearningRepository';
 
 import {Answer, Exam, ExamAnswer, ExamAnswerActivity, ExaminationOverview, ExamResult} from '@model/Learning';
 
@@ -10,7 +15,7 @@ import IExaminationStore, { Store } from './IExaminationStore';
 
 export class ExaminationStore implements IExaminationStore {
   rootStore: RootStore; // contains the root of store (outest mobx)
-  private learningRepository: LearningRepository;
+  private learningRepository: ILearningRepository;
 
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
@@ -20,11 +25,27 @@ export class ExaminationStore implements IExaminationStore {
     this.learningRepository = learningRepository;
   }
 
+  /**
+   * Store for storing datas
+   *
+   * @remarks
+   * This method is part of examination store, manipulating examination and examination'data.
+   */
   @observable
   store : Store = {
       data: null,
   }
 
+  /**
+   * On user enter examination page, start fetching examination
+   *
+   * @remarks
+   * This method is part of examination store, manipulating examination and examination'data.
+   *
+   * @param examId exam's identifier
+   *
+   * @return Examination information
+   */
   @action.bound
   public async FetchExam(examId : number) : Promise<Exam | null> {
     const { token } = this.rootStore.authStore.store;
@@ -34,6 +55,16 @@ export class ExaminationStore implements IExaminationStore {
     return res;
   }
 
+  /**
+   * On user enter examination result page, fetching examination'result
+   *
+   * @remarks
+   * This method is part of examination store, manipulating examination and examination'data.
+   *
+   * @param examId exam's identifier
+   *
+   * @return Examination result information
+   */
   @action.bound
   public async FetchResult(examId : number) : Promise<ExamResult | null> {
     const { token } = this.rootStore.authStore.store;
@@ -43,6 +74,12 @@ export class ExaminationStore implements IExaminationStore {
     return res;
   }
 
+  /**
+   * On user enter examination overview page, start fetching examination overview from repository
+   *
+   * @remarks
+   * This method is part of examination store, manipulating examination and examination'data.
+   */
   @action.bound
   public async FetchExamOverview(): Promise<any> {
     this.store.data = null;
@@ -53,15 +90,37 @@ export class ExaminationStore implements IExaminationStore {
     return;
   }
 
+  /**
+   * On fetching examination overview success, store overview information to store
+   *
+   * @remarks
+   * This method is part of examination store, manipulating examination and examination'data.
+   *
+   * @param res exam's overview information
+   *
+   * @return Examination overview information
+   */
   @action.bound
-  private onFetchExamOverviewSuccess (res : ExaminationOverview) : ExaminationOverview {
+  private onFetchExamOverviewSuccess (res : ExaminationOverview) : void {
     this.store.data = res;
-    return res;
   }
 
-
+  /**
+   * On user submit examination, submitting information to repository.
+   *
+   * @remarks
+   * This method is part of examination store, manipulating examination and examination'data.
+   *
+   * @param result exam's result
+   * 
+   * @param exam examination information
+   * 
+   * @param cb callback function
+   *
+   * @return Examination information
+   */
   @action.bound
-  public submitExam (result : Answer[], exam : Exam, cb : any) : void {
+  public submitExam (result : Answer[], exam : Exam, onSuccess : (res : {exam_result_id : string}) => void, onError : () => void) : void {
     let answer : ExamAnswer = {
       exam_id : exam.exam.exam_id,
       activities : []
@@ -86,7 +145,9 @@ export class ExaminationStore implements IExaminationStore {
     })
     const { token } = this.rootStore.authStore.store;
     this.learningRepository.submitExam(token, answer).then((res : any)=>{
-      cb?.(res)
+      onSuccess?.(res);
+    }).catch(()=>{
+      onError?.();
     })
   }
 }

@@ -1,13 +1,23 @@
+// PointRankingPage.tsx
+/**
+ * This file contains components, relaed to point ranking page.
+*/
+
 import React from "react";
 import BaseView from '@view/BaseView';
 import "semantic-ui-css/semantic.min.css";
 import { inject, observer } from "mobx-react";
-import PointRankingViewModel from "@view-model/app/PointRanking.ViewModel";
+
+import PointRankingViewModel from "@root/view-model/point-ranking/PointRankingViewModel";
+import IPointRankingViewModel from "@root/view-model/point-ranking/IPointRankingViewModel";
+
 import RankingItem from "./components/RankingItem";
 import Header from "@view/layout/app/Header";
 import { RouteComponentProps, withRouter } from "react-router";
 import { AppStore } from "@store/stores/AppStore/AppStore";
 import { PointRankingStore } from "@store/stores/PointRankingStore/PointRankingStore";
+import {SIDEBAR_RANKING} from '@constant/text';
+
 
 export interface IPointRanking extends BaseView {
   props : PointRankingProps
@@ -25,13 +35,21 @@ class PointRankingPage
   extends React.Component<PointRankingProps, {}>
   implements IPointRanking
 {
-  private viewModel: PointRankingViewModel;
+  private viewModel: IPointRankingViewModel;
 
   public constructor(props: any) {
     super(props);
     this.viewModel = new PointRankingViewModel();
   }
 
+
+  /**
+   * On component did mount, set application store, and attach view-model
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public componentDidMount(): void {
     const {isExpand} = this.props.appStore!.store;
     if (!isExpand) {
@@ -41,16 +59,21 @@ class PointRankingPage
     this.viewModel.attachView(this);
   }
 
+  /**
+   * On view-model changes, update view states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public onViewModelChanged(): void {}
-
-  onFinishFailed = () => {};
 
   public render(): JSX.Element {
     const { isLoading, data } = this.props.pointRankingStore!.store;
     return (
       <>
         <div className="font-prompt w-full p-12 px-10">
-          <Header text='จัดลำดับคะแนน' />
+          <Header text={SIDEBAR_RANKING} />
           <div className="mt-10">
             {data &&
             <RankingItem

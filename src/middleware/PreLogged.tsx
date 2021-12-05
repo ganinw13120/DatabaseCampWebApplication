@@ -1,3 +1,7 @@
+// PreLogged.tsx
+/**
+ * This file used be middleware for checking authentication state.
+*/
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { observe  } from "mobx"
@@ -18,6 +22,11 @@ class PreLogged extends React.Component<LoggedMiddlewareProps, {}> {
       }
     })
   }
+
+  /**
+   * Check user authentication state, validating user's authentication
+   * push back to overview page if user is logged in
+   */
   checkUser() {
     const { userData } = this.props.authStore!.store;
     if (userData) {

@@ -1,3 +1,8 @@
+// HintTab.tsx
+/**
+ * This file contains components, related to hint tab in requirement section.
+*/
+
 import { Component, ReactElement } from 'react';
 
 import { inject, observer } from 'mobx-react';
@@ -10,6 +15,7 @@ import { Hint, HintRoadMap } from '@model/Learning';
 import Tooltip from '@mui/material/Tooltip';
 
 import parse from 'html-react-parser';
+import { HINT_HEADER_TEXT } from '@constant/text';
 
 
 interface HintProps {
@@ -25,7 +31,7 @@ interface HintState {
 @inject('learningStore')
 @inject('authStore')
 @observer
-export default class Hintbox extends Component<HintProps, HintState> {
+export default class HintTab extends Component<HintProps, HintState> {
   constructor(props: HintProps) {
     super(props);
     this.state = {
@@ -33,11 +39,21 @@ export default class Hintbox extends Component<HintProps, HintState> {
     }
     this.selectTab = this.selectTab.bind(this);
   }
+
+  /**
+   * On user select hint tab, update state
+   * 
+   * @remarks
+   * This is a part of view component.
+   * 
+   * @param tab target tab index
+  */
   private selectTab(tab: number): void {
     this.setState({
       currentTab: tab
     })
   }
+  
   public render(): JSX.Element {
     const { hint, hintRoadMap } = this.props.learningStore!.store;
     const { currentTab } = this.state;
@@ -68,8 +84,8 @@ export default class Hintbox extends Component<HintProps, HintState> {
 }
 
 interface HintHeadereProps {
-  isSelect: boolean,
-  onSelect(tab: number): void,
+  isSelect: boolean
+  onSelect(tab: number): void
   id: number
 }
 class HintHeader extends Component<HintHeadereProps, {}> {
@@ -84,8 +100,8 @@ class HintHeader extends Component<HintHeadereProps, {}> {
 }
 
 interface NextHintHeaderProps {
-  isEnabled: boolean,
-  reduce_point: number,
+  isEnabled: boolean
+  reduce_point: number
   onHint(): void
 }
 
@@ -97,7 +113,7 @@ class NextHintHeader extends Component<NextHintHeaderProps, {}> {
       <Tooltip title={isEnabled ? `Show Hint` : 'Point ไม่เพียงพอ'} placement="top">
         <div className={`px-2 pr-5 hint-tab flex py-2 ${isEnabled ? 'active-hint ' : ' disabled-hint'}`} onClick={() => { if (isEnabled) onHint() }}>
           <img src={ActiveBulb} alt='hint' className='h-10 my-auto mr-2' />
-          <span className='my-auto'>Show Hint</span>
+          <span className='my-auto'>{HINT_HEADER_TEXT}</span>
           <span className='font-normal text-base ml-3 my-auto'>(-{reduce_point} points)</span>
         </div>
       </Tooltip>

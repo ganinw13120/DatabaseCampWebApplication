@@ -1,16 +1,178 @@
+// ILearningRepository.ts
+/**
+ * This file used to be a interface of learning repository.
+*/
 import { ExamResult, ExamAnswer, Exam, ExaminationOverview, Answer, Hint, RoadMap, Lecture, Activity, Overview } from "@model/Learning";
 
 export default interface ILearningRepository {
-    fetchExamResult(token: string, exam_id : number) : Promise<ExamResult>;
-    submitExam(token: string, result : ExamAnswer): Promise<object>;
-    fetchExam(token: string, examId : number) : Promise<Exam>;
-    fetchExamOverview(token: string) : Promise<ExaminationOverview>;
-    checkMultiple(token: string, activityId : number, result : Answer): Promise<object>;
-    checkMatching(token: string, activityId : number, result : Answer): Promise<object>;
-    checkCompletion(token: string, activityId : number, result : Answer): Promise<object>;
-    getHint(token: string, activityId : number): Promise<Hint>;
-    fetchRoadmap(token: string, contentId : number): Promise<RoadMap>;
-    fetchLecture(token: string, contentId : number): Promise<Lecture>;
-    fetchActivity(token: string, activityId : number): Promise<Activity>;
-    fetchOverview(token: string) : Promise<Overview>;
+
+    /**
+     * Fetch `Examination Result` data on examination result page.
+     *
+     * @remarks
+     * This method is part of repository, connect to backend service.
+     *
+     * @param token for authentication
+     *
+     * @param exam_id for target examination
+     *
+     * @return ExamResult
+     */
+    fetchExamResult(token: string, exam_id: number): Promise<ExamResult>
+
+    /**
+     * Submit `Examination` result.
+     *
+     * @remarks
+     * This method is part of repository, connect to backend service.
+     *
+     * @param token for authentication
+     *
+     * @param result answer of examination
+     *
+     * @return Result including lead to result page
+     */
+    submitExam(token: string, result: ExamAnswer): Promise<object>
+
+    /**
+     * Fetch `Examination` information shown on examination flow.
+     *
+     * @remarks
+     * This method is part of repository, connect to backend service.
+     *
+     * @param token for authentication
+     *
+     * @param examId identifier for target examination
+     *
+     * @return Exam information
+     */
+    fetchExam(token: string, examId: number): Promise<Exam>
+
+    /**
+     * Fetch `Overview Examination` information shown on examination overview page.
+     *
+     * @remarks
+     * This method is part of repository, connect to backend service.
+     *
+     * @param token for authentication
+     *
+     * @return Examinations information
+     */
+    fetchExamOverview(token: string): Promise<ExaminationOverview>
+
+    /**
+     * Submit `Answer` of multiple choice activity and check for result.
+     *
+     * @remarks
+     * This method is part of repository, connect to backend service.
+     *
+     * @param token for authentication
+     *
+     * @param activityId identifier of target activity
+     *
+     * @param result result of activity
+     *
+     * @return Result of submittion
+     */
+    checkMultiple(token: string, activityId: number, result: Answer): Promise<object>
+
+    /**
+     * Submit `Answer` of matching choice activity and check for result.
+     *
+     * @remarks
+     * This method is part of repository, connect to backend service.
+     *
+     * @param token for authentication
+     *
+     * @param activityId identifier of target activity
+     *
+     * @param result result of activity
+     *
+     * @return Result of submittion
+     */
+    checkMatching(token: string, activityId: number, result: Answer): Promise<object>
+
+    /**
+     * Submit `Answer` of completion choice activity and check for result.
+     *
+     * @remarks
+     * This method is part of repository, connect to backend service.
+     *
+     * @param token for authentication
+     *
+     * @param activityId identifier of target activity
+     *
+     * @param result result of activity
+     *
+     * @return Result of submittion
+     */
+    checkCompletion(token: string, activityId: number, result: Answer): Promise<object>
+
+    /**
+     * Fetch `Hint` information of target activity.
+     *
+     * @remarks
+     * This method is part of repository, connect to backend service.
+     *
+     * @param token for authentication
+     *
+     * @param activityId identifier of target activity
+     *
+     * @return Hint information
+     */
+    getHint(token: string, activityId: number): Promise<Hint>
+
+    /**
+     * Fetch `Roadmap` information of target content.
+     *
+     * @remarks
+     * This method is part of repository, connect to backend service.
+     *
+     * @param token for authentication
+     *
+     * @param contentId identifier of target content
+     *
+     * @return Roadmap information
+     */
+    fetchRoadmap(token: string, contentId: number): Promise<RoadMap>
+
+    /**
+     * Fetch `Lecture` information of target content shown on lecture page.
+     *
+     * @remarks
+     * This method is part of repository, connect to backend service.
+     *
+     * @param token for authentication
+     *
+     * @param contentId identifier of target content
+     *
+     * @return Lecture information shown on lecture page
+     */
+    fetchLecture(token: string, contentId: number): Promise<Lecture>
+
+    /**
+     * Fetch `Activity` information of target activity on activity page.
+     *
+     * @remarks
+     * This method is part of repository, connect to backend service.
+     *
+     * @param token for authentication
+     *
+     * @param activityId identifier of target activity
+     *
+     * @return Activity information shown on activity page
+     */
+    fetchActivity(token: string, activityId: number): Promise<Activity>
+
+    /**
+     * Fetch `Overview` information of current user shown on overview page.
+     *
+     * @remarks
+     * This method is part of repository, connect to backend service.
+     *
+     * @param token for authentication
+     *
+     * @return Overview information shown on overview page
+     */
+    fetchOverview(token: string): Promise<Overview>
 }

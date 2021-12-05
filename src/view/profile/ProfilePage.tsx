@@ -1,3 +1,8 @@
+// ProfilePage.tsx
+/**
+ * This file contains components, relaed to profile page.
+*/
+
 import { Component, ReactElement } from 'react';
 import BaseView from '@view/BaseView';
 
@@ -9,6 +14,7 @@ import hat from '@assets/hat.png';
 import './profile.css';
 
 import ProfileViewModel from '@view-model/profile/ProfileViewModel';
+import IProfileViewModel from '@view-model/profile/IProfileViewModel';
 
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
@@ -50,7 +56,7 @@ var monthNamesThai = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ
 @observer
 class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
   implements IProfilePage {
-  private profileViewModel: ProfileViewModel;
+  private profileViewModel: IProfileViewModel;
   public constructor(props: any) {
     super(props);
     this.profileViewModel = new ProfileViewModel();
@@ -62,6 +68,14 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
     this.showEditModal = this.showEditModal.bind(this);
     this.hideEditModal = this.hideEditModal.bind(this);
   }
+
+  /**
+   * On component did update, reattach view-model due to changes of properties.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   componentDidUpdate(): void {
     const { data } = this.state;
     const profileId = this.props.match.params?.id;
@@ -70,6 +84,14 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
     }
   }
 
+
+  /**
+   * On component did mount, set application store, and attach view-model
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public componentDidMount(): void {
     const { isExpand } = this.props.appStore!.store;
     if (!isExpand) {
@@ -79,28 +101,47 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
     this.profileViewModel.attachView(this);
   }
 
+  /**
+   * On view-model changes, update view states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public onViewModelChanged(): void {
-    const alertText = this.profileViewModel.alertText;
+    const alertText = this.profileViewModel.getAlertText();
     this.setState({
-      data: this.profileViewModel.profileData,
+      data: this.profileViewModel.getProfileData(),
       isShowModal: alertText !== '',
       textAlertModal: alertText
     })
   }
 
+
+  /**
+   * On user select edit icon, show edit modal
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   private showEditModal(): void {
     this.setState({
       isShowModal: true
     })
   }
 
+  /**
+   * On user close edit modal, hide modal
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   private hideEditModal(): void {
     this.setState({
       isShowModal: false
     })
-  }
-
-  onFinishFailed = () => {
   }
 
   public render(): JSX.Element {
@@ -133,7 +174,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
           <div className='font-prompt gap-9'>
             <div className='mb-10'>เปลี่ยนชื่อ </div>
             <Form
-              ref={this.profileViewModel.formRef}
+              ref={this.profileViewModel.getFormRef()}
               name="basic"
               autoComplete="off"
               className='mt-10'

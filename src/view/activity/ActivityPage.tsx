@@ -1,3 +1,7 @@
+// ActivityPage.tsx
+/**
+ * This file contains components, related to activity pages.
+*/
 import React from 'react';
 import BaseView from '@view/BaseView';
 import './activity.css';
@@ -6,6 +10,7 @@ import Requirement from './components/Requirement';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import ActivityViewModel from '@view-model/activity/ActivityViewModel';
+import IActivityViewModel from '@view-model/activity/IActivityViewModel';
 
 import Matching from './components/Matching';
 import Completion from './components/Completion';
@@ -16,9 +21,9 @@ import { Activity, ActivityAlert, CompletionChoice, MatchingChoice, MultipleChoi
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { LearningStore } from '@store/stores/LearningStore/LearningStore';
-import { AppStore } from '@store/stores/AppStore/AppStore';
-import { AuthStore } from '@store/stores/AuthStore/AuthStore';
+import ILearningStore from '@store/stores/LearningStore/ILearningStore';
+import IAppStore from '@store/stores/AppStore/IAppStore';
+import IAuthStore from '@store/stores/AuthStore/IAuthStore';
 
 import AlertTab from './components/AlertTab';
 import { green } from '@mui/material/colors';
@@ -28,21 +33,23 @@ import Star from '@assets/starProfile.png';
 
 import SkeletonActivity from './components/SkeletonActivity';
 
+import { ACTIVITY_NEXT, ACTIVITY_SUBMIT, ACTIVITY_TITLE, WARNING_HINT_TITLE, WARNING_HINT_DESCRIPTION, WARNING_HINT_ACCEPT, WARNING_HINT_CANCLE } from '@constant/text';
+
 export interface IActivityPage extends BaseView {
-  props : ActivityProps
+  props: ActivityProps
 }
 
 interface ActivityState {
   activityInfo: Activity | null,
-  alert : ActivityAlert | null,
+  alert: ActivityAlert | null,
 }
 
 interface ActivityProps extends RouteComponentProps<{
-    id : string
+  id: string
 }> {
-  learningStore?: LearningStore,
-  appStore?: AppStore,
-  authStore ?: AuthStore  | null
+  learningStore?: ILearningStore,
+  appStore?: IAppStore,
+  authStore?: IAuthStore
 }
 
 @inject('learningStore')
@@ -51,21 +58,28 @@ interface ActivityProps extends RouteComponentProps<{
 @observer
 class ActivityPage extends React.Component<ActivityProps, ActivityState>
   implements IActivityPage {
-  private activityViewModel: ActivityViewModel;
+  private activityViewModel: IActivityViewModel;
   private swal: any;
   constructor(props: any) {
     super(props);
     this.props.appStore?.setPercent(0)
     this.state = {
       activityInfo: null,
-      alert : null
+      alert: null
     }
     this.activityViewModel = new ActivityViewModel();
     this.showHintPopup = this.showHintPopup.bind(this);
     this.swal = withReactContent(Swal);
   }
+  
+  /**
+   * On component did mount, set application information, and attach view-model
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public componentDidMount(): void {
-
     this.props.appStore!.setExpand(false)
     this.activityViewModel.attachView(this);
     const { isExpand } = this.props.appStore!.store;
@@ -74,6 +88,13 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
     }
   }
 
+  /**
+   * On component did update, reattach view-model due to changes of properties.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   componentDidUpdate(): void {
     let { activityInfo } = this.state;
     const activityID = this.props.match.params.id;
@@ -82,41 +103,57 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
       this.setState({ activityInfo: null })
     }
   }
-  
-  showHintPopup(): void {
+
+  /**
+   * On user request hint, show hint popups.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
+  private showHintPopup(): void {
     this.swal.fire({
-      title: 'ท่านต้องการขอคำใบ้ใช่หรือไม่?',
-      text: "การขอคำใบ้จะหักเเต้มที่ได้รับในการทำกิจกรรม",
+      title: WARNING_HINT_TITLE,
+      text: WARNING_HINT_DESCRIPTION,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#005FB7',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'ตกลง',
-      cancelButtonText: 'ยกเลิก',
+      confirmButtonText: WARNING_HINT_ACCEPT,
+      cancelButtonText: WARNING_HINT_CANCLE,
     }).then((result: any) => {
       if (result.isConfirmed)
         this.activityViewModel.onHint()
     })
   }
+  
+  /**
+   * On view-model changes, update view states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public onViewModelChanged(): void {
     this.setState({
-      activityInfo: this.activityViewModel.activityInfo,
-      alert : this.activityViewModel.alert
+      activityInfo: this.activityViewModel.getActivityInfo(),
+      alert: this.activityViewModel.getAlert()
     })
   }
+  
   public render(): JSX.Element {
     const { activityInfo, alert } = this.state;
     const { roadMap, isLoading } = this.props.learningStore!.store;
-    const {userData} = this.props.authStore!.store;
+    const { userData } = this.props.authStore!.store;
     return (
       <>
         <div className='xl:grid xl:grid-cols-10 w-full pt-10 h-full'>
           {userData &&
-          <div className='ribbon-points flex z-20 mt-16 md:mt-0'>
-            <img src={Star} alt='points' className='star my-auto mx-10' />
-            <span className='text-white text-xl my-auto mr-5'>{userData?.point.toLocaleString()}</span>
-            <span className='text-white text-lg my-auto mr-5'>Points</span>
-          </div>}
+            <div className='ribbon-points flex z-20 mt-16 md:mt-0'>
+              <img src={Star} alt='points' className='star my-auto mx-10' />
+              <span className='text-white text-xl my-auto mr-5'>{userData?.point.toLocaleString()}</span>
+              <span className='text-white text-lg my-auto mr-5'>Points</span>
+            </div>}
           <Requirement
             onHint={this.showHintPopup}
             activityInfo={activityInfo?.activity}
@@ -128,7 +165,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
                 <span className='w-full h-full bg-darkPrimary'>..</span>
               </div>
               <div className='w-auto py-6 -mx-4'>
-                <span className=' text-3xl text-darkPrimary font-semibold tracking-wider'>กิจกรรม {roadMap && roadMap.items.length !== 0 && activityInfo ? `(${roadMap!.items.find((e: any) => e.activity_id === activityInfo?.activity?.activity_id)!.order}/${roadMap.items.length})` : ''} </span> <span className=' text-lg text-success font-semibold tracking-wider'> {activityInfo ? ` + ${activityInfo.activity.point} Points` : ''} </span>
+                <span className=' text-3xl text-darkPrimary font-semibold tracking-wider'>{ACTIVITY_TITLE} {roadMap && roadMap.items.length !== 0 && activityInfo ? `(${roadMap!.items.find((e: any) => e.activity_id === activityInfo?.activity?.activity_id)!.order}/${roadMap.items.length})` : ''} </span> <span className=' text-lg text-success font-semibold tracking-wider'> {activityInfo ? ` + ${activityInfo.activity.point} Points` : ''} </span>
               </div>
             </div>
             {
@@ -148,26 +185,26 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
                 </>
               })()} </> : <SkeletonActivity />
             }
-             <AlertTab alert={alert} />
+            <AlertTab alert={alert} />
             {activityInfo &&
-            <div className='flex w-5/6 mx-auto'>
-              <div className='flex-grow'>
-              </div>
-              <div onClick={() => {if(alert && alert.isSuccess) this.activityViewModel.moveNext(); else this.activityViewModel.onSubmit(); }} className={`relative ${isLoading ? '' : 'hoverable'} flex-none bg-${isLoading ? 'disabledPrimary' : 'primary'} mt-10 text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'loading' : 'pointer'}`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
-                {alert && alert.isSuccess ? 'ถัดไป' : 'ตรวจคำตอบ'}
-                {isLoading && <CircularProgress
-                  size={24}
-                  sx={{
-                    color: green[500],
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    marginTop: '-12px',
-                    marginLeft: '-12px',
-                  }}
-                />}
-              </div>
-            </div>}
+              <div className='flex w-5/6 mx-auto'>
+                <div className='flex-grow'>
+                </div>
+                <div onClick={() => { if (alert && alert.isSuccess) this.activityViewModel.moveNext(); else this.activityViewModel.onSubmit(); }} className={`relative ${isLoading ? '' : 'hoverable'} flex-none bg-${isLoading ? 'disabledPrimary' : 'primary'} mt-10 text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'loading' : 'pointer'}`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+                  {alert && alert.isSuccess ? ACTIVITY_NEXT : ACTIVITY_SUBMIT}
+                  {isLoading && <CircularProgress
+                    size={24}
+                    sx={{
+                      color: green[500],
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      marginTop: '-12px',
+                      marginLeft: '-12px',
+                    }}
+                  />}
+                </div>
+              </div>}
           </div>
         </div>
 

@@ -1,3 +1,8 @@
+// LoginPage.tsx
+/**
+ * This file contains components, relaed to login page.
+*/
+
 import { Component } from 'react';
 import BaseView from '@view/BaseView';
 import FullLogo from '@assets/high-res-full-logo.png';
@@ -8,16 +13,17 @@ import { inject, observer } from 'mobx-react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import validateEmail from '@util/validateEmail';
-import { AppStore } from '@store/stores/AppStore/AppStore';
-import { AuthStore } from '@store/stores/AuthStore/AuthStore';
+import IAppStore from '@store/stores/AppStore/IAppStore';
+import IAuthStore from '@store/stores/AuthStore/IAuthStore';
+import IAuthViewModel from '@view-model/auth/IAuthViewModel';
 
 export interface ILoginPage extends BaseView {
   props : LoginProps
 }
 
 interface LoginProps extends RouteComponentProps {
-  appStore ?: AppStore,
-  authStore ?: AuthStore
+  appStore ?: IAppStore
+  authStore ?: IAuthStore
 }
 
 interface LoginComponentState {
@@ -25,15 +31,14 @@ interface LoginComponentState {
   displayText : string
 }
 
-@inject('authStore')
 @inject('appStore')
-  
+@inject('authStore')
 
 @observer
 class LoginPage extends Component<LoginProps, LoginComponentState>
   implements ILoginPage {
   
-  private loginViewModel: LoginViewModel;
+  private loginViewModel: IAuthViewModel;
   
   public constructor(props: LoginProps) {
     super(props);
@@ -45,25 +50,36 @@ class LoginPage extends Component<LoginProps, LoginComponentState>
 
     
     this.state = {
-      displayText : loginViewModel.displayText,
-      isLoading : loginViewModel.isLoading
+      displayText : loginViewModel.getDisplayText(),
+      isLoading : loginViewModel.getIsLoadng()
     }
   }
   
+
+  /**
+   * On component did mount, set application store, and attach view-model
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public componentDidMount(): void {
     this.loginViewModel.attachView(this);
     this.props.appStore?.setPercent(100)
   }
 
+  /**
+   * On view-model changes, update view states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public onViewModelChanged(): void {
     this.setState({
-      displayText : this.loginViewModel.displayText,
-      isLoading : this.loginViewModel.isLoading
+      displayText : this.loginViewModel.getDisplayText(),
+      isLoading : this.loginViewModel.getIsLoadng()
     })
-  }
-
-  onFinishFailed = () => {
-
   }
 
   public render(): JSX.Element {
@@ -71,10 +87,9 @@ class LoginPage extends Component<LoginProps, LoginComponentState>
     return (
       <>
         <Form
-          ref={this.loginViewModel.formRef}
+          ref={this.loginViewModel.getFormRef()}
           name="basic"
           onFinish={this.loginViewModel.OnFinish}
-          onFinishFailed={this.onFinishFailed}
           autoComplete="off"
         >
             <div className="grid  md:grid-cols-2 h-screen font-prompt bg-bg">
@@ -118,7 +133,7 @@ class LoginPage extends Component<LoginProps, LoginComponentState>
                   <div className={`bg-${isLoading ? 'gray' : 'primary'} h-14 rounded-xl mt-4`}>
                     <Button disabled={isLoading} htmlType="submit" className='w-full h-24 bg-primary' style={{height: '100%'}} ghost size='large'><span className='text-base text-white font-light tracking-wider '>เข้าสู่ระบบ</span></Button>
                   </div>
-                  <div className="mt-5 h-14 text-center cursor-pointer" onClick={this.loginViewModel.OnClickRegister}>
+                  <div className="mt-5 h-14 text-center cursor-pointer" onClick={this.loginViewModel.onChangePage}>
                     <span className='text-base text-darkPrimary font-light tracking-wider '>สมัครสมาชิก</span>
                   </div>
                 </div>

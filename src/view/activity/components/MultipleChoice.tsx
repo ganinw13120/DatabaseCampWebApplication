@@ -1,3 +1,8 @@
+// MultipleChoiceComponent.tsx
+/**
+ * This file contains components, related to choices in multiple choice activity.
+*/
+
 import { Component, ReactElement } from 'react';
 import Radio from '@mui/material/Radio';
 import {MultipleChoice} from '@model/Learning';
@@ -19,6 +24,15 @@ export default class MultipleChoiceComponent extends Component<MultipleChoicePro
     }
     this.handleSelect = this.handleSelect.bind(this);
   }
+  
+  /**
+   * On user select choice, update state and result.
+   * 
+   * @remarks
+   * This is a part of view component.
+   * 
+   * @param quest question box information
+  */
   handleSelect(e : number): void {
     const {updateResult} = this.props;
     updateResult(e)
@@ -43,7 +57,15 @@ export default class MultipleChoiceComponent extends Component<MultipleChoicePro
     );
   }
 }
-class Choice extends Component<any, any> {
+
+type ChoiceProps = {
+  selected : number | null
+  handleSelect (id : number) : void
+  id : number
+  displayText : string
+}
+
+class Choice extends Component<ChoiceProps, {}> {
   public render () : JSX.Element {
     const { selected, handleSelect, id, displayText } = this.props;
     return (<>

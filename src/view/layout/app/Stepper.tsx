@@ -1,3 +1,8 @@
+// Stepper.tsx
+/**
+ * This file contains components, related to stepper used to show learning step in application.
+*/
+
 import { Component, ReactElement } from "react";
 
 import { styled } from '@mui/material/styles';
@@ -10,11 +15,13 @@ import { StepIconProps } from '@mui/material/StepIcon';
 import TvIcon from '@mui/icons-material/Tv';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 
+import { STEPPER_NEXT, STEPPER_BACK } from '@constant/text';
+
 import { AppStore } from "@store/stores/AppStore/AppStore";
 
 import { inject, observer } from 'mobx-react';
 
-import {Step as StepEnum} from '@model/App';
+import { Step as StepEnum } from '@model/App';
 
 
 const primaryColor = '#03EF62'
@@ -67,11 +74,11 @@ const QontoStepIconRoot = styled('div')<{ ownerState: { active?: boolean } }>(
 
 class CompleteStepIcon extends Component<StepIconProps, any> {
   render(): JSX.Element {
-    const { active : isActive, completed, className } = this.props;
+    const { active: isActive, completed, className } = this.props;
     const active = isActive || completed
     return (
       <QontoStepIconRoot ownerState={{ active }} className={className}>
-          <Check className={completed ? `QontoStepIcon-completedIcn` : ''} />
+        <Check className={completed ? `QontoStepIcon-completedIcn` : ''} />
       </QontoStepIconRoot>
     );
   }
@@ -79,11 +86,11 @@ class CompleteStepIcon extends Component<StepIconProps, any> {
 
 class UnCompleteStepIcon extends Component<StepIconProps, any> {
   render(): JSX.Element {
-    const { active : isActive, completed, className } = this.props;
+    const { active: isActive, completed, className } = this.props;
     const active = isActive || completed
     return (
       <QontoStepIconRoot ownerState={{ active }} className={className}>
-          <div className="QontoStepIcon-circle" />
+        <div className="QontoStepIcon-circle" />
       </QontoStepIconRoot>
     );
   }
@@ -91,51 +98,59 @@ class UnCompleteStepIcon extends Component<StepIconProps, any> {
 
 class LectureIcon extends Component<StepIconProps, any> {
   render(): JSX.Element {
-    const { active : isActive, completed, className } = this.props;
+    const { active: isActive, completed, className } = this.props;
     const active = isActive || completed
     return (
       <QontoStepIconRoot ownerState={{ active }} className={className}>
-          <TvIcon className="QontoStepIcon-completedIcon" />
+        <TvIcon className="QontoStepIcon-completedIcon" />
       </QontoStepIconRoot>
     );
   }
 }
 
 interface StepperProps {
-  appStore ?: AppStore
+  appStore?: AppStore
 }
 
 @inject('appStore')
 @observer
 export default class ActivityStepper extends Component<StepperProps, any> {
+  
+  /**
+   * Render stepper from stepper data pulled from application store
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   render(): JSX.Element | null {
-    const {stepper} = this.props!.appStore!.store;
+    const { stepper } = this.props!.appStore!.store;
     return (stepper ? <>
       <div className='absolute top-0 bg-darkPrimary w-full h-14' style={{ boxShadow: '0 0px 4px rgba(0, 0, 0, 0.25)', marginTop: '0px', zIndex: -0 }}>
         <div className='mt-3 flex z-0'>
           <div className='flex-grow'></div>
           {stepper.onPrev && stepper.currentStep > 0 ?
-          <div className='flex-none cursor-pointer' onClick={()=>{stepper?.onPrev?.()}}>
-            <LeftOutlined className='text-white my-auto' style={{fontSize : 20, color : 'white'}} />
-            <span className='my-auto ml-1 text-white font-normal'>
-            Back
-            </span>
-          </div> :
-          <div className='flex-none cursor-pointer'>
-            <LeftOutlined className='text-white my-auto' style={{fontSize : 20, color : '#BBBFC0'}} />
-            <span className='ml-1 text-gray font-normal'>
-            Back
-            </span>
-          </div>}
+            <div className='flex-none cursor-pointer' onClick={() => { stepper?.onPrev?.() }}>
+              <LeftOutlined className='text-white my-auto' style={{ fontSize: 20, color: 'white' }} />
+              <span className='my-auto ml-1 text-white font-normal'>
+                {STEPPER_BACK}
+              </span>
+            </div> :
+            <div className='flex-none cursor-pointer'>
+              <LeftOutlined className='text-white my-auto' style={{ fontSize: 20, color: '#BBBFC0' }} />
+              <span className='ml-1 text-gray font-normal'>
+                {STEPPER_BACK}
+              </span>
+            </div>}
           <div className='w-4/6'>
             <Stepper alternativeLabel activeStep={stepper.currentStep} connector={<QontoConnector />}>
               {(() => {
                 const steppers: ReactElement[] = [];
                 let i = 1;
                 while (i <= stepper.steps.length) {
-                steppers.push(
+                  steppers.push(
                     <Step key={i}>
-                      <StepLabel StepIconComponent={stepper.steps[i-1]===StepEnum.Activity ? CompleteStepIcon : stepper.steps[i-1]===StepEnum.Lecture ? LectureIcon : UnCompleteStepIcon}></StepLabel>
+                      <StepLabel StepIconComponent={stepper.steps[i - 1] === StepEnum.Activity ? CompleteStepIcon : stepper.steps[i - 1] === StepEnum.Lecture ? LectureIcon : UnCompleteStepIcon}></StepLabel>
                     </Step>
                   )
                   i++;
@@ -145,18 +160,18 @@ export default class ActivityStepper extends Component<StepperProps, any> {
             </Stepper>
           </div>
           {stepper.onNext && stepper.currentStep !== stepper.steps.length - 1 ?
-          <div className='flex-none cursor-pointer' onClick={()=>{stepper?.onNext?.()}}>
-            <span className='my-auto mr-1 text-white font-normal'>
-            Next
-            </span>
-            <RightOutlined className='text-white my-auto' style={{fontSize : 20, color : 'white'}} />
-          </div> :
-          <div className='flex-none cursor-pointer'>
-            <span className='my-auto mr-1 text-gray font-normal'>
-            Next
-            </span>
-            <RightOutlined className='text-white my-auto' style={{fontSize : 20, color : '#BBBFC0'}} />
-          </div>}
+            <div className='flex-none cursor-pointer' onClick={() => { stepper?.onNext?.() }}>
+              <span className='my-auto mr-1 text-white font-normal'>
+                {STEPPER_NEXT}
+              </span>
+              <RightOutlined className='text-white my-auto' style={{ fontSize: 20, color: 'white' }} />
+            </div> :
+            <div className='flex-none cursor-pointer'>
+              <span className='my-auto mr-1 text-gray font-normal'>
+                {STEPPER_NEXT}
+              </span>
+              <RightOutlined className='text-white my-auto' style={{ fontSize: 20, color: '#BBBFC0' }} />
+            </div>}
           <div className='flex-grow'></div>
         </div>
       </div>
