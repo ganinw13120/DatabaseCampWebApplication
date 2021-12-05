@@ -48,4 +48,12 @@ export default interface IAuthViewModel extends BaseViewModel {
    * This method is part of view-model, application logic parts, manipulating view.
    */
   onChangePage(): void
+
+  /**
+   * On user fill password confirmation, validate if match with other password input
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
+  matchPassword(_: any, val: string, callback: any): void
 }
