@@ -115,20 +115,4 @@ export default class RegisterViewModel implements IAuthViewModel {
     public onChangePage = (): void => {
         this.baseView?.props?.history?.push('/login');
     }
-
-    /**
-     * On user fill password confirmation, validate if match with other password input
-     *
-     * @remarks
-     * This method is part of view-model, application logic parts, manipulating view.
-     */
-    public matchPassword = (_: any, val: string, callback: any): void => {
-        if (val === this.formRef?.current?.getFieldValue("password")) {
-            callback();
-        } else if (val) {
-            callback("รหัสผ่านไม่ตรงกัน")
-        } else {
-            callback("กรุณากรอกรหัสผ่าน")
-        }
-    }
 }

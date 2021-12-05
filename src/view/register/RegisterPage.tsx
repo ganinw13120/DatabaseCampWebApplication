@@ -30,6 +30,7 @@ interface RegisterProps extends RouteComponentProps {
 interface RegisterComponentState {
   isLoading: boolean
   displayText : string
+  password_comfirmation_alert : string | null
 }
 
 @inject('appStore')
@@ -48,10 +49,12 @@ class RegisterPage extends Component<RegisterProps, RegisterComponentState>
     
     this.viewModel = viewModel;
 
+    this.onFormChange = this.onFormChange.bind(this);
     
     this.state = {
       displayText : viewModel.getDisplayText(),
-      isLoading : viewModel.getIsLoadng()
+      isLoading : viewModel.getIsLoadng(),
+      password_comfirmation_alert : null
     }
   }
   
@@ -82,14 +85,37 @@ class RegisterPage extends Component<RegisterProps, RegisterComponentState>
     })
   }
 
+    /**
+     * On user fill password confirmation, validate if match with other password input
+     *
+     * @remarks
+     * This method is part of view-model, application logic parts, manipulating view.
+     */
+  private onFormChange (changedFields : any, allField : any) : void {
+    if (changedFields[0].name[0]==="password_comfirmation" || changedFields[0].name[0]==="password"){
+      const password = allField.find((e : any)=>e.name[0]==='password');
+      const password_comfirmation = allField.find((e : any)=>e.name[0]==='password_comfirmation');
+      if (password.touched && password_comfirmation.touched && password_comfirmation.value !== password.value) {
+        this.setState({
+          password_comfirmation_alert : 'รหัสผ่านไม่ตรงกัน'
+        })
+      } else {
+        this.setState({
+          password_comfirmation_alert : null
+        })
+      }
+    }
+  }
+
   public render(): JSX.Element {
-    const { isLoading, displayText } = this.state
+    const { isLoading, displayText, password_comfirmation_alert } = this.state
     return (
       <>
         <Form
           ref={this.viewModel.getFormRef()}
           name="basic"
           onFinish={this.viewModel.OnFinish}
+          onFieldsChange={this.onFormChange}
           autoComplete="off"
         >
             <div className="grid  md:grid-cols-2 h-screen font-prompt bg-bg">
@@ -144,7 +170,11 @@ class RegisterPage extends Component<RegisterProps, RegisterComponentState>
                   <span >ยีนยันรหัสผ่าน :</span>
                 </div>
                 <div className='w-full'>
-                  <Form.Item name="password_comfirmation" rules={[ {validator : this.viewModel?.matchPassword}]} className='w-full'>
+                  <Form.Item 
+                    name="password_comfirmation" 
+                    validateStatus={password_comfirmation_alert ? 'error' : ''}
+                    help={password_comfirmation_alert}
+                    className='w-full'>
                     <Input.Password iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} className='mt-3 h-12 ' size="large" placeholder="รหัสผ่าน" prefix={<KeyOutlined className='mr-3'/>}  />
                   </Form.Item>
                 </div>
