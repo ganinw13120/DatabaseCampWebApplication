@@ -1,3 +1,8 @@
+// Header.tsx
+/**
+ * This file contains components, related to application layout, in a page.
+*/
+
 import React from "react";
 import Stepper from "./Stepper";
 import '../app/applayout.css';

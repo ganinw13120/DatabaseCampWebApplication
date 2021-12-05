@@ -1,3 +1,7 @@
+// AlertTab.tsx
+/**
+ * This file contains components, related to alert tab pages in activity.
+*/
 import { Component } from 'react';
 import { ActivityAlert } from '@model/Learning';
 
@@ -13,10 +17,7 @@ interface AlertProps {
     alert : ActivityAlert | null,
 }
 
-interface AlertState {
-}
-
-export default class AlertTab extends Component<AlertProps, AlertState> {
+export default class AlertTab extends Component<AlertProps, {}> {
     public render(): JSX.Element {
         const {alert} = this.props;
         const {isSuccess, feedback} = alert || {} as ActivityAlert;

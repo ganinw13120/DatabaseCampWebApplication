@@ -1,3 +1,8 @@
+// HeaderSkeleton.tsx
+/**
+ * This file contains components, relaed to skeleton of card in overview page.
+*/
+
 import React from 'react';
 
 import HeaderSkeleton from './HeaderSkeleton';

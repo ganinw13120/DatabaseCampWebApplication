@@ -1,3 +1,8 @@
+// ExamViewModel.tsx
+/**
+ * This file contains view-model, related to examination page.
+*/
+
 import IExamViewModel from './IExamViewModel';
 import { ActivityAlert, Answer, CompletionAnswer, Exam } from '@model/Learning';
 import { Step, Stepper } from '@model/App';
@@ -8,12 +13,12 @@ import { validateCompletion, validateMultiple, validateMatching } from '@util/va
 
 export default class ExamViewModel implements IExamViewModel {
   private baseView?: IExamPage;
-  public currentActivity : number;
-  public exam : Exam | null;
-  private result : Answer[];
-  public alert : ActivityAlert | null;
-  public isLoading : boolean;
-  constructor (currentActivity : number) {
+  private currentActivity: number;
+  private exam: Exam | null;
+  private result: Answer[];
+  private alert: ActivityAlert | null;
+  private isLoading: boolean;
+  constructor(currentActivity: number) {
     this.exam = null;
     this.currentActivity = currentActivity;
     this.result = [];
@@ -22,13 +27,72 @@ export default class ExamViewModel implements IExamViewModel {
     this.moveNext = this.moveNext.bind(this);
     this.movePrev = this.movePrev.bind(this);
   }
-  public attachView = (baseView: IExamPage): void => {
-    this.baseView = baseView;
-    
+
+  /**
+   * Get form examination alert
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   *
+   * @returns Alert information
+   */
+  public getAlert(): ActivityAlert | null {
+    return this.alert;
+  }
+
+  /**
+   * Get is application is loaind
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   *
+   * @returns Is loading data
+   */
+  public getIsLoading(): boolean {
+    return this.isLoading;
+  }
+
+  /**
+   * Get examination information
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   *
+   * @returns examination information
+   */
+  public getExam(): Exam | null {
+    return this.exam;
+  }
+
+  /**
+   * Get current activity index
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   *
+   * @returns Current activity index
+   */
+  public getCurrentActivity(): number {
+    return this.currentActivity;
+  }
+
+  /**
+   * On user enter examination page, fetch examination information
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
+  private fetchExam(): void {
+    const baseView = this.baseView;
+    if (!baseView) return;
+
     baseView?.props.appStore?.setPercent(40);
     const examId = parseInt(baseView.props.match.params?.id);
-    if (!examId) baseView.props.history.replace('/examination/overview');
-    baseView.props.examinationStore!.FetchExam(examId).then((res : Exam | null) => {
+    if (!examId) {
+      baseView.props.history.replace('/examination/overview');
+      return;
+    }
+    baseView.props.examinationStore!.FetchExam(examId).then((res: Exam | null) => {
       if (!res) {
         baseView.props.history.replace('/examination/overview');
         return;
@@ -38,50 +102,99 @@ export default class ExamViewModel implements IExamViewModel {
       baseView?.props.appStore?.setPercent(100)
       this.setStepper();
     })
-  };
+  }
 
-  private setStepper = () : void => {
+  /**
+   * On attach view, initailize view-model
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
+  public attachView = (baseView: IExamPage): void => {
+    this.baseView = baseView;
+    this.fetchExam();
+  }
+
+  /**
+   * Set stepper
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
+  private setStepper (): void  {
     if (!this.exam) return;
-    const stepper : Stepper = this.generateExamStepper(this.exam)
+    const stepper: Stepper = this.generateExamStepper(this.exam)
     stepper.onNext = this.moveNext;
     stepper.onPrev = this.movePrev;
     this.baseView?.props.appStore!.setStepper(stepper)
   }
 
-  private generateExamStepper = (res : Exam) : Stepper => { 
-    const stepper : Stepper = {
-      currentStep : this.currentActivity,
-      steps : []
-    } 
-    res.activities.forEach((e, key : number)=>{
+  /**
+   * Generate examination stepper from examination information
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   * 
+   * @param res Examination information
+   *
+   * @returns Stepper information
+   */
+  private generateExamStepper (res: Exam): Stepper {
+    const stepper: Stepper = {
+      currentStep: this.currentActivity,
+      steps: []
+    }
+    res.activities.forEach((e, key: number) => {
       stepper.steps.push(this.validateResult(key) ? Step.Activity : Step.UnCompleteActivity)
     })
     return stepper;
   }
 
+  /**
+   * On view detach, remove view
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
   public detachView = (): void => {
     this.baseView = undefined;
-  };
-  
-  public updateResult = (key : number, result: Answer | null): void => {
+  }
+
+  /**
+   * Update result on user activity result
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   * 
+   * @param key target examination identifier
+   * 
+   * @param result Answer of activity
+   */
+  public updateResult = (key: number, result: Answer | null): void => {
     this.result[key] = result;
   }
 
-  public obSubmitActivity = () : void => {
+  /**
+   * On user submit activity, validate answer and submit answer
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
+  public SubmitActivity = (): void => {
     if (!this.exam) return;
     if (this.currentActivity < this.exam.activities.length - 1) {
       this.currentActivity++;
       this.baseView?.onViewModelChanged();
     } else {
       let isPassed = true;
-      this.exam.activities.forEach((_, key : number) => {
+      this.exam.activities.forEach((_, key: number) => {
         const temp = this.validateResult(key);
         if (!temp) isPassed = false;
       })
       if (!isPassed) {
-        const alert : ActivityAlert = {
-          isSuccess : false,
-          feedback : 'กรุณาทำแบบฝึกหัดให้ครบทุกข้อ'
+        const alert: ActivityAlert = {
+          isSuccess: false,
+          feedback: 'กรุณาทำแบบฝึกหัดให้ครบทุกข้อ'
         }
         this.alert = alert;
         this.baseView?.onViewModelChanged();
@@ -90,14 +203,22 @@ export default class ExamViewModel implements IExamViewModel {
       }
       this.isLoading = true;
       this.baseView?.onViewModelChanged();
-      this.baseView?.props.examinationStore!.submitExam(this.result, this.exam, (res : any)=>{
-        this.baseView?.props.history.replace('/examination/result/' + res.exam_result_id);
+      this.baseView?.props.examinationStore!.submitExam(this.result, this.exam, (res) => {
+        this.baseView?.props.history.push('/examination/result/' + res.exam_result_id);
+      }, () => {
+        this.baseView?.props.history.push('/overview');
       })
     }
     this.setStepper();
   }
 
-  public moveNext = () : void => {
+  /**
+   * Move to next activity
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
+  public moveNext = (): void => {
     if (this.currentActivity < this.exam!.activities.length - 1) {
       this.currentActivity++;
       this.baseView?.onViewModelChanged();
@@ -106,7 +227,14 @@ export default class ExamViewModel implements IExamViewModel {
     this.baseView?.onViewModelChanged();
     this.setStepper();
   }
-  public movePrev = () : void => {
+  
+  /**
+   * Move to previous activity
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   */
+  public movePrev = (): void => {
     if (this.currentActivity !== 0) {
       this.currentActivity--;
       this.baseView?.onViewModelChanged();
@@ -116,10 +244,18 @@ export default class ExamViewModel implements IExamViewModel {
     this.setStepper();
   }
 
-  private validateResult = (key : number) : boolean => {
+  /**
+   * validate activity result
+   *
+   * @remarks
+   * This method is part of view-model, application logic parts, manipulating view.
+   * 
+   * @param key target activity index
+   */
+  private validateResult(key: number): boolean {
     const result = this.result[key];
     if (!this.exam?.activities[key] || !result) return false;
-    const {activity_type_id} = this.exam?.activities[key].activity;
+    const { activity_type_id } = this.exam?.activities[key].activity;
     if (activity_type_id === 1) {
       return validateMatching(result as string[][])
     }

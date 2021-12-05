@@ -1,3 +1,8 @@
+// RankingItem.tsx
+/**
+ * This file contains components, relaed to user ranking item in point ranking page.
+*/
+
 import { Skeleton } from "@mui/material";
 import { withRouter, RouteComponentProps  } from 'react-router-dom';
 import React from "react";
@@ -14,8 +19,16 @@ class RankingItem extends React.Component<Props> {
     super (props);
     this.onInspectPerson = this.onInspectPerson.bind(this)
   }
+  
+  /**
+   * On user select person, load person profile page
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   onInspectPerson () : void {
-    this.props.history.replace('/profile/' + this.props.data.user_id)
+    this.props.history.push('/profile/' + this.props.data.user_id)
   }
   public render(): JSX.Element {
     const data = this.props.data;

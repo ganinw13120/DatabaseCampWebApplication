@@ -1,23 +1,30 @@
+// HeaderCard.tsx
+/**
+ * This file contains components, relaed to header card in overview page.
+*/
+
 import React from 'react';
-import { inject, observer } from 'mobx-react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Progress } from 'semantic-ui-react'
 
 import {Content} from '@model/Learning';
-import { OverviewStore } from '@store/stores/OverviewStore';
 
 interface HeaderCardProps extends RouteComponentProps {
   data : Content,
-  overviewStore ?: OverviewStore
 }
 
-@inject('overviewStore')
-@observer
 class HeaderCard extends React.Component<HeaderCardProps, {}>{
+
+  /**
+   * On user click continue, load content
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   private onClickContinue () : void {
-    // const { content_id } = this.props.overviewStore!.store.data?.lasted_group;
     const {content_id} = this.props.data;
-    this.props.history.replace('/learning/content/' + content_id);
+    this.props.history.push('/learning/content/' + content_id);
   }
   public render(): JSX.Element {
     const { content_name, group_name, progress  } = this.props.data;

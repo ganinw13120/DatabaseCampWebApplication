@@ -1,5 +1,9 @@
-import { Component, ReactElement } from 'react';
+// App.tsx
+/**
+ * This file contains entry component, located on top of component trees.
+*/
 
+import { Component, ReactElement } from 'react';
 import '@root/App.css';
 
 import LandingPage from "@view/landing-page";
@@ -31,10 +35,18 @@ import LoggedMiddleware from '@middleware/LoggedMiddleware';
 import { Provider } from 'mobx-react';
 
 import RootStore  from '@store/RootStore';
+import { Routes } from '@model/App';
 
 
+/**
+ * Initializing stores
+ * 
+ */
 const _RootStore = new RootStore();
 
+/**
+ * Getting all stores from RootStore
+*/
 const store = {
   rootStore: _RootStore,
   authStore: _RootStore.authStore,
@@ -46,12 +58,10 @@ const store = {
   examinationStore : _RootStore.examinationStore,
 };
 
-interface route {
-  url: string,
-  page : ReactElement,
-}
-
-const appRouteList : route[] = [
+/**
+ * Listing all routes in application
+*/
+const appRouteList : Routes[] = [
   {
     url: '/overview',
     page : <OverviewPage/>
@@ -87,9 +97,12 @@ const appRouteList : route[] = [
 ];
 
 export default class App extends Component {
-
   render(): JSX.Element  {
     const appRouterendered : ReactElement[] = [];
+
+    /**
+     * Mapping all routes into components.
+    */
     appRouteList.forEach((e, key) => {
       appRouterendered.push(
         <Route path={e.url} exact key={key}>
@@ -99,6 +112,7 @@ export default class App extends Component {
         </Route>
       )
     })
+    
     return (
       <Provider {...store}>
         <Router>
@@ -118,7 +132,7 @@ export default class App extends Component {
             </Route>
             {appRouterendered}
             <Route>
-              <NotFoundPage />              
+              <NotFoundPage />
             </Route>
           </Switch>
         </Router>

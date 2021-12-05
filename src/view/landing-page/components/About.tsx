@@ -1,23 +1,55 @@
+// About.tsx
+/**
+ * This file contains components, related to about section in landing page.
+*/
+
 import React from 'react';
 import Circle from '@assets/circle.svg';
 import About1 from '@assets/about-1.png';
 import About2 from '@assets/about-2.png';
 
-export default class About extends React.Component<any, any> {
+type AboutState = {
+  offSetY: number
+}
 
-  public constructor(props: any) {
+export default class About extends React.Component<{}, AboutState> {
+  public constructor(props: {}) {
     super(props);
     this.state = {
-      offsetY : 0
+      offSetY: 0
     }
     this.handleScroll = this.handleScroll.bind(this);
   }
-  handleScroll () :void {
+
+  /**
+   * On user scroll website, set state.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
+  handleScroll(): void {
     this.setState({ offSetY: window.pageYOffset });
   }
+
+  /**
+   * On component did mount, add event listener to observe user scoll
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll, false);
   }
+
+  /**
+   * On component will unmount, remove event listener to unobserve user scoll
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll, false);
   }
@@ -28,20 +60,20 @@ export default class About extends React.Component<any, any> {
         <div id='about' className='font-prompt flip-wavediv w-full -mt-1 mb-10 z-10'>
           <div className='h-auto w-full md:pt-16 lg:pt-32 '>
             <div className='w-full text-center' >
-              <span className='border-white mx-auto shadow-text text-3xl md:text-4xl lg:text-5xl text-white font-semibold tracking-wider'  style={{borderBottom:'0.7px solid #FFFFFF'}}>เกี่ยวกับเรา</span>
+              <span className='border-white mx-auto shadow-text text-3xl md:text-4xl lg:text-5xl text-white font-semibold tracking-wider' style={{ borderBottom: '0.7px solid #FFFFFF' }}>เกี่ยวกับเรา</span>
             </div>
           </div>
           <div className='mt-32'>
             <div className='float-right margin-circle'>
-              <img  style={{ transform: `translateY(${offSetY * .1}px)`, transition : 'transform 0.5s' }} src={Circle} alt="Logo" className='z-0 w-2/3  opacity-50' />
+              <img style={{ transform: `translateY(${offSetY * .1}px)`, transition: 'transform 0.5s' }} src={Circle} alt="Logo" className='z-0 w-2/3  opacity-50' />
             </div>
-            <div  className='float-right pt-10'>
-              <img  style={{ transform: `translateY(${offSetY * .15}px)`, transition : 'transform 0.5s' }} src={Circle} alt="Logo" className='z-0' />
+            <div className='float-right pt-10'>
+              <img style={{ transform: `translateY(${offSetY * .15}px)`, transition: 'transform 0.5s' }} src={Circle} alt="Logo" className='z-0' />
             </div>
           </div>
           <div className='md:grid md:grid-cols-2 w-full'>
-            <div className='landing-container p-4 w-full'>            
-              <img src={About1} alt="Logo"/>
+            <div className='landing-container p-4 w-full'>
+              <img src={About1} alt="Logo" />
             </div>
             <div className='landing-container p-4 w-full my-auto'>
               <div className='pl-10'>
@@ -64,8 +96,8 @@ export default class About extends React.Component<any, any> {
             </div>
           </div>
           <div className='md:grid md:grid-cols-2 w-screen mt-16 bg-bg'>
-            <div className='md:order-2 landing-container p-4 w-full'>            
-              <img src={About2} alt="Logo"/>
+            <div className='md:order-2 landing-container p-4 w-full'>
+              <img src={About2} alt="Logo" />
             </div>
             <div className='text-right landing-container p-4 w-full my-auto '>
               <div className='pl-10 pr-20'>
@@ -82,8 +114,8 @@ export default class About extends React.Component<any, any> {
               </div>
               <div className='mt-10 pl-10 pr-20'>
                 <span className='text-lg md:text-xl lg:text-2xl text-darkPrimary font-light tracking-wider'>
-                เรียนรู้ผ่านการทำกิจกรรม
-                เพื่อสร้างความชำนาญ
+                  เรียนรู้ผ่านการทำกิจกรรม
+                  เพื่อสร้างความชำนาญ
                 </span>
               </div>
             </div>

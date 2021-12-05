@@ -1,27 +1,65 @@
-import React from 'react';
+// Navbar.tsx
+/**
+ * This file contains components, related navigation bar on error page.
+*/
+import { Component } from 'react';
 import DarkLogo from '@assets/dark-logo.png';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-class Navbar extends React.Component<any, any> {
+type NavbarState = {
+  offSetY : number
+}
 
-  public constructor(props: any) {
+class Navbar extends Component<RouteComponentProps, NavbarState> {
+
+  public constructor(props: RouteComponentProps) {
     super(props);
     this.state = {
-      offsetY : 0
+      offSetY : 0
     }
     this.handleScroll = this.handleScroll.bind(this);
   }
+  
+  /**
+   * On user scroll, update state.
+   * 
+   * @remarks
+   * This is a part of view component.
+  */
   handleScroll () :void {
     this.setState({ offSetY: window.pageYOffset });
   }
+
+  /**
+   * On component did mount, add event lister to get user's scroll action
+   * 
+   * @remarks
+   * This is a part of view component.
+  */
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll, false);
   }
+
+  /**
+   * On component did mount, remove event lister
+   * 
+   * @remarks
+   * This is a part of view component.
+  */
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll, false);
   }
+
+  /**
+   * On user select navigation bar item, load target page
+   * 
+   * @remarks
+   * This is a part of view component.
+   * 
+   * @param url target page url
+  */
   loadPage(url: string) {
-    this.props.history.replace('/' + url);
+    this.props.history.push('/' + url);
   }
   public render(): JSX.Element {
     const { offSetY } = this.state;

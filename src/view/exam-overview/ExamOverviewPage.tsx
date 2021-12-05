@@ -1,35 +1,47 @@
+// ExamOverviewPage.tsx
+/**
+ * This file contains components, related examination overview page.
+*/
+
 import React, { ReactElement } from 'react';
 import BaseView from '@view/BaseView';
-import 'semantic-ui-css/semantic.min.css'
-import './Bar.css'
-import './overview.css'
+import './exam-overview.css';
 import { inject, observer } from 'mobx-react';
 import { withRouter, RouteComponentProps  } from 'react-router-dom';
+
 import ExamOverviewViewModel from '@view-model/exam-overview/ExamOverviewViewModel';
+import IExamOverviewViewModel from '@view-model/exam-overview/IExamOverviewViewModel';
+
 import Skeleton from '@mui/material/Skeleton';
 
 import HeaderCard from "./components/HeaderCard";
 import HeaderSkeleton from "./components/HeaderSkeleton";
 
-import {AppStore} from '@store/stores/AppStore';
-import {ExaminationStore} from '@store/stores/ExaminationStore';
+import IAppStore from '@store/stores/AppStore/IAppStore';
+import IExaminationStore from '@store/stores/ExaminationStore/IExaminationStore';
+
+import {SIDEBAR_EXAMINATION} from '@constant/text';
+
+export interface IExamOverviewPage extends BaseView {
+  props : ExamOverviewProps
+}
 
 interface ExamOverviewComponentState {}
 
 interface ExamOverviewProps extends RouteComponentProps {
-  appStore ?: AppStore,
-  examinationStore ?: ExaminationStore,
+  appStore ?: IAppStore,
+  examinationStore ?: IExaminationStore,
 }
 
 @inject('examinationStore')
 @inject('appStore')
 @observer
 
-class OverviewPage
+class ExamOverviewPage
   extends React.Component<ExamOverviewProps, ExamOverviewComponentState>
-  implements BaseView
+  implements IExamOverviewPage
 {
-  private examOverviewViewModel: ExamOverviewViewModel;
+  private examOverviewViewModel: IExamOverviewViewModel;
 
   public constructor(props: any) {
     super(props);
@@ -39,8 +51,23 @@ class OverviewPage
     this.examOverviewViewModel = overviewViewModel;
   }
 
+  /**
+   * On view-model changes, update view states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public onViewModelChanged(): void {}
 
+
+  /**
+   * On component did mount, set application store, and attach view-model
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public componentDidMount(): void {
     const { isExpand } = this.props.appStore!.store ;
     if (!isExpand) {
@@ -64,7 +91,7 @@ class OverviewPage
                   <span className="w-full bg-darkPrimary">..</span>
                 </div>
                 <div className="text-3xl text-darkPrimary font-semibold tracking-wider pt-6">
-                  <span>การทดสอบ</span>
+                  <span>{SIDEBAR_EXAMINATION}</span>
                 </div>
               </>
             )}
@@ -91,4 +118,4 @@ class OverviewPage
     );
   }
 }
-export default withRouter(OverviewPage);
+export default withRouter(ExamOverviewPage);

@@ -1,16 +1,20 @@
+// LoggedMiddleware.tsx
+/**
+ * This file used be middleware for checking authentication state.
+*/
 import { inject, observer  } from "mobx-react"
 import { observe  } from "mobx"
 import { Component } from "react"
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import AppLayout from "@view/layout/app/AppLayout";
-import { AuthStore } from "@store/stores/AuthStore";
+import { AuthStore } from '@store/stores/AuthStore/AuthStore';
 
 interface LoggedMiddlewareProps extends RouteComponentProps {
   authStore ?: AuthStore
 }
 
 @inject('authStore')
-@observer 
+@observer
 class LoggedMiddleware extends Component<LoggedMiddlewareProps, {}> {
   componentDidMount() {
     this.checkUser();
@@ -18,6 +22,11 @@ class LoggedMiddleware extends Component<LoggedMiddlewareProps, {}> {
       this.checkUser();
     })
   }
+
+  /**
+   * Check user authentication state, validating user's authentication
+   * push back to login if user is not logged in
+   */
   checkUser() {
     const { isLoading, userData, token } = this.props.authStore!.store;
     if ((!isLoading && !userData) || (!isLoading && !token)) {

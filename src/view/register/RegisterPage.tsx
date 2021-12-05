@@ -1,3 +1,8 @@
+// RegisterPage.tsx
+/**
+ * This file contains components, relaed to register page.
+*/
+
 import { Component } from 'react';
 import BaseView from '@view/BaseView';
 import FullLogo from '@assets/high-res-full-logo.png';
@@ -7,10 +12,12 @@ import { KeyOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@an
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
+import validateName from '@util/validateName';
 import validateEmail from '@util/validateEmail';
 import validatePassword from '@util/validatePassword';
-import { AppStore } from '@store/stores/AppStore';
-import { AuthStore } from '@store/stores/AuthStore';
+import { AppStore } from '@store/stores/AppStore/AppStore';
+import { AuthStore } from '@store/stores/AuthStore/AuthStore';
+import IAuthViewModel from '@view-model/auth/IAuthViewModel';
 
 export interface IRegisterPage extends BaseView {
   props : RegisterProps
@@ -32,7 +39,7 @@ interface RegisterComponentState {
 class RegisterPage extends Component<RegisterProps, RegisterComponentState>
   implements IRegisterPage {
   
-  private viewModel: RegisterViewModel;
+  private viewModel: IAuthViewModel;
   
   public constructor(props: RegisterProps) {
     super(props);
@@ -42,22 +49,36 @@ class RegisterPage extends Component<RegisterProps, RegisterComponentState>
     
     this.viewModel = viewModel;
 
-    
     this.state = {
-      displayText : viewModel.displayText,
-      isLoading : viewModel.isLoading
+      displayText : viewModel.getDisplayText(),
+      isLoading : viewModel.getIsLoadng(),
     }
   }
   
+
+  /**
+   * On component did mount, set application store, and attach view-model
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public componentDidMount(): void {
     this.viewModel.attachView(this);
     this.props.appStore?.setPercent(100)
   }
 
+  /**
+   * On view-model changes, update view states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public onViewModelChanged(): void {
     this.setState({
-      displayText : this.viewModel.displayText,
-      isLoading : this.viewModel.isLoading
+      displayText : this.viewModel.getDisplayText(),
+      isLoading : this.viewModel.getIsLoadng()
     })
   }
 
@@ -66,7 +87,7 @@ class RegisterPage extends Component<RegisterProps, RegisterComponentState>
     return (
       <>
         <Form
-          ref={this.viewModel.formRef}
+          ref={this.viewModel.getFormRef()}
           name="basic"
           onFinish={this.viewModel.OnFinish}
           autoComplete="off"
@@ -93,7 +114,7 @@ class RegisterPage extends Component<RegisterProps, RegisterComponentState>
                     <span >ชื่อ :</span>
                   </div>
                   <div>
-                    <Form.Item name="name" rules={[{ required: true, message: 'กรุณากรอกชื่อ'}]}>
+                    <Form.Item name="name" rules={[{validator : validateName}]}>
                       <Input className='mt-3 h-12 w-full' size="large" placeholder="ชื่อ" prefix={<UserOutlined className='mr-3'/>} />
                     </Form.Item>
                   </div>
@@ -123,7 +144,24 @@ class RegisterPage extends Component<RegisterProps, RegisterComponentState>
                   <span >ยีนยันรหัสผ่าน :</span>
                 </div>
                 <div className='w-full'>
-                  <Form.Item name="password_comfirmation" rules={[ {validator : this.viewModel?.matchPassword}]} className='w-full'>
+                  <Form.Item 
+                    name="password_comfirmation" 
+                    dependencies={['password']}
+                    rules={[
+                      {
+                        required: true,
+                        message: 'กรุณากรอกยืนยันรหัสผ่าน',
+                      },
+                      ({ getFieldValue }) => ({
+                        validator(_, value) {
+                          if (!value || getFieldValue('password') === value) {
+                            return Promise.resolve();
+                          }
+                          return Promise.reject(new Error('รหัสผ่านไม่ตรงกัน'));
+                        },
+                      }),
+                    ]}
+                    className='w-full'>
                     <Input.Password iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} className='mt-3 h-12 ' size="large" placeholder="รหัสผ่าน" prefix={<KeyOutlined className='mr-3'/>}  />
                   </Form.Item>
                 </div>
@@ -133,7 +171,7 @@ class RegisterPage extends Component<RegisterProps, RegisterComponentState>
                     <Button disabled={isLoading} htmlType="submit" className='w-full h-24 bg-primary' style={{height: '100%'}} ghost size='large'><span className='text-base text-white font-light tracking-wider '>สมัครสมาชิก</span></Button>
                   </div>
                   <div className="mt-5 h-14 text-center cursor-pointer">
-                    <span onClick={this.viewModel.onClickLoginButton} className='text-base text-darkPrimary font-light tracking-wider '>เข้าสู่ระบบ</span>
+                    <span onClick={this.viewModel.onChangePage} className='text-base text-darkPrimary font-light tracking-wider '>เข้าสู่ระบบ</span>
                   </div>
                 </div>
               </div>

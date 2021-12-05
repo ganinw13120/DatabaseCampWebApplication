@@ -1,16 +1,21 @@
+// ExamPage.tsx
+/**
+ * This file contains components, related examination.
+*/
+
 import { Component, ReactElement, Fragment } from 'react';
 import BaseView from '@view/BaseView';
-import 'semantic-ui-css/semantic.min.css'
-import './Bar.css'
-import './overview.css'
+import './exam.css'
 import { inject, observer } from 'mobx-react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+
 import ExamViewModel from '@view-model/exam/ExamViewModel';
+import IExamViewModel from '@view-model/exam/IExamViewModel';
 
 import Requirement from '../activity/components/Requirement';
 
-import { AppStore } from '@store/stores/AppStore';
-import { ExaminationStore } from '@store/stores/ExaminationStore';
+import IAppStore from '@store/stores/AppStore/IAppStore';
+import IExaminationStore from '@store/stores/ExaminationStore/IExaminationStore';
 
 import { ActivityAlert, CompletionChoice, Exam, ExamActivity, ExamType, MatchingChoice, MultipleChoice, RoadMap } from '@model/Learning';
 import Matching from '../activity/components/Matching';
@@ -20,8 +25,10 @@ import AlertTab from '../activity/components/AlertTab';
 import { CircularProgress } from '@mui/material';
 import { green } from '@mui/material/colors';
 
+import { EXAMINATION_INSTRUCTION_TITLE, EXAMINATION_BACK_BUTTON, EXAMINATION_START } from '@constant/text';
+
 export interface IExamPage extends BaseView {
-  props : ExamPageProps
+  props: ExamPageProps
 }
 
 interface ExamPageState {
@@ -32,10 +39,10 @@ interface ExamPageState {
 }
 
 interface ExamPageProps extends RouteComponentProps<{
-  id : string
+  id: string
 }> {
-  appStore?: AppStore,
-  examinationStore?: ExaminationStore,
+  appStore?: IAppStore,
+  examinationStore?: IExaminationStore,
 }
 
 @inject('examinationStore')
@@ -45,7 +52,7 @@ interface ExamPageProps extends RouteComponentProps<{
 class ExamPage
   extends Component<ExamPageProps, ExamPageState>
   implements IExamPage {
-  private examViewModel: ExamViewModel;
+  private examViewModel: IExamViewModel;
 
   public constructor(props: ExamPageProps) {
     super(props);
@@ -63,15 +70,29 @@ class ExamPage
 
   }
 
+  /**
+   * On view-model changes, update view states.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public onViewModelChanged(): void {
     this.setState({
-      exam: this.examViewModel.exam,
-      currentActivity: this.examViewModel.currentActivity,
-      alert: this.examViewModel.alert,
-      isLoading: this.examViewModel.isLoading
+      exam: this.examViewModel.getExam(),
+      currentActivity: this.examViewModel.getCurrentActivity(),
+      alert: this.examViewModel.getAlert(),
+      isLoading: this.examViewModel.getIsLoading()
     })
   }
 
+  /**
+   * On component did mount, set application store, and attach view-model
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   public componentDidMount(): void {
     const { isExpand } = this.props.appStore!.store;
     if (isExpand) {
@@ -80,16 +101,20 @@ class ExamPage
     this.examViewModel.attachView(this);
   }
 
-  componentDidUpdate(): void {
-    // let { exam } = this.state;
-    // const examId = this.props.match.params.id;
-    // if (examId && exam?.exam.exam_id.toString() !== examId) {
-    //   this.examViewModel.attachView(this);
-    //   this.setState({ exam: null })
-    // }
-  }
-
-  private getCurrentActivity(act: number, currentActivity: number): ReactElement | null {
+  /**
+   * On user's enter examination, generating all activity.
+   * 
+   * @remarks
+   * This is a part of view component.
+   * 
+   * @param act activity's identifier
+   * 
+   * @param currentActivity current activity index
+   * 
+   * @return Activity react element
+   *
+   */
+  private getActivityElement(act: number, currentActivity: number): ReactElement | null {
     const { exam, alert, isLoading } = this.state;
     if (!exam) return null;
     const examActivity: ExamActivity[] = exam?.activities;
@@ -107,7 +132,6 @@ class ExamPage
       <Requirement
         activityInfo={data.activity}
         roadMap={roadMap}
-        submitText={act === examActivity.length - 1 ? 'ส่งคำตอบ' : "ถัดไป"}
         isHidden={isHidden}
       />
       <div className={`${isHidden ? 'hidden' : ''} pt-20 pb-12 col-span-6`}>
@@ -145,7 +169,7 @@ class ExamPage
           <div className='flex w-5/6 mx-auto'>
             <div className='flex-grow'>
             </div>
-            <div onClick={() => { this.examViewModel.obSubmitActivity() }} className={`relative ${isLoading ? '' : 'hoverable'} flex-none bg-${isLoading ? 'disabledPrimary' : 'primary'} mt-10 text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'loading' : 'pointer'}`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+            <div onClick={() => { this.examViewModel.SubmitActivity() }} className={`relative ${isLoading ? '' : 'hoverable'} flex-none bg-${isLoading ? 'disabledPrimary' : 'primary'} mt-10 text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-${isLoading ? 'loading' : 'pointer'}`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
               {act === examActivity.length - 1 ? 'ส่งคำตอบ' : "ถัดไป"}
               {isLoading && <CircularProgress
                 size={24}
@@ -164,8 +188,14 @@ class ExamPage
     </Fragment>)
   }
 
+  /**
+   * Return user to overview page.
+   * 
+   * @remarks
+   * This is a part of view component.
+   */
   private returnOverview(): void {
-    return this.props.history.replace('/examination/overview');
+    return this.props.history.push('/examination/overview');
   }
 
   public render(): JSX.Element {
@@ -178,7 +208,7 @@ class ExamPage
             const examList: ReactElement[] = [];
             let i = 0;
             while (i < exam!.activities.length) {
-              const exam = this.getCurrentActivity(i, currentActivity)
+              const exam = this.getActivityElement(i, currentActivity)
               if (exam) examList.push(exam);
               i++;
             }
@@ -197,6 +227,12 @@ interface InstructionProps {
   returnOverview(): void
 }
 
+/**
+ * Examination's instruction shown to user before starting examination.
+ * 
+ * @remarks
+ * This is a part of view component.
+ */
 class Instruction extends Component<InstructionProps, any> {
   render(): JSX.Element {
     return (<>
@@ -207,7 +243,7 @@ class Instruction extends Component<InstructionProps, any> {
             <span className="w-full bg-darkPrimary">..</span>
           </div>
           <div className="text-3xl text-darkPrimary font-semibold tracking-wider pt-6 ml-7">
-            <span>คำชี้เเจง</span>
+            <span>{EXAMINATION_INSTRUCTION_TITLE}</span>
           </div>
         </div>
         <div className='my-auto'>
@@ -220,10 +256,10 @@ class Instruction extends Component<InstructionProps, any> {
         <div className='flex'>
           <div className='flex-grow'></div>
           <div onClick={() => { this.props.returnOverview(); }} className={`w-64 text-center mt-32 border-gray gray-hoverable  mx-8 border text-darkPrimary text-lg font-medium py-4 px-10 tracking-wider rounded-xl cursor-pointer`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
-            ย้อนกลับ
+            {EXAMINATION_BACK_BUTTON}
           </div>
           <div onClick={() => { this.props.onNext?.() }} className={`w-64 text-center mt-32 hoverable  mx-8 bg-primary text-white text-lg font-normal py-4 px-10 tracking-wider rounded-xl cursor-pointer`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
-            เริ่มทำแบบทดสอบ
+            {EXAMINATION_START}
           </div>
           <div className='flex-grow'></div>
         </div>

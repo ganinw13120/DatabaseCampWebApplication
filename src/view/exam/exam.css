@@ -1,0 +1,16 @@
+/* overview.css */
+/* Set store style for user interface */
+
+.continuebtn {
+    transition : all 0.07s;
+}
+.continuebtn:hover {
+    background-color : #E7E5DE; 
+}
+
+.instruction {
+    width : 70vw;
+}
+.instructionbox {
+    position : absolute;
+}

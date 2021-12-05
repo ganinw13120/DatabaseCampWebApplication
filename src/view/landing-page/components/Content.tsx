@@ -1,3 +1,8 @@
+// Content.tsx
+/**
+ * This file contains components, relaed to content section in landing page.
+*/
+
 import React from 'react';
 import Circle from '@assets/circle.svg';
 

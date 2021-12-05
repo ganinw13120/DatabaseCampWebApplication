@@ -1,28 +1,71 @@
+// Example.tsx
+/**
+ * This file contains components, relaed to navigation bar section in landing page.
+*/
+
 import React from 'react';
 import DarkLogo from '@assets/dark-logo.png';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import scrollTo from '@util/scrollTo';
- 
-class Navbar extends React.Component<any, any> {
 
-  public constructor(props: any) {
+type NavbarState = {
+  offSetY : number
+}
+
+class Navbar extends React.Component<RouteComponentProps, NavbarState> {
+
+  public constructor(props: RouteComponentProps) {
     super(props);
     this.state = {
-      offsetY : 0
+      offSetY : 0
     }
     this.handleScroll = this.handleScroll.bind(this);
   }
+
+  /**
+   * On user scroll website, set state.
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   handleScroll () :void {
     this.setState({ offSetY: window.pageYOffset });
   }
+
+  /**
+   * On component did mount, add event listener to observe user scoll
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll, false);
   }
+
+  /**
+   * On component will unmount, remove event listener to unobserve user scoll
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll, false);
   }
+
+  /**
+   * On user select item on navigation bar, taking user target url
+   * 
+   * @remarks
+   * This is a part of view component.
+   * 
+   * @param url target url
+   *
+   */
   loadPage(url: string) {
-    this.props.history.replace('/' + url);
+    this.props.history.push('/' + url);
   }
   public render(): JSX.Element {
     const { offSetY } = this.state;

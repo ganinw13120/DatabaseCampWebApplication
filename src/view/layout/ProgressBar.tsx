@@ -1,16 +1,29 @@
+// ProgressBar.tsx
+/**
+ * This file contains components, related to progress bar in application.
+*/
+
 import {Component} from "react";
 import { inject, observer } from 'mobx-react';
 
 
 @inject('appStore')
 @observer
-export default class Sidebar extends Component<any, any>{
+export default class ProgressBar extends Component<any, any>{
   constructor (props : any) {
     super (props)
     this.state = {
       isWaiting : true,
     }
   }
+  
+  /**
+   * On component did mount, set waiting to delay loading indicator
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   componentDidMount () {
     setTimeout(() => {
       this.setState({
@@ -18,6 +31,7 @@ export default class Sidebar extends Component<any, any>{
       })
     }, 10);
   }
+  
   render(): JSX.Element {
     const speed = 1.2;
     const { isWaiting} = this.state;

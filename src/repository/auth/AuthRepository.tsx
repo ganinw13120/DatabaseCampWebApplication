@@ -1,3 +1,7 @@
+// AuthRepository.ts
+/**
+ * This file is a part of repository, used to conenct with services which related to authentication. 
+*/
 import IAuthRepository from './IAuthRepository';
 
 import axios from 'axios';
@@ -9,12 +13,12 @@ export default class AuthRepository implements IAuthRepository {
 
   /**
    * Verify `Access Token` of current session token.
-   * 
+   *
    * @remarks
    * This method is part of repository, connect to backend service.
-   * 
+   *
    * @param token for authentication
-   * 
+   *
    * @return current user's information, reject if token is unable to verify.
    */
   public async VerifyToken(token: string) : Promise<User> {
@@ -34,12 +38,12 @@ export default class AuthRepository implements IAuthRepository {
 
   /**
    * Submit `Login` information to generate session.
-   * 
+   *
    * @remarks
    * This method is part of repository, connect to backend service.
-   * 
+   *
    * @param data information of user
-   * 
+   *
    * @return User's information, reject if unable to login.
    */
   public async Login(data: any): Promise<AuthUser> {
@@ -54,12 +58,12 @@ export default class AuthRepository implements IAuthRepository {
 
   /**
    * Submit `Register` information to generate session.
-   * 
+   *
    * @remarks
    * This method is part of repository, connect to backend service.
-   * 
+   *
    * @param data information of user
-   * 
+   *
    * @return User's information, reject if unable to register
    */
   public async Register(data: any): Promise<AuthUser> {
