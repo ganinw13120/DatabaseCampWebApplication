@@ -1,3 +1,8 @@
+// Stepper.tsx
+/**
+ * This file contains components, related to stepper used to show learning step in application.
+*/
+
 import { Component, ReactElement } from "react";
 
 import { styled } from '@mui/material/styles';
@@ -110,6 +115,14 @@ interface StepperProps {
 @inject('appStore')
 @observer
 export default class ActivityStepper extends Component<StepperProps, any> {
+  
+  /**
+   * Render stepper from stepper data pulled from application store
+   * 
+   * @remarks
+   * This is a part of view component.
+   *
+   */
   render(): JSX.Element | null {
     const { stepper } = this.props!.appStore!.store;
     return (stepper ? <>

@@ -1,3 +1,8 @@
+// Header.tsx
+/**
+ * This file contains components, related to header title used in pages.
+*/
+
 import React from "react";
 
 interface HeaderProps {

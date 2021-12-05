@@ -6,6 +6,12 @@ export const WARNING_HINT_TITLE = 'ท่านต้องการขอคำ
 export const WARNING_HINT_DESCRIPTION = 'การขอคำใบ้จะหักเเต้มที่ได้รับในการทำกิจกรรม'
 export const WARNING_HINT_ACCEPT = 'ตกลง'
 export const WARNING_HINT_CANCLE = 'ยกเลิก'
+
+export const WARNING_LOGOUT_TITLE = 'คำเตือน'
+export const WARNING_LOGOUT_DESCRIPTION = 'ท่านต้องการออกจากระบบใช่หรือไม่'
+export const WARNING_LOGOUT_ACCEPT = 'ตกลง'
+export const WARNING_LOGOUT_CANCLE = 'ยกเลิก'
+
 export const HINT_HEADER_TEXT = 'Show Hint'
 export const ACTIVITY_REQUIREMENT_HEADER = 'ความต้องการของระบบ'
 export const ACTIVITY_BREADCRUMBS = 'เนื้อหา'
