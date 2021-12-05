@@ -24,7 +24,11 @@ const checkNameFormat = (_: any, val: string, callback: any): void => {
     if (valid) {
       callback();
     } else {
-      callback('ความยาวต้องไม่เกิน 100 ตัวอักษร');
+      if (val) {
+        callback('ความยาวต้องไม่เกิน 100 ตัวอักษร');
+      } else {
+        callback('กรุณากรอกชื่อ');
+      }
     }
   })
 }
