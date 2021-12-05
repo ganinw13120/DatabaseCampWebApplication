@@ -12,6 +12,7 @@ import { KeyOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@an
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
+import validateName from '@util/validateName';
 import validateEmail from '@util/validateEmail';
 import validatePassword from '@util/validatePassword';
 import { AppStore } from '@store/stores/AppStore/AppStore';
@@ -140,7 +141,7 @@ class RegisterPage extends Component<RegisterProps, RegisterComponentState>
                     <span >ชื่อ :</span>
                   </div>
                   <div>
-                    <Form.Item name="name" rules={[{ required: true, message: 'กรุณากรอกชื่อ'}]}>
+                    <Form.Item name="name" rules={[{ required: true, message: 'กรุณากรอกชื่อ'}, {validator : validateName}]}>
                       <Input className='mt-3 h-12 w-full' size="large" placeholder="ชื่อ" prefix={<UserOutlined className='mr-3'/>} />
                     </Form.Item>
                   </div>
