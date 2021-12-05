@@ -99,9 +99,13 @@ class Choice extends React.Component<ChoiceProps, any> {
 
   /**
    * Calculate coordination that choice box should be move to.
-   * 
+   *  
    * @remarks
    * This is a part of view component.
+   * 
+   * @param boxRef Snap box reference
+   * 
+   * @returns X,Y Coordination of choice
   */
   calculateCoordination = (boxRef: any): { x: number, y: number } => {
     const { x, y } = this.originalRef?.current.getBoundingClientRect();
