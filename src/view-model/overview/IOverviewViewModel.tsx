@@ -9,7 +9,7 @@ export default interface IOverviewViewModel extends BaseViewModel {
    *
    * @remarks
    * This method is part of view-model, application logic parts, manipulating view.
-   * 
+   *
    * @returns Overview data
    */
   getData(): Overview | null

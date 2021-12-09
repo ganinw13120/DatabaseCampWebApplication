@@ -74,7 +74,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
   
   /**
    * On component did mount, set application information, and attach view-model
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -90,7 +90,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
 
   /**
    * On component did update, reattach view-model due to changes of properties.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -106,7 +106,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
 
   /**
    * On component will unmount, detach view.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -117,7 +117,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
 
   /**
    * On user request hint, show hint popups.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -140,7 +140,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
   
   /**
    * On view-model changes, update view states.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *

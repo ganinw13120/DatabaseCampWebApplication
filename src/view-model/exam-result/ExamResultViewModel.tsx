@@ -45,7 +45,7 @@ export default class ExaminationResultViewModel implements IProfileViewModel {
    *
    * @remarks
    * This method is part of view-model, application logic parts, manipulating view.
-   * 
+   *
    * @returns Examination result data
    */
   public getData () : ExamResult | null {

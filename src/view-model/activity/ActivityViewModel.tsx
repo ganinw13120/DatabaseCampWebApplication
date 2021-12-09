@@ -151,9 +151,9 @@ export default class ActivityViewModel implements IActivityViewModel {
    *
    * @remarks
    * This method is part of view-model, application logic parts, manipulating view.
-   * 
+   *
    * @param roadMap Roadmap information
-   * 
+   *
    * @returns Current activity index in roadmap
    */
   private getCurrentActivityOrder(roadMap: RoadMap): number {
@@ -274,7 +274,7 @@ export default class ActivityViewModel implements IActivityViewModel {
    *
    * @remarks
    * This method is part of view-model, application logic parts, manipulating view.
-   * 
+   *
    * @param result activity's answer
    */
   public updateResult = (result: Answer): void => {

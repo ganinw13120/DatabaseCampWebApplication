@@ -72,7 +72,7 @@ class ExamPage
 
   /**
    * On view-model changes, update view states.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -88,7 +88,7 @@ class ExamPage
 
   /**
    * On component did mount, set application store, and attach view-model
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -103,7 +103,7 @@ class ExamPage
 
   /**
    * On component will unmount, detach view.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -114,14 +114,14 @@ class ExamPage
 
   /**
    * On user's enter examination, generating all activity.
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param act activity's identifier
-   * 
+   *
    * @param currentActivity current activity index
-   * 
+   *
    * @return Activity react element
    *
    */
@@ -201,7 +201,7 @@ class ExamPage
 
   /**
    * Return user to overview page.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    */
@@ -240,7 +240,7 @@ interface InstructionProps {
 
 /**
  * Examination's instruction shown to user before starting examination.
- * 
+ *
  * @remarks
  * This is a part of view component.
  */

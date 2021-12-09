@@ -23,7 +23,7 @@ export default class About extends React.Component<{}, AboutState> {
 
   /**
    * On user scroll website, set state.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -34,7 +34,7 @@ export default class About extends React.Component<{}, AboutState> {
 
   /**
    * On component did mount, add event listener to observe user scoll
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -45,7 +45,7 @@ export default class About extends React.Component<{}, AboutState> {
 
   /**
    * On component will unmount, remove event listener to unobserve user scoll
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *

@@ -27,10 +27,10 @@ export default class MultipleChoiceComponent extends Component<MultipleChoicePro
   
   /**
    * On user select choice, update state and result.
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param quest question box information
   */
   handleSelect(e : number): void {

@@ -47,9 +47,9 @@ export class LearningStore implements ILearningStore {
    * This method is part of learning store, manipulating learning and learning'data.
    *
    * @param contentID content identifier
-   * 
+   *
    * @param onSuccess on fetching success callback function
-   * 
+   *
    * @param onError on fetching error callback function
    */
   @action.bound
@@ -69,7 +69,7 @@ export class LearningStore implements ILearningStore {
    * This method is part of learning store, manipulating learning and learning'data.
    *
    * @param res roadmap information
-   * 
+   *
    * @return Roadmap information
    */
   @action.bound
@@ -86,9 +86,9 @@ export class LearningStore implements ILearningStore {
    * This method is part of learning store, manipulating learning and learning'data.
    *
    * @param activityID activity indentifier
-   * 
+   *
    * @param onSuccess on fetching success callback function
-   * 
+   *
    * @param onError on fetching error callback function
    */
   @action.bound
@@ -115,7 +115,7 @@ export class LearningStore implements ILearningStore {
    * This method is part of learning store, manipulating learning and learning'data.
    *
    * @param res activity information
-   * 
+   *
    * @return Activity information
    */
   @action.bound
@@ -133,7 +133,7 @@ export class LearningStore implements ILearningStore {
    * This method is part of learning store, manipulating learning and learning'data.
    *
    * @param activityID activity indentifier
-   * 
+   *
    * @param cb callback function
    */
   @action.bound
@@ -166,9 +166,9 @@ export class LearningStore implements ILearningStore {
    *
    * @remarks
    * This method is part of learning store, manipulating learning and learning'data.
-   * 
+   *
    * @param cb callback function
-   * 
+   *
    * @param message custom message (If any)
    */
   @action.bound
@@ -186,9 +186,9 @@ export class LearningStore implements ILearningStore {
    *
    * @remarks
    * This method is part of learning store, manipulating learning and learning'data.
-   * 
+   *
    * @param cb callback function
-   * 
+   *
    * @param message custom message (If any)
    */
   @action.bound
@@ -206,7 +206,7 @@ export class LearningStore implements ILearningStore {
    *
    * @remarks
    * This method is part of learning store, manipulating learning and learning'data.
-   * 
+   *
    * @param activity_id target activity identifire
    */
   @action.bound
@@ -225,11 +225,11 @@ export class LearningStore implements ILearningStore {
    *
    * @remarks
    * This method is part of learning store, manipulating learning and learning'data.
-   * 
+   *
    * @param activityID target activity identifire
-   * 
+   *
    * @param result activity answer
-   * 
+   *
    * @param cb callback function
    */
   @action.bound
@@ -255,11 +255,11 @@ export class LearningStore implements ILearningStore {
    *
    * @remarks
    * This method is part of learning store, manipulating learning and learning'data.
-   * 
+   *
    * @param activityID target activity identifire
-   * 
+   *
    * @param result activity answer
-   * 
+   *
    * @param cb callback function
    */
   @action.bound
@@ -296,11 +296,11 @@ export class LearningStore implements ILearningStore {
    *
    * @remarks
    * This method is part of learning store, manipulating learning and learning'data.
-   * 
+   *
    * @param activityID target activity identifire
-   * 
+   *
    * @param result activity answer
-   * 
+   *
    * @param cb callback function
    */
   @action.bound
@@ -367,9 +367,9 @@ export class LearningStore implements ILearningStore {
    *
    * @remarks
    * This method is part of learning store, manipulating learning and learning'data.
-   * 
+   *
    * @param res Hint information
-   * 
+   *
    * @returns message alert to user, null due to success action
    */
   @action.bound
@@ -388,11 +388,11 @@ export class LearningStore implements ILearningStore {
    *
    * @remarks
    * This method is part of learning store, manipulating learning and learning'data.
-   * 
+   *
    * @param contentID lecture's content identifier
-   * 
+   *
    * @param onSuccess on fetching success callback function
-   * 
+   *
    * @param onError on fetching error callback function
    */
   @action.bound
@@ -416,11 +416,11 @@ export class LearningStore implements ILearningStore {
    *
    * @remarks
    * This method is part of learning store, manipulating learning and learning'data.
-   * 
+   *
    * @param contentID lecture's content identifier
-   * 
+   *
    * @param onSuccess on fetching success callback function
-   * 
+   *
    * @param onError on fetching error callback function
    */
   @action.bound

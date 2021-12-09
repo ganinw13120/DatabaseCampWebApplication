@@ -55,7 +55,7 @@ class LecturePage extends React.Component<LectureProps, LectureComponentState>
 
   /**
    * On component did mount, set application store, and attach view-model
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -70,7 +70,7 @@ class LecturePage extends React.Component<LectureProps, LectureComponentState>
 
   /**
    * On view-model changes, update view states.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -83,7 +83,7 @@ class LecturePage extends React.Component<LectureProps, LectureComponentState>
 
   /**
    * On component will unmount, detach view.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *

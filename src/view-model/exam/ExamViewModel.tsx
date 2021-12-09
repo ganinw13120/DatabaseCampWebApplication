@@ -135,7 +135,7 @@ export default class ExamViewModel implements IExamViewModel {
    *
    * @remarks
    * This method is part of view-model, application logic parts, manipulating view.
-   * 
+   *
    * @param res Examination information
    *
    * @returns Stepper information
@@ -166,9 +166,9 @@ export default class ExamViewModel implements IExamViewModel {
    *
    * @remarks
    * This method is part of view-model, application logic parts, manipulating view.
-   * 
+   *
    * @param key target examination identifier
-   * 
+   *
    * @param result Answer of activity
    */
   public updateResult = (key: number, result: Answer | null): void => {
@@ -250,7 +250,7 @@ export default class ExamViewModel implements IExamViewModel {
    *
    * @remarks
    * This method is part of view-model, application logic parts, manipulating view.
-   * 
+   *
    * @param key target activity index
    */
   private validateResult(key: number): boolean {

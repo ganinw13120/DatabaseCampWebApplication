@@ -24,7 +24,7 @@ class Navbar extends React.Component<RouteComponentProps, NavbarState> {
 
   /**
    * On user scroll website, set state.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -35,7 +35,7 @@ class Navbar extends React.Component<RouteComponentProps, NavbarState> {
 
   /**
    * On component did mount, add event listener to observe user scoll
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -46,7 +46,7 @@ class Navbar extends React.Component<RouteComponentProps, NavbarState> {
 
   /**
    * On component will unmount, remove event listener to unobserve user scoll
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -57,10 +57,10 @@ class Navbar extends React.Component<RouteComponentProps, NavbarState> {
 
   /**
    * On user select item on navigation bar, taking user target url
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param url target url
    *
    */
