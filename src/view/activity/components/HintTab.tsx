@@ -42,10 +42,10 @@ export default class HintTab extends Component<HintProps, HintState> {
 
   /**
    * On user select hint tab, update state
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param tab target tab index
   */
   private selectTab(tab: number): void {

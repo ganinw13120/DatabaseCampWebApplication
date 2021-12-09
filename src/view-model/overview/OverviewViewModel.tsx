@@ -21,7 +21,7 @@ export default class OverviewViewModel implements IOverviewViewModel {
    *
    * @remarks
    * This method is part of view-model, application logic parts, manipulating view.
-   * 
+   *
    * @returns Overview data
    */
   public getData(): Overview | null {

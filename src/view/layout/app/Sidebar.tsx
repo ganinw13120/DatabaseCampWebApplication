@@ -45,7 +45,7 @@ class Sidebar extends React.Component <OverviewProps, SidebarState>{
 
   /**
    * On user logout, update store datas, push user back to login page
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -57,7 +57,7 @@ class Sidebar extends React.Component <OverviewProps, SidebarState>{
   
   /**
    * On user select sidebar item, take user to target url
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -68,7 +68,7 @@ class Sidebar extends React.Component <OverviewProps, SidebarState>{
   
   /**
    * On user click expand on mobile view, expand mobile navigation bar
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -81,7 +81,7 @@ class Sidebar extends React.Component <OverviewProps, SidebarState>{
   
   /**
    * On user select logout item, show confirmation popup
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *

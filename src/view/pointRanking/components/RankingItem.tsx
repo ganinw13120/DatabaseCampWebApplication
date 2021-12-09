@@ -22,7 +22,7 @@ class RankingItem extends React.Component<Props> {
   
   /**
    * On user select person, load person profile page
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *

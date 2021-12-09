@@ -11,11 +11,11 @@ export default interface IProfileStore {
      *
      * @remarks
      * This method is part of profile store, manipulating profile and profile'data.
-     * 
+     *
      * @param userId target user's indentifier
-     * 
+     *
      * @param onSuccess on success callback function
-     * 
+     *
      * @param onError on error callback function
      */
     FetchUserProfile(userId: number, onSuccess: (res: User) => void, onError: () => void): void
@@ -25,9 +25,9 @@ export default interface IProfileStore {
      *
      * @remarks
      * This method is part of profile store, manipulating profile and profile'data.
-     * 
+     *
      * @param name new user's name
-     * 
+     *
      * @param onSuccess on success callback function
      */
     UpdateName(name: string, onSuccess: any): Promise<any>

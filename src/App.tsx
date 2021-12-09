@@ -40,7 +40,7 @@ import { Routes } from '@model/App';
 
 /**
  * Initializing stores
- * 
+ *
  */
 const _RootStore = new RootStore();
 

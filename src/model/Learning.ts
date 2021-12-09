@@ -282,7 +282,7 @@ export enum ExamType {
  * `acitivities` : Examination's acitivity on this exam
  */
 export type Exam = {
-    exam : ExamInfo 
+    exam : ExamInfo
     activities : ExamActivity[]
 }
 

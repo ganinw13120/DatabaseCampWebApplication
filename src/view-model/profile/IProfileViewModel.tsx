@@ -10,7 +10,7 @@ export default interface IProfileViewModel extends BaseViewModel {
      *
      * @remarks
      * This method is part of view-model, application logic parts, manipulating view.
-     * 
+     *
      * @returns Profile data
      */
     getProfileData(): User | null
@@ -20,7 +20,7 @@ export default interface IProfileViewModel extends BaseViewModel {
      *
      * @remarks
      * This method is part of view-model, application logic parts, manipulating view.
-     * 
+     *
      * @returns Input form reference data
      */
     getFormRef(): React.RefObject<FormInstance<any>> | undefined
@@ -30,7 +30,7 @@ export default interface IProfileViewModel extends BaseViewModel {
      *
      * @remarks
      * This method is part of view-model, application logic parts, manipulating view.
-     * 
+     *
      * @returns Alert data
      */
     getAlertText(): string

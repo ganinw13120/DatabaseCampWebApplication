@@ -33,7 +33,7 @@ type ChoiceProps = {
 
 /**
 * Dragable choices, used in draggable activity.
-* 
+*
 * @remarks
 * This is a part of view component.
 */
@@ -65,7 +65,7 @@ class Choice extends React.Component<ChoiceProps, any> {
 
   /**
    * On component did mount, observe width changes.
-   * 
+   *
    * @remarks
    * This is a part of view component.
   */
@@ -75,7 +75,7 @@ class Choice extends React.Component<ChoiceProps, any> {
 
   /**
    * On component did mount, unobserve width changes.
-   * 
+   *
    * @remarks
    * This is a part of view component.
   */
@@ -85,7 +85,7 @@ class Choice extends React.Component<ChoiceProps, any> {
 
   /**
    * On width changes, recalculate position to adjusted.
-   * 
+   *
    * @remarks
    * This is a part of view component.
   */
@@ -99,12 +99,12 @@ class Choice extends React.Component<ChoiceProps, any> {
 
   /**
    * Calculate coordination that choice box should be move to.
-   *  
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param boxRef Snap box reference
-   * 
+   *
    * @returns X,Y Coordination of choice
   */
   calculateCoordination = (boxRef: any): { x: number, y: number } => {
@@ -117,7 +117,7 @@ class Choice extends React.Component<ChoiceProps, any> {
 
   /**
    * On start dragging, update state.
-   * 
+   *
    * @remarks
    * This is a part of view component.
   */
@@ -127,7 +127,7 @@ class Choice extends React.Component<ChoiceProps, any> {
 
   /**
    * On stop dragging, update state.
-   * 
+   *
    * @remarks
    * This is a part of view component.
   */

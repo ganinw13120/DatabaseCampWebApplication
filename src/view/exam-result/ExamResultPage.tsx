@@ -33,9 +33,9 @@ interface ExamResultState {
 interface ExamResultProps extends RouteComponentProps <{
   id : string
 }> {
-  examinationStore?: IExaminationStore 
-  authStore?: IAuthStore 
-  appStore?: IAppStore 
+  examinationStore?: IExaminationStore
+  authStore?: IAuthStore
+  appStore?: IAppStore
 }
 
 var monthNamesThai = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.",
@@ -58,7 +58,7 @@ class ExamResultPage extends Component<ExamResultProps, ExamResultState>
   
   /**
    * On component did update, reload view-model if property changes
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -74,7 +74,7 @@ class ExamResultPage extends Component<ExamResultProps, ExamResultState>
 
   /**
    * On component did mount, set application store, and attach view-model
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -90,7 +90,7 @@ class ExamResultPage extends Component<ExamResultProps, ExamResultState>
 
   /**
    * On view-model changes, update view states.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *

@@ -23,7 +23,7 @@ export default class ProfileviewModel implements IProfileViewModel {
    *
    * @remarks
    * This method is part of view-model, application logic parts, manipulating view.
-   * 
+   *
    * @returns Profile data
    */
   public getProfileData () : User | null {
@@ -35,7 +35,7 @@ export default class ProfileviewModel implements IProfileViewModel {
    *
    * @remarks
    * This method is part of view-model, application logic parts, manipulating view.
-   * 
+   *
    * @returns Input form reference data
    */
   public getFormRef () : React.RefObject<FormInstance<any>> | undefined {
@@ -47,7 +47,7 @@ export default class ProfileviewModel implements IProfileViewModel {
    *
    * @remarks
    * This method is part of view-model, application logic parts, manipulating view.
-   * 
+   *
    * @returns Alert data
    */
   public getAlertText () : string {

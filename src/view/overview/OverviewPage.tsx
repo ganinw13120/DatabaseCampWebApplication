@@ -67,7 +67,7 @@ class OverviewPage
 
   /**
    * On view-model changes, update view states.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -81,7 +81,7 @@ class OverviewPage
 
   /**
    * On component did mount, set application store, and attach view-model
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *

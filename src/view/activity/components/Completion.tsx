@@ -44,10 +44,10 @@ export default class Completion extends Component<CompletionProps, CompletionPag
 
   /**
    * On user hovering question, update states.
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param id question's indentifire
   */
   public onHoverQuestionEnter(id: number): void {
@@ -56,10 +56,10 @@ export default class Completion extends Component<CompletionProps, CompletionPag
 
   /**
    * On user exit hovering question, update states.
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param id question's indentifire
   */
   public onHoverQuestionExit(): void {
@@ -68,12 +68,12 @@ export default class Completion extends Component<CompletionProps, CompletionPag
 
   /**
    * On user interact with question, update question state.
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param id id of choice
-   * 
+   *
    * @param isFilled is choice is filled
   */
   public updateQuestionState(id : number, isFilled : boolean): void {
@@ -90,12 +90,12 @@ export default class Completion extends Component<CompletionProps, CompletionPag
 
   /**
    * On user release question, check for snap points, return if any.
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param text text on dragable choice
-   * 
+   *
    * @return if there is any enabled snap point, move choice to snap
   */
   public snapPos(text : string): any | null {
@@ -125,10 +125,10 @@ export default class Completion extends Component<CompletionProps, CompletionPag
 
   /**
    * On user remove choice from snaping point
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param id choice identifier
   */
   public removeSnap(id : number): void {
@@ -148,10 +148,10 @@ export default class Completion extends Component<CompletionProps, CompletionPag
 
   /**
    * On component mount, append question snap point references.
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param quest question box information
   */
   public appendRef(quest: QuestionBox): void {

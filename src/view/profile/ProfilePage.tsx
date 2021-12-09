@@ -71,7 +71,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
 
   /**
    * On component did update, reattach view-model due to changes of properties.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -87,7 +87,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
 
   /**
    * On component did mount, set application store, and attach view-model
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -103,7 +103,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
 
   /**
    * On view-model changes, update view states.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -120,7 +120,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
 
   /**
    * On user select edit icon, show edit modal
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -133,7 +133,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
 
   /**
    * On user close edit modal, hide modal
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *

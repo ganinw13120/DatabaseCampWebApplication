@@ -45,9 +45,9 @@ export default interface IExaminationStore {
      * This method is part of examination store, manipulating examination and examination'data.
      *
      * @param result exam's result
-     * 
+     *
      * @param exam examination information
-     * 
+     *
      * @param cb callback function
      *
      * @return Examination information

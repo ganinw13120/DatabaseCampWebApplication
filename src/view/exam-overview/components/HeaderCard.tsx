@@ -20,7 +20,7 @@ class HeaderCard extends React.Component<ExamCardProps, any>{
 
   /**
    * On user click start examination, load examination page
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
