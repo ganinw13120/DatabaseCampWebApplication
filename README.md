@@ -7,6 +7,9 @@
 
 [![Thai](https://img.shields.io/badge/Language-Thai-blueviolet?style=for-the-badge)](README.ja-JP.md)
 
+[![forthebadge](https://forthebadge.com/images/badges/made-with-typescript.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/powered-by-coffee.svg)](https://forthebadge.com)
+
 URL : https://databasecamp.io
 
 Staging : https://staging.databasecamp.io
