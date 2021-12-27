@@ -12,12 +12,13 @@ import 'react-awesome-slider/dist/styles.css';
  * Images list display on image sldie.
  */
 const images = [
-  { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/1.png" },
-  { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/2.png" },
-  { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/3.png" },
-  { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/4.png" },
-  { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/5.png" },
-  { url: "https://databasecamp-public.s3.ap-southeast-1.amazonaws.com/example/6.png" },
+  { url: "https://storage.googleapis.com/databasecamp-public/slide-show-example/1" },
+  { url: "https://storage.googleapis.com/databasecamp-public/slide-show-example/2" },
+  { url: "https://storage.googleapis.com/databasecamp-public/slide-show-example/3" },
+  { url: "https://storage.googleapis.com/databasecamp-public/slide-show-example/4" },
+  { url: "https://storage.googleapis.com/databasecamp-public/slide-show-example/5" },
+  { url: "https://storage.googleapis.com/databasecamp-public/slide-show-example/6" },
+  { url: "https://storage.googleapis.com/databasecamp-public/slide-show-example/7" },
 ];
 
 export default class Example extends Component<{}, {}> {
