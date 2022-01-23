@@ -28,17 +28,34 @@ import { AppStore } from '@store/stores/AppStore/AppStore';
 import { AuthStore } from '@store/stores/AuthStore/AuthStore';
 import { ProfileStore } from '@store/stores/ProfileStore/ProfileStore';
 
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+} from 'chart.js';
+import { Radar } from 'react-chartjs-2';
+
+ChartJS.register(
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+);
 
 export interface IProfilePage extends BaseView {
-  props : ProfilePageProps,
+  props: ProfilePageProps,
 }
 
-interface ProfilePageProps extends RouteComponentProps <{
-  id : string
+interface ProfilePageProps extends RouteComponentProps<{
+  id: string
 }> {
-  appStore ?: AppStore,
-  profileStore ?: ProfileStore,
-  authStore ?: AuthStore,
+  appStore?: AppStore,
+  profileStore?: ProfileStore,
+  authStore?: AuthStore,
 }
 
 interface ProfileComponentState {
@@ -46,6 +63,23 @@ interface ProfileComponentState {
   isShowModal: boolean,
   textAlertModal: string,
 }
+
+const mockData = {
+  labels: ['บท 1', 'บท 2', 'บท 3', 'บท 4', 'บท 5', 'บท 6', 'บท 7'],
+  datasets: [
+    {
+      label: 'ความฉมัง',
+      data: [0.89, 0.9, 0.88, 0.88, 0.90, 0.99, 1],
+      backgroundColor: '#4F88BC',
+      borderColor: '#005FB7',
+      borderWidth: 1,
+    },
+    {
+      label: '',
+      data: [0],
+    },
+  ],
+};
 
 var monthNamesThai = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.",
   "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
@@ -208,8 +242,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
               </>}
             </div>
 
-            <div className='rounded-lg outline-blackProfile drop-shadow-shadowProfile h-20 w-5/6 md:w-2/4 mx-auto bg-white my-24 flex' style={{ boxShadow: '0 2px 2px rgba(0, 0, 0, 0.25)' }}>
-
+            <div className='rounded-lg outline-blackProfile drop-shadow-shadowProfile h-20 w-5/6 md:w-2/4 mx-auto bg-white my-12 flex' style={{ boxShadow: '0 2px 2px rgba(0, 0, 0, 0.25)' }}>
               {data ? <>
                 <div className='w-auto flex'>
                   <img src={star} alt="Logo4" className='object-none mx-auto my-auto ml-2 md:ml-8' />
@@ -225,6 +258,11 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
                 <Skeleton variant="text" className="w-5/6 mx-auto" />
               </>}
             </div>
+            {data && <>
+              <div className='spider-container m-auto mb-12'>
+                <Radar data={mockData} />
+              </div>
+            </>}
             {data ? <>
               <div className=' text-xl text-darkPrimary font-prompt font-semibold tracking-wider inline px-2 '>
                 <span>My Badge ({data.badges.filter(e => e.is_collect).length})</span>
