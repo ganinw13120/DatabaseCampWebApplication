@@ -73,3 +73,40 @@
 .star {
     width : 40px;
 }
+.z--10 {
+    z-index: 0;
+}
+
+.big-box {
+    height : 400px;
+}
+
+.back {
+    z-index: 1;
+}
+.box-plate {
+    z-index: 11;
+}
+
+.table-box {
+    min-width: 150px;
+}
+
+.cell {
+    color : white;
+    font-size : 20px;
+}
+
+.header {
+    background-color: #3766BA;
+}
+.even {
+    background-color: #AABEE2;
+    border-top : 3px solid white;
+    color : black;
+}
+.odd {
+  background-color: #D3DEF0;
+  border-top : 3px solid white;
+  color : black;
+}

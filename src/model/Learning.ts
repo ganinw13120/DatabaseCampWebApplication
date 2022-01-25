@@ -62,8 +62,27 @@ export type RoadMapItem = {
 export type Activity = {
     activity : ActivityInfo
     hint : ActivityHint
-    choice : MatchingChoice | MultipleChoice[] | CompletionChoice
+    choice :ActivityChoices
 }
+
+export type ActivityChoices =  MatchingChoice | MultipleChoice[] | CompletionChoice | CheckboxMultipleChoice[] | GroupChoice | TableChoice
+
+export type CheckboxMultipleChoice = {
+    content : string
+    multiple_choice_id : number
+}
+
+export type GroupChoice = {
+    group_list : string[]
+    choices : string[]
+}
+
+export type TableChoice = {
+    tables : TableDetail[][],
+    choices : string[]
+}
+
+export type TableDetail = string | null
 
 /**
  * Store `Activity` infomation.
@@ -209,7 +228,13 @@ export type CompletionAnswer = {
  *
  * Depends on `acitivty type` .
  */
-export type Answer = CompletionAnswer[] | string[][] | number | null
+export type Answer = CompletionAnswer[] | MultipleAnswer | MatchingAnswer | CheckboxMultipleAnswer | GroupAnswer | TableAnswer | null
+
+export type MultipleAnswer = number
+export type MatchingAnswer = string[][]
+export type CheckboxMultipleAnswer = number[]
+export type GroupAnswer = string[][]
+export type TableAnswer = string[][]
 
 /**
  * Store `Activity Result` for activity after checking.
@@ -295,7 +320,7 @@ export type Exam = {
  */
 export type ExamActivity = {
     activity : ActivityInfo
-    choice : MatchingChoice | MultipleChoice[] | CompletionChoice
+    choice : ActivityChoices
 }
 
 /**

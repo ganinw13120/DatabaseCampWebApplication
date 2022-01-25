@@ -8,13 +8,37 @@ import { notification } from 'antd';
 
 import { IActivityPage } from '@root/view/activity/ActivityPage';
 
-import { Activity, ActivityAlert, Answer, RoadMap } from '@model/Learning';
+import { Activity, ActivityAlert, ActivityChoices, Answer, RoadMap } from '@model/Learning';
 import generateStepper, { generateEmptyStepper } from '@util/generateStepper';
 
-const mockActivity = {
-  
-}
-
+const mockActivity : ActivityChoices[] = [
+  [
+    {
+      content : 'ย-นภถ-สาภถ',
+      multiple_choice_id : 1
+    },
+    {
+      content : 'ผอิ',
+      multiple_choice_id : 2
+    },
+    {
+      content : 'ผปแอผปแอ',
+      multiple_choice_id : 3
+    },
+    {
+      content : 'ฟหก',
+      multiple_choice_id : 4
+    }
+  ],
+  {
+    group_list : ['ข้อจำกัดของ File-based System', 'ไม่เป็นข้อจำกัดของ File-based System'],
+    choices : ["ข้อมูลซ้ำซ้อน", "ค่าใช้จ่ายสูง", "Isolation data", "ต้องใช้ผู้เชี่ยวชาญ", "รูปแบบไฟล์ต่างกัน"]
+  },
+  {
+    tables : [[null, null, null, null], [null, null, null, null]],
+    choices : ['วิชาเรียน', 'เบอร์โทร', 'ครู', 'ชื่อ-นามสกุล', 'รหัสวิชา', 'รายละเอียดวิชา', 'ห้องเรียน', 'ที่อยู่ติดต่อ']
+  }
+]
 
 export default class ActivityViewModel implements IActivityViewModel {
   private baseView?: IActivityPage;
@@ -80,7 +104,16 @@ export default class ActivityViewModel implements IActivityViewModel {
 
     baseView.props.appStore!.setPercent(40)
     baseView.props.learningStore!.FetchActivity(activityID, (res: Activity) => {
-      // console.log(res.activity);
+      console.log(res);
+      console.log(res.choice);
+
+      res.activity.question = "จงเลือกคำตอบไปวางในพื้นที่ให้ถูกต้อง";
+      res.activity.story = "นายแกนกำลังออกแบบฐานข้อมูลภายในโรงเรียนเเห่งหนึ่ง ในขณะที่นายแกนกำลังออกแบบฐานข้อมูลอยู่นั้น นายแกนกำลังสับสนว่าข้อมูลแบบไหนที่เป็น Entity\
+      นายแกนต้องการสร้างฐานข้อมูลวิชาเรียน เเละครู โดยที่วิชาเรียนหนึ่งสามารถมีห้องเรียนได้เพียงห้องเดียวเท่านั้น นายแกนจะออกแบบฐานข้อมูลนี้อย่างไร\
+      "
+      res.activity.activity_type_id = 6;
+      res.choice = mockActivity[2];
+
       this.activityInfo = res;
       baseView?.onViewModelChanged()
       baseView?.props.appStore?.setPercent(70)

@@ -15,9 +15,10 @@ import IActivityViewModel from '@view-model/activity/IActivityViewModel';
 import Matching from './components/Matching';
 import Completion from './components/Completion';
 import MultipleChoiceComponent from './components/MultipleChoice';
+import CheckboxMultipleChoiceComponent from './components/CheckboxMultipleChoice';
 import { inject, observer } from 'mobx-react';
 
-import { Activity, ActivityAlert, CompletionChoice, MatchingChoice, MultipleChoice } from '@model/Learning';
+import { Activity, ActivityAlert, CheckboxMultipleChoice, CompletionChoice, GroupChoice, MatchingChoice, MultipleChoice, TableChoice } from '@model/Learning';
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -34,6 +35,8 @@ import Star from '@assets/starProfile.png';
 import SkeletonActivity from './components/SkeletonActivity';
 
 import { ACTIVITY_NEXT, ACTIVITY_SUBMIT, ACTIVITY_TITLE, WARNING_HINT_TITLE, WARNING_HINT_DESCRIPTION, WARNING_HINT_ACCEPT, WARNING_HINT_CANCLE } from '@constant/text';
+import Group from './components/Group';
+import Table from './components/Table';
 
 export interface IActivityPage extends BaseView {
   props: ActivityProps
@@ -187,6 +190,9 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
                   if (type === 1) return <Matching info={activityInfo.choice as MatchingChoice} updateResult={this.activityViewModel.updateResult} />
                   else if (type === 2) return <MultipleChoiceComponent info={activityInfo.choice as MultipleChoice[]} updateResult={this.activityViewModel.updateResult} />
                   else if (type === 3) return <Completion info={activityInfo.choice as CompletionChoice} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 4) return <CheckboxMultipleChoiceComponent info={activityInfo.choice as CheckboxMultipleChoice[]} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 5) return <Group info={activityInfo.choice as GroupChoice} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 6) return <Table info={activityInfo.choice as TableChoice} updateResult={this.activityViewModel.updateResult} />
                 }
                 return <>
                   <div className='text-xl text-black font-sarabun tracking-wider mx-14 my-8'>

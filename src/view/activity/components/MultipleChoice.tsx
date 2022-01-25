@@ -5,7 +5,7 @@
 
 import { Component, ReactElement } from 'react';
 import Radio from '@mui/material/Radio';
-import {MultipleChoice} from '@model/Learning';
+import {MultipleAnswer, MultipleChoice} from '@model/Learning';
 
 interface MultipleChoiceState {
   selectedChoice : number | null,
@@ -13,7 +13,7 @@ interface MultipleChoiceState {
 
 interface MultipleChoiceProps {
   info : MultipleChoice[],
-  updateResult(e : number) : void
+  updateResult(e : MultipleAnswer) : void
 }
 
 export default class MultipleChoiceComponent extends Component<MultipleChoiceProps, MultipleChoiceState> {

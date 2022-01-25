@@ -9,27 +9,26 @@ import { v4 as uuidv4 } from 'uuid';
 import ChoiceBox from './Choicebox';
 
 import Equal from '@assets/equal.svg';
-import { MatchingAnswer, MatchingChoice } from '@model/Learning';
+import { GroupAnswer, GroupChoice, MatchingAnswer, MatchingChoice } from '@model/Learning';
 
 type QuestionBox = {
-  id : string,
+  id: number,
   isFilled: boolean,
   ref: any,
-  pairId : number
 }
 
-interface MatchingPageState {
+interface GroupState {
   questions: QuestionBox[],
-  hoverQuestion: string | null,
+  hoverQuestion: number | null,
   result: string[][]
 }
 
-interface MatchingProps {
-  info : MatchingChoice,
-  updateResult(e : MatchingAnswer) : void
+interface GroupProps {
+  info: GroupChoice,
+  updateResult(e: GroupAnswer): void
 }
 
-export default class Matching extends Component<MatchingProps, MatchingPageState> {
+export default class Group extends Component<GroupProps, GroupState> {
   public constructor(props: any) {
     super(props);
     this.state = {
@@ -43,7 +42,7 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
     this.removeSnap = this.removeSnap.bind(this);
     this.appendRef = this.appendRef.bind(this);
   }
-  
+
   /**
    * On user hovering question, update states.
    *
@@ -52,7 +51,8 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
    *
    * @param id question's indentifire
   */
-  public onHoverQuestionEnter(id: string): void {
+  public onHoverQuestionEnter(id: number): void {
+    console.log(id)
     this.setState({ hoverQuestion: id });
   }
 
@@ -65,6 +65,7 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
    * @param id question's indentifire
   */
   public onHoverQuestionExit(): void {
+    console.log('on leave')
     this.setState({ hoverQuestion: null });
   }
 
@@ -78,15 +79,15 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
    *
    * @param isFilled is choice is filled
   */
-  public updateQuestionState(id : string, isFilled : boolean): void {
+  public updateQuestionState(id: number, isFilled: boolean): void {
     const { questions } = this.state;
     let temp = [...questions];
     ((obj) => {
       if (!obj) return;
       else obj.isFilled = isFilled
-     })(temp.find(e => e.id === id))
+    })(temp.find(e => e.id === id))
     return this.setState({
-      questions : temp
+      questions: temp
     })
   }
 
@@ -100,23 +101,25 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
    *
    * @return if there is any enabled snap point, move choice to snap
   */
-  public snapPos(text : string): any | null {
+  public snapPos(text: string): any | null {
     const { questions, hoverQuestion } = this.state;
     if (hoverQuestion) {
-      const question = questions.find(e => e.id === hoverQuestion && !e.isFilled);
+      const question = questions.find(e => e.id === hoverQuestion);
+      console.log(question)
+      console.log(questions)
       if (!question) return null;
       else {
         this.updateQuestionState(hoverQuestion, true);
         const { result } = this.state;
         let temp = [...result];
-        temp[question.pairId - 1] = [...temp[question.pairId - 1], text];
+        temp[question.id].push(text);
         this.setState({
-          result : temp
+          result: temp
         })
         this.props.updateResult(temp);
         return {
           boxRef: question.ref,
-          boxID : question.id
+          boxID: question.id
         }
       }
     }
@@ -133,14 +136,14 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
    *
    * @param displayText text on removed choice
   */
-  public removeSnap(id: string, displayText : string): void {
-    const { questions,result } = this.state;
+  public removeSnap(id: number, displayText: string): void {
+    const { questions, result } = this.state;
     let temp = [...result];
     const question = questions.find(e => e.id === id);
     if (!question) return;
-    temp[question?.pairId - 1] = temp[question?.pairId - 1].filter((e: any) => e !== displayText);
+    temp[question.id] = temp[question.id].filter((e: any) => e !== displayText);
     this.setState({
-      result : temp
+      result: temp
     })
     this.props.updateResult(temp);
     this.updateQuestionState(id, false);
@@ -155,66 +158,56 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
    * @param quest question box information
   */
   public appendRef(quest: QuestionBox): void {
-    this.setState((prev: MatchingPageState) => {
-      prev.result[quest.pairId - 1] = [];
+    this.setState((prev: GroupState) => {
+      prev.result[quest.id] = [];
       prev.questions.push(quest);
       return prev;
     })
   }
-  
+
   public render(): JSX.Element {
     const func = { enter: this.onHoverQuestionEnter, exit: this.onHoverQuestionExit, append: this.appendRef };
     const { info } = this.props;
-    let choiceList = [...info.items_left, ...info.items_right];
+    let choiceList = [...info.choices];
     let i = 0;
-    let questionList: ReactElement[] = [];
-    while (i < Math.floor(choiceList.length / 2)) {
-      questionList.push(<Question func={func} id={i + 1} key={i} />);
-      i++;
-    }
+    let groupBoxList: ReactElement[] = [];
+    info.group_list.forEach((e, i) => {
+      groupBoxList.push(<GroupBox func={func} id={i + 1} key={i} groupName={info.group_list[i]} />);
+    })
     return (
       <>
         <div className='w-full'>
           <ChoiceBox snapPos={this.snapPos} removeSnap={this.removeSnap} list={choiceList} />
-          {questionList}
+          <div className='mx-auto text-base text-darkPrimary font-normal my-14 flex' >
+            <div className='flex-grow'></div>
+            <div className='flex w-3/4'>
+              {groupBoxList}
+            </div>
+            <div className='flex-grow'></div>
+          </div>
         </div>
       </>
     );
   }
 }
 
-class Question extends Component<any, any> {
-  public render(): JSX.Element {
-    return (<>
-      <div className='mx-auto text-base text-darkPrimary font-normal my-14 flex' >
-        <div className='flex-grow'></div>
-        <Dropzone {...this.props} />
-        <div className='flex-grow m-auto text-center'>
-          <img src={Equal} alt="Equal to" className='m-auto' />
-        </div>
-        <Dropzone {...this.props} />
-        <div className='flex-grow'></div>
-      </div>
-    </>)
-  }
-}
+class GroupBox extends Component<any, any> {
 
-class Dropzone extends React.Component<any, any> {
   private ref: React.Ref<HTMLDivElement>;
-  private id: string;
+  private id: number;
   constructor(props: any) {
     super(props);
-    const id = uuidv4();
-    this.id = id;
+    this.id = this.props.id;
     this.ref = React.createRef<HTMLDivElement>();
     props.func?.append?.({
       isFilled: false,
-      ref : this.ref,
-      id: id,
-      pairId : props.id
+      ref: this.ref,
+      id: this.id,
+      pairId: props.id
     })
   }
   onEnter(): void {
+    console.log('entering..')
     const { enter } = this.props.func;
     enter(this.id);
   }
@@ -225,14 +218,19 @@ class Dropzone extends React.Component<any, any> {
 
   public render(): JSX.Element {
     return (<>
-      <div className='relative'>
-        <div className='bg-white w-32 h-12 py-2 px-12 mx-4 absolute border-b border-gray rounded-lg' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
-          {'  '}
+      <div className='w-3/4 m-5'>
+        <p className='mx-auto text-center text-xl font-prompt'>
+          {this.props.groupName}
+        </p>
+        <div>
+          <div className='relative back'>
+            <div className='w-full h-full absolute border border-gray rounded p-12 bg-white big-box ' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+            </div>
+          </div>
+          <div className='relative w-full h-full big-box box-plate z-50' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }} ref={this.ref} onMouseEnter={() => { this.onEnter() }} onMouseLeave={() => { this.onExit() }}>
+          </div>
         </div>
       </div>
-        <div ref={this.ref} className={` w-32 h-12 py-2 px-12 mx-4 z-20`} onMouseEnter={() => { this.onEnter() }} onMouseLeave={() => { this.onExit() }}>
-          {'  '}
-        </div>
     </>)
   }
 }

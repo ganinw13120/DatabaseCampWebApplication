@@ -157,7 +157,7 @@ class Choice extends React.Component<ChoiceProps, any> {
       <>
         <div ref={this.originalRef} className={`z-${isDragging ? '10' : '30'}`}>
           <Draggable onStart={this.onStartDrag} onStop={this.onStopDrag} position={pos}>
-            <div ref={this.ref} className={`z-${isDragging ? '10' : '30'} ${isDragging ? 'dragging' : 'dragable'} p-4 bg-white w-32 text-center rounded-lg cursor-pointer`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+            <div ref={this.ref} className={`z-${isDragging ? '10' : '30'} ${isDragging ? 'dragging' : 'dragable'} p-4 bg-white mx-6 text-center rounded-lg cursor-pointer`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
               {displayText}
             </div>
           </Draggable>

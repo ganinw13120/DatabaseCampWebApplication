@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ChoiceBox from './Choicebox';
 
 import Equal from '@assets/equal.svg';
-import { MatchingAnswer, MatchingChoice } from '@model/Learning';
+import { MatchingAnswer, MatchingChoice, TableAnswer, TableChoice } from '@model/Learning';
 
 type QuestionBox = {
   id : string,
@@ -18,18 +18,18 @@ type QuestionBox = {
   pairId : number
 }
 
-interface MatchingPageState {
+interface TableState {
   questions: QuestionBox[],
   hoverQuestion: string | null,
   result: string[][]
 }
 
-interface MatchingProps {
-  info : MatchingChoice,
-  updateResult(e : MatchingAnswer) : void
+interface TableProps {
+  info : TableChoice,
+  updateResult(e : TableAnswer) : void
 }
 
-export default class Matching extends Component<MatchingProps, MatchingPageState> {
+export default class Table extends Component<TableProps, TableState> {
   public constructor(props: any) {
     super(props);
     this.state = {
@@ -155,7 +155,7 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
    * @param quest question box information
   */
   public appendRef(quest: QuestionBox): void {
-    this.setState((prev: MatchingPageState) => {
+    this.setState((prev: TableState) => {
       prev.result[quest.pairId - 1] = [];
       prev.questions.push(quest);
       return prev;
@@ -165,21 +165,47 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
   public render(): JSX.Element {
     const func = { enter: this.onHoverQuestionEnter, exit: this.onHoverQuestionExit, append: this.appendRef };
     const { info } = this.props;
-    let choiceList = [...info.items_left, ...info.items_right];
+    // let choiceList = [...info.items_left, ...info.items_right];
+    let choiceList = info.choices
     let i = 0;
-    let questionList: ReactElement[] = [];
-    while (i < Math.floor(choiceList.length / 2)) {
-      questionList.push(<Question func={func} id={i + 1} key={i} />);
-      i++;
-    }
+    const tableList : ReactElement[] = [];
+    info.tables.forEach((e, key)=>{
+      tableList.push(<TableBlock func={func} id={i + 1} key={i} info={e}/>);
+    })
     return (
       <>
         <div className='w-full'>
           <ChoiceBox snapPos={this.snapPos} removeSnap={this.removeSnap} list={choiceList} />
-          {questionList}
+          <div className='flex'>
+            <div className='flex-grow'></div>
+          {tableList}
+            <div className='flex-grow'></div>
+          </div>
+
         </div>
       </>
     );
+  }
+}
+
+class TableBlock extends Component<any, any> {
+  public render(): JSX.Element {
+    const info = this.props.info
+    const tableList : ReactElement[] = [];
+    info.forEach((e : any, key : number)=>{
+      tableList.push(<>
+        <div className={`w-auto cell p-5 px-12 text-center mx-auto ${key===0 ? 'header' : (key%2===0 ? 'even' : 'odd')}`}>
+          {e !== null ? e : <Dropzone {...this.props} />}
+        </div>
+      </>)
+    })
+    return (<>
+      <div className='w-auto table-box bg-white m-6 rounded'>
+        <div>
+          {tableList}
+        </div>
+      </div>
+    </>)
   }
 }
 
@@ -226,11 +252,11 @@ class Dropzone extends React.Component<any, any> {
   public render(): JSX.Element {
     return (<>
       <div className='relative'>
-        <div className='bg-white w-32 h-12 py-2 px-12 mx-4 absolute border-b border-gray rounded-lg' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+        <div className='bg-white w-48 h-12 py-2 px-12 mx-4 absolute border-b border-gray rounded-lg' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
           {'  '}
         </div>
       </div>
-        <div ref={this.ref} className={` w-32 h-12 py-2 px-12 mx-4 z-20`} onMouseEnter={() => { this.onEnter() }} onMouseLeave={() => { this.onExit() }}>
+        <div ref={this.ref} className={` w-48 h-12 py-2 px-12 mx-4 z-20`} onMouseEnter={() => { this.onEnter() }} onMouseLeave={() => { this.onExit() }}>
           {'  '}
         </div>
     </>)
