@@ -16,6 +16,9 @@ import Matching from './components/Matching';
 import Completion from './components/Completion';
 import MultipleChoiceComponent from './components/MultipleChoice';
 import CheckboxMultipleChoiceComponent from './components/CheckboxMultipleChoice';
+import Group from './components/Group';
+import Table from './components/Table';
+import Drawer from './components/drawer';
 import { inject, observer } from 'mobx-react';
 
 import { Activity, ActivityAlert, CheckboxMultipleChoice, CompletionChoice, GroupChoice, MatchingChoice, MultipleChoice, TableChoice } from '@model/Learning';
@@ -35,8 +38,7 @@ import Star from '@assets/starProfile.png';
 import SkeletonActivity from './components/SkeletonActivity';
 
 import { ACTIVITY_NEXT, ACTIVITY_SUBMIT, ACTIVITY_TITLE, WARNING_HINT_TITLE, WARNING_HINT_DESCRIPTION, WARNING_HINT_ACCEPT, WARNING_HINT_CANCLE } from '@constant/text';
-import Group from './components/Group';
-import Table from './components/Table';
+
 
 export interface IActivityPage extends BaseView {
   props: ActivityProps
@@ -193,6 +195,8 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
                   else if (type === 4) return <CheckboxMultipleChoiceComponent info={activityInfo.choice as CheckboxMultipleChoice[]} updateResult={this.activityViewModel.updateResult} />
                   else if (type === 5) return <Group info={activityInfo.choice as GroupChoice} updateResult={this.activityViewModel.updateResult} />
                   else if (type === 6) return <Table info={activityInfo.choice as TableChoice} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 7) return <Drawer />
+                  // else if (type === 8) return <Drawer />
                 }
                 return <>
                   <div className='text-xl text-black font-sarabun tracking-wider mx-14 my-8'>

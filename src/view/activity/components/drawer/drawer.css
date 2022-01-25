@@ -1,0 +1,119 @@
+.drawer-container {
+  /* background-color: #FAFAFA; */
+  height: 100%;
+  width: 100%;
+}
+
+.stat-container {
+  background-color: #afd8fe;
+  right : 0;
+  position : absolute;
+  z-index: 10;
+  margin : 30px;
+  padding : 10px;
+  width : 200px;
+}
+
+.app {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.box {
+  position: absolute;
+  cursor: grab;
+  margin : 10px;
+  padding : 10px;
+}
+
+.box-inner-container {
+  border : 2px solid white;
+}
+
+.row-odd {
+  background-color: #AABEE2;
+}
+.row-even {
+  background-color: #D3DEF0;
+}
+
+.box-inner-container:hover {
+  background-color: #f0efef;
+}
+
+.box-header {
+  padding :8px;
+  padding-left : 20px;
+  padding-right : 20px;
+  background-color: #3766BA;
+  color : white;
+  min-width: 50px;
+  font-size : 20px;
+}
+.box-detail {
+  border-top : 1px solid white;
+  top : 0;
+  padding : 8px;
+}
+.box-detail-container {
+  position: relative;
+  height: 100px;
+}
+
+.box-dragging {
+  border : 2px solid #364655;
+}
+.box-select {
+  border :2px solid #007EF3;
+}
+
+.panel-container {
+  background-color: white;
+  /* background-color: #364655; */
+  border: 1px solid #dfe3e8;
+  width : 100%;
+  /* padding : 10px; */
+}
+.panel {
+  padding : 15px 20px 15px 20px;
+  display: flex;
+}
+.btn {
+  padding : 5px;
+  background-color: white;
+  border: 0.1px solid gray;
+  border-radius: 4px;
+}
+.panel-item-group {
+  border-right : 1px solid #dfe3e8;
+  display : flex;
+  padding-right: 30px;
+  margin-right: 30px;
+}
+.number-inp-container {
+  width : 80px;
+}
+.panel-label {
+  margin : auto;
+  padding-right : 10px;
+}
+.panel-btn-container {
+  margin : 0 10px 0 0;
+  height : 40px;
+}
+.mr-r {
+  margin-right: 10px;
+}
+
+.input,
+.textarea {
+  /* border: 1px solid #ccc; */
+  /* height: 100px; */
+  font-family: inherit;
+  font-size: inherit;
+  padding: 1px 6px;
+}
+.inp-field {
+   min-width: 40px;
+}

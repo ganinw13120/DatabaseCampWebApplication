@@ -9,6 +9,7 @@ import Skeleton from '@mui/material/Skeleton';
 import { withRouter, RouteComponentProps  } from 'react-router-dom';
 
 import { ActivityInfo, RoadMap } from '@model/Learning';
+import parse from 'html-react-parser';
 
 import {ACTIVITY_BREADCRUMBS, ACTIVITY_REQUIREMENT_HEADER} from '@constant/text'
 
@@ -40,7 +41,7 @@ class Requirement extends React.Component<RequirementProps, {}> {
         </div>
         <div className='font-sarabun text-xl text-wrap mx-auto mt-24 md:mt-10 tracking-wider requirementtext pb-10'>
           <p>
-            {activityInfo ? <>{activityInfo.story}</> : <>
+            {activityInfo ? <>{parse(activityInfo.story)}</> : <>
                 <Skeleton variant='text' className='w-full' />
                 <Skeleton variant='text' className='w-full' />
                 <Skeleton variant='text' className='w-full' />
