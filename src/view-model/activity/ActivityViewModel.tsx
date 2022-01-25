@@ -11,6 +11,11 @@ import { IActivityPage } from '@root/view/activity/ActivityPage';
 import { Activity, ActivityAlert, Answer, RoadMap } from '@model/Learning';
 import generateStepper, { generateEmptyStepper } from '@util/generateStepper';
 
+const mockActivity = {
+  
+}
+
+
 export default class ActivityViewModel implements IActivityViewModel {
   private baseView?: IActivityPage;
   private activityInfo: Activity | null;
@@ -75,6 +80,7 @@ export default class ActivityViewModel implements IActivityViewModel {
 
     baseView.props.appStore!.setPercent(40)
     baseView.props.learningStore!.FetchActivity(activityID, (res: Activity) => {
+      // console.log(res.activity);
       this.activityInfo = res;
       baseView?.onViewModelChanged()
       baseView?.props.appStore?.setPercent(70)
@@ -83,12 +89,11 @@ export default class ActivityViewModel implements IActivityViewModel {
         const { content_id: contentId } = res.activity;
         baseView.props.learningStore!.FetchRoadmap(contentId, (res: RoadMap) => {
           if (!this.baseView) return;
-          console.log(this.baseView)
-          this.baseView.props.appStore?.setPercent(100)
+          this.baseView.props.appStore?.setPercent(100);
           const stepper = generateStepper(res, this.getCurrentActivityOrder(res), true);
           stepper.onNext = this.moveNext;
           stepper.onPrev = this.movePrev;
-          this.baseView.props.appStore!.setStepper(stepper)
+          this.baseView.props.appStore!.setStepper(stepper);
         }, () => {
           this.baseView?.props.history.replace('/overview');
           return;
