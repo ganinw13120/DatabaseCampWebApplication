@@ -64,23 +64,6 @@ interface ProfileComponentState {
   textAlertModal: string,
 }
 
-const mockData = {
-  labels: ['บท 1', 'บท 2', 'บท 3', 'บท 4', 'บท 5', 'บท 6', 'บท 7'],
-  datasets: [
-    {
-      label: 'ความฉมัง',
-      data: [0.89, 0.9, 0.88, 0.88, 0.90, 0.99, 1],
-      backgroundColor: '#4F88BC',
-      borderColor: '#005FB7',
-      borderWidth: 1,
-    },
-    {
-      label: '',
-      data: [0],
-    },
-  ],
-};
-
 var monthNamesThai = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.",
   "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
 
@@ -260,7 +243,31 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
             </div>
             {data && <>
               <div className='spider-container m-auto mb-12'>
-                <Radar data={mockData} />
+                {(() => {
+                  let chartData : any = {
+                    labels: [],
+                    datasets: [
+                      {
+                        label: 'สถิติ',
+                        data: [0.89, 0.9, 0.88, 0.88, 0.90, 0.99, 1],
+                        backgroundColor: '#4F88BC',
+                        borderColor: '#005FB7',
+                        borderWidth: 1,
+                      },
+                      {
+                        label: '',
+                        data: [0],
+                      },
+                    ],
+                  };
+                  data.spider.forEach((e, key)=>{
+                    chartData.labels.push(e.content_group_name);
+                    // chartData.datasets[0].data.push(e.stat)
+                  })
+                  return <>
+                <Radar data={chartData} />
+                  </>
+                })()}
               </div>
             </>}
             {data ? <>

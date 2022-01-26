@@ -55,6 +55,13 @@ export type User = {
     name: string
     point: number
     user_id: number
+    spider : Spider[]
+}
+
+export type Spider = {
+    content_group_id : number
+    content_group_name : string
+    stat : number
 }
 
 /**
