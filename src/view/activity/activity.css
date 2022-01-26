@@ -110,3 +110,21 @@
   border-top : 3px solid white;
   color : black;
 }
+.choicebox {
+    max-width: 150px;
+}
+.questionbox {
+    width: 150px;
+    height: 50px;
+}
+
+.question img {
+    width: 30%;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.peer-drawer-container {
+    height : 400px;
+}

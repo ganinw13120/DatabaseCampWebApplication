@@ -27,8 +27,11 @@ const Drawer: React.FC<DrawerProps> = () => {
         boxes.setBoxes([
             // generateBox('นักเรียน', ['รหัสนักเรียน', 'ชื่อจริง', 'นามสกุล', 'เบอร์โทร', 'วันเกิด']),
             // generateBox('นักเลง', ['รหัสนักเรียน', 'ชื่อจริง', 'นามสกุล', 'เบอร์โทร', 'วันเกิด', 'ที่อยู่']),
-            generateBox('Customer', ['cusomter_id', 'full_name', 'mobile_no', 'password', 'created_at', 'updated_at']),
-            generateBox('Branch', ['branch_d', 'branch_name', 'branch_address', 'mobile_no', 'created_at', 'updated_at'])
+            generateBox('Guest', ['guest_id', 'first_name', 'last_name', 'mobile_no', 'points', 'guest_type_id', 'created_at', 'updated_at']),
+            generateBox('Branch', ['branch_d', 'branch_name', 'branch_address', 'mobile_no', 'website', 'created_at', 'updated_at']),
+            generateBox('Room', ['room_id', 'room_no', 'branch_id', 'created_at', 'updated_at']),
+            generateBox('Record', ['record_id', 'room_id', 'guest_id', 'created_at', 'updated_at']),
+            generateBox('GuestType', ['guest_type_id', 'type_name', 'description', 'created_at', 'updated_at']),
         ]);
     }, []);
 
@@ -59,7 +62,7 @@ const Drawer: React.FC<DrawerProps> = () => {
         <>
             {/* <Stat /> */}
             {/* <a style={{position : 'absolute'}}>{userState.Action}</a> */}
-            <ControlPanel {...panelFunc} userState={userState} />
+            {/* <ControlPanel {...panelFunc} userState={userState} /> */}
             <DrawerContext.Provider value={{
                 pos: currentPos,
                 offset: {

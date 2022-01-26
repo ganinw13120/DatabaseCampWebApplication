@@ -11,33 +11,136 @@ import { IActivityPage } from '@root/view/activity/ActivityPage';
 import { Activity, ActivityAlert, ActivityChoices, Answer, RoadMap } from '@model/Learning';
 import generateStepper, { generateEmptyStepper } from '@util/generateStepper';
 
-const mockActivity : ActivityChoices[] = [
+const mockActivity: ActivityChoices[] = [
   [
     {
-      content : 'ย-นภถ-สาภถ',
-      multiple_choice_id : 1
+      content: 'patient_id',
+      multiple_choice_id: 1
     },
     {
-      content : 'ผอิ',
-      multiple_choice_id : 2
+      content: 'first_name',
+      multiple_choice_id: 2
     },
     {
-      content : 'ผปแอผปแอ',
-      multiple_choice_id : 3
+      content: 'last_name',
+      multiple_choice_id: 3
     },
     {
-      content : 'ฟหก',
-      multiple_choice_id : 4
+      content: 'mobile_no',
+      multiple_choice_id: 4
+    },
+    {
+      content: 'patient_type',
+      multiple_choice_id: 4
+    },
+    {
+      content: 'blood_type',
+      multiple_choice_id: 4
+    },
+    {
+      content: 'ตารางนี้ไม่มีปัญหาเลย',
+      multiple_choice_id: 4
     }
   ],
   {
-    group_list : ['ข้อจำกัดของ File-based System', 'ไม่เป็นข้อจำกัดของ File-based System'],
-    choices : ["ข้อมูลซ้ำซ้อน", "ค่าใช้จ่ายสูง", "Isolation data", "ต้องใช้ผู้เชี่ยวชาญ", "รูปแบบไฟล์ต่างกัน"]
+    group_list: ['ข้อจำกัดของ File-based System', 'ไม่เป็นข้อจำกัดของ File-based System'],
+    choices: ["ข้อมูลซ้ำซ้อน", "ค่าใช้จ่ายสูง", "Isolation data", "ต้องใช้ผู้เชี่ยวชาญ", "รูปแบบไฟล์ต่างกัน"]
   },
   {
-    tables : [[null, null, null, null], [null, null, null, null]],
-    choices : ['วิชาเรียน', 'เบอร์โทร', 'ครู', 'ชื่อ-นามสกุล', 'รหัสวิชา', 'รายละเอียดวิชา', 'ห้องเรียน', 'ที่อยู่ติดต่อ']
-  }
+    tables: [[null, null, null, null], [null, null, null, null]],
+    choices: ['วิชาเรียน', 'เบอร์โทร', 'ครู', 'ชื่อ-นามสกุล', 'รหัสวิชา', 'รายละเอียดวิชา', 'ห้องเรียน', 'ที่อยู่ติดต่อ']
+  },
+  {
+    choices: ['teacher_id', 'first_name', 'teacher_id', 'last_name', 'mobile_no', 'last_name', 'teacher_id', 'first_name', 'last_name'],
+    problems: [
+      {
+        before: 1,
+        after: 1
+      },
+      {
+        before: 1,
+        after: 1
+      },
+      {
+        before: 2,
+        after: 1
+      },
+      {
+        before: 2,
+        after: 1
+      }
+    ]
+  },
+  {
+    problems: [
+      {
+        question: 'ในด้าน Entity มีความถูกต้องหรือไม่',
+        choices: [
+          { content: 'ไม่มีความถูกต้อง เนื่องจากยังมี Entity ไม่ครบตามความต้องการของระบบ', multiple_choice_id: 1 },
+          { content: 'ไม่มีความถูกต้อง เนื่องจาก Entity ยังสามารถเพิ่มเติมให้ใช้งานง่ายขึ้นได้', multiple_choice_id: 1 },
+          { content: 'มีความถูกต้อง เนื่องจากมี Entity ครบถ้วน', multiple_choice_id: 1 },
+        ]
+      },
+      {
+        question: 'ในด้าน Attribute มีความถูกต้องหรือไม่',
+        choices: [
+
+          { content: 'ไม่มีความถูกต้อง เนื่องจากยังมี Attribute ไม่ครบตามความต้องการของระบบ', multiple_choice_id: 1 },
+          { content: 'ไม่มีความถูกต้อง เนื่องจาก Attribute ยังสามารถเพิ่มเติมให้ใช้งานง่ายขึ้นได้', multiple_choice_id: 1 },
+          { content: 'มีความถูกต้อง เนื่องจากมี Attribute ครบถ้วน', multiple_choice_id: 1 },
+        ]
+      },
+      {
+        question: 'ในด้าน Relationship มีความถูกต้องหรือไม่',
+
+        choices: [
+
+          { content: 'ไม่มีความถูกต้อง เนื่องจากยังมี Relationship ไม่ครบตามความต้องการของระบบ', multiple_choice_id: 1 },
+          { content: 'ไม่มีความถูกต้อง เนื่องจาก Relationship ยังสามารถเพิ่มเติมให้ดีขึ้นได้', multiple_choice_id: 1 },
+          { content: 'มีความถูกต้อง เนื่องจากมี Relationship ครบถ้วนและถูกต้อง', multiple_choice_id: 1 },
+        ]
+      },
+      {
+        question: 'ในด้านความซ้ำซ้อนของข้อมูล (Redundancy) มีความถูกต้องหรือไม่',
+
+        choices: [
+
+          { content: 'มีความถูกต้อง เนื่องจากข้อมูลไม่สามารถเกิดปัญหาจากความซ้ำซ้อนได้', multiple_choice_id: 1 },
+          { content: 'ไม่ถูกต้อง เนื่องจากข้อมูลเกิดความซ้ำซ้อนได้', multiple_choice_id: 1 },
+        ]
+      },
+    ]
+  },
+  [
+    {
+      content: 'นักเรียน',
+      multiple_choice_id: 1
+    },
+    {
+      content: 'ครู',
+      multiple_choice_id: 2
+    },
+    {
+      content: 'ห้องเรียน',
+      multiple_choice_id: 3
+    },
+    {
+      content: 'วัน-เวลา ที่เข้าเรียน',
+      multiple_choice_id: 4
+    },
+    {
+      content: 'ประวัติการเข้าเรียน',
+      multiple_choice_id: 4
+    },
+    {
+      content: 'ชื่อ-นามสกุล นักเรียน',
+      multiple_choice_id: 4
+    },
+    {
+      content: 'ชื่อโรงเรียน',
+      multiple_choice_id: 4
+    }
+  ],
 ]
 
 export default class ActivityViewModel implements IActivityViewModel {
@@ -107,20 +210,18 @@ export default class ActivityViewModel implements IActivityViewModel {
       console.log(res);
       console.log(res.choice);
 
-      res.activity.question = "จงเลือกคำตอบไปวางในพื้นที่ให้ถูกต้อง";
-      res.activity.story = "\
-      นายแกนต้องการออกแบบฐานข้อมูลสำหรับใช้ในโรงแรมซึ่งมีหลายสาขา ซึ่งนายแกนต้องการสร้างฐานข้อมูล ที่สามารถใช้ในทุกโรงเเรม เเละสามารถติดต่อข้อมูลของทุกสาขาได้พร้อมกัน ซึ่งในต้องการเก็บข้อมูลดังนี้\
-      <li>แขกผู้เข้าพัก (Guest) เก็บข้อมูลเกี่ยวกับแขกที่ทำการลงชื่อเข้าพักโรงแรมเเห่งนี้  เช่น ข้อมูลติดต่อ เเต้มสะสม ซึ่งสามารถนำไปใช้เเลกส่วนลดได้ ประเภทผู้เข้าพัก (ลูกค้าทั่วไป, ลูกพิเศษ สามารถเพิ่มหรือเปลี่ยนชื่อได้) เป็นต้น</li>\
-      <li>สาขา (Branch) เก็บข้อมูลเกี่ยวกับสาขาโรงเเรม เช่น ชื่อ ที่อยู่ เบอร์ติดต่อ เว็ปไซต์ เป็นต้น</li>\
-      <li>ห้องพัก (Room) เก็บข้อมูลเกี่ยวกับห้องพักภายในโรงแรมเเห่งนี  เช่น ชื่อ เลขที่ห้อง ชั้น สาขา เป็นต้น</li>\
-      <li>ข้อมูลการเข้าพัก (Record) เก็บข้อมูลเกี่ยวกับการเข้าพักภายในโรงเเรมเเห่งนี้  เช่น ข้อมูลเเขกผู้เข้าพัก วันเวลาที่เข้าพัก เเละข้อมูลห้อง เป็นต้น</li>\
-      โดยความสัมพันธ์ของ Entity ต่าง ๆ มีดังนี้\
-      <li>เมื่อแขกเข้าพักภายในโรงเเรม ข้อมูลจะถูกเก็บใน ข้อมูลการเข้าพัก แขกหนึ่งคนสามารถเข้าพักภายในโรงเเรมได้หลายครั้ง เเต่ข้อมูลการเข้าพักจะประกอบไปด้วยเเขกที่จองเพียงคนเดียวเท่านั้น</li>\
-      <li>การเข้าพักจะเก็บข้อมูลห้องพักที่เข้าพัก โดยหนึ่งห้องพักสามารถเข้าพักได้หลายครั้ง เเต่ข้อมูลการเข้าพักจะประกอบไปด้วยห้องพักเพียงห้องเดียวเท่านั้น</li>\
-      <li>ในเเต่ละสาขาสามารถห้องพักได้หลายห้องพัก เเละห้องพักจะเป็นของสาขานั้น ๆ เพียงสาขาเดียวเท่านั้น</li>\
-      "
-      res.activity.activity_type_id = 7;
-      res.choice = mockActivity[2];
+      // res.activity.question = "<image src='https://storage.googleapis.com/databasecamp-public/material/Screen%20Shot%202565-01-11%20at%2023.28%201%20(2).png' style='width:60%; padding-bottom:20px;' /> จากตารางข้างต้น Attribute ไหนบ้างที่เข้าข่ายเก็บข้อมูลซ้ำซ้อน";
+      // res.activity.story = "\
+      // นายแกนกำลังออกแบบฐานข้อมูลภายในโรงพยาบาลเเห่งหนึ่ง โดยประกอบไปด้วยข้อมูลต่าง ๆ ดังนี้ โดยในการเก็บข้อมูลคนไข้ ประกอบไปด้วยข้อมูลดังนี้\
+      // <li>patient_id เป็นรหัสประจำตัวของคนไข้</li>\
+      // <li>first_name เป็นชื่อจริงคของคนไข้</li>\
+      // <li>last_name เป็นนามสกุลของคนไข้</li>\
+      // <li>mobile_no เป็นเบอร์โทรติดต่อของคนไข้</li>\
+      // <li>patient_type เป็นประเภทของคนไข้ ประกอบไปด้วยคนไข้ประเภทต่าง ๆ ภายในโรงพยาบาล เช่น คนไข้ภายใน คนไข้ภายนอก เป็นต้น ซึ่งสามารถเปลี่ยนแปลงได้ภายในอนาคตะ</li>\
+      // <li>blood_type เป็นหมู่เลือดของคนไข้ ประกอบไปด้วย A, B, AB, เเละ O</li>\
+      // "
+      // res.activity.activity_type_id = 2;
+      // res.choice = mockActivity[0];
 
       this.activityInfo = res;
       baseView?.onViewModelChanged()

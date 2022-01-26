@@ -20,8 +20,9 @@ import Group from './components/Group';
 import Table from './components/Table';
 import Drawer from './components/drawer';
 import { inject, observer } from 'mobx-react';
+import parse from 'html-react-parser';
 
-import { Activity, ActivityAlert, CheckboxMultipleChoice, CompletionChoice, GroupChoice, MatchingChoice, MultipleChoice, TableChoice } from '@model/Learning';
+import { Activity, ActivityAlert, CheckboxMultipleChoice, CompletionChoice, GroupChoice, MatchingChoice, MultipleChoice, PeerChoice, RelationChoice, TableChoice } from '@model/Learning';
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -38,6 +39,8 @@ import Star from '@assets/starProfile.png';
 import SkeletonActivity from './components/SkeletonActivity';
 
 import { ACTIVITY_NEXT, ACTIVITY_SUBMIT, ACTIVITY_TITLE, WARNING_HINT_TITLE, WARNING_HINT_DESCRIPTION, WARNING_HINT_ACCEPT, WARNING_HINT_CANCLE } from '@constant/text';
+import Relation from './components/Relation';
+import Peer from './components/Peer';
 
 
 export interface IActivityPage extends BaseView {
@@ -196,11 +199,12 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
                   else if (type === 5) return <Group info={activityInfo.choice as GroupChoice} updateResult={this.activityViewModel.updateResult} />
                   else if (type === 6) return <Table info={activityInfo.choice as TableChoice} updateResult={this.activityViewModel.updateResult} />
                   else if (type === 7) return <Drawer />
-                  // else if (type === 8) return <Drawer />
+                  else if (type === 8) return <Relation info={activityInfo.choice as RelationChoice} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 9) return <Peer info={activityInfo.choice as PeerChoice} updateResult={this.activityViewModel.updateResult} />
                 }
                 return <>
                   <div className='text-xl text-black font-sarabun tracking-wider mx-14 my-8'>
-                    <span>{question}</span>
+                    <span className='question'>{parse(question)}</span>
                   </div>
                   {act(type)}
                 </>

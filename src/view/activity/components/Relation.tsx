@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ChoiceBox from './Choicebox';
 
 import Equal from '@assets/equal.svg';
-import { MatchingAnswer, MatchingChoice } from '@model/Learning';
+import { MatchingAnswer, MatchingChoice, RelationChoice, RelationProblem } from '@model/Learning';
 
 type QuestionBox = {
   id : string,
@@ -18,18 +18,18 @@ type QuestionBox = {
   pairId : number
 }
 
-interface MatchingPageState {
+interface RelationState {
   questions: QuestionBox[],
   hoverQuestion: string | null,
   result: string[][]
 }
 
-interface MatchingProps {
-  info : MatchingChoice,
+interface RelationProps {
+  info : RelationChoice
   updateResult(e : MatchingAnswer) : void
 }
 
-export default class Matching extends Component<MatchingProps, MatchingPageState> {
+export default class Relation extends Component<RelationProps, RelationState> {
   public constructor(props: any) {
     super(props);
     this.state = {
@@ -155,7 +155,7 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
    * @param quest question box information
   */
   public appendRef(quest: QuestionBox): void {
-    this.setState((prev: MatchingPageState) => {
+    this.setState((prev: RelationState) => {
       prev.result[quest.pairId - 1] = [];
       prev.questions.push(quest);
       return prev;
@@ -165,13 +165,13 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
   public render(): JSX.Element {
     const func = { enter: this.onHoverQuestionEnter, exit: this.onHoverQuestionExit, append: this.appendRef };
     const { info } = this.props;
-    let choiceList = [...info.items_left, ...info.items_right];
+    // let choiceList = [...info.items_left, ...info.items_right];
+    let choiceList = info.choices;
     let i = 0;
     let questionList: ReactElement[] = [];
-    while (i < Math.floor(choiceList.length / 2)) {
-      questionList.push(<Question func={func} id={i + 1} key={i} />);
-      i++;
-    }
+    info.problems.forEach(e=>{
+      questionList.push(<Question func={func} id={i + 1} key={i} info={e}/>);
+    })
     return (
       <>
         <div className='w-full'>
@@ -186,14 +186,29 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
 class Question extends Component<any, any> {
   public render(): JSX.Element {
     return (<>
-      <div className='mx-auto text-base text-darkPrimary font-normal my-14 flex' >
-        <div className='flex-grow'></div>
-        <Dropzone {...this.props} />
-        <div className='flex-grow m-auto text-center'>
+      <div className='mx-auto text-base text-darkPrimary font-normal my-14 flex px-56' >
+        {(()=>{
+          const list : ReactElement[] = [];
+          let i = 0;
+          while (i < this.props.info.before) {
+            list.push(<Dropzone {...this.props} />)
+            i++;
+          }
+          return list;
+        })()}
+        <div className='flex-grow pr-12'></div>
+        <div className='flex-none m-auto text-center mr-24'>
           <img src={Equal} alt="Equal to" className='m-auto' />
         </div>
-        <Dropzone {...this.props} />
-        <div className='flex-grow'></div>
+        {(()=>{
+          const list : ReactElement[] = [];
+          let i = 0;
+          while (i < this.props.info.after) {
+            list.push(<Dropzone {...this.props} />)
+            i++;
+          }
+          return list;
+        })()}
       </div>
     </>)
   }
@@ -226,11 +241,11 @@ class Dropzone extends React.Component<any, any> {
   public render(): JSX.Element {
     return (<>
       <div className='relative'>
-        <div className='bg-white w-32 h-12 py-2 px-12 mx-4 absolute border-b border-gray rounded-lg' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+        <div className='bg-white questionbox h-12 py-2 px-12 mx-4 absolute border-b border-gray rounded-lg' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
           {'  '}
         </div>
       </div>
-        <div ref={this.ref} className={` w-32 h-12 py-2 px-12 mx-4 z-20`} onMouseEnter={() => { this.onEnter() }} onMouseLeave={() => { this.onExit() }}>
+        <div ref={this.ref} className={` questionbox h-12 py-2 px-12 mx-4 z-20`} onMouseEnter={() => { this.onEnter() }} onMouseLeave={() => { this.onExit() }}>
           {'  '}
         </div>
     </>)
