@@ -272,7 +272,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
             </>}
             {data ? <>
               <div className=' text-xl text-darkPrimary font-prompt font-semibold tracking-wider inline px-2 '>
-                <span>My Badge ({data.badges.filter(e => e.is_collect).length})</span>
+                <span>My Badge ({data.badges.filter(e => e.IsCollected).length})</span>
               </div>
             </> : <>
               <Skeleton variant="text" className="w-1/6 mx-auto" />
@@ -283,8 +283,8 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
                 </div>
                 {(() => {
                   let badgeList: ReactElement[] = [];
-                  data.badges.forEach((e: any, key: number) => {
-                    badgeList.push(<Badge Icon={e.icon_path} displayText={e.name} isCollect={e.is_collect} key={key} />)
+                  data.badges.filter(e=>e.ImagePath!=='-').forEach((e: any, key: number) => {
+                    badgeList.push(<Badge Icon={e.ImagePath} displayText={e.Name} isCollect={e.IsCollected} key={key} />)
                   })
                   return badgeList
                 })()}
