@@ -5,7 +5,7 @@ import Drawer from './components/Drawer';
 const Index: React.FC = () => {
   return (
     <>
-      <div className='relative h-3/5 w-full'>
+      <div className='relative h-full w-full'>
         <div className='app'>
           <Drawer />
         </div>

@@ -60,9 +60,9 @@ const Drawer: React.FC<DrawerProps> = () => {
 
     return (
         <>
-            {/* <Stat /> */}
-            {/* <a style={{position : 'absolute'}}>{userState.Action}</a> */}
-            {/* <ControlPanel {...panelFunc} userState={userState} /> */}
+            <Stat />
+            <a style={{position : 'absolute'}}>{userState.Action}</a>
+            <ControlPanel {...panelFunc} userState={userState} />
             <DrawerContext.Provider value={{
                 pos: currentPos,
                 offset: {
