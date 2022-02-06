@@ -1,4 +1,4 @@
-import { Position } from "../model/Drawer"
+import { Position } from "@model/Drawer"
 
 const parseClientRectsToPosition = (val: DOMRect, addOn : number, offsetPosition ?: Position): Position => {
     return {

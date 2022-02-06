@@ -1,7 +1,7 @@
 {
   "name": "databasecamp_web_application",
   "version": "0.1.0",
-  "proxy": "https://dev.api.databasecamp.io",
+  "proxy": "https://apidev.databasecamp.io",
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.3.0",
