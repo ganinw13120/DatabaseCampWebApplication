@@ -32,14 +32,16 @@ export class DrawerStore implements IDrawerStore {
     makeObservable(this);
 
     this.store.boxes = [
-      generateBox("Record", [
+      generateBox([
+        "Record",
         "record_id",
         "room_id",
         "guest_id",
         "created_at",
         "updated_at",
       ]),
-      generateBox("Record", [
+      generateBox([
+        "Record",
         "record_id",
         "room_id",
         "guest_id",
@@ -86,6 +88,27 @@ export class DrawerStore implements IDrawerStore {
   @action.bound
   public clearSelection(): void {
     this.store.focusEntity = null;
+    console.log("clearing..");
+    this.clearSelectionBoxes();
+    this.clearSelectionLine();
+  }
+
+  @action.bound
+  private clearSelectionBoxes(): void {
+    this.store.boxes = this.store.boxes.map((e) => {
+      e.isHover = false;
+      e.isSelect = false;
+      e.isDragging = false;
+      return e;
+    });
+  }
+
+  @action.bound
+  private clearSelectionLine(): void {
+    this.store.lines = this.store.lines.map((e) => {
+      e.isSelect = false;
+      return e;
+    });
   }
 
   @action.bound
@@ -105,6 +128,13 @@ export class DrawerStore implements IDrawerStore {
         isDrawingReady = true;
       }
     });
+    if (!_focusEntity) {
+      this.store.lines.forEach(e=>{
+        if (e.isSelect) {
+          _focusEntity = e;
+        }
+      })
+    }
     this.store.focusEntity = _focusEntity;
     if (isDrawingReady) {
       return ActionType.DrawReady;
@@ -155,7 +185,7 @@ export class DrawerStore implements IDrawerStore {
       stopInfo: {
         position: this.store.currentPosition,
       },
-      isFocus: true,
+      isSelect: true,
       startPosition: this.calculatePositionFromInfomation(startInfo),
       stopPosition: this.store.currentPosition,
     });
@@ -175,7 +205,6 @@ export class DrawerStore implements IDrawerStore {
   @action.bound
   private stopDrawing(): void {
     const currentAction = this.getCurrentAction();
-    console.log(currentAction)
 
     let tmp = [...this.store.lines];
 
@@ -190,42 +219,66 @@ export class DrawerStore implements IDrawerStore {
         e.points.some((e) => e.isHover)
       );
       if (!targetBox) {
-        console.log('Focusing box is not found, abort!');
+        console.log("Focusing box is not found, abort!");
         return;
       }
-      const stopInfo : LineInfo = {
-        box : {
-          box : targetBox,
-          level : target.level,
-          pointPosition : target.position
-        }
+      const stopInfo: LineInfo = {
+        box: {
+          box: targetBox,
+          level: target.level,
+          pointPosition: target.position,
+        },
       };
-      tmp.find(e=>e.isFocus)!.stopInfo = stopInfo;
-      tmp.find(e=>e.isFocus)!.stopPosition = this.calculatePositionFromInfomation(stopInfo);
+      tmp.find((e) => e.isSelect)!.stopInfo = stopInfo;
+      tmp.find((e) => e.isSelect)!.stopPosition =
+        this.calculatePositionFromInfomation(stopInfo);
+    }
+
+    const focusLine = tmp.find((e) => e.isSelect)!;
+    if (
+      focusLine.startInfo.box &&
+      focusLine.stopInfo.box &&
+      this.isSamePoint(focusLine.startInfo.box, focusLine.stopInfo.box)
+    ) {
+      tmp = tmp.filter((e) => !e.isSelect);
     }
 
     tmp = tmp.map((e) => {
-      e.isFocus = false;
+      e.isSelect = false;
       return e;
     });
+
     this.store.lines = tmp;
     this.store.actionType = ActionType.None;
   }
 
+  private isSamePoint(a: LineInfoBox, b: LineInfoBox): boolean {
+    return (
+      a.box.uuid === b.box.uuid &&
+      a.level === b.level &&
+      a.pointPosition === b.pointPosition
+    );
+  }
+
   @action.bound
   private drawEntity(): void {
-    const focusLine = this.store.lines.find((e) => e.isFocus);
+    const focusLine = this.store.lines.find((e) => e.isSelect);
     if (!focusLine) return;
     let tmp = [...this.store.lines];
-    tmp.find((e) => e.isFocus)!.stopInfo.position = this.store.currentPosition;
-    tmp.find((e) => e.isFocus)!.stopPosition = this.store.currentPosition;
+    tmp.find((e) => e.isSelect)!.stopInfo.position = this.store.currentPosition;
+    tmp.find((e) => e.isSelect)!.stopPosition = this.store.currentPosition;
   }
 
   @action.bound
   public deleteEntity(): void {}
 
   @action.bound
-  public addRelation(): void {}
+  public addRelation(): void {
+    const newBox = generateBox([""]);
+    const tmp = [...this.store.boxes];
+    tmp.push(newBox);
+    this.store.boxes = tmp;
+  }
 
   @action.bound
   public changeFields(amount: number): void {}
@@ -233,13 +286,13 @@ export class DrawerStore implements IDrawerStore {
   @action.bound
   public addField(type: "Buttom" | "Top", focusBox?: Box): void {}
 
-  private isBox(target: Entity): boolean {
+  public isBox(target: Entity): boolean {
     return (target as Box).entities !== undefined;
   }
-  private isLine(target: Entity): boolean {
+  public isLine(target: Entity): boolean {
     return (target as Line).startType !== undefined;
   }
-  private isPoint(target: Entity): boolean {
+  public isPoint(target: Entity): boolean {
     return (target as Point).position !== undefined;
   }
 
@@ -281,12 +334,12 @@ export class DrawerStore implements IDrawerStore {
   }
 
   @action.bound
-  private reCalculatePosition () : void {
+  private reCalculatePosition(): void {
     let tmp = [...this.store.lines];
-    tmp.forEach(e=>{
+    tmp.forEach((e) => {
       e.startPosition = this.calculatePositionFromInfomation(e.startInfo);
       e.stopPosition = this.calculatePositionFromInfomation(e.stopInfo);
-    })
+    });
     this.store.lines = tmp;
   }
 
@@ -316,6 +369,20 @@ export class DrawerStore implements IDrawerStore {
   private startDragging(): void {
     this.store.lastPosition = this.store.currentPosition;
     this.store.actionType = ActionType.Drag;
+
+    // this.clearSelection();
+    this.clearSelectionLine();
+    const focusEntity = this.store.focusEntity;
+    if (!focusEntity) return;
+    if (this.isBox(focusEntity)) {
+      let tmp = [...this.store.boxes];
+      tmp = tmp.map((e) => {
+        e.isSelect = false;
+        return e;
+      });
+      tmp.find((e) => e.uuid === focusEntity.uuid)!.isSelect = true;
+      this.store.boxes = tmp;
+    }
   }
 
   @action.bound
@@ -338,7 +405,8 @@ export class DrawerStore implements IDrawerStore {
 
   @action.bound
   public onBackgroundClick(): void {
-    this.clearSelection();
+    // this.clearSelection();
+    this.clearSelectionBoxes();
   }
 
   @action.bound
@@ -362,9 +430,6 @@ export class DrawerStore implements IDrawerStore {
   }
 
   @action.bound
-  public onPointUpdate(point: Point): void {}
-
-  @action.bound
   public getPointFromInfo(info: LineInfoBox): Point {
     return info.box.points.find(
       (e) => e.level === info.level && e.position === info.pointPosition
@@ -381,5 +446,13 @@ export class DrawerStore implements IDrawerStore {
   @action.bound
   public onUnHoverBox(box: Box): void {
     this.store.boxes.find((e) => e.uuid === box.uuid)!.isHover = false;
+  }
+
+  @action.bound
+  public onSelectLine(line: Line): void {
+    let tmp = [...this.store.lines];
+    tmp.find((e) => e.uuid === line.uuid)!.isSelect = true;
+    this.store.focusEntity = tmp.find((e) => e.uuid === line.uuid)!;
+    this.store.lines = tmp;
   }
 }

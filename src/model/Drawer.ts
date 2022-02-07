@@ -11,7 +11,7 @@ export type Line = {
     stopType : LineType
     startInfo : LineInfo
     stopInfo : LineInfo
-    isFocus : boolean
+    isSelect : boolean
     startPosition : Position
     stopPosition : Position
 }

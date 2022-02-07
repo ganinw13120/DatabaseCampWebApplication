@@ -2,9 +2,8 @@ import React from "react";
 import { v4 as uuidv4 } from 'uuid';
 import { Box, BoxDetail } from "@model/Drawer"
 
-const generateBox = (title: string, entities: Array<string>): Box => {
+const generateBox = (entities: Array<string>): Box => {
     const ref = React.createRef<HTMLDivElement>();
-    const refTitle = React.createRef<HTMLDivElement>();
     let entityList: Array<BoxDetail> = [];
     entities.forEach(e => {
         const refEntity = React.createRef<HTMLDivElement>();

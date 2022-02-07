@@ -146,12 +146,10 @@ class PointComponent extends Component <PointComponentProps, {}> {
     private onHoverPoint () : void {
         let point = this.props.data;
         point.isHover = true;
-        this.props.drawerStore!.onPointUpdate(point)
     }
     private onUnHoverPoint () : void {
         let point = this.props.data;
         point.isHover = false;
-        this.props.drawerStore!.onPointUpdate(point)
     }
     render () : JSX.Element {
         const {data, pos} = this.props;

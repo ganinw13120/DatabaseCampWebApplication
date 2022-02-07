@@ -31,9 +31,12 @@ type ControlPanelProps = {
 @observer
 class ControlPanel extends Component<ControlPanelProps, {}> {
     render(): JSX.Element {
-        const { getFocusBox, getFocusLine,
+        const { store,
             changeFields, addField, addRelation,
+            isBox, isLine,
             deleteEntity } = this.props.drawerStore!;
+        const {focusEntity} = store;
+        console.log(focusEntity)
         return <>
             <ThemeProvider theme={theme}>
                 <div className='panel-container'>
@@ -42,15 +45,15 @@ class ControlPanel extends Component<ControlPanelProps, {}> {
                             <Button variant="outlined" color="secondary" onClick={addRelation}><AddIcon /> <WysiwygIcon /></Button>
                         </div>
                         {
-                            (getFocusBox() || getFocusLine()) &&
+                            (focusEntity && (isBox(focusEntity) || isLine(focusEntity))) &&
                             <div className='panel-item-group'>
                                 <Button variant="outlined" color="secondary" onClick={deleteEntity}><DeleteIcon /></Button>
                             </div>
                         }
-                        {getFocusBox() &&
+                        {focusEntity && isBox(focusEntity) &&
                             <BoxPanel />
                         }
-                        {getFocusLine() &&
+                        {focusEntity && isLine(focusEntity) &&
                             <LinePanel />
                         }
                     </div>

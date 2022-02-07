@@ -51,31 +51,12 @@ type LineProps = {
 export default class LineComponent extends Component<LineProps, {}> {
   private generateLineElement(): ReactElement[] {
     const { data } = this.props;
-    // const { offset } = this.props.drawerStore!.store;
     const offset = this.props.drawerStore!.getSvgOffset();
     const { getPointFromInfo } = this.props.drawerStore!;
     let element: ReactElement[] = [];
 
-    // const startPos = data.startInfo.box
-    //   ? parseClientRectsToPosition(
-    //     getPointFromInfo(data.startInfo.box)!.ref.current!.getClientRects()[0],
-    //     pointOffset,
-    //     offset
-    //   )
-    //   : data.startInfo.position!;
-    // const stopPos = data.stopInfo.box
-    //   ? parseClientRectsToPosition(
-    //     getPointFromInfo(data.stopInfo.box)!.ref.current!.getClientRects()[0],
-    //     pointOffset,
-    //     offset
-    //   )
-    //   : data.stopInfo.position!;
-
     const startPos = data.startPosition;
     const stopPos = data.stopPosition;
-
-    console.log(startPos)
-    console.log(stopPos)
 
     const linePath = this.generateLinePath({
       startInfo: data.startInfo,
@@ -206,11 +187,13 @@ export default class LineComponent extends Component<LineProps, {}> {
 
   private generateSvgLine(path: string): ReactElement {
     const { data } = this.props;
-    const color = data.isFocus ? LineColor.Blue : LineColor.Black;
+    const color = data.isSelect ? LineColor.Blue : LineColor.Black;
+    const {onSelectLine} = this.props.drawerStore!;
     return (
       <>
         <path
           onMouseDown={() => {
+            onSelectLine(data);
             // onLineSelect();
           }}
           key={uuidv4()}

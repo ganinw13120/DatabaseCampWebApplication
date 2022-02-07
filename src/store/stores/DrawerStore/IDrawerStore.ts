@@ -31,15 +31,19 @@ export default interface IDrawerStore {
 
   onEntityUpdate(box: Box, entity: BoxDetail): void;
 
-  onPointUpdate(point: Point): void;
-
   getPointFromInfo(info: LineInfoBox): Point;
 
   onHoverBox(box: Box): void;
   onUnHoverBox(box: Box): void;
 
-  getDrawerOffset () : Position;
-  getSvgOffset () : Position;
+  getDrawerOffset(): Position;
+  getSvgOffset(): Position;
+
+  onSelectLine(line: Line): void;
+
+  isBox(target: Entity): boolean;
+  isLine(target: Entity): boolean;
+  isPoint(target: Entity): boolean;
 }
 
 export type Store = {
