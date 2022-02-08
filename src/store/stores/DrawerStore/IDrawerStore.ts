@@ -8,7 +8,7 @@ import {
   Point,
   Position,
 } from "@model/Drawer";
-
+import { KeyType } from "@model/Drawer";
 export default interface IDrawerStore {
   clearSelection(): void;
   setCurrentMousePosition(newPosition: Position): void;
@@ -37,6 +37,9 @@ export default interface IDrawerStore {
 
   onHoverBox(box: Box): void;
   onUnHoverBox(box: Box): void;
+
+  onFocusField(box : Box, key : number) : void;
+  onSetFieldKeyType(keyType : KeyType) : void;
 
   getDrawerOffset(): Position;
   getSvgOffset(): Position;

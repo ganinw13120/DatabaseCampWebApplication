@@ -1,5 +1,5 @@
 import React, { Component, ReactElement } from 'react';
-import { Box, Point, PointPosition, Position } from '@model/Drawer';
+import { Box, KeyType, Point, PointPosition, Position } from '@model/Drawer';
 import ContentEditable, { ContentEditableEvent } from 'react-contenteditable'
 import { inject, observer } from "mobx-react";
 import { DrawerStore } from '@store/stores/DrawerStore/DrawerStore';
@@ -49,7 +49,7 @@ class BoxComponent extends Component<BoxProps, {}> {
     }
     render(): JSX.Element {
         const {data} = this.props;
-        const {onHoverBox, onUnHoverBox} = this.props.drawerStore!;
+        const {onHoverBox, onUnHoverBox, onFocusField} = this.props.drawerStore!;
         return (
 
             <>
@@ -64,21 +64,27 @@ class BoxComponent extends Component<BoxProps, {}> {
                     onMouseLeave={() => {
                         onUnHoverBox(data);
                     }}
-                    onMouseDown={() => {
-                        // handleMouseDown();
-                    }}
-                    onMouseUp={() => {
-                        // handleMouseUp();
-                    }}
                 >
                     <div className={`box-inner-container ${data.isSelect && !data.isDragging ? 'box-select' : ''} ${data.isDragging ? 'box-dragging' : ''} `}>
                         <div className='box-header' ref={data.entities[0].ref}>
                             <ContentEditable
-                                html={data.entities[0].text}
+                                html={data.entities[0].text + `${(()=>{
+                                    switch (data.entities[0].keyType) {
+                                        case KeyType.None :
+                                            return '';
+                                        case KeyType.Foreign :
+                                            return ' <Foreign Key>'
+                                        case KeyType.Primary : 
+                                            return ' <Primary Key>'
+                                    }
+                                })()}`}
                                 disabled={false}
                                 onChange={e=>this.onChangeEntityText(e, 0)}
+                                // onFocus={()=>{
+                                //     onFocusField(data, 0);
+                                // }}
                                 tagName='div'
-                                className='inp-field'
+                                className={`inp-field ${data.entities[0].isFocus && data.isSelect ? 'inp-fiel-focus' : ''}`}
                             />
                         </div>
                         {(() => {
@@ -92,8 +98,27 @@ class BoxComponent extends Component<BoxProps, {}> {
                                             disabled={false}
                                             onChange={(e) => { this.onChangeEntityText(e, key + 1) }}
                                             tagName='div'
-                                            className='inp-field'
-                                        />
+                                            onFocus={()=>{
+                                                onFocusField(data, key+1)
+                                            }}
+                                            className={`inp-field ${entity.isFocus && data.isSelect ? 'inp-fiel-focus' : ''}`}
+                                        /> 
+                                        {(()=>{
+                                                let res = '';
+                                                switch (entity.keyType) {
+                                                    case KeyType.None :
+                                                        // return '';
+                                                        break;
+                                                    case KeyType.Foreign :
+                                                        res = ' <Foreign Key>'
+                                                        break;
+                                                    case KeyType.Primary : 
+                                                        res = ' <Primary Key>'
+                                                        break;
+                                                }
+                                                console.log(res)
+                                                return res;
+                                        })()}
                                     </div>
                                 </React.Fragment>)
                             })

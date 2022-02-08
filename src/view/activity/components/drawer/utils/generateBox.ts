@@ -1,6 +1,6 @@
 import React from "react";
 import { v4 as uuidv4 } from 'uuid';
-import { Box, BoxDetail } from "@model/Drawer"
+import { Box, BoxDetail, KeyType } from "@model/Drawer"
 
 const generateBox = (entities: Array<string>): Box => {
     const ref = React.createRef<HTMLDivElement>();
@@ -10,7 +10,9 @@ const generateBox = (entities: Array<string>): Box => {
         entityList.push({
             text: e,
             ref: refEntity,
-            uuid : uuidv4()
+            uuid : uuidv4(),
+            isFocus : false,
+            keyType : KeyType.None
         })
     })
     const box: Box = {

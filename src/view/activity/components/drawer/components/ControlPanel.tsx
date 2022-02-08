@@ -8,6 +8,7 @@ import { TextField } from '@mui/material';
 import BorderTopIcon from '@mui/icons-material/BorderTop';
 import BorderBottomIcon from '@mui/icons-material/BorderBottom';
 import { DrawerStore } from '@store/stores/DrawerStore/DrawerStore';
+import { KeyType } from "@model/Drawer";
 
 import { inject, observer } from 'mobx-react';
 import { Box } from '@model/Drawer';
@@ -35,7 +36,7 @@ class ControlPanel extends Component<ControlPanelProps, {}> {
         const { store, addRelation,
             isBox, isLine,
             deleteEntity } = this.props.drawerStore!;
-        const {focusEntity} = store;
+        const { focusEntity } = store;
         console.log(focusEntity)
         return <>
             <ThemeProvider theme={theme}>
@@ -71,9 +72,9 @@ type BoxPanelProps = {
 @observer
 class BoxPanel extends Component<BoxPanelProps, {}>{
     render(): JSX.Element {
-        const { getFocusBox,
+        const { onSetFieldKeyType,
             changeFields, addField, store } = this.props.drawerStore!;
-        const {focusEntity} = store;
+        const { focusEntity } = store;
         return <>
             <div className='panel-item-group'>
                 <div className='panel-label'>
@@ -93,6 +94,21 @@ class BoxPanel extends Component<BoxPanelProps, {}>{
                 <div className='panel-btn-container'>
                     <Button variant="outlined" color="secondary" className="panel-btn-container" onClick={() => { addField("Buttom") }}><BorderBottomIcon /></Button>
                 </div>
+                {
+                    (focusEntity as Box).entities.some(e => e.isFocus) && (
+                        <>
+                            <div className='panel-btn-container'>
+                                <Button variant="outlined" color="secondary" className="panel-btn-container" onClick={() => { onSetFieldKeyType(KeyType.Primary) }}>Set primary key</Button>
+                            </div>
+                            <div className='panel-btn-container'>
+                                <Button variant="outlined" color="secondary" className="panel-btn-container" onClick={() => { onSetFieldKeyType(KeyType.Foreign) }}>Set foreign key</Button>
+                            </div>
+                            <div className='panel-btn-container'>
+                                <Button variant="outlined" color="secondary" className="panel-btn-container" onClick={() => { onSetFieldKeyType(KeyType.None) }}>Remove key</Button>
+                            </div>
+                        </>
+                    )
+                }
             </div>
         </>
     }

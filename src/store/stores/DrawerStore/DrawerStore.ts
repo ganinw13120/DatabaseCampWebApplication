@@ -4,6 +4,7 @@ import {
   Box,
   BoxDetail,
   Entity,
+  KeyType,
   Line,
   LineInfo,
   LineInfoBox,
@@ -345,6 +346,8 @@ export class DrawerStore implements IDrawerStore {
           uuid: uuidv4(),
           text: "",
           ref: refEntity,
+          isFocus : false,
+          keyType : KeyType.None
         });
         break;
       case "Top":
@@ -353,6 +356,8 @@ export class DrawerStore implements IDrawerStore {
           uuid: uuidv4(),
           text: "",
           ref: refEntity,
+          isFocus : false,
+          keyType : KeyType.None
         });
         target.entities = [target.entities[0], ...tmp]
         break;
@@ -559,5 +564,26 @@ export class DrawerStore implements IDrawerStore {
       });
     });
     this.addBoxPoints(box, _points);
+  }
+
+  @action.bound
+  public  onFocusField(box : Box, key : number) : void {
+    let tmp = [...this.store.boxes.find(e=>e.uuid===box.uuid)!.entities].map(e=>{
+      e.isFocus = false;
+      return e;
+    });
+    tmp[key].isFocus = true;
+    this.store.boxes.find(e=>e.uuid===box.uuid)!.entities = tmp;
+  }
+
+  @action.bound
+  public onSetFieldKeyType(keyType : KeyType) : void {
+    const {focusEntity} = this.store;
+    if (!focusEntity) return;
+    if (!this.isBox(focusEntity)) return;
+    this.store.boxes = this.store.boxes.map(e=>{
+      if(e.isSelect && e.entities.some(e=>e.isFocus))e.entities.find(e=>e.isFocus)!.keyType = keyType; 
+      return e;
+    })
   }
 }

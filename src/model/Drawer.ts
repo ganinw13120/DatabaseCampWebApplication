@@ -42,6 +42,8 @@ export type BoxDetail = {
     uuid : string
     text : string
     ref : React.RefObject<HTMLDivElement>
+    isFocus : boolean
+    keyType : KeyType
 }
 
 export type Point = {
@@ -74,4 +76,9 @@ export enum ActionType {
     Focus = 'Focus',
     Draw = 'Draw',
     DrawReady = 'DrawReady',
+}
+export enum KeyType {
+    Primary = 'primary',
+    Foreign = 'foreign',
+    None = 'None'
 }

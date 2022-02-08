@@ -119,3 +119,7 @@
 .inp-field {
    min-width: 40px;
 }
+
+.inp-fiel-focus {
+  color : #D5393B;
+}
