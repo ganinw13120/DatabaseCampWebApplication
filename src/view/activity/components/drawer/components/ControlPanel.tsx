@@ -31,12 +31,10 @@ type ControlPanelProps = {
 @observer
 class ControlPanel extends Component<ControlPanelProps, {}> {
     render(): JSX.Element {
-        const { store,
-            changeFields, addField, addRelation,
+        const { store, addRelation,
             isBox, isLine,
             deleteEntity } = this.props.drawerStore!;
         const {focusEntity} = store;
-        console.log(focusEntity)
         return <>
             <ThemeProvider theme={theme}>
                 <div className='panel-container'>

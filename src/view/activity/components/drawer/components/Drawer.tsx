@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useRef, createContext, useContext, Component } from 'react';
+import React, { ReactElement, Component } from 'react';
 import BoxComponent from './Box';
 import Line from './Line';
 import Stat from './Stat';

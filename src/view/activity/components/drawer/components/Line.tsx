@@ -1,7 +1,6 @@
-import React, { Component, ReactElement, useEffect, useState } from "react";
+import React, { Component, ReactElement} from "react";
 import { Line, LineInfo, LineInfoBox, LineType, Point, Position } from "@model/Drawer";
 import { v4 as uuidv4 } from "uuid";
-import parseClientRectsToPosition from "../utils/parseClientRectsToPosition";
 import generateShortestPath from "../utils/generateShortestPath";
 import { inject, observer } from "mobx-react";
 import { DrawerStore } from "@root/store/stores/DrawerStore/DrawerStore";
@@ -52,19 +51,34 @@ export default class LineComponent extends Component<LineProps, {}> {
   private generateLineElement(): ReactElement[] {
     const { data } = this.props;
     const offset = this.props.drawerStore!.getSvgOffset();
-    const { getPointFromInfo } = this.props.drawerStore!;
+    const { getPointFromInfo, deleteLine } = this.props.drawerStore!;
     let element: ReactElement[] = [];
 
     const startPos = data.startPosition;
     const stopPos = data.stopPosition;
+
+    if (data.startInfo.box && !getPointFromInfo(data.startInfo.box)) {
+      deleteLine(data.uuid);
+      return [];
+    }
+    if (data.stopInfo.box && !getPointFromInfo(data.stopInfo.box)) {
+      deleteLine(data.uuid);
+      return [];
+    }
+
+    const _getPointFromInfo = (info : LineInfoBox) : Point => {
+      const res = getPointFromInfo(info);
+      return res!;
+    }
 
     const linePath = this.generateLinePath({
       startInfo: data.startInfo,
       stopInfo: data.stopInfo,
       offset: offset,
       pointOffset,
-      getPointFromInfo
+      getPointFromInfo : _getPointFromInfo
     });
+
     const { startAngle, stopAngle } = linePath;
     let i = 0;
     while (i < linePath.checkPoints.length - 1) {

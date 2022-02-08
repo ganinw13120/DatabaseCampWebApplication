@@ -9,6 +9,7 @@ import {
   LineInfoBox,
   LineType,
   Point,
+  PointPosition,
   Position,
 } from "@model/Drawer";
 import generateBox from "@root/view/activity/components/drawer/utils/generateBox";
@@ -18,7 +19,6 @@ import React from "react";
 import RootStore from "../../RootStore";
 
 import IDrawerStore, { Store } from "./IDrawerStore";
-import addPositionOffset from "@root/view/activity/components/drawer/utils/addPositionOffset";
 import parseClientRectsToPosition from "@root/view/activity/components/drawer/utils/parseClientRectsToPosition";
 
 const pointOffset: number = 15;
@@ -88,7 +88,6 @@ export class DrawerStore implements IDrawerStore {
   @action.bound
   public clearSelection(): void {
     this.store.focusEntity = null;
-    console.log("clearing..");
     this.clearSelectionBoxes();
     this.clearSelectionLine();
   }
@@ -113,12 +112,16 @@ export class DrawerStore implements IDrawerStore {
 
   @action.bound
   private getCurrentAction(): ActionType {
-    let isFocusing,
-      isDragging,
+    let isFocusing = false,
+      isDragging = false,
       isDrawingReady = false;
     let _focusEntity: Entity | null = null;
     this.store.boxes.forEach((e) => {
       if (e.isDragging) isDragging = true;
+      if (e.isSelect && !isFocusing) {
+        isFocusing = true;
+        _focusEntity = e;
+      }
       if (e.isHover) {
         isFocusing = true;
         _focusEntity = e;
@@ -129,11 +132,11 @@ export class DrawerStore implements IDrawerStore {
       }
     });
     if (!_focusEntity) {
-      this.store.lines.forEach(e=>{
+      this.store.lines.forEach((e) => {
         if (e.isSelect) {
           _focusEntity = e;
         }
-      })
+      });
     }
     this.store.focusEntity = _focusEntity;
     if (isDrawingReady) {
@@ -270,7 +273,25 @@ export class DrawerStore implements IDrawerStore {
   }
 
   @action.bound
-  public deleteEntity(): void {}
+  public deleteEntity(): void {
+    const { focusEntity } = this.store;
+    if (!focusEntity) return;
+    if (this.isBox(focusEntity)) {
+      this.store.lines = this.store.lines.filter((e) => {
+        return !(e.startInfo.box?.box.uuid === focusEntity.uuid ||
+          e.stopInfo.box?.box.uuid === focusEntity.uuid);
+      });
+      this.store.boxes = this.store.boxes.filter(
+        (e) => !(e.uuid === focusEntity.uuid)
+      );
+    } else if (this.isLine(focusEntity)) {
+      this.store.lines = this.store.lines.filter(
+        (e) => !(e.uuid === focusEntity.uuid)
+      );
+    }
+    const currentAction = this.getCurrentAction();
+    this.store.actionType = currentAction;
+  }
 
   @action.bound
   public addRelation(): void {
@@ -278,13 +299,66 @@ export class DrawerStore implements IDrawerStore {
     const tmp = [...this.store.boxes];
     tmp.push(newBox);
     this.store.boxes = tmp;
+    const currentAction = this.getCurrentAction();
+    this.store.actionType = currentAction;
   }
 
   @action.bound
-  public changeFields(amount: number): void {}
+  public changeFields(amount: number): void {
+    const { focusEntity } = this.store;
+    const target = focusEntity as Box;
+    if (!focusEntity || !this.isBox(focusEntity)) {
+      return;
+    }
+    if (target.entities.length > amount) {
+      if (target.entities.length <= 1) {
+        return;
+      }
+      this.removeField();
+    } else {
+      this.addField("Buttom");
+    }
+  }
 
   @action.bound
-  public addField(type: "Buttom" | "Top", focusBox?: Box): void {}
+  public removeField(): void {
+    const { focusEntity } = this.store;
+    const target = focusEntity as Box;
+    if (!focusEntity || !this.isBox(focusEntity)) {
+      return;
+    }
+    target.entities.pop();
+    this.generatePoint(target);
+  }
+
+  @action.bound
+  public addField(type: "Buttom" | "Top"): void {
+    const { focusEntity } = this.store;
+    const target = focusEntity as Box;
+    if (!focusEntity || !this.isBox(focusEntity)) {
+      return;
+    }
+    const refEntity = React.createRef<HTMLDivElement>();
+    switch (type) {
+      case "Buttom":
+        target.entities.push({
+          uuid: uuidv4(),
+          text: "",
+          ref: refEntity,
+        });
+        break;
+      case "Top":
+        let tmp = [...target.entities].slice(1);
+        tmp.unshift({
+          uuid: uuidv4(),
+          text: "",
+          ref: refEntity,
+        });
+        target.entities = [target.entities[0], ...tmp]
+        break;
+    }
+    this.generatePoint(target);
+  }
 
   public isBox(target: Entity): boolean {
     return (target as Box).entities !== undefined;
@@ -430,10 +504,15 @@ export class DrawerStore implements IDrawerStore {
   }
 
   @action.bound
-  public getPointFromInfo(info: LineInfoBox): Point {
+  public getPointFromInfo(info: LineInfoBox): Point | undefined {
     return info.box.points.find(
       (e) => e.level === info.level && e.position === info.pointPosition
-    )!;
+    );
+  }
+
+  @action.bound
+  public deleteLine(id: string): void {
+    this.store.lines = this.store.lines.filter((e) => !(e.uuid === id));
   }
 
   @action.bound
@@ -454,5 +533,31 @@ export class DrawerStore implements IDrawerStore {
     tmp.find((e) => e.uuid === line.uuid)!.isSelect = true;
     this.store.focusEntity = tmp.find((e) => e.uuid === line.uuid)!;
     this.store.lines = tmp;
+  }
+
+  @action.bound
+  public generatePoint(box: Box): void {
+    const _points: Array<Point> = [];
+    box.entities.forEach((en, key) => {
+      const L = React.createRef<SVGSVGElement>();
+      const R = React.createRef<SVGSVGElement>();
+      _points.push({
+        uuid: uuidv4(),
+        isHover: false,
+        ref: L,
+        position: PointPosition.Left,
+        parentRef: en.ref,
+        level: key,
+      });
+      _points.push({
+        uuid: uuidv4(),
+        isHover: false,
+        ref: R,
+        position: PointPosition.Right,
+        parentRef: en.ref,
+        level: key,
+      });
+    });
+    this.addBoxPoints(box, _points);
   }
 }

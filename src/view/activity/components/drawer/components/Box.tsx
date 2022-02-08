@@ -1,6 +1,5 @@
-import React, { Component, ReactElement, useEffect, useState } from 'react';
+import React, { Component, ReactElement } from 'react';
 import { Box, Point, PointPosition, Position } from '@model/Drawer';
-import { v4 as uuidv4 } from 'uuid';
 import ContentEditable, { ContentEditableEvent } from 'react-contenteditable'
 import { inject, observer } from "mobx-react";
 import { DrawerStore } from '@store/stores/DrawerStore/DrawerStore';
@@ -17,33 +16,7 @@ type BoxProps = {
 class BoxComponent extends Component<BoxProps, {}> {
     
     public componentDidMount () {
-        this.generatePoints();
-    }
-
-    private generatePoints () {
-        const data = this.props.data;
-        const _points: Array<Point> = [];
-        data.entities.forEach((en, key) => {
-            const L = React.createRef<SVGSVGElement>();
-            const R = React.createRef<SVGSVGElement>();
-            _points.push({
-                uuid: uuidv4(),
-                isHover: false,
-                ref: L,
-                position: PointPosition.Left,
-                parentRef: en.ref,
-                level : key
-            })
-            _points.push({
-                uuid: uuidv4(),
-                isHover: false,
-                ref: R,
-                position: PointPosition.Right,
-                parentRef: en.ref,
-                level : key
-            })
-        })
-        this.props.drawerStore!.addBoxPoints(data, _points);
+        this.props.drawerStore!.generatePoint(this.props.data);
     }
 
     private generatePointElement (): ReactElement[] {
@@ -53,16 +26,18 @@ class BoxComponent extends Component<BoxProps, {}> {
         let borderNoiseAddup = .65;
         const points = this.props.data.points;
         points.forEach((e, key) => {
-            const pos: Position = e.position === PointPosition.Left ? {
-                x: 0,
-                y: sum + borderNoise,
-            } : {
-                x: e.parentRef.current!.offsetWidth + borderNoiseAddup,
-                y: sum + borderNoise,
+            if (e.parentRef.current) {
+                const pos: Position = e.position === PointPosition.Left ? {
+                    x: 0,
+                    y: sum + borderNoise,
+                } : {
+                    x:  e.parentRef.current!.offsetWidth + borderNoiseAddup,
+                    y: sum + borderNoise,
+                }
+                if (e.position === PointPosition.Right) sum += e.parentRef.current!.clientHeight;
+                borderNoise += borderNoiseAddup;
+                _points.push(<PointComponent pos={pos} data={e} />);
             }
-            if (e.position === PointPosition.Right) sum += e.parentRef.current!.clientHeight;
-            borderNoise += borderNoiseAddup;
-            _points.push(<PointComponent pos={pos} data={e} />);
         })
         return _points;
     }

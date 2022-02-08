@@ -16,7 +16,8 @@ export default interface IDrawerStore {
   addRelation(): void;
   changeFields(amount: number): void;
   // removeField (target : Box) : void
-  addField(type: "Buttom" | "Top", focusBox?: Box): void;
+  addField(type: "Buttom" | "Top"): void;
+  removeField(): void;
   store: Store;
   getFocusLine(): Line | null;
   getFocusBox(): Box | null;
@@ -31,7 +32,8 @@ export default interface IDrawerStore {
 
   onEntityUpdate(box: Box, entity: BoxDetail): void;
 
-  getPointFromInfo(info: LineInfoBox): Point;
+  getPointFromInfo(info: LineInfoBox): Point | undefined;
+  deleteLine(id : string): void;
 
   onHoverBox(box: Box): void;
   onUnHoverBox(box: Box): void;
@@ -44,6 +46,8 @@ export default interface IDrawerStore {
   isBox(target: Entity): boolean;
   isLine(target: Entity): boolean;
   isPoint(target: Entity): boolean;
+
+  generatePoint(box: Box): void;
 }
 
 export type Store = {
