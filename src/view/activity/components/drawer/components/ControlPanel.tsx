@@ -10,6 +10,7 @@ import BorderBottomIcon from '@mui/icons-material/BorderBottom';
 import { DrawerStore } from '@store/stores/DrawerStore/DrawerStore';
 
 import { inject, observer } from 'mobx-react';
+import { Box } from '@model/Drawer';
 
 const theme = createTheme({
     palette: {
@@ -35,6 +36,7 @@ class ControlPanel extends Component<ControlPanelProps, {}> {
             isBox, isLine,
             deleteEntity } = this.props.drawerStore!;
         const {focusEntity} = store;
+        console.log(focusEntity)
         return <>
             <ThemeProvider theme={theme}>
                 <div className='panel-container'>
@@ -70,14 +72,15 @@ type BoxPanelProps = {
 class BoxPanel extends Component<BoxPanelProps, {}>{
     render(): JSX.Element {
         const { getFocusBox,
-            changeFields, addField } = this.props.drawerStore!;
+            changeFields, addField, store } = this.props.drawerStore!;
+        const {focusEntity} = store;
         return <>
             <div className='panel-item-group'>
                 <div className='panel-label'>
                     Fields :
                 </div>
                 <div className='number-inp-container mr-r'>
-                    <TextField size='small' type={"number"} value={getFocusBox()!.entities.length} onChange={(e) => {
+                    <TextField size='small' type={"number"} value={(focusEntity as Box)!.entities.length} onChange={(e) => {
                         changeFields(Number(e.target.value));
                     }} />
                 </div>

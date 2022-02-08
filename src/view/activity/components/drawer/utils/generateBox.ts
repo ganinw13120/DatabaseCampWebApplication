@@ -22,7 +22,7 @@ const generateBox = (entities: Array<string>): Box => {
             x : 0,
             y : 0
         },
-        isSelect : true,
+        isSelect : false,
         isHover : false,
         isDragging : false,
     }
