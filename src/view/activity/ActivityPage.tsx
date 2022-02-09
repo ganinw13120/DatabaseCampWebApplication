@@ -192,16 +192,16 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
                 const { activity } = activityInfo;
                 const { activity_type_id: type, question } = activity;
                 const act = (type: number) => {
-                  return <Drawer />;
-                  // if (type === 1) return <Matching info={activityInfo.choice as MatchingChoice} updateResult={this.activityViewModel.updateResult} />
-                  // else if (type === 2) return <MultipleChoiceComponent info={activityInfo.choice as MultipleChoice[]} updateResult={this.activityViewModel.updateResult} />
-                  // else if (type === 3) return <Completion info={activityInfo.choice as CompletionChoice} updateResult={this.activityViewModel.updateResult} />
-                  // else if (type === 4) return <CheckboxMultipleChoiceComponent info={activityInfo.choice as CheckboxMultipleChoice[]} updateResult={this.activityViewModel.updateResult} />
-                  // else if (type === 5) return <Group info={activityInfo.choice as GroupChoice} updateResult={this.activityViewModel.updateResult} />
-                  // else if (type === 6) return <Table info={activityInfo.choice as TableChoice} updateResult={this.activityViewModel.updateResult} />
-                  // else if (type === 7) return <Drawer />
-                  // else if (type === 8) return <Relation info={activityInfo.choice as RelationChoice} updateResult={this.activityViewModel.updateResult} />
-                  // else if (type === 9) return <Peer info={activityInfo.choice as PeerChoice} updateResult={this.activityViewModel.updateResult} />
+                  // return <Drawer />;
+                  if (type === 1) return <Matching info={activityInfo.choice as MatchingChoice} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 2) return <MultipleChoiceComponent info={activityInfo.choice as MultipleChoice[]} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 3) return <Completion info={activityInfo.choice as CompletionChoice} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 4) return <CheckboxMultipleChoiceComponent info={activityInfo.choice as CheckboxMultipleChoice[]} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 5) return <Group info={activityInfo.choice as GroupChoice} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 6) return <Table info={activityInfo.choice as TableChoice} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 7) return <Drawer />
+                  else if (type === 8) return <Relation info={activityInfo.choice as RelationChoice} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 9) return <Peer info={activityInfo.choice as PeerChoice} updateResult={this.activityViewModel.updateResult} />
                 }
                 return <>
                   <div className='text-xl text-black font-sarabun tracking-wider mx-14 my-8'>

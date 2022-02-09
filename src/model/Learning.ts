@@ -73,8 +73,8 @@ export type CheckboxMultipleChoice = {
 }
 
 export type GroupChoice = {
-    group_list : string[]
-    choices : string[]
+    groups : string[]
+    vocabs : string[]
 }
 
 export type TableChoice = {

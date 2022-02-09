@@ -43,8 +43,8 @@ const mockActivity: ActivityChoices[] = [
     }
   ],
   {
-    group_list: ['ข้อจำกัดของ File-based System', 'ไม่เป็นข้อจำกัดของ File-based System'],
-    choices: ["ข้อมูลซ้ำซ้อน", "ค่าใช้จ่ายสูง", "Isolation data", "ต้องใช้ผู้เชี่ยวชาญ", "รูปแบบไฟล์ต่างกัน"]
+    groups: ['ข้อจำกัดของ File-based System', 'ไม่เป็นข้อจำกัดของ File-based System'],
+    vocabs: ["ข้อมูลซ้ำซ้อน", "ค่าใช้จ่ายสูง", "Isolation data", "ต้องใช้ผู้เชี่ยวชาญ", "รูปแบบไฟล์ต่างกัน"]
   },
   {
     tables: [[null, null, null, null], [null, null, null, null]],
@@ -220,8 +220,8 @@ export default class ActivityViewModel implements IActivityViewModel {
       // <li>patient_type เป็นประเภทของคนไข้ ประกอบไปด้วยคนไข้ประเภทต่าง ๆ ภายในโรงพยาบาล เช่น คนไข้ภายใน คนไข้ภายนอก เป็นต้น ซึ่งสามารถเปลี่ยนแปลงได้ภายในอนาคตะ</li>\
       // <li>blood_type เป็นหมู่เลือดของคนไข้ ประกอบไปด้วย A, B, AB, เเละ O</li>\
       // "
-      // res.activity.activity_type_id = 2;
-      // res.choice = mockActivity[0];
+      res.activity.activity_type_id = 5;
+      res.choice = mockActivity[1];
 
       this.activityInfo = res;
       baseView?.onViewModelChanged()
