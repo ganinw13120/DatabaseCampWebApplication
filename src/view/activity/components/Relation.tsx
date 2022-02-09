@@ -8,25 +8,26 @@ import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import ChoiceBox from './Choicebox';
 
-import Equal from '@assets/equal.svg';
-import { MatchingAnswer, MatchingChoice, RelationChoice, RelationProblem } from '@model/Learning';
+import Arrow from '@assets/arrow.svg';
+import { MatchingAnswer, MatchingChoice, RelationAnswer, RelationChoice, RelationProblem } from '@model/Learning';
 
 type QuestionBox = {
   id : string,
   isFilled: boolean,
   ref: any,
   pairId : number
+  side : 'dependent' | 'determinants'
 }
 
 interface RelationState {
   questions: QuestionBox[],
   hoverQuestion: string | null,
-  result: string[][]
+  result: RelationAnswer[]
 }
 
 interface RelationProps {
   info : RelationChoice
-  updateResult(e : MatchingAnswer) : void
+  updateResult(e :  RelationAnswer[]) : void
 }
 
 export default class Relation extends Component<RelationProps, RelationState> {
@@ -109,7 +110,11 @@ export default class Relation extends Component<RelationProps, RelationState> {
         this.updateQuestionState(hoverQuestion, true);
         const { result } = this.state;
         let temp = [...result];
-        temp[question.pairId - 1] = [...temp[question.pairId - 1], text];
+        if (question.side==='dependent') {
+          temp[question.pairId - 1].dependent = text;
+        } else {
+          temp[question.pairId - 1].determinants = [...temp[question.pairId - 1].determinants, {value : text}];
+        }
         this.setState({
           result : temp
         })
@@ -138,7 +143,11 @@ export default class Relation extends Component<RelationProps, RelationState> {
     let temp = [...result];
     const question = questions.find(e => e.id === id);
     if (!question) return;
-    temp[question?.pairId - 1] = temp[question?.pairId - 1].filter((e: any) => e !== displayText);
+    if (temp[question.pairId-1].dependent===displayText) {
+      temp[question.pairId-1].dependent='';
+    } else {
+      temp[question?.pairId - 1].determinants = temp[question?.pairId - 1].determinants.filter((e: any) => e.value !== displayText);
+    }
     this.setState({
       result : temp
     })
@@ -155,22 +164,34 @@ export default class Relation extends Component<RelationProps, RelationState> {
    * @param quest question box information
   */
   public appendRef(quest: QuestionBox): void {
+    const { info } = this.props;
+    let determinants = [...info.dependencies[quest.pairId - 1].determinants]
+    let _determinants : Array<{value : string}> = [];
+    determinants.forEach(e=>{
+      _determinants.push({
+        value : e!
+      })
+    })
     this.setState((prev: RelationState) => {
-      prev.result[quest.pairId - 1] = [];
+      prev.result[quest.pairId - 1] = {
+        dependent : info.dependencies[quest.pairId-1].dependent ? info.dependencies[quest.pairId-1].dependent! : '',
+        determinants : _determinants
+      }
       prev.questions.push(quest);
       return prev;
     })
   }
   
+
+  
   public render(): JSX.Element {
     const func = { enter: this.onHoverQuestionEnter, exit: this.onHoverQuestionExit, append: this.appendRef };
     const { info } = this.props;
     // let choiceList = [...info.items_left, ...info.items_right];
-    let choiceList = info.choices;
-    let i = 0;
+    let choiceList = info.vocabs;
     let questionList: ReactElement[] = [];
-    info.problems.forEach(e=>{
-      questionList.push(<Question func={func} id={i + 1} key={i} info={e}/>);
+    info.dependencies.forEach((e, k)=>{
+      questionList.push(<Question func={func} id={k + 1} key={k} info={e}/>);
     })
     return (
       <>
@@ -185,30 +206,41 @@ export default class Relation extends Component<RelationProps, RelationState> {
 
 class Question extends Component<any, any> {
   public render(): JSX.Element {
+    const {determinants_count, determinants} = this.props.info
     return (<>
       <div className='mx-auto text-base text-darkPrimary font-normal my-14 flex px-56' >
         {(()=>{
           const list : ReactElement[] = [];
+          determinants.forEach((e : string | null)=>{
+            if (e) {
+              list.push(<EmptyBox text={e} />) 
+            } else {
+              list.push(<Dropzone {...this.props} side={'determinants'}/>)
+            }
+          })
           let i = 0;
-          while (i < this.props.info.before) {
-            list.push(<Dropzone {...this.props} />)
+          while (i < determinants_count - determinants.length) {
+            list.push(<Dropzone {...this.props} side={'determinants'}/>)
             i++;
           }
           return list;
         })()}
         <div className='flex-grow pr-12'></div>
         <div className='flex-none m-auto text-center mr-24'>
-          <img src={Equal} alt="Equal to" className='m-auto' />
+          <img src={Arrow} alt="Equal to" className='m-auto' />
         </div>
-        {(()=>{
-          const list : ReactElement[] = [];
-          let i = 0;
-          while (i < this.props.info.after) {
-            list.push(<Dropzone {...this.props} />)
-            i++;
-          }
-          return list;
-        })()}
+        
+        { this.props.info.dependent ? <EmptyBox text={this.props.info.dependent} /> :  <Dropzone {...this.props} side='dependent'/>}
+      </div>
+    </>)
+  }
+}
+
+class EmptyBox extends Component <{text : string}, {}> {
+  render () : JSX.Element {
+    return (<>
+      <div className={` questionbox h-12 py-2 px-12 mx-4 z-20 text-center pt-5`}  style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+        {this.props.text}
       </div>
     </>)
   }
@@ -226,7 +258,8 @@ class Dropzone extends React.Component<any, any> {
       isFilled: false,
       ref : this.ref,
       id: id,
-      pairId : props.id
+      pairId : props.id,
+      side : this.props.side
     })
   }
   onEnter(): void {

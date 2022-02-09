@@ -80,8 +80,14 @@ export type TableChoice = {
 export type TableDetail = string | null
 
 export type RelationChoice = {
-    choices : string[]
-    problems : RelationProblem[]
+    dependencies : RelationDependencyChoice[]
+    vocabs : string[]
+}
+
+export type RelationDependencyChoice = {
+    dependent : string | null
+    determinants : Array<string | null>
+    determinants_count : number
 }
 
 export type RelationProblem = {
@@ -248,7 +254,7 @@ export type CompletionAnswer = {
  *
  * Depends on `acitivty type` .
  */
-export type Answer = CompletionAnswer[] | MultipleAnswer | MatchingAnswer | CheckboxMultipleAnswer | GroupAnswer | TableAnswer | RelationAnswer | null
+export type Answer = CompletionAnswer[] | MultipleAnswer | MatchingAnswer | CheckboxMultipleAnswer | GroupAnswer | TableAnswer | RelationAnswer[] | null
 
 export type MultipleAnswer = number
 export type MatchingAnswer = string[][]
@@ -261,7 +267,11 @@ export type GroupAnswerDetail = {
     vocabs : string[]
 }
 export type TableAnswer = string[][]
-export type RelationAnswer = string[][]
+export type RelationAnswer = {
+    dependent : string
+    determinants : Array<{value : string}>
+}
+
 /**
  * Store `Activity Result` for activity after checking.
  *

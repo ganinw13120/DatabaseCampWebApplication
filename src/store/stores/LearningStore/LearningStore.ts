@@ -9,7 +9,7 @@ import RootStore from '../../RootStore';
 import LearningRepository from '@repository/app/LearningRepository';
 import ILearningRepository from '@repository/app/ILearningRepository';
 
-import { RoadMap, Lecture, Activity, Hint, Answer, CompletionAnswer, ActivityAlert, MultipleAnswer, MatchingAnswer, MultipleChoice, CheckboxMultipleAnswer, GroupAnswer } from '@model/Learning';
+import { RoadMap, Lecture, Activity, Hint, Answer, CompletionAnswer, ActivityAlert, MultipleAnswer, MatchingAnswer, MultipleChoice, CheckboxMultipleAnswer, GroupAnswer, RelationAnswer } from '@model/Learning';
 import ILearningStore, { Store } from './ILearningStore';
 import { ACTIVITY_SUCCESS, ACTIVITY_WARNING_ON_EMPTY, ACTIVITY_WARNING_ON_UNCOMPLETE, ACTIVITY_WRONG } from '@constant/text';
 
@@ -164,6 +164,8 @@ export class LearningStore implements ILearningStore {
       }
     } else if (activity.activity_type_id === 4) {
       this.checkGroup(activity.activity_id, result as GroupAnswer, cb);
+    } else if (activity.activity_type_id === 5) {
+      this.checkRelation(activity.activity_id, result as RelationAnswer[], cb);
     }
   }
 
@@ -277,6 +279,24 @@ export class LearningStore implements ILearningStore {
   private async checkGroup(activityID: number, result: GroupAnswer, cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     this.learningRepository.checkActiivty(token, activityID, 4, result).then((res: any) => {
+      const { is_correct } = res;
+      if (is_correct) {
+        this.updateRoadMapStatus(activityID);
+        this.rootStore.authStore.SetUserPoint(res.updated_point);
+        this.successAnswer(cb);
+        return;
+      }
+      else {
+        this.rejectAnswer(cb);
+        return;
+      }
+    });
+  }
+
+  @action.bound
+  private async checkRelation(activityID: number, result: RelationAnswer[], cb: any): Promise<any> {
+    const { token } = this.rootStore.authStore.store;
+    this.learningRepository.checkActiivty(token, activityID, 5, result).then((res: any) => {
       const { is_correct } = res;
       if (is_correct) {
         this.updateRoadMapStatus(activityID);
