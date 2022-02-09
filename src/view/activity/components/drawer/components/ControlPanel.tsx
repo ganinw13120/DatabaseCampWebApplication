@@ -81,7 +81,7 @@ class BoxPanel extends Component<BoxPanelProps, {}>{
                     Fields :
                 </div>
                 <div className='number-inp-container mr-r'>
-                    <TextField size='small' type={"number"} value={(focusEntity as Box)!.entities.length} onChange={(e) => {
+                    <TextField size='small' type={"number"} value={((focusEntity as Box)!.entities.length) - 1} onChange={(e) => {
                         changeFields(Number(e.target.value));
                     }} />
                 </div>
@@ -96,18 +96,29 @@ class BoxPanel extends Component<BoxPanelProps, {}>{
                 </div>
                 {
                     (focusEntity as Box).entities.some(e => e.isFocus) && (
-                        <>
-                            <div className='panel-btn-container'>
-                                <Button variant="outlined" color="secondary" className="panel-btn-container" onClick={() => { onSetFieldKeyType(KeyType.Primary) }}>Set primary key</Button>
-                            </div>
-                            <div className='panel-btn-container'>
-                                <Button variant="outlined" color="secondary" className="panel-btn-container" onClick={() => { onSetFieldKeyType(KeyType.Foreign) }}>Set foreign key</Button>
-                            </div>
-                            <div className='panel-btn-container'>
-                                <Button variant="outlined" color="secondary" className="panel-btn-container" onClick={() => { onSetFieldKeyType(KeyType.None) }}>Remove key</Button>
-                            </div>
-                        </>
-                    )
+                        () => {
+                            const keyType = (focusEntity as Box).entities.find(e => e.isFocus)!.keyType;
+                            return (
+                                <>
+                                    {keyType !== KeyType.Primary &&
+                                        <div className='panel-btn-container'>
+                                            <Button variant="outlined" color="secondary" className="panel-btn-container" onClick={() => { onSetFieldKeyType(KeyType.Primary) }}>Set primary key</Button>
+                                        </div>
+                                    }
+                                    {keyType !== KeyType.Foreign &&
+                                        <div className='panel-btn-container'>
+                                            <Button variant="outlined" color="secondary" className="panel-btn-container" onClick={() => { onSetFieldKeyType(KeyType.Foreign) }}>Set foreign key</Button>
+                                        </div>
+                                    }
+                                    {keyType !== KeyType.None &&
+                                        <div className='panel-btn-container'>
+                                            <Button variant="outlined" color="secondary" className="panel-btn-container" onClick={() => { onSetFieldKeyType(KeyType.None) }}>Remove key</Button>
+                                        </div>
+                                    }
+                                </>
+                            )
+                        }
+                    )()
                 }
             </div>
         </>

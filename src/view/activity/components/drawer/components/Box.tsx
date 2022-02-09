@@ -8,18 +8,18 @@ const pointHitbox: number = 30;
 
 type BoxProps = {
     data: Box
-    drawerStore ?: DrawerStore
+    drawerStore?: DrawerStore
 }
 
 @inject("drawerStore")
 @observer
 class BoxComponent extends Component<BoxProps, {}> {
-    
-    public componentDidMount () {
+
+    public componentDidMount() {
         this.props.drawerStore!.generatePoint(this.props.data);
     }
 
-    private generatePointElement (): ReactElement[] {
+    private generatePointElement(): ReactElement[] {
         const _points: ReactElement[] = [];
         let sum = 10;
         let borderNoise = 0;
@@ -31,7 +31,7 @@ class BoxComponent extends Component<BoxProps, {}> {
                     x: 0,
                     y: sum + borderNoise,
                 } : {
-                    x:  e.parentRef.current!.offsetWidth + borderNoiseAddup,
+                    x: e.parentRef.current!.offsetWidth + borderNoiseAddup,
                     y: sum + borderNoise,
                 }
                 if (e.position === PointPosition.Right) sum += e.parentRef.current!.clientHeight;
@@ -42,14 +42,14 @@ class BoxComponent extends Component<BoxProps, {}> {
         return _points;
     }
 
-    private onChangeEntityText (event: ContentEditableEvent, key: number) {
+    private onChangeEntityText(event: ContentEditableEvent, key: number) {
         let entity = this.props.data.entities[key];
         entity.text = event.target.value;
         this.props.drawerStore!.onEntityUpdate(this.props.data, entity)
     }
     render(): JSX.Element {
-        const {data} = this.props;
-        const {onHoverBox, onUnHoverBox, onFocusField} = this.props.drawerStore!;
+        const { data } = this.props;
+        const { onHoverBox, onUnHoverBox, onFocusField } = this.props.drawerStore!;
         return (
 
             <>
@@ -68,18 +68,18 @@ class BoxComponent extends Component<BoxProps, {}> {
                     <div className={`box-inner-container ${data.isSelect && !data.isDragging ? 'box-select' : ''} ${data.isDragging ? 'box-dragging' : ''} `}>
                         <div className='box-header' ref={data.entities[0].ref}>
                             <ContentEditable
-                                html={data.entities[0].text + `${(()=>{
+                                html={data.entities[0].text + `${(() => {
                                     switch (data.entities[0].keyType) {
-                                        case KeyType.None :
+                                        case KeyType.None:
                                             return '';
-                                        case KeyType.Foreign :
+                                        case KeyType.Foreign:
                                             return ' <Foreign Key>'
-                                        case KeyType.Primary : 
+                                        case KeyType.Primary:
                                             return ' <Primary Key>'
                                     }
                                 })()}`}
                                 disabled={false}
-                                onChange={e=>this.onChangeEntityText(e, 0)}
+                                onChange={e => this.onChangeEntityText(e, 0)}
                                 // onFocus={()=>{
                                 //     onFocusField(data, 0);
                                 // }}
@@ -98,26 +98,26 @@ class BoxComponent extends Component<BoxProps, {}> {
                                             disabled={false}
                                             onChange={(e) => { this.onChangeEntityText(e, key + 1) }}
                                             tagName='div'
-                                            onFocus={()=>{
-                                                onFocusField(data, key+1)
+                                            onFocus={() => {
+                                                onFocusField(data, key + 1)
                                             }}
                                             className={`inp-field ${entity.isFocus && data.isSelect ? 'inp-fiel-focus' : ''}`}
-                                        /> 
-                                        {(()=>{
-                                                let res = '';
-                                                switch (entity.keyType) {
-                                                    case KeyType.None :
-                                                        // return '';
-                                                        break;
-                                                    case KeyType.Foreign :
-                                                        res = ' <Foreign Key>'
-                                                        break;
-                                                    case KeyType.Primary : 
-                                                        res = ' <Primary Key>'
-                                                        break;
-                                                }
-                                                console.log(res)
-                                                return res;
+                                        />
+                                        {(() => {
+                                            let res = '';
+                                            switch (entity.keyType) {
+                                                case KeyType.None:
+                                                    // return '';
+                                                    break;
+                                                case KeyType.Foreign:
+                                                    res = ' <Foreign Key>'
+                                                    break;
+                                                case KeyType.Primary:
+                                                    res = ' <Primary Key>'
+                                                    break;
+                                            }
+                                            console.log(res)
+                                            return res;
                                         })()}
                                     </div>
                                 </React.Fragment>)
@@ -137,22 +137,22 @@ export default BoxComponent;
 type PointComponentProps = {
     data: Point
     pos: Position
-    drawerStore ?: DrawerStore
+    drawerStore?: DrawerStore
 }
 
 @inject("drawerStore")
 @observer
-class PointComponent extends Component <PointComponentProps, {}> {
-    private onHoverPoint () : void {
+class PointComponent extends Component<PointComponentProps, {}> {
+    private onHoverPoint(): void {
         let point = this.props.data;
         point.isHover = true;
     }
-    private onUnHoverPoint () : void {
+    private onUnHoverPoint(): void {
         let point = this.props.data;
         point.isHover = false;
     }
-    render () : JSX.Element {
-        const {data, pos} = this.props;
+    render(): JSX.Element {
+        const { data, pos } = this.props;
         const pointR = 2.5;
         return (<>
             <svg key={data.uuid} ref={data.ref} onMouseEnter={() => { this.onHoverPoint() }} onMouseLeave={() => { this.onUnHoverPoint() }} style={{ padding: `${pointR * 3}px`, cursor: 'pointer', position: 'absolute', top: 0, zIndex: 10, width: `${pointHitbox}px`, height: `${pointHitbox}px`, transform: `translate(${pos.x - (pointHitbox / 2)}px, ${pos.y}px)` }}>
