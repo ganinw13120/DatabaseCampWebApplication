@@ -586,4 +586,20 @@ export class DrawerStore implements IDrawerStore {
       return e;
     })
   }
+
+  @action.bound
+  public changeLineType (point : 'Start' | 'Stop', type : LineType) : void {
+    const {focusEntity} = this.store;
+    if (!focusEntity) return;
+    if (!this.isLine(focusEntity)) return;
+    const target = focusEntity as Line;
+    switch (point) {
+      case 'Start' :
+        target.startType = type; 
+        break;
+      case 'Stop' :
+        target.stopType = type;
+        break;
+    }
+  }
 }

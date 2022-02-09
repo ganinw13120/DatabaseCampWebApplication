@@ -116,7 +116,6 @@ class BoxComponent extends Component<BoxProps, {}> {
                                                     res = ' <Primary Key>'
                                                     break;
                                             }
-                                            console.log(res)
                                             return res;
                                         })()}
                                     </div>

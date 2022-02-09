@@ -5,6 +5,7 @@ import {
   Entity,
   Line,
   LineInfoBox,
+  LineType,
   Point,
   Position,
 } from "@model/Drawer";
@@ -22,6 +23,8 @@ export default interface IDrawerStore {
   getFocusLine(): Line | null;
   getFocusBox(): Box | null;
 
+  changeLineType(point : 'Start' | 'Stop', type: LineType): void;
+
   handleMouseMove(e: React.MouseEvent<HTMLDivElement>): void;
   handleMouseUp(e: React.MouseEvent<HTMLDivElement>): void;
   handleMouseDown(e: React.MouseEvent<HTMLDivElement>): void;
@@ -33,13 +36,13 @@ export default interface IDrawerStore {
   onEntityUpdate(box: Box, entity: BoxDetail): void;
 
   getPointFromInfo(info: LineInfoBox): Point | undefined;
-  deleteLine(id : string): void;
+  deleteLine(id: string): void;
 
   onHoverBox(box: Box): void;
   onUnHoverBox(box: Box): void;
 
-  onFocusField(box : Box, key : number) : void;
-  onSetFieldKeyType(keyType : KeyType) : void;
+  onFocusField(box: Box, key: number): void;
+  onSetFieldKeyType(keyType: KeyType): void;
 
   getDrawerOffset(): Position;
   getSvgOffset(): Position;

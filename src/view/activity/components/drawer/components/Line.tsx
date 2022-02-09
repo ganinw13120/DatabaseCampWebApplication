@@ -92,11 +92,19 @@ export default class LineComponent extends Component<LineProps, {}> {
         element.push(...this.generateHeadOne(startAngle, startPos));
         break;
       }
+      case LineType.More: {
+        element.push(...this.generateHeadMany(startAngle, startPos));
+        break;
+      }
     }
 
     switch (data.stopType) {
       case LineType.More: {
         element.push(...this.generateHeadMany(stopAngle, stopPos));
+        break;
+      }
+      case LineType.OnlyOne: {
+        element.push(...this.generateHeadOne(stopAngle, stopPos));
         break;
       }
     }
@@ -109,8 +117,8 @@ export default class LineComponent extends Component<LineProps, {}> {
     const stopAngle =
       shortestPath[shortestPath.length - 1].x <
         shortestPath[shortestPath.length - 2].x
-        ? Angle.ToLeft
-        : Angle.ToRight;
+        ? Angle.ToRight
+        : Angle.ToLeft;
     const startAngle =
       shortestPath[0].x < shortestPath[1].x ? Angle.ToRight : Angle.ToLeft;
 
@@ -158,26 +166,6 @@ export default class LineComponent extends Component<LineProps, {}> {
       case Angle.ToLeft: {
         element.push(
           this.generateSvgLine(
-            `M ${pos.x + lineStopTickDistance} ${pos.y}, ${pos.x} ${pos.y + lineStopTickSpread
-            }`
-          )
-        );
-        element.push(
-          this.generateSvgLine(
-            `M ${pos.x + lineStopTickDistance} ${pos.y}, ${pos.x} ${pos.y}`
-          )
-        );
-        element.push(
-          this.generateSvgLine(
-            `M ${pos.x + lineStopTickDistance} ${pos.y}, ${pos.x} ${pos.y - lineStopTickSpread
-            }`
-          )
-        );
-        break;
-      }
-      case Angle.ToRight: {
-        element.push(
-          this.generateSvgLine(
             `M ${pos.x - lineStopTickDistance} ${pos.y}, ${pos.x} ${pos.y + lineStopTickSpread
             }`
           )
@@ -190,6 +178,26 @@ export default class LineComponent extends Component<LineProps, {}> {
         element.push(
           this.generateSvgLine(
             `M ${pos.x - lineStopTickDistance} ${pos.y}, ${pos.x} ${pos.y - lineStopTickSpread
+            }`
+          )
+        );
+        break;
+      }
+      case Angle.ToRight: {
+        element.push(
+          this.generateSvgLine(
+            `M ${pos.x + lineStopTickDistance} ${pos.y}, ${pos.x} ${pos.y + lineStopTickSpread
+            }`
+          )
+        );
+        element.push(
+          this.generateSvgLine(
+            `M ${pos.x + lineStopTickDistance} ${pos.y}, ${pos.x} ${pos.y}`
+          )
+        );
+        element.push(
+          this.generateSvgLine(
+            `M ${pos.x + lineStopTickDistance} ${pos.y}, ${pos.x} ${pos.y - lineStopTickSpread
             }`
           )
         );

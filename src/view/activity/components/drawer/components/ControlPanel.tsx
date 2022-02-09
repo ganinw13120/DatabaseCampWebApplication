@@ -8,7 +8,13 @@ import { TextField } from '@mui/material';
 import BorderTopIcon from '@mui/icons-material/BorderTop';
 import BorderBottomIcon from '@mui/icons-material/BorderBottom';
 import { DrawerStore } from '@store/stores/DrawerStore/DrawerStore';
-import { KeyType } from "@model/Drawer";
+import { KeyType, LineType, Line } from "@model/Drawer";
+
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import { inject, observer } from 'mobx-react';
 import { Box } from '@model/Drawer';
@@ -37,7 +43,6 @@ class ControlPanel extends Component<ControlPanelProps, {}> {
             isBox, isLine,
             deleteEntity } = this.props.drawerStore!;
         const { focusEntity } = store;
-        console.log(focusEntity)
         return <>
             <ThemeProvider theme={theme}>
                 <div className='panel-container'>
@@ -125,14 +130,54 @@ class BoxPanel extends Component<BoxPanelProps, {}>{
     }
 }
 
-const LinePanel: React.FC = () => {
+type LinePanelProps = {
+    drawerStore?: DrawerStore
+}
+
+@inject('drawerStore')
+@observer
+class LinePanel extends Component<LinePanelProps, {}>{
+    render () : JSX.Element {
+        
+    const focusEntity = this.props.drawerStore!.store.focusEntity;
+    const {changeLineType} = this.props.drawerStore!;
+    if (!focusEntity) return <></>
+    const target = focusEntity as Line
     return <>
         <div className='panel-item-group'>
             <div className='panel-label'>
-                Line
+                Line : 
+            </div>
+            <div className='panel-btn-container'>
+                <Select
+                    value={target.startType}
+                    style={{ height: 40 }}
+                    onChange={(e)=>{
+                        changeLineType('Start', e.target.value as LineType);
+                    }}
+                >
+                    <MenuItem value={LineType.OnlyOne}>One</MenuItem>
+                    <MenuItem value={LineType.More}>Many</MenuItem>
+                </Select>
+            </div>
+            <div className='panel-label'>
+                To
+            </div>
+            <div className='panel-btn-container'>
+                <Select
+                    value={target.stopType}
+                    style={{ height: 40 }}
+                    onChange={(e)=>{
+                        changeLineType('Stop', e.target.value as LineType);
+                    }}
+                >
+                    <MenuItem value={LineType.OnlyOne}>One</MenuItem>
+                    <MenuItem value={LineType.More}>Many</MenuItem>
+                </Select>
             </div>
         </div>
     </>
+    }
 }
 
 export default ControlPanel
