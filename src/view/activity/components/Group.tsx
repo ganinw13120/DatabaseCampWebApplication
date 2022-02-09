@@ -20,7 +20,7 @@ type QuestionBox = {
 interface GroupState {
   questions: QuestionBox[],
   hoverQuestion: number | null,
-  result: string[][],
+  result: GroupAnswer,
   groups : GroupData[]
 }
 
@@ -58,7 +58,9 @@ export default class Group extends Component<GroupProps, GroupState> {
     this.state = {
       hoverQuestion: null,
       questions: [],
-      result: [],
+      result: {
+        groups : []
+      },
       groups : []
     }
 
@@ -81,8 +83,8 @@ export default class Group extends Component<GroupProps, GroupState> {
       if (!group) return null;
       else {
         const { result } = this.state;
-        let temp = [...result];
-        temp[group.id-1].push(text);
+        let temp = result;
+        temp.groups[group.id-1].vocabs.push(text);
         this.setState({
           result: temp
         })
@@ -105,10 +107,10 @@ export default class Group extends Component<GroupProps, GroupState> {
   }
   public removeSnap(id: string, displayText: string): void {
     const { groups, result } = this.state;
-    let temp = [...result];
+    let temp = result;
     const group = groups.find(e => e.slots.some(_e=>_e.id===id));
     if (!group) return;
-    temp[group.id-1] = temp[group.id-1].filter((e: string) => e !== displayText);
+    temp.groups[group.id-1].vocabs = temp.groups[group.id-1].vocabs.filter((e: string) => e !== displayText);
     this.setState(prev=>{
       prev.groups.find(e=>e.slots.some(_e=>_e.id===id))!.slots.find(e=>e.id===id)!.isFilled = false;
       return prev;
@@ -120,7 +122,10 @@ export default class Group extends Component<GroupProps, GroupState> {
   }
   public appendRef(quest: GroupData): void {
     this.setState((prev: GroupState) => {
-      prev.result[quest.id-1] = [];
+      prev.result.groups[quest.id-1] = {
+        group_name : quest.text,
+        vocabs : []
+      }
       prev.groups.push(quest)
       return prev;
     })
@@ -177,6 +182,7 @@ class GroupBox extends Component<any, BoxState> {
       slots : slots
     }
     props.func?.append?.({
+      text : this.props.groupName,
       id : this.id,
       slots : slots,
     })

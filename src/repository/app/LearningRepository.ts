@@ -117,7 +117,26 @@ export default class LearningRepository implements ILearningRepository {
       })
     })
   }
-  
+
+  public async checkActiivty(token: string, activityId : number, activityTypeId : number, result : Answer): Promise<object> {
+    return new Promise((resolve, reject) => {
+      axios.post(`${API_BASE_URL}/learning/activity/check-answer`, {
+        activity_id: activityId,
+        activity_type_id : activityTypeId,
+        answer : result
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      }).then(res => {
+        const { data } = res;
+        resolve(data)
+      }).catch(res=>{
+        reject(res.message)
+      })
+    })
+  }
+
   /**
    * Submit `Answer` of multiple choice activity and check for result.
    *

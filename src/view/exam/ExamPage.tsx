@@ -17,7 +17,7 @@ import Requirement from '../activity/components/Requirement';
 import IAppStore from '@store/stores/AppStore/IAppStore';
 import IExaminationStore from '@store/stores/ExaminationStore/IExaminationStore';
 
-import { ActivityAlert, CompletionChoice, Exam, ExamActivity, ExamType, MatchingChoice, MultipleChoice, RoadMap } from '@model/Learning';
+import { ActivityAlert, CompletionChoice, Exam, ExamActivity, ExamType, MatchingChoice, MultipleChoice, MultipleChoiceDetail, RoadMap } from '@model/Learning';
 import Matching from '../activity/components/Matching';
 import MultipleChoiceComponent from '../activity/components/MultipleChoice';
 import Completion from '../activity/components/Completion';
@@ -162,7 +162,7 @@ class ExamPage
             const { activity_type_id: type } = activity;
             const act = (type: number) => {
               if (type === 1) return <Matching info={data.choice as MatchingChoice} updateResult={updateActivityResult} />
-              else if (type === 2) return <MultipleChoiceComponent info={data.choice as MultipleChoice[]} updateResult={updateActivityResult} />
+              else if (type === 2) return <MultipleChoiceComponent info={(data.choice as MultipleChoice).choices as MultipleChoiceDetail[]} updateResult={updateActivityResult} />
               else if (type === 3) return <Completion info={data.choice as CompletionChoice} updateResult={updateActivityResult} />
             }
             return <>

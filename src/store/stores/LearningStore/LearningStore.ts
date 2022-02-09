@@ -9,7 +9,7 @@ import RootStore from '../../RootStore';
 import LearningRepository from '@repository/app/LearningRepository';
 import ILearningRepository from '@repository/app/ILearningRepository';
 
-import { RoadMap, Lecture, Activity, Hint, Answer, CompletionAnswer, ActivityAlert } from '@model/Learning';
+import { RoadMap, Lecture, Activity, Hint, Answer, CompletionAnswer, ActivityAlert, MultipleAnswer, MatchingAnswer, MultipleChoice, CheckboxMultipleAnswer, GroupAnswer } from '@model/Learning';
 import ILearningStore, { Store } from './ILearningStore';
 import { ACTIVITY_SUCCESS, ACTIVITY_WARNING_ON_EMPTY, ACTIVITY_WARNING_ON_UNCOMPLETE, ACTIVITY_WRONG } from '@constant/text';
 
@@ -153,11 +153,17 @@ export class LearningStore implements ILearningStore {
     }
     const { activity } = activityInfo
     if (activity.activity_type_id === 1) {
-      this.checkMatching(activity.activity_id, result as string[][], cb);
+      this.checkMatching(activity.activity_id, result as MatchingAnswer, cb);
     } else if (activity.activity_type_id === 3) {
       this.checkCompletion(activity.activity_id, result as CompletionAnswer[], cb);
     } else if (activity.activity_type_id === 2) {
-      this.checkMultiple(activity.activity_id, result as number, cb);
+      if (!(activityInfo.choice as MultipleChoice).is_multiple_answers) {
+        this.checkMultiple(activity.activity_id, result as MultipleAnswer, cb);
+      } else {
+        this.checkCheckbox(activity.activity_id, result as CheckboxMultipleAnswer, cb);
+      }
+    } else if (activity.activity_type_id === 4) {
+      this.checkGroup(activity.activity_id, result as GroupAnswer, cb);
     }
   }
 
@@ -233,9 +239,44 @@ export class LearningStore implements ILearningStore {
    * @param cb callback function
    */
   @action.bound
-  private async checkMultiple(activityID: number, result: number, cb: any): Promise<any> {
+  private async checkMultiple(activityID: number, result: MultipleAnswer, cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
-    this.learningRepository.checkMultiple(token, activityID, result).then((res: any) => {
+    this.learningRepository.checkActiivty(token, activityID, 2, [result]).then((res: any) => {
+      const { is_correct } = res;
+      if (is_correct) {
+        this.updateRoadMapStatus(activityID);
+        this.rootStore.authStore.SetUserPoint(res.updated_point);
+        this.successAnswer(cb);
+        return;
+      }
+      else {
+        this.rejectAnswer(cb);
+        return;
+      }
+    });
+  }
+
+  @action.bound
+  private async checkCheckbox(activityID: number, result: CheckboxMultipleAnswer, cb: any): Promise<any> {
+    const { token } = this.rootStore.authStore.store;
+    this.learningRepository.checkActiivty(token, activityID, 2, result).then((res: any) => {
+      const { is_correct } = res;
+      if (is_correct) {
+        this.updateRoadMapStatus(activityID);
+        this.rootStore.authStore.SetUserPoint(res.updated_point);
+        this.successAnswer(cb);
+        return;
+      }
+      else {
+        this.rejectAnswer(cb);
+        return;
+      }
+    });
+  }
+  @action.bound
+  private async checkGroup(activityID: number, result: GroupAnswer, cb: any): Promise<any> {
+    const { token } = this.rootStore.authStore.store;
+    this.learningRepository.checkActiivty(token, activityID, 4, result).then((res: any) => {
       const { is_correct } = res;
       if (is_correct) {
         this.updateRoadMapStatus(activityID);
@@ -263,7 +304,7 @@ export class LearningStore implements ILearningStore {
    * @param cb callback function
    */
   @action.bound
-  private async checkMatching(activityID: number, result: string[][], cb: any): Promise<any> {
+  private async checkMatching(activityID: number, result: MatchingAnswer, cb: any): Promise<any> {
     const { token } = this.rootStore.authStore.store;
     let res: any = [];
     result.forEach((e: any) => {
@@ -276,7 +317,7 @@ export class LearningStore implements ILearningStore {
         item2: e[1]
       })
     })
-    this.learningRepository.checkMatching(token, activityID, res).then((res: any) => {
+    this.learningRepository.checkActiivty(token, activityID, 1, res).then((res: any) => {
       const { is_correct } = res;
       if (is_correct) {
         this.updateRoadMapStatus(activityID);
@@ -312,7 +353,7 @@ export class LearningStore implements ILearningStore {
         return;
       }
     })
-    this.learningRepository.checkCompletion(token, activityID, result).then((res: any) => {
+    this.learningRepository.checkActiivty(token, activityID, 3, result).then((res: any) => {
       const { is_correct } = res;
       if (is_correct) {
         this.updateRoadMapStatus(activityID);

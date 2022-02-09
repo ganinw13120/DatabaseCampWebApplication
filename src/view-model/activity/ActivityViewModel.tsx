@@ -12,36 +12,6 @@ import { Activity, ActivityAlert, ActivityChoices, Answer, RoadMap } from '@mode
 import generateStepper, { generateEmptyStepper } from '@util/generateStepper';
 
 const mockActivity: ActivityChoices[] = [
-  [
-    {
-      content: 'patient_id',
-      multiple_choice_id: 1
-    },
-    {
-      content: 'first_name',
-      multiple_choice_id: 2
-    },
-    {
-      content: 'last_name',
-      multiple_choice_id: 3
-    },
-    {
-      content: 'mobile_no',
-      multiple_choice_id: 4
-    },
-    {
-      content: 'patient_type',
-      multiple_choice_id: 4
-    },
-    {
-      content: 'blood_type',
-      multiple_choice_id: 4
-    },
-    {
-      content: 'ตารางนี้ไม่มีปัญหาเลย',
-      multiple_choice_id: 4
-    }
-  ],
   {
     groups: ['ข้อจำกัดของ File-based System', 'ไม่เป็นข้อจำกัดของ File-based System'],
     vocabs: ["ข้อมูลซ้ำซ้อน", "ค่าใช้จ่ายสูง", "Isolation data", "ต้องใช้ผู้เชี่ยวชาญ", "รูปแบบไฟล์ต่างกัน"]
@@ -111,36 +81,6 @@ const mockActivity: ActivityChoices[] = [
       },
     ]
   },
-  [
-    {
-      content: 'นักเรียน',
-      multiple_choice_id: 1
-    },
-    {
-      content: 'ครู',
-      multiple_choice_id: 2
-    },
-    {
-      content: 'ห้องเรียน',
-      multiple_choice_id: 3
-    },
-    {
-      content: 'วัน-เวลา ที่เข้าเรียน',
-      multiple_choice_id: 4
-    },
-    {
-      content: 'ประวัติการเข้าเรียน',
-      multiple_choice_id: 4
-    },
-    {
-      content: 'ชื่อ-นามสกุล นักเรียน',
-      multiple_choice_id: 4
-    },
-    {
-      content: 'ชื่อโรงเรียน',
-      multiple_choice_id: 4
-    }
-  ],
 ]
 
 export default class ActivityViewModel implements IActivityViewModel {
@@ -207,9 +147,6 @@ export default class ActivityViewModel implements IActivityViewModel {
 
     baseView.props.appStore!.setPercent(40)
     baseView.props.learningStore!.FetchActivity(activityID, (res: Activity) => {
-      console.log(res);
-      console.log(res.choice);
-
       // res.activity.question = "<image src='https://storage.googleapis.com/databasecamp-public/material/Screen%20Shot%202565-01-11%20at%2023.28%201%20(2).png' style='width:60%; padding-bottom:20px;' /> จากตารางข้างต้น Attribute ไหนบ้างที่เข้าข่ายเก็บข้อมูลซ้ำซ้อน";
       // res.activity.story = "\
       // นายแกนกำลังออกแบบฐานข้อมูลภายในโรงพยาบาลเเห่งหนึ่ง โดยประกอบไปด้วยข้อมูลต่าง ๆ ดังนี้ โดยในการเก็บข้อมูลคนไข้ ประกอบไปด้วยข้อมูลดังนี้\
@@ -220,8 +157,6 @@ export default class ActivityViewModel implements IActivityViewModel {
       // <li>patient_type เป็นประเภทของคนไข้ ประกอบไปด้วยคนไข้ประเภทต่าง ๆ ภายในโรงพยาบาล เช่น คนไข้ภายใน คนไข้ภายนอก เป็นต้น ซึ่งสามารถเปลี่ยนแปลงได้ภายในอนาคตะ</li>\
       // <li>blood_type เป็นหมู่เลือดของคนไข้ ประกอบไปด้วย A, B, AB, เเละ O</li>\
       // "
-      res.activity.activity_type_id = 5;
-      res.choice = mockActivity[1];
 
       this.activityInfo = res;
       baseView?.onViewModelChanged()
@@ -425,6 +360,7 @@ export default class ActivityViewModel implements IActivityViewModel {
    * @param result activity's answer
    */
   public updateResult = (result: Answer): void => {
+    console.log(result)
     this.result = result;
   }
 

@@ -5,14 +5,14 @@
 
 import { Component, ReactElement } from 'react';
 import Checkbox from '@mui/material/Checkbox';
-import { CheckboxMultipleAnswer, CheckboxMultipleChoice, MultipleChoice } from '@model/Learning';
+import { CheckboxMultipleAnswer, MultipleChoiceDetail } from '@model/Learning';
 
 interface CheckboxMultipleChoiceState {
   selectedChoice: number[],
 }
 
 interface CheckboxMultipleChoiceProps {
-  info: CheckboxMultipleChoice[],
+  info: MultipleChoiceDetail[],
   updateResult(e: CheckboxMultipleAnswer): void
 }
 

@@ -60,6 +60,8 @@ export default interface ILearningRepository {
      */
     fetchExamOverview(token: string): Promise<ExaminationOverview>
 
+    checkActiivty(token: string, activityId : number, activityTypeId : number, result : Answer): Promise<object>
+
     /**
      * Submit `Answer` of multiple choice activity and check for result.
      *

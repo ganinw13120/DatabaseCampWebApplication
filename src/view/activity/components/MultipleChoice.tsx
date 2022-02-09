@@ -5,14 +5,14 @@
 
 import { Component, ReactElement } from 'react';
 import Radio from '@mui/material/Radio';
-import {MultipleAnswer, MultipleChoice} from '@model/Learning';
+import {MultipleAnswer, MultipleChoice, MultipleChoiceDetail} from '@model/Learning';
 
 interface MultipleChoiceState {
   selectedChoice : number | null,
 }
 
 interface MultipleChoiceProps {
-  info : MultipleChoice[],
+  info : MultipleChoiceDetail[],
   updateResult(e : MultipleAnswer) : void
 }
 
@@ -44,7 +44,7 @@ export default class MultipleChoiceComponent extends Component<MultipleChoicePro
     const { selectedChoice } = this.state;
     const {info} = this.props;
     let choiceList: ReactElement[] = [];
-    info.forEach((e:  MultipleChoice, key : number) => {
+    info.forEach((e:  MultipleChoiceDetail, key : number) => {
       choiceList.push(<Choice key={key} id={e.multiple_choice_id} displayText={e.content} handleSelect={this.handleSelect} selected={selectedChoice} />)
     })
     return (

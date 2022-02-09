@@ -65,12 +65,7 @@ export type Activity = {
     choice :ActivityChoices
 }
 
-export type ActivityChoices =  MatchingChoice | MultipleChoice[] | CompletionChoice | CheckboxMultipleChoice[] | GroupChoice | TableChoice | RelationChoice | PeerChoice
-
-export type CheckboxMultipleChoice = {
-    content : string
-    multiple_choice_id : number
-}
+export type ActivityChoices =  MatchingChoice | MultipleChoice | CompletionChoice | GroupChoice | TableChoice | RelationChoice | PeerChoice
 
 export type GroupChoice = {
     groups : string[]
@@ -100,7 +95,7 @@ export type PeerChoice = {
 
 export type PeerProblem = {
     question : string
-    choices : MultipleChoice[]
+    choices : MultipleChoiceDetail[]
 }
 
 /**
@@ -197,7 +192,13 @@ export type MatchingChoice = {
  * `multiple_choice_id` : Identifier for choice
  *
  */
+
 export type MultipleChoice = {
+    choices : MultipleChoiceDetail[],
+    is_multiple_answers : boolean
+}
+
+export type MultipleChoiceDetail = {
     content : string
     multiple_choice_id : number
 }
@@ -252,10 +253,15 @@ export type Answer = CompletionAnswer[] | MultipleAnswer | MatchingAnswer | Chec
 export type MultipleAnswer = number
 export type MatchingAnswer = string[][]
 export type CheckboxMultipleAnswer = number[]
-export type GroupAnswer = string[][]
+export type GroupAnswer = {
+    groups : GroupAnswerDetail[]
+}
+export type GroupAnswerDetail = {
+    group_name : string
+    vocabs : string[]
+}
 export type TableAnswer = string[][]
 export type RelationAnswer = string[][]
-
 /**
  * Store `Activity Result` for activity after checking.
  *
