@@ -99,6 +99,8 @@
 
 .header {
     background-color: #3766BA;
+    color : white;
+    font-size : 22px;
 }
 .even {
     background-color: #AABEE2;
@@ -127,4 +129,17 @@
 
 .peer-drawer-container {
     height : 400px;
+}
+
+.gap-table {
+    gap : 15px;
+}
+
+.bg-box {
+    background-color: 	rgb(255,255,255, 0.9);
+}
+
+.col-box {
+    /* padding-top: -10px; */
+    transform: translate(0, -15px);
 }

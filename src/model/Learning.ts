@@ -1,7 +1,7 @@
 // Learning.ts
 /**
  * This file used to store model using in application, related to learning.
-*/
+ */
 
 /**
  * Store `Lecture` information for single lecutre.
@@ -13,10 +13,10 @@
  * `video_link` : Temporary url for lecture's video
  */
 export type Lecture = {
-    contend_id : number
-    content_name : string
-    video_link : string
-}
+  contend_id: number;
+  content_name: string;
+  video_link: string;
+};
 
 /**
  * Store `Roadmap` data for content which contains `activity_id_.
@@ -30,10 +30,10 @@ export type Lecture = {
  * `items` : Contain activities data in content
  */
 export type RoadMap = {
-    content_id : number
-    content_name : string
-    items : RoadMapItem[]
-}
+  content_id: number;
+  content_name: string;
+  items: RoadMapItem[];
+};
 
 /**
  * Store `Activity` data for each activity in roadmap.
@@ -45,10 +45,10 @@ export type RoadMap = {
  * `order` : Identify ordering between each activity
  */
 export type RoadMapItem = {
-    activity_id : number
-    is_learned : boolean
-    order : number
-}
+  activity_id: number;
+  is_learned: boolean;
+  order: number;
+};
 
 /**
  * Store `Activity` data for activity page.
@@ -60,49 +60,70 @@ export type RoadMapItem = {
  * `choice` : Choice for activity depends on `activty type_
  */
 export type Activity = {
-    activity : ActivityInfo
-    hint : ActivityHint
-    choice :ActivityChoices
-}
+  activity: ActivityInfo;
+  hint: ActivityHint;
+  choice: ActivityChoices;
+};
 
-export type ActivityChoices =  MatchingChoice | MultipleChoice | CompletionChoice | GroupChoice | TableChoice | RelationChoice | PeerChoice
+export type ActivityChoices =
+  | MatchingChoice
+  | MultipleChoice
+  | CompletionChoice
+  | GroupChoice
+  | TableChoice
+  | DrawerChoice
+  | RelationChoice
+  | PeerChoice;
 
 export type GroupChoice = {
-    groups : string[]
-    vocabs : string[]
-}
+  groups: string[];
+  vocabs: string[];
+};
+
+export type DrawerChoice = {
+  tables: TableChoiceDetail[];
+  relationships: string[];
+};
 
 export type TableChoice = {
-    tables : TableDetail[][],
-    choices : string[]
-}
+  tables: TableChoiceDetail[];
+  vocabs: string[];
+};
 
-export type TableDetail = string | null
+export type TableChoiceDetail = {
+  attributes: TableChoiceAttribute[];
+  attributes_count: number;
+  title: string | null;
+};
+
+export type TableChoiceAttribute = {
+  value: string;
+};
 
 export type RelationChoice = {
-    dependencies : RelationDependencyChoice[]
-    vocabs : string[]
-}
+  dependencies: RelationDependencyChoice[];
+  vocabs: string[];
+};
 
 export type RelationDependencyChoice = {
-    dependent : string | null
-    determinants : Array<string | null>
-    determinants_count : number
-}
+  dependent: string | null;
+  determinants: Array<string | null>;
+  determinants_count: number;
+};
 
 export type RelationProblem = {
-    before : number
-    after : number
-}
+  before: number;
+  after: number;
+};
 
 export type PeerChoice = {
-    problems : PeerProblem[]
-}
+  problems: PeerProblem[];
+};
 
 export type PeerProblem = {
-    question : string
-    choices : MultipleChoiceDetail[]
-}
+  question: string;
+  choices: MultipleChoiceDetail[];
+};
 
 /**
  * Store `Activity` infomation.
@@ -120,14 +141,14 @@ export type PeerProblem = {
  * `story` : Story requirement for this acitivity
  */
 export type ActivityInfo = {
-    activity_id : number
-    activity_order : number
-    activity_type_id : number
-    content_id : number
-    point : number
-    question : string
-    story : string
-}
+  activity_id: number;
+  activity_order: number;
+  activity_type_id: number;
+  content_id: number;
+  point: number;
+  question: string;
+  story: string;
+};
 
 /**
  * Store `Hint` infomation for each activity.
@@ -139,10 +160,10 @@ export type ActivityInfo = {
  * `hint_roadmap` : Contains hints for activity
  */
 export type ActivityHint = {
-    total_hint : number
-    used_hints : Hint[]
-    hint_roadmap : HintRoadMap[]
-}
+  total_hint: number;
+  used_hints: Hint[];
+  hint_roadmap: HintRoadMap[];
+};
 
 /**
  * Store `Hint Roadmap` infomation contains in each activity.
@@ -152,9 +173,9 @@ export type ActivityHint = {
  * `reduce_point` : Amount of points will be reduce on using hint
  */
 export type HintRoadMap = {
-    level : number
-    reduce_point : number
-}
+  level: number;
+  reduce_point: number;
+};
 
 /**
  * Store `Hint` infomation.
@@ -170,12 +191,12 @@ export type HintRoadMap = {
  * `point_reduce` : Amount of points reduce on this hint
  */
 export type Hint = {
-    activity_id : number
-    content : string
-    hint_id : number
-    level : number
-    point_reduce : number
-}
+  activity_id: number;
+  content: string;
+  hint_id: number;
+  level: number;
+  point_reduce: number;
+};
 
 /**
  * Store `Choice` infomation on Matching Acitivty.
@@ -186,9 +207,9 @@ export type Hint = {
  *
  */
 export type MatchingChoice = {
-    items_left : string[]
-    items_right : string[]
-}
+  items_left: string[];
+  items_right: string[];
+};
 
 /**
  * Store `Choice` infomation on Multiple Choice Acitivty.
@@ -200,14 +221,14 @@ export type MatchingChoice = {
  */
 
 export type MultipleChoice = {
-    choices : MultipleChoiceDetail[],
-    is_multiple_answers : boolean
-}
+  choices: MultipleChoiceDetail[];
+  is_multiple_answers: boolean;
+};
 
 export type MultipleChoiceDetail = {
-    content : string
-    multiple_choice_id : number
-}
+  content: string;
+  multiple_choice_id: number;
+};
 
 /**
  * Store `Choice` infomation on Completion Choice Acitivty.
@@ -218,9 +239,9 @@ export type MultipleChoiceDetail = {
  *
  */
 export type CompletionChoice = {
-    contents : string[]
-    questions : CompletionQuestion[]
-}
+  contents: string[];
+  questions: CompletionQuestion[];
+};
 
 /**
  * Store `Question` information for Completion Activity.
@@ -232,10 +253,10 @@ export type CompletionChoice = {
  * `id` : Identifier for question
  */
 export type CompletionQuestion = {
-    first : string
-    last : string
-    id : number
-}
+  first: string;
+  last: string;
+  id: number;
+};
 
 /**
  * Store `Answer` information for Completion Activity.
@@ -245,32 +266,48 @@ export type CompletionQuestion = {
  * `content` : Answer for this choice
  */
 export type CompletionAnswer = {
-    completion_choice_id : number
-    content : string | null
-}
+  completion_choice_id: number;
+  content: string | null;
+};
 
 /**
  * Store `Answer` information for Activity can be completion multiple matching.
  *
  * Depends on `acitivty type` .
  */
-export type Answer = CompletionAnswer[] | MultipleAnswer | MatchingAnswer | CheckboxMultipleAnswer | GroupAnswer | TableAnswer | RelationAnswer[] | null
+export type Answer =
+  | CompletionAnswer[]
+  | MultipleAnswer
+  | MatchingAnswer
+  | CheckboxMultipleAnswer
+  | GroupAnswer
+  | TableAnswer
+  | RelationAnswer[]
+  | null;
 
-export type MultipleAnswer = number
-export type MatchingAnswer = string[][]
-export type CheckboxMultipleAnswer = number[]
+export type MultipleAnswer = number;
+export type MatchingAnswer = string[][];
+export type CheckboxMultipleAnswer = number[];
 export type GroupAnswer = {
-    groups : GroupAnswerDetail[]
-}
+  groups: GroupAnswerDetail[];
+};
 export type GroupAnswerDetail = {
-    group_name : string
-    vocabs : string[]
+  group_name: string;
+  vocabs: string[];
+};
+export type TableAnswer = {
+    tables : TableAnswerDetail[]
+};
+
+export type TableAnswerDetail = {
+    title : string
+    attributes : Array<{value : string}>
 }
-export type TableAnswer = string[][]
+
 export type RelationAnswer = {
-    dependent : string
-    determinants : Array<{value : string}>
-}
+  dependent: string;
+  determinants: Array<{ value: string }>;
+};
 
 /**
  * Store `Activity Result` for activity after checking.
@@ -282,10 +319,10 @@ export type RelationAnswer = {
  * `updated_point` : User's points after checking activity
  */
 export type ActivityResult = {
-    activity_id : number
-    is_correct : boolean
-    updated_point : number
-}
+  activity_id: number;
+  is_correct: boolean;
+  updated_point: number;
+};
 
 /**
  * Store `Examination` data for examination overview pages.
@@ -297,10 +334,10 @@ export type ActivityResult = {
  * `final_exam` : Exam_information for Final-Exam
  */
 export type ExaminationOverview = {
-    pre_exam : ExamOverviewInfo
-    mini_exam : ExamOverviewInfo[]
-    final_exam : ExamOverviewInfo
-}
+  pre_exam: ExamOverviewInfo;
+  mini_exam: ExamOverviewInfo[];
+  final_exam: ExamOverviewInfo;
+};
 
 /**
  * Store `Examination` data for each examination on overview pages.
@@ -318,21 +355,21 @@ export type ExaminationOverview = {
  * `can_do` : Can user acccess this examination
  */
 export type ExamOverviewInfo = {
-    exam_id : number
-    exam_type : ExamType
-    results : ExamResult[] | null
-    content_group_id ?: number
-    content_group_name ?: string
-    can_do  :boolean
-}
+  exam_id: number;
+  exam_type: ExamType;
+  results: ExamResult[] | null;
+  content_group_id?: number;
+  content_group_name?: string;
+  can_do: boolean;
+};
 
 /**
  * Enumeration for examination type
  */
 export enum ExamType {
-    PRE = "PRE",
-    POST = "POST",
-    MINI = "MINI"
+  PRE = "PRE",
+  POST = "POST",
+  MINI = "MINI",
 }
 
 /**
@@ -343,9 +380,9 @@ export enum ExamType {
  * `acitivities` : Examination's acitivity on this exam
  */
 export type Exam = {
-    exam : ExamInfo
-    activities : ExamActivity[]
-}
+  exam: ExamInfo;
+  activities: ExamActivity[];
+};
 
 /**
  * Store `Activity` data for examination on examination page.
@@ -355,9 +392,9 @@ export type Exam = {
  * `choice` : Choice for activity depends on `activty type_
  */
 export type ExamActivity = {
-    activity : ActivityInfo
-    choice : ActivityChoices
-}
+  activity: ActivityInfo;
+  choice: ActivityChoices;
+};
 
 /**
  * Store `Examination` data for examination on examination page.
@@ -377,14 +414,14 @@ export type ExamActivity = {
  * `badge_id` : Badge for this examination
  */
 export type ExamInfo = {
-    exam_id : number
-    exam_type : ExamType
-    instruction : string
-    created_timestamp : string
-    content_group_id : number
-    content_group_name : string
-    badge_id : number
-}
+  exam_id: number;
+  exam_type: ExamType;
+  instruction: string;
+  created_timestamp: string;
+  content_group_id: number;
+  content_group_name: string;
+  badge_id: number;
+};
 
 /**
  * Store `Examination` answer.
@@ -394,9 +431,9 @@ export type ExamInfo = {
  * `activitiest` : List of answer for every acitivties
  */
 export type ExamAnswer = {
-    exam_id : number
-    activities : ExamAnswerActivity[]
-}
+  exam_id: number;
+  activities: ExamAnswerActivity[];
+};
 
 /**
  * Store `Examination` answer for each activity.
@@ -406,9 +443,9 @@ export type ExamAnswer = {
  * `answer` : Answer for activity
  */
 export type ExamAnswerActivity = {
-    activity_id : number
-    answer : Answer
-}
+  activity_id: number;
+  answer: Answer;
+};
 
 /**
  * Store `Examination` result which will be shown on activity.
@@ -418,9 +455,9 @@ export type ExamAnswerActivity = {
  * `isSuccess` : Result of acitvity
  */
 export type ActivityAlert = {
-    feedback : string
-    isSuccess : boolean
-}
+  feedback: string;
+  isSuccess: boolean;
+};
 
 /**
  * Store `Examination` result which will be shown on examination result page.
@@ -440,15 +477,14 @@ export type ActivityAlert = {
  * `is_passed` : Is result pass criteria
  */
 export type ExamResult = {
-    exam_id : number
-    content_group_name : string
-    exam_type : ExamType
-    exam_result_id : number
-    created_timestamp : string
-    score : number
-    is_passed : boolean
-}
-
+  exam_id: number;
+  content_group_name: string;
+  exam_type: ExamType;
+  exam_result_id: number;
+  created_timestamp: string;
+  score: number;
+  is_passed: boolean;
+};
 
 /**
  * Store `ContentGroup` information shown on overview page.
@@ -466,13 +502,13 @@ export type ExamResult = {
  * `progress` : Progression on content to user
  */
 export type ContentGroup = {
-    contents : Content[]
-    group_id : number
-    group_name : string
-    is_lasted : boolean
-    is_recommend : boolean
-    progress : number
-}
+  contents: Content[];
+  group_id: number;
+  group_name: string;
+  is_lasted: boolean;
+  is_recommend: boolean;
+  progress: number;
+};
 
 /**
  * Store `Content` information shown on overview page.
@@ -490,14 +526,13 @@ export type ContentGroup = {
  * `group_id` : Content group identifier
  */
 export type Content = {
-    content_id : number
-    content_name : string
-    is_lasted ?: boolean
-    progress : number
-    group_name ?: string
-    group_id ?: number
-}
-
+  content_id: number;
+  content_name: string;
+  is_lasted?: boolean;
+  progress: number;
+  group_name?: string;
+  group_id?: number;
+};
 
 /**
  * Store `Overview` information shown on overview page.
@@ -507,6 +542,6 @@ export type Content = {
  * `content_group_overview` : All content groups list on overview page
  */
 export type Overview = {
-    lasted_group : Content
-    content_group_overview : ContentGroup[]
-}
+  lasted_group: Content;
+  content_group_overview: ContentGroup[];
+};

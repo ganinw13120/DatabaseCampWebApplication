@@ -200,6 +200,13 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
                   else if (type === 3) return <Completion info={activityInfo.choice as CompletionChoice} updateResult={this.activityViewModel.updateResult} />
                   else if (type === 4) return <Group info={activityInfo.choice as GroupChoice} updateResult={this.activityViewModel.updateResult} />
                   else if (type === 5) return <Relation info={activityInfo.choice as RelationChoice} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 6) {
+                    if ((activityInfo.choice as TableChoice).vocabs) {
+                      return <Table info={activityInfo.choice as TableChoice} updateResult={this.activityViewModel.updateResult} />
+                    } else {
+                      return <Drawer />
+                    }
+                  }
                   // else if (type === 6) return <Table info={activityInfo.choice as TableChoice} updateResult={this.activityViewModel.updateResult} />
                   // else if (type === 7) return <Drawer />
                   // else if (type === 9) return <Peer info={activityInfo.choice as PeerChoice} updateResult={this.activityViewModel.updateResult} />

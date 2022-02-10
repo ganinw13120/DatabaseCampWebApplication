@@ -16,12 +16,13 @@ type QuestionBox = {
   isFilled: boolean,
   ref: any,
   pairId : number
+  type : 'title' | 'attr'
 }
 
 interface TableState {
   questions: QuestionBox[],
   hoverQuestion: string | null,
-  result: string[][]
+  result: TableAnswer
 }
 
 interface TableProps {
@@ -35,7 +36,9 @@ export default class Table extends Component<TableProps, TableState> {
     this.state = {
       hoverQuestion: null,
       questions: [],
-      result: []
+      result: {
+        tables : []
+      }
     }
     this.onHoverQuestionEnter = this.onHoverQuestionEnter.bind(this);
     this.onHoverQuestionExit = this.onHoverQuestionExit.bind(this);
@@ -108,8 +111,13 @@ export default class Table extends Component<TableProps, TableState> {
       else {
         this.updateQuestionState(hoverQuestion, true);
         const { result } = this.state;
-        let temp = [...result];
-        temp[question.pairId - 1] = [...temp[question.pairId - 1], text];
+        // let temp = [...result];
+        let temp = result;
+        if (question.type==='attr') {
+          temp.tables[question.pairId - 1].attributes = [...temp.tables[question.pairId - 1].attributes, {value : text}];
+        } else {
+          temp.tables[question.pairId - 1].title = text;
+        }
         this.setState({
           result : temp
         })
@@ -135,10 +143,14 @@ export default class Table extends Component<TableProps, TableState> {
   */
   public removeSnap(id: string, displayText : string): void {
     const { questions,result } = this.state;
-    let temp = [...result];
+    let temp = result;
     const question = questions.find(e => e.id === id);
     if (!question) return;
-    temp[question?.pairId - 1] = temp[question?.pairId - 1].filter((e: any) => e !== displayText);
+    if (question.type==='attr') {
+      temp.tables[question?.pairId - 1].attributes = temp.tables[question?.pairId - 1].attributes.filter((e) => e.value !== displayText);
+    } else {
+      temp.tables[question?.pairId - 1].title = '';
+    }
     this.setState({
       result : temp
     })
@@ -155,8 +167,12 @@ export default class Table extends Component<TableProps, TableState> {
    * @param quest question box information
   */
   public appendRef(quest: QuestionBox): void {
+    const { info } = this.props;
     this.setState((prev: TableState) => {
-      prev.result[quest.pairId - 1] = [];
+      prev.result.tables[quest.pairId - 1] = {
+        title : info.tables[quest.pairId-1].title ? info.tables[quest.pairId-1].title! : '',
+        attributes : [...info.tables[quest.pairId-1].attributes.map(e=>{return {value : e.value}})]
+      };
       prev.questions.push(quest);
       return prev;
     })
@@ -166,17 +182,16 @@ export default class Table extends Component<TableProps, TableState> {
     const func = { enter: this.onHoverQuestionEnter, exit: this.onHoverQuestionExit, append: this.appendRef };
     const { info } = this.props;
     // let choiceList = [...info.items_left, ...info.items_right];
-    let choiceList = info.choices
-    let i = 0;
+    let choiceList = info.vocabs
     const tableList : ReactElement[] = [];
     info.tables.forEach((e, key)=>{
-      tableList.push(<TableBlock func={func} id={i + 1} key={i} info={e}/>);
+      tableList.push(<TableBlock func={func} id={key + 1} key={key} info={e}/>);
     })
     return (
       <>
         <div className='w-full'>
-          <ChoiceBox snapPos={this.snapPos} removeSnap={this.removeSnap} list={choiceList} />
-          <div className='flex'>
+          <ChoiceBox snapPos={this.snapPos} removeSnap={this.removeSnap} list={choiceList} offsetY={0}/>
+          <div className='flex gap-5'>
             <div className='flex-grow'></div>
           {tableList}
             <div className='flex-grow'></div>
@@ -192,38 +207,48 @@ class TableBlock extends Component<any, any> {
   public render(): JSX.Element {
     const info = this.props.info
     const tableList : ReactElement[] = [];
-    info.forEach((e : any, key : number)=>{
-      tableList.push(<>
-        <div className={`w-auto cell p-5 px-12 text-center mx-auto ${key===0 ? 'header' : (key%2===0 ? 'even' : 'odd')}`}>
-          {e !== null ? e : <Dropzone {...this.props} />}
-        </div>
-      </>)
+    let offset = 0;
+    tableList.push(<React.Fragment key={offset}>
+        {info.title ? <EmptyBox text={info.title} id={0} /> : <Dropzone {...this.props} order={offset} type='title'/>}
+    </React.Fragment>)
+    offset++;
+    info.attributes.forEach((e : any, key : number)=>{
+      tableList.push(<React.Fragment key={offset}>
+          {e !== null ? <EmptyBox text={e.value} id={offset}/> : <Dropzone {...this.props} order={offset} type='attr'/>}
+      </React.Fragment>)
+      offset++;
     })
+    let i = 0;
+    while (i < info.attributes_count - info.attributes.length) {
+      tableList.push(<React.Fragment key={offset}>
+          <Dropzone {...this.props} order={offset} type='attr' />
+      </React.Fragment>)
+      i ++;
+      offset++;
+    }
     return (<>
-      <div className='w-auto table-box bg-white m-6 rounded'>
-        <div>
-          {tableList}
-        </div>
+      <div className='flex flex-col gap-table text-center'>
+        {tableList}
       </div>
     </>)
   }
 }
 
-class Question extends Component<any, any> {
-  public render(): JSX.Element {
-    return (<>
-      <div className='mx-auto text-base text-darkPrimary font-normal my-14 flex' >
-        <div className='flex-grow'></div>
-        <Dropzone {...this.props} />
-        <div className='flex-grow m-auto text-center'>
-          <img src={Equal} alt="Equal to" className='m-auto' />
+class EmptyBox extends Component <{text : string, id : number}, {}> {
+  render () : JSX.Element { 
+    const {id, text} = this.props;
+    return (
+      <>
+        <div className={``} style={{ width : '177.99px', height : 69}}>
         </div>
-        <Dropzone {...this.props} />
-        <div className='flex-grow'></div>
+      <div className={`pt-7 text-xl absolute ${id===0 ? 'header' : (id%2===0 ? 'even' : 'odd')}`} style={{transform : `translate(0, ${ (85 * (id)) - 15}px)`, width : '177.99px', height : 80}}>
+        {this.props.text}
       </div>
-    </>)
+      </>
+    )
   }
 }
+
 
 class Dropzone extends React.Component<any, any> {
   private ref: React.Ref<HTMLDivElement>;
@@ -237,7 +262,7 @@ class Dropzone extends React.Component<any, any> {
       isFilled: false,
       ref : this.ref,
       id: id,
-      pairId : props.id
+      pairId : props.id,
     })
   }
   onEnter(): void {
@@ -250,15 +275,19 @@ class Dropzone extends React.Component<any, any> {
   }
 
   public render(): JSX.Element {
+    const {order} = this.props;
     return (<>
       <div className='relative'>
-        <div className='bg-white w-48 h-12 py-2 px-12 mx-4 absolute border-b border-gray rounded-lg' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+        <div className='bg-box questionbox h-12 py-2 px-12 mx-4 absolute border-b border-gray rounded-lg z-10' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
           {'  '}
         </div>
       </div>
-        <div ref={this.ref} className={` w-48 h-12 py-2 px-12 mx-4 z-20`} onMouseEnter={() => { this.onEnter() }} onMouseLeave={() => { this.onExit() }}>
+        <div ref={this.ref} className={` questionbox col-box h-12 px-12 mx-4 z-20`} onMouseEnter={() => { this.onEnter() }} onMouseLeave={() => { this.onExit() }}>
           {'  '}
         </div>
+      <div className={`h-28 absolute w-42 ${order===0 ? 'header' : (order%2===0 ? 'even' : 'odd')}`} style={{transform : `translate(0, ${ (85 * (this.props.order)) - 15}px)`, width : '177.99px', height : 80}}>
+        {' '}
+      </div>
     </>)
   }
 }

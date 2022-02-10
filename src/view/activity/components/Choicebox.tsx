@@ -16,7 +16,7 @@ export default class ChoiceBox extends Component<any, any> {
     }
     let choiceList: ReactElement[] = [];
     list.forEach((e: any, key: number) => {
-      choiceList.push(<Choice key={key} displayText={e} func={func} />)
+      choiceList.push(<Choice key={key} displayText={e} func={func} offsetY={this.props.offsetY}/>)
     })
     return (<>
       <div className='rounded-lg border border-gray bg-white w-5/6 h-auto mx-auto p-6 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-6 mb-10' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
@@ -28,7 +28,8 @@ export default class ChoiceBox extends Component<any, any> {
 
 type ChoiceProps = {
   displayText: string,
-  func: any
+  func: any,
+  offsetY ?: number
 }
 
 /**
@@ -147,11 +148,11 @@ class Choice extends React.Component<ChoiceProps, any> {
     }
   }
   public render(): JSX.Element {
-    const { displayText } = this.props;
+    const { displayText, offsetY } = this.props;
     const { isDragging, posX, posY } = this.state;
     const pos = {
-      x: posX,
-      y: posY
+      x: posX ,
+      y: posY+ (offsetY ? offsetY : 0)
     }
     return (
       <>

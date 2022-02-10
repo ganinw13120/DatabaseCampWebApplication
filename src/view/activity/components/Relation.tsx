@@ -274,7 +274,7 @@ class Dropzone extends React.Component<any, any> {
   public render(): JSX.Element {
     return (<>
       <div className='relative'>
-        <div className='bg-white questionbox h-12 py-2 px-12 mx-4 absolute border-b border-gray rounded-lg' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+        <div className='bg-white questionbox h-12 py-2 px-12 mx-4 absolute border-b border-gray rounded-lg z-0' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
           {'  '}
         </div>
       </div>
