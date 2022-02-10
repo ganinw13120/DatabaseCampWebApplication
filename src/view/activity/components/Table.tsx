@@ -239,9 +239,9 @@ class EmptyBox extends Component <{text : string, id : number}, {}> {
     const {id, text} = this.props;
     return (
       <>
-        <div className={``} style={{ width : '177.99px', height : 69}}>
+        <div className={``} style={{ width : '177.99px', height : 65}}>
         </div>
-      <div className={`pt-7 text-xl absolute ${id===0 ? 'header' : (id%2===0 ? 'even' : 'odd')}`} style={{transform : `translate(0, ${ (85 * (id)) - 15}px)`, width : '177.99px', height : 80}}>
+      <div className={`pt-7 text-xl absolute ${id===0 ? 'header' : (id%2===0 ? 'even' : 'odd')}`} style={{transform : `translate(0, ${ (81 * (id)) - 15}px)`, width : '177.99px', height : 75}}>
         {this.props.text}
       </div>
       </>
@@ -285,7 +285,7 @@ class Dropzone extends React.Component<any, any> {
         <div ref={this.ref} className={` questionbox col-box h-12 px-12 mx-4 z-20`} onMouseEnter={() => { this.onEnter() }} onMouseLeave={() => { this.onExit() }}>
           {'  '}
         </div>
-      <div className={`h-28 absolute w-42 ${order===0 ? 'header' : (order%2===0 ? 'even' : 'odd')}`} style={{transform : `translate(0, ${ (85 * (this.props.order)) - 15}px)`, width : '177.99px', height : 80}}>
+      <div className={`h-28 absolute w-42 ${order===0 ? 'header' : (order%2===0 ? 'even' : 'odd')}`} style={{transform : `translate(0, ${ (81 * (this.props.order)) - 15}px)`, width : '177.99px', height : 75}}>
         {' '}
       </div>
     </>)
