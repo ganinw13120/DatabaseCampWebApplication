@@ -11,6 +11,8 @@ type BoxProps = {
     drawerStore?: DrawerStore
 }
 
+const maxLength : number = 20;
+
 @inject("drawerStore")
 @observer
 class BoxComponent extends Component<BoxProps, {}> {
@@ -45,6 +47,9 @@ class BoxComponent extends Component<BoxProps, {}> {
     private onChangeEntityText(event: ContentEditableEvent, key: number) {
         let entity = this.props.data.entities[key];
         entity.text = event.target.value;
+        if (entity.text.length >= maxLength) {
+            entity.text = entity.text.slice(0, maxLength - 1);
+        }
         this.props.drawerStore!.onEntityUpdate(this.props.data, entity)
     }
     render(): JSX.Element {
@@ -79,10 +84,11 @@ class BoxComponent extends Component<BoxProps, {}> {
                                     }
                                 })()}`}
                                 disabled={false}
-                                onChange={e => this.onChangeEntityText(e, 0)}
+                                onChange={e => {this.onChangeEntityText(e, 0)}}
                                 // onFocus={()=>{
                                 //     onFocusField(data, 0);
                                 // }}
+                                
                                 tagName='div'
                                 className={`inp-field ${data.entities[0].isFocus && data.isSelect ? 'inp-fiel-focus' : ''}`}
                             />
