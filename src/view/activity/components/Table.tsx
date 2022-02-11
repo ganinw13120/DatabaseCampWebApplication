@@ -191,7 +191,7 @@ export default class Table extends Component<TableProps, TableState> {
       <>
         <div className='w-full'>
           <ChoiceBox snapPos={this.snapPos} removeSnap={this.removeSnap} list={choiceList} offsetY={0}/>
-          <div className='flex gap-5'>
+          <div className='flex gap-8'>
             <div className='flex-grow'></div>
           {tableList}
             <div className='flex-grow'></div>
