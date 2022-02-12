@@ -92,7 +92,7 @@ export class DrawerStore implements IDrawerStore {
     info.tables.forEach((e, key)=>{
       boxes.push(generateBox([
         e.title ? e.title : '', ...e.attributes.map(e=>e.value)
-      ], e.table_id, {x : key * 300, y : key * 100}, true))
+      ], e.table_id, {x : (key * 300) + 20, y : key * 100}, true))
     })
     this.store.boxes = boxes;
     this.isEditable = isEditable;
@@ -668,6 +668,7 @@ export class DrawerStore implements IDrawerStore {
 
   @action.bound
   public onSelectLine(line: Line): void {
+    if (!this.isEditable) return;
     let tmp = [...this.store.lines];
     tmp.find((e) => e.uuid === line.uuid)!.isSelect = true;
     this.store.focusEntity = tmp.find((e) => e.uuid === line.uuid)!;
