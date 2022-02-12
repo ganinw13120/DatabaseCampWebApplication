@@ -444,7 +444,7 @@ export class LearningStore implements ILearningStore {
         if (is_correct) {
           this.updateRoadMapStatus(activityID);
           this.rootStore.authStore.SetUserPoint(res.updated_point);
-          this.successAnswer(cb);
+          this.successAnswer(cb, res.err_message);
           return;
         } else {
           this.rejectAnswer(cb);
