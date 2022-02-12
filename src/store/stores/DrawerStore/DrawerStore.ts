@@ -88,6 +88,7 @@ export class DrawerStore implements IDrawerStore {
 
   @action.bound
   public setupDrawer(info : DrawerChoice, isEditable : boolean) : void {
+    this.store.lines = [];
     let boxes : Box[] = [];
     info.tables.forEach((e, key)=>{
       boxes.push(generateBox([
