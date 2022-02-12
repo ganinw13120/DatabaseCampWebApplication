@@ -25,7 +25,7 @@ import IAppStore from '@store/stores/AppStore/IAppStore';
 import IOverviewStore from '@store/stores/OverviewStore/IOverviewStore';
 import IAuthStore from '@store/stores/AuthStore/IAuthStore';
 
-import { Overview } from '@model/Learning';
+import { Overview, Recommend } from '@model/Learning';
 
 import {SIDEBAR_OVERVIEW} from '@constant/text';
 
@@ -34,7 +34,8 @@ export interface IOverview extends BaseView {
 }
 
 interface OverviewState {
-  data: Overview | null
+  data: Overview | null,
+  recommend : Recommend | null
 }
 
 interface OverviewProps extends RouteComponentProps {
@@ -59,7 +60,8 @@ class OverviewPage
     const overviewViewModel = new OverviewViewModel();
 
     this.state = {
-      data: null
+      data: null,
+      recommend : null
     }
 
     this.overviewViewModel = overviewViewModel;
@@ -67,21 +69,22 @@ class OverviewPage
 
   /**
    * On view-model changes, update view states.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
    */
   public onViewModelChanged(): void {
     this.setState({
-      data: this.overviewViewModel.getData()
+      data: this.overviewViewModel.getData(),
+      recommend: this.overviewViewModel.getRecommend(),
     })
   }
 
 
   /**
    * On component did mount, set application store, and attach view-model
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -96,7 +99,7 @@ class OverviewPage
   }
 
   public render(): JSX.Element {
-    const { data } = this.state;
+    const { data, recommend } = this.state;
     const { userData } = this.props.authStore!.store;
     return (
       <>
@@ -134,7 +137,8 @@ class OverviewPage
                   .slice()
                   .sort((a: any, b: any) => a.group_id - b.group_id)
                   .forEach((item, key: number) => {
-                    cardList.push(<ContentGroup data={item} key={key} />);
+                    const is_recommend = recommend?.recommend_group.find(e=>e.content_group_id===item.group_id)?.is_recommend;
+                    cardList.push(<ContentGroup data={item} key={key} isRecommend={is_recommend!==undefined ? is_recommend : false} />);
                   });
                 return cardList;
               })()}

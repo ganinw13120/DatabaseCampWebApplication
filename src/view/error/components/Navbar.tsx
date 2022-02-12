@@ -22,7 +22,7 @@ class Navbar extends Component<RouteComponentProps, NavbarState> {
   
   /**
    * On user scroll, update state.
-   * 
+   *
    * @remarks
    * This is a part of view component.
   */
@@ -32,7 +32,7 @@ class Navbar extends Component<RouteComponentProps, NavbarState> {
 
   /**
    * On component did mount, add event lister to get user's scroll action
-   * 
+   *
    * @remarks
    * This is a part of view component.
   */
@@ -42,7 +42,7 @@ class Navbar extends Component<RouteComponentProps, NavbarState> {
 
   /**
    * On component did mount, remove event lister
-   * 
+   *
    * @remarks
    * This is a part of view component.
   */
@@ -52,10 +52,10 @@ class Navbar extends Component<RouteComponentProps, NavbarState> {
 
   /**
    * On user select navigation bar item, load target page
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param url target page url
   */
   loadPage(url: string) {

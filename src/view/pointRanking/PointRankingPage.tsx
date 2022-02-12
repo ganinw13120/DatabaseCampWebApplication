@@ -45,7 +45,7 @@ class PointRankingPage
 
   /**
    * On component did mount, set application store, and attach view-model
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -61,7 +61,7 @@ class PointRankingPage
 
   /**
    * On view-model changes, update view states.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *

@@ -52,7 +52,7 @@ export default interface IActivityViewModel extends BaseViewModel {
      *
      * @remarks
      * This method is part of view-model, application logic parts, manipulating view.
-     * 
+     *
      * @param result activity's answer
      */
     updateResult(result: Answer): void

@@ -2,7 +2,7 @@
 /**
  * This file used to be a interface of overview store.
 */
-import { Overview } from "@model/Learning";
+import { Overview, Recommend } from "@model/Learning";
 
 export default interface IOverviewStore {
 
@@ -15,4 +15,5 @@ export default interface IOverviewStore {
      * @returns Overview information
      */
     FetchOverview(): Promise<Overview | null>
+    FetchRecommend() : Promise<Recommend | null>
 }

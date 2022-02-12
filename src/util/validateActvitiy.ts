@@ -12,7 +12,7 @@ import { CompletionAnswer } from "../model/Learning";
  * This method is part of utility functions.
  *
  * @param result answer of activity
- * 
+ *
  * @return if answer is valid
  */
 export const validateMatching = (result: string[][]): boolean => {
@@ -32,7 +32,7 @@ export const validateMatching = (result: string[][]): boolean => {
  * This method is part of utility functions.
  *
  * @param result answer of activity
- * 
+ *
  * @return if answer is valid
  */
 export const validateCompletion = (result: CompletionAnswer[]): boolean => {
@@ -52,7 +52,7 @@ export const validateCompletion = (result: CompletionAnswer[]): boolean => {
  * This method is part of utility functions.
  *
  * @param result answer of activity
- * 
+ *
  * @return if answer is valid
  */
 export const validateMultiple = (result: number): boolean => {

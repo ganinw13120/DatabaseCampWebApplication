@@ -8,7 +8,7 @@
  *
  * @remarks
  * This method is part of utility functions.
- * 
+ *
  * @param key id part of website
  */
 const scrollto = (key : string) => {

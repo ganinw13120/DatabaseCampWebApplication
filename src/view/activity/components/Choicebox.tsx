@@ -16,7 +16,7 @@ export default class ChoiceBox extends Component<any, any> {
     }
     let choiceList: ReactElement[] = [];
     list.forEach((e: any, key: number) => {
-      choiceList.push(<Choice key={key} displayText={e} func={func} />)
+      choiceList.push(<Choice key={key} displayText={e} func={func} offsetY={this.props.offsetY}/>)
     })
     return (<>
       <div className='rounded-lg border border-gray bg-white w-5/6 h-auto mx-auto p-6 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-6 mb-10' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
@@ -28,12 +28,13 @@ export default class ChoiceBox extends Component<any, any> {
 
 type ChoiceProps = {
   displayText: string,
-  func: any
+  func: any,
+  offsetY ?: number
 }
 
 /**
 * Dragable choices, used in draggable activity.
-* 
+*
 * @remarks
 * This is a part of view component.
 */
@@ -65,7 +66,7 @@ class Choice extends React.Component<ChoiceProps, any> {
 
   /**
    * On component did mount, observe width changes.
-   * 
+   *
    * @remarks
    * This is a part of view component.
   */
@@ -75,7 +76,7 @@ class Choice extends React.Component<ChoiceProps, any> {
 
   /**
    * On component did mount, unobserve width changes.
-   * 
+   *
    * @remarks
    * This is a part of view component.
   */
@@ -85,7 +86,7 @@ class Choice extends React.Component<ChoiceProps, any> {
 
   /**
    * On width changes, recalculate position to adjusted.
-   * 
+   *
    * @remarks
    * This is a part of view component.
   */
@@ -99,12 +100,12 @@ class Choice extends React.Component<ChoiceProps, any> {
 
   /**
    * Calculate coordination that choice box should be move to.
-   *  
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param boxRef Snap box reference
-   * 
+   *
    * @returns X,Y Coordination of choice
   */
   calculateCoordination = (boxRef: any): { x: number, y: number } => {
@@ -117,7 +118,7 @@ class Choice extends React.Component<ChoiceProps, any> {
 
   /**
    * On start dragging, update state.
-   * 
+   *
    * @remarks
    * This is a part of view component.
   */
@@ -127,7 +128,7 @@ class Choice extends React.Component<ChoiceProps, any> {
 
   /**
    * On stop dragging, update state.
-   * 
+   *
    * @remarks
    * This is a part of view component.
   */
@@ -147,17 +148,17 @@ class Choice extends React.Component<ChoiceProps, any> {
     }
   }
   public render(): JSX.Element {
-    const { displayText } = this.props;
+    const { displayText, offsetY } = this.props;
     const { isDragging, posX, posY } = this.state;
     const pos = {
-      x: posX,
-      y: posY
+      x: posX ,
+      y: posY+ (offsetY ? offsetY : 0)
     }
     return (
       <>
         <div ref={this.originalRef} className={`z-${isDragging ? '10' : '30'}`}>
           <Draggable onStart={this.onStartDrag} onStop={this.onStopDrag} position={pos}>
-            <div ref={this.ref} className={`z-${isDragging ? '10' : '30'} ${isDragging ? 'dragging' : 'dragable'} p-4 bg-white w-32 text-center rounded-lg cursor-pointer`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
+            <div ref={this.ref} className={`z-${isDragging ? '10' : '30'} ${isDragging ? 'dragging' : 'dragable'} p-4 bg-white choicebox text-center rounded-lg cursor-pointer`} style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
               {displayText}
             </div>
           </Draggable>

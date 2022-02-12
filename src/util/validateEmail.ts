@@ -12,7 +12,7 @@ import * as yup from 'yup';
  * This method is part of utility functions.
  *
  * @param val user's email
- * 
+ *
  * @param calllback callback function to return result
  */
 const checkEmailFormat = (_: any, val: string, callback: any): void => {
