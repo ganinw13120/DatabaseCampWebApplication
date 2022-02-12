@@ -2,7 +2,7 @@
 /**
  * This file used to be a interface of learning repository.
 */
-import { ExamResult, ExamAnswer, Exam, ExaminationOverview, Answer, Hint, RoadMap, Lecture, Activity, Overview } from "@model/Learning";
+import { ExamResult, ExamAnswer, Exam, ExaminationOverview, Answer, Hint, RoadMap, Lecture, Activity, Overview, PeerAnswer } from "@model/Learning";
 
 export default interface ILearningRepository {
 
@@ -61,6 +61,8 @@ export default interface ILearningRepository {
     fetchExamOverview(token: string): Promise<ExaminationOverview>
 
     checkActiivty(token: string, activityId : number, activityTypeId : number, result : Answer): Promise<object>
+
+    checkPeer(token: string, er_id : number, activityTypeId : number, result : PeerAnswer): Promise<object>
 
     /**
      * Submit `Answer` of multiple choice activity and check for result.

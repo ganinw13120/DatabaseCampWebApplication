@@ -6,7 +6,7 @@
 import axios from 'axios';
 import { API_BASE_URL } from '../../constant/constant';
 
-import {Overview, Lecture, RoadMap, Activity, Hint, Answer, ExaminationOverview, Exam, ExamAnswer, ExamResult} from '@model/Learning';
+import {Overview, Lecture, RoadMap, Activity, Hint, Answer, ExaminationOverview, Exam, ExamAnswer, ExamResult, PeerAnswer} from '@model/Learning';
 
 import ILearningRepository from './ILearningRepository';
 
@@ -132,7 +132,25 @@ export default class LearningRepository implements ILearningRepository {
         const { data } = res;
         resolve(data)
       }).catch(res=>{
-        reject(res.message)
+        reject(res?.response?.data?.th_message ? res?.response?.data?.th_message : res.message)
+      })
+    })
+  }
+
+  public async checkPeer(token: string, er_id : number, activityTypeId : number, result : PeerAnswer): Promise<object> {
+    return new Promise((resolve, reject) => {
+      axios.post(`${API_BASE_URL}/learning/activity/peer`, {
+        er_answer_id: er_id,
+        reviews : result.selected
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      }).then(res => {
+        const { data } = res;
+        resolve(data)
+      }).catch(res=>{
+        reject(res?.response?.data?.th_message ? res?.response?.data?.th_message : res.message)
       })
     })
   }

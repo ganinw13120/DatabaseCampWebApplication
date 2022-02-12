@@ -26,6 +26,8 @@ import {
   TableAnswer,
   TableChoice,
   DrawerAnswer,
+  PeerAnswer,
+  PeerChoice,
 } from "@model/Learning";
 import ILearningStore, { Store } from "./ILearningStore";
 import {
@@ -218,6 +220,8 @@ export class LearningStore implements ILearningStore {
       } else {
         this.checkDrawer(activity.activity_id, result as DrawerAnswer, cb);
       }
+    } else if (activity.activity_type_id === 7) {
+      this.checkPeer(activity.activity_id, (activityInfo.choice as PeerChoice).er_answe_id, result as PeerAnswer, cb);
     }
   }
 
@@ -237,6 +241,16 @@ export class LearningStore implements ILearningStore {
     const alert: ActivityAlert = {
       isSuccess: false,
       feedback: message ? message : ACTIVITY_WRONG,
+    };
+    cb?.(alert);
+  }
+
+  @action.bound
+  private checkErrorHandle(cb: any, message?: string): void {
+    this.store.isLoading = false;
+    const alert: ActivityAlert = {
+      isSuccess: false,
+      feedback: message ? message : 'พบข้อผิดพลาดในการตรวจสอบคำตอบ',
     };
     cb?.(alert);
   }
@@ -312,6 +326,8 @@ export class LearningStore implements ILearningStore {
           this.rejectAnswer(cb);
           return;
         }
+      }).catch((err : any) => {
+        this.checkErrorHandle(cb, err);
       });
   }
 
@@ -335,6 +351,8 @@ export class LearningStore implements ILearningStore {
           this.rejectAnswer(cb);
           return;
         }
+      }).catch((err : any) => {
+        this.checkErrorHandle(cb, err);
       });
   }
   @action.bound
@@ -357,6 +375,8 @@ export class LearningStore implements ILearningStore {
           this.rejectAnswer(cb);
           return;
         }
+      }).catch((err : any) => {
+        this.checkErrorHandle(cb, err);
       });
   }
 
@@ -380,6 +400,8 @@ export class LearningStore implements ILearningStore {
           this.rejectAnswer(cb);
           return;
         }
+      }).catch((err : any) => {
+        this.checkErrorHandle(cb, err);
       });
   }
 
@@ -403,6 +425,8 @@ export class LearningStore implements ILearningStore {
           this.rejectAnswer(cb);
           return;
         }
+      }).catch((err : any) => {
+        this.checkErrorHandle(cb, err);
       });
   }
 
@@ -426,6 +450,34 @@ export class LearningStore implements ILearningStore {
           this.rejectAnswer(cb);
           return;
         }
+      }).catch((err : any) => {
+        this.checkErrorHandle(cb, err);
+      });
+  }
+
+  @action.bound
+  private async checkPeer(
+    activityID : number,
+    erAnswerId: number,
+    result: PeerAnswer,
+    cb: any
+  ): Promise<any> {
+    const { token } = this.rootStore.authStore.store;
+    this.learningRepository
+      .checkPeer(token, erAnswerId, 6, result)
+      .then((res: any) => {
+        const { is_correct } = res;
+        if (is_correct) {
+          this.updateRoadMapStatus(activityID);
+          this.rootStore.authStore.SetUserPoint(res.updated_point);
+          this.successAnswer(cb);
+          return;
+        } else {
+          this.rejectAnswer(cb);
+          return;
+        }
+      }).catch((err : any) => {
+        this.checkErrorHandle(cb, err);
       });
   }
 

@@ -127,6 +127,7 @@ export type RelationProblem = {
 
 export type PeerChoice = DrawerChoice & {
   problems: PeerProblem;
+  er_answe_id : number
 };
 
 export type PeerProblem = {
