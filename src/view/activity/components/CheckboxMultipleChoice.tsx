@@ -6,6 +6,7 @@
 import { Component, ReactElement } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import { CheckboxMultipleAnswer, MultipleChoiceDetail } from '@model/Learning';
+import parse from 'html-react-parser';
 
 interface CheckboxMultipleChoiceState {
   selectedChoice: number[],
@@ -93,7 +94,7 @@ class Choice extends Component<ChoiceProps, {}> {
             },
           }} />
         <span className='my-auto'>
-          {displayText}
+            {parse(displayText)}
         </span>
       </div>
 

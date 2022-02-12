@@ -6,6 +6,7 @@
 import { Component, ReactElement } from 'react';
 import Radio from '@mui/material/Radio';
 import {MultipleAnswer, MultipleChoice, MultipleChoiceDetail} from '@model/Learning';
+import parse from 'html-react-parser';
 
 interface MultipleChoiceState {
   selectedChoice : number | null,
@@ -83,7 +84,7 @@ class Choice extends Component<ChoiceProps, {}> {
                 },
               }} />
             <span className='my-auto'>
-              {displayText}
+              {parse(displayText)}
             </span>
           </div>
     
