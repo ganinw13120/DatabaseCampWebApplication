@@ -58,7 +58,7 @@ class RegisterPage extends Component<RegisterProps, RegisterComponentState>
 
   /**
    * On component did mount, set application store, and attach view-model
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -70,7 +70,7 @@ class RegisterPage extends Component<RegisterProps, RegisterComponentState>
 
   /**
    * On view-model changes, update view states.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -144,8 +144,8 @@ class RegisterPage extends Component<RegisterProps, RegisterComponentState>
                   <span >ยีนยันรหัสผ่าน :</span>
                 </div>
                 <div className='w-full'>
-                  <Form.Item 
-                    name="password_comfirmation" 
+                  <Form.Item
+                    name="password_comfirmation"
                     dependencies={['password']}
                     rules={[
                       {

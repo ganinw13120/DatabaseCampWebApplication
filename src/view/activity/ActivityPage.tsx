@@ -15,9 +15,14 @@ import IActivityViewModel from '@view-model/activity/IActivityViewModel';
 import Matching from './components/Matching';
 import Completion from './components/Completion';
 import MultipleChoiceComponent from './components/MultipleChoice';
+import CheckboxMultipleChoiceComponent from './components/CheckboxMultipleChoice';
+import Group from './components/Group';
+import Table from './components/Table';
+import Drawer from './components/drawer/components/Drawer';
 import { inject, observer } from 'mobx-react';
+import parse from 'html-react-parser';
 
-import { Activity, ActivityAlert, CompletionChoice, MatchingChoice, MultipleChoice } from '@model/Learning';
+import { Activity, ActivityAlert, CompletionChoice, DrawerChoice, GroupChoice, MatchingChoice, MultipleChoice, PeerChoice, RelationChoice, TableChoice } from '@model/Learning';
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -34,6 +39,10 @@ import Star from '@assets/starProfile.png';
 import SkeletonActivity from './components/SkeletonActivity';
 
 import { ACTIVITY_NEXT, ACTIVITY_SUBMIT, ACTIVITY_TITLE, WARNING_HINT_TITLE, WARNING_HINT_DESCRIPTION, WARNING_HINT_ACCEPT, WARNING_HINT_CANCLE } from '@constant/text';
+import Relation from './components/Relation';
+import Peer from './components/Peer';
+import IDrawerStore from '@store/stores/DrawerStore/IDrawerStore';
+
 
 export interface IActivityPage extends BaseView {
   props: ActivityProps
@@ -50,11 +59,13 @@ interface ActivityProps extends RouteComponentProps<{
   learningStore?: ILearningStore,
   appStore?: IAppStore,
   authStore?: IAuthStore
+  drawerStore?: IDrawerStore
 }
 
 @inject('learningStore')
 @inject('authStore')
 @inject('appStore')
+@inject('drawerStore')
 @observer
 class ActivityPage extends React.Component<ActivityProps, ActivityState>
   implements IActivityPage {
@@ -74,7 +85,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
   
   /**
    * On component did mount, set application information, and attach view-model
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -90,7 +101,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
 
   /**
    * On component did update, reattach view-model due to changes of properties.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -106,7 +117,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
 
   /**
    * On component will unmount, detach view.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -117,7 +128,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
 
   /**
    * On user request hint, show hint popups.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -140,7 +151,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
   
   /**
    * On view-model changes, update view states.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -185,12 +196,25 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
                 const { activity_type_id: type, question } = activity;
                 const act = (type: number) => {
                   if (type === 1) return <Matching info={activityInfo.choice as MatchingChoice} updateResult={this.activityViewModel.updateResult} />
-                  else if (type === 2) return <MultipleChoiceComponent info={activityInfo.choice as MultipleChoice[]} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 2) {
+                    if (!(activityInfo.choice as MultipleChoice).is_multiple_answers) return <MultipleChoiceComponent info={(activityInfo.choice as MultipleChoice).choices} updateResult={this.activityViewModel.updateResult} />
+                    else return <CheckboxMultipleChoiceComponent info={(activityInfo.choice as MultipleChoice).choices} updateResult={this.activityViewModel.updateResult} />
+                  }
                   else if (type === 3) return <Completion info={activityInfo.choice as CompletionChoice} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 4) return <Group info={activityInfo.choice as GroupChoice} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 5) return <Relation info={activityInfo.choice as RelationChoice} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 6) {
+                    if ((activityInfo.choice as TableChoice).vocabs) {
+                      return <Table info={activityInfo.choice as TableChoice} updateResult={this.activityViewModel.updateResult} />
+                    } else {
+                      return <Drawer info={activityInfo.choice as DrawerChoice} isEditable={true}/>
+                    }
+                  }
+                  else if (type === 7) return <Peer info={activityInfo.choice as PeerChoice} drawerInfo={activityInfo.choice as DrawerChoice} updateResult={this.activityViewModel.updateResult} />
                 }
                 return <>
                   <div className='text-xl text-black font-sarabun tracking-wider mx-14 my-8'>
-                    <span>{question}</span>
+                    <span className='question'>{parse(question)}</span>
                   </div>
                   {act(type)}
                 </>

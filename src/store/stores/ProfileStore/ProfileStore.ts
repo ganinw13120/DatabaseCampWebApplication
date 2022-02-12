@@ -27,11 +27,11 @@ export class ProfileStore implements IProfileStore {
    *
    * @remarks
    * This method is part of profile store, manipulating profile and profile'data.
-   * 
+   *
    * @param userId target user's indentifier
-   * 
+   *
    * @param onSuccess on success callback function
-   * 
+   *
    * @param onError on error callback function
    */
   @action
@@ -49,9 +49,9 @@ export class ProfileStore implements IProfileStore {
    *
    * @remarks
    * This method is part of profile store, manipulating profile and profile'data.
-   * 
+   *
    * @param name new user's name
-   * 
+   *
    * @param onSuccess on success callback function
    */
   @action.bound

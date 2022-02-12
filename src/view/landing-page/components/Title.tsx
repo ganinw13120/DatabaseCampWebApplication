@@ -14,7 +14,7 @@ class Title extends React.Component<any, any> {
 
   /**
    * On user scroll website, set state.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -25,7 +25,7 @@ class Title extends React.Component<any, any> {
 
   /**
    * On component did mount, add event listener to observe user scoll
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -36,7 +36,7 @@ class Title extends React.Component<any, any> {
 
   /**
    * On component will unmount, remove event listener to unobserve user scoll
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -47,10 +47,10 @@ class Title extends React.Component<any, any> {
 
   /**
    * On user select item on title section, taking user target url
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param url target url
    *
    */

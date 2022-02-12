@@ -8,7 +8,7 @@ import { notification } from 'antd';
 
 import { IActivityPage } from '@root/view/activity/ActivityPage';
 
-import { Activity, ActivityAlert, Answer, RoadMap } from '@model/Learning';
+import { Activity, ActivityAlert, ActivityChoices, Answer, RoadMap, TableChoice } from '@model/Learning';
 import generateStepper, { generateEmptyStepper } from '@util/generateStepper';
 
 export default class ActivityViewModel implements IActivityViewModel {
@@ -75,6 +75,17 @@ export default class ActivityViewModel implements IActivityViewModel {
 
     baseView.props.appStore!.setPercent(40)
     baseView.props.learningStore!.FetchActivity(activityID, (res: Activity) => {
+      // res.activity.question = "<image src='https://storage.googleapis.com/databasecamp-public/material/Screen%20Shot%202565-01-11%20at%2023.28%201%20(2).png' style='width:60%; padding-bottom:20px;' /> จากตารางข้างต้น Attribute ไหนบ้างที่เข้าข่ายเก็บข้อมูลซ้ำซ้อน";
+      // res.activity.story = "\
+      // นายแกนกำลังออกแบบฐานข้อมูลภายในโรงพยาบาลเเห่งหนึ่ง โดยประกอบไปด้วยข้อมูลต่าง ๆ ดังนี้ โดยในการเก็บข้อมูลคนไข้ ประกอบไปด้วยข้อมูลดังนี้\
+      // <li>patient_id เป็นรหัสประจำตัวของคนไข้</li>\
+      // <li>first_name เป็นชื่อจริงคของคนไข้</li>\
+      // <li>last_name เป็นนามสกุลของคนไข้</li>\
+      // <li>mobile_no เป็นเบอร์โทรติดต่อของคนไข้</li>\
+      // <li>patient_type เป็นประเภทของคนไข้ ประกอบไปด้วยคนไข้ประเภทต่าง ๆ ภายในโรงพยาบาล เช่น คนไข้ภายใน คนไข้ภายนอก เป็นต้น ซึ่งสามารถเปลี่ยนแปลงได้ภายในอนาคตะ</li>\
+      // <li>blood_type เป็นหมู่เลือดของคนไข้ ประกอบไปด้วย A, B, AB, เเละ O</li>\
+      // "
+
       this.activityInfo = res;
       baseView?.onViewModelChanged()
       baseView?.props.appStore?.setPercent(70)
@@ -83,12 +94,11 @@ export default class ActivityViewModel implements IActivityViewModel {
         const { content_id: contentId } = res.activity;
         baseView.props.learningStore!.FetchRoadmap(contentId, (res: RoadMap) => {
           if (!this.baseView) return;
-          console.log(this.baseView)
-          this.baseView.props.appStore?.setPercent(100)
+          this.baseView.props.appStore?.setPercent(100);
           const stepper = generateStepper(res, this.getCurrentActivityOrder(res), true);
           stepper.onNext = this.moveNext;
           stepper.onPrev = this.movePrev;
-          this.baseView.props.appStore!.setStepper(stepper)
+          this.baseView.props.appStore!.setStepper(stepper);
         }, () => {
           this.baseView?.props.history.replace('/overview');
           return;
@@ -139,7 +149,15 @@ export default class ActivityViewModel implements IActivityViewModel {
     if (!this.baseView) return;
     const { isLoading } = this.baseView.props.learningStore!.store;
     if (isLoading) return;
-    this.baseView.props.learningStore!.SubmitActivity(this.result, (res: ActivityAlert) => {
+
+    let ans = this.result;
+
+    if (this.activityInfo?.activity.activity_type_id === 6 && !((this.activityInfo.choice as TableChoice).vocabs)) {
+      ans = this.baseView.props.drawerStore!.getDrawerAnswer();
+    }
+
+    console.log(ans)
+    this.baseView.props.learningStore!.SubmitActivity(ans, (res: ActivityAlert) => {
       this.generateStepperFromStore();
       this.alert = res;
       this.baseView?.onViewModelChanged();
@@ -151,9 +169,9 @@ export default class ActivityViewModel implements IActivityViewModel {
    *
    * @remarks
    * This method is part of view-model, application logic parts, manipulating view.
-   * 
+   *
    * @param roadMap Roadmap information
-   * 
+   *
    * @returns Current activity index in roadmap
    */
   private getCurrentActivityOrder(roadMap: RoadMap): number {
@@ -274,10 +292,11 @@ export default class ActivityViewModel implements IActivityViewModel {
    *
    * @remarks
    * This method is part of view-model, application logic parts, manipulating view.
-   * 
+   *
    * @param result activity's answer
    */
   public updateResult = (result: Answer): void => {
+    console.log(result)
     this.result = result;
   }
 

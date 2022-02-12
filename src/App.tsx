@@ -40,7 +40,7 @@ import { Routes } from '@model/App';
 
 /**
  * Initializing stores
- * 
+ *
  */
 const _RootStore = new RootStore();
 
@@ -56,6 +56,7 @@ const store = {
   learningStore: _RootStore.learningStore,
   profileStore : _RootStore.profileStore,
   examinationStore : _RootStore.examinationStore,
+  drawerStore : _RootStore.drawerStore,
 };
 
 /**

@@ -13,9 +13,9 @@ import { RoadMap } from "../model/Learning";
  * This method is part of utility functions.
  *
  * @param data roadmap information.
- * 
+ *
  * @param current current activity index
- * 
+ *
  * @param isLectureProvide if lecture is provide in stepper
  *
  * @return Stepper information

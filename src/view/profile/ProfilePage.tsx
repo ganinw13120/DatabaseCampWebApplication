@@ -28,17 +28,34 @@ import { AppStore } from '@store/stores/AppStore/AppStore';
 import { AuthStore } from '@store/stores/AuthStore/AuthStore';
 import { ProfileStore } from '@store/stores/ProfileStore/ProfileStore';
 
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+} from 'chart.js';
+import { Radar } from 'react-chartjs-2';
+
+ChartJS.register(
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+);
 
 export interface IProfilePage extends BaseView {
-  props : ProfilePageProps,
+  props: ProfilePageProps,
 }
 
-interface ProfilePageProps extends RouteComponentProps <{
-  id : string
+interface ProfilePageProps extends RouteComponentProps<{
+  id: string
 }> {
-  appStore ?: AppStore,
-  profileStore ?: ProfileStore,
-  authStore ?: AuthStore,
+  appStore?: AppStore,
+  profileStore?: ProfileStore,
+  authStore?: AuthStore,
 }
 
 interface ProfileComponentState {
@@ -71,7 +88,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
 
   /**
    * On component did update, reattach view-model due to changes of properties.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -87,7 +104,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
 
   /**
    * On component did mount, set application store, and attach view-model
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -103,7 +120,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
 
   /**
    * On view-model changes, update view states.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -120,7 +137,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
 
   /**
    * On user select edit icon, show edit modal
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -133,7 +150,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
 
   /**
    * On user close edit modal, hide modal
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -208,8 +225,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
               </>}
             </div>
 
-            <div className='rounded-lg outline-blackProfile drop-shadow-shadowProfile h-20 w-5/6 md:w-2/4 mx-auto bg-white my-24 flex' style={{ boxShadow: '0 2px 2px rgba(0, 0, 0, 0.25)' }}>
-
+            <div className='rounded-lg outline-blackProfile drop-shadow-shadowProfile h-20 w-5/6 md:w-2/4 mx-auto bg-white my-12 flex' style={{ boxShadow: '0 2px 2px rgba(0, 0, 0, 0.25)' }}>
               {data ? <>
                 <div className='w-auto flex'>
                   <img src={star} alt="Logo4" className='object-none mx-auto my-auto ml-2 md:ml-8' />
@@ -225,24 +241,55 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
                 <Skeleton variant="text" className="w-5/6 mx-auto" />
               </>}
             </div>
+            {data && <>
+              <div className='spider-container m-auto mb-12'>
+                {(() => {
+                  let chartData : any = {
+                    labels: [],
+                    datasets: [
+                      {
+                        label: 'สถิติ',
+                        data: [],
+                        backgroundColor: '#4F88BC',
+                        borderColor: '#005FB7',
+                        borderWidth: 1,
+                      },
+                      {
+                        label: '',
+                        data: [0],
+                      },
+                    ],
+                  };
+                  data.spider.forEach((e, key)=>{
+                    chartData.labels.push(e.content_group_name);
+                    chartData.datasets[0].data.push(e.stat)
+                  })
+                  return <>
+                <Radar data={chartData} />
+                  </>
+                })()}
+              </div>
+            </>}
             {data ? <>
               <div className=' text-xl text-darkPrimary font-prompt font-semibold tracking-wider inline px-2 '>
-                <span>My Badge ({data.badges.filter(e => e.is_collect).length})</span>
+                <span>My Badge ({data.badges.filter(e => e.IsCollected).length})</span>
               </div>
             </> : <>
               <Skeleton variant="text" className="w-1/6 mx-auto" />
             </>}
             {data && <>
-              <div className='  mt-16 w-auto md:flex'>
+              <div className='mt-16 w-auto md:flex mb-16'>
                 <div className='flex-grow'>
                 </div>
+                <div className='md:grid md:grid-cols-4'>
                 {(() => {
                   let badgeList: ReactElement[] = [];
-                  data.badges.forEach((e: any, key: number) => {
-                    badgeList.push(<Badge Icon={e.icon_path} displayText={e.name} isCollect={e.is_collect} key={key} />)
+                  data.badges.filter(e=>e.ImagePath!=='-').forEach((e: any, key: number) => {
+                    badgeList.push(<Badge Icon={e.ImagePath} displayText={e.Name} isCollect={e.IsCollected} key={key} />)
                   })
                   return badgeList
                 })()}
+                </div>
                 <div className='flex-grow'>
                 </div>
               </div>

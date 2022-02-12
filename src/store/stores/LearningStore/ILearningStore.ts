@@ -13,9 +13,9 @@ export default interface ILearningStore {
      * This method is part of learning store, manipulating learning and learning'data.
      *
      * @param contentID content identifier
-     * 
+     *
      * @param onSuccess on fetching success callback function
-     * 
+     *
      * @param onError on fetching error callback function
      */
     FetchRoadmap(contentID: number, onSuccess: (res: RoadMap) => void, onError: () => void): Promise<any>
@@ -27,9 +27,9 @@ export default interface ILearningStore {
      * This method is part of learning store, manipulating learning and learning'data.
      *
      * @param activityID activity indentifier
-     * 
+     *
      * @param onSuccess on fetching success callback function
-     * 
+     *
      * @param onError on fetching error callback function
      */
     FetchActivity(activityID: number, onSuccess: (res: Activity) => void, onError: () => void): Promise<any>
@@ -41,7 +41,7 @@ export default interface ILearningStore {
      * This method is part of learning store, manipulating learning and learning'data.
      *
      * @param activityID activity indentifier
-     * 
+     *
      * @param cb callback function
      */
     SubmitActivity(result: Answer, cb: (res: ActivityAlert) => void): Promise<any>
@@ -67,11 +67,11 @@ export default interface ILearningStore {
      *
      * @remarks
      * This method is part of learning store, manipulating learning and learning'data.
-     * 
+     *
      * @param contentID lecture's content identifier
-     * 
+     *
      * @param onSuccess on fetching success callback function
-     * 
+     *
      * @param onError on fetching error callback function
      */
     FetchLecture(contentID: number, onSuccess: (res: Lecture) => void, onError: () => void): Promise<any>
