@@ -92,7 +92,7 @@ export class DrawerStore implements IDrawerStore {
     info.tables.forEach((e, key)=>{
       boxes.push(generateBox([
         e.title ? e.title : '', ...e.attributes.map(e=>e.value)
-      ], e.table_id, {x : (key * 300) + 20, y : key * 100}, true))
+      ], e.table_id, {x : (key * 150) + 20, y : key * 100}, true))
     })
     this.store.boxes = boxes;
     this.isEditable = isEditable;
@@ -106,7 +106,7 @@ export class DrawerStore implements IDrawerStore {
       const lineType = this.parseRelationshipTypeToLineType(e.relationship_type);
       const startBox = boxes.find(_e=>_e.uuid===e.table1_id)!;
       const stopBox =  boxes.find(_e=>_e.uuid===e.table2_id)!;
-      lines.push({
+      if( startBox && stopBox)lines.push({
         uuid :uuidv4(),
         startType : lineType.start,
         stopType : lineType.stop,
