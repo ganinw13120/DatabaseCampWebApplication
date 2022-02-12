@@ -249,7 +249,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
                     datasets: [
                       {
                         label: 'สถิติ',
-                        data: [0.89, 0.9, 0.88, 0.88, 0.90, 0.99, 1],
+                        data: [],
                         backgroundColor: '#4F88BC',
                         borderColor: '#005FB7',
                         borderWidth: 1,
@@ -262,7 +262,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
                   };
                   data.spider.forEach((e, key)=>{
                     chartData.labels.push(e.content_group_name);
-                    // chartData.datasets[0].data.push(e.stat)
+                    chartData.datasets[0].data.push(e.stat)
                   })
                   return <>
                 <Radar data={chartData} />
@@ -278,10 +278,10 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
               <Skeleton variant="text" className="w-1/6 mx-auto" />
             </>}
             {data && <>
-              <div className='mt-16 w-auto md:flex'>
+              <div className='mt-16 w-auto md:flex mb-16'>
                 <div className='flex-grow'>
                 </div>
-                <div className='grid grid-cols-4'>
+                <div className='md:grid md:grid-cols-4'>
                 {(() => {
                   let badgeList: ReactElement[] = [];
                   data.badges.filter(e=>e.ImagePath!=='-').forEach((e: any, key: number) => {
