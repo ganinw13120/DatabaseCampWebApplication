@@ -143,7 +143,7 @@ export default class Relation extends Component<RelationProps, RelationState> {
     let temp = [...result];
     const question = questions.find(e => e.id === id);
     if (!question) return;
-    if (temp[question.pairId-1].dependent===displayText) {
+    if (question.side === 'dependent' && temp[question.pairId-1].dependent===displayText) {
       temp[question.pairId-1].dependent='';
     } else {
       temp[question?.pairId - 1].determinants = temp[question?.pairId - 1].determinants.filter((e: any) => e.value !== displayText);

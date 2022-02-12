@@ -39,10 +39,10 @@ export default class OverviewViewModel implements IOverviewViewModel {
     if (!baseView) return;
     baseView.props.appStore?.setPercent(40)
     baseView.props.overviewStore?.FetchOverview().then((res: Overview | null) => {
-      // if (res?.pre_exam_id) {
-      //   console.log(res)
-      //   this.baseView?.props.history.push('/examination/' + res.pre_exam_id);
-      // }
+      if (res?.pre_exam_id) {
+        console.log(res)
+        this.baseView?.props.history.push('/examination/' + res.pre_exam_id);
+      }
       this.data = res;
       this.baseView?.onViewModelChanged();
       baseView?.props.appStore?.setPercent(100)
