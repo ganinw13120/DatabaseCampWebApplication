@@ -278,9 +278,10 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
               <Skeleton variant="text" className="w-1/6 mx-auto" />
             </>}
             {data && <>
-              <div className='  mt-16 w-auto md:flex'>
+              <div className='mt-16 w-auto md:flex'>
                 <div className='flex-grow'>
                 </div>
+                <div className='grid grid-cols-4'>
                 {(() => {
                   let badgeList: ReactElement[] = [];
                   data.badges.filter(e=>e.ImagePath!=='-').forEach((e: any, key: number) => {
@@ -288,6 +289,7 @@ class ProfilePage extends Component<ProfilePageProps, ProfileComponentState>
                   })
                   return badgeList
                 })()}
+                </div>
                 <div className='flex-grow'>
                 </div>
               </div>
