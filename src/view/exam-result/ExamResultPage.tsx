@@ -3,7 +3,7 @@
  * This file contains components, relaed to examination result page.
 */
 
-import { Component } from 'react';
+import { Component, ReactElement } from 'react';
 import BaseView from '@view/BaseView';
 
 import ExamResultViewModel from '@view-model/exam-result/ExamResultViewModel';
@@ -18,7 +18,7 @@ import SuccessIcon from '@assets/alertsuccess.svg';
 import  IAppStore  from '@store/stores/AppStore/IAppStore';
 import  IExaminationStore  from '@store/stores/ExaminationStore/IExaminationStore';
 import  IAuthStore  from '@store/stores/AuthStore/IAuthStore';
-import { ExamResult } from '@model/Learning';
+import { ExamResult, Recommend } from '@model/Learning';
 
 import { ExamType } from '@model/Learning';
 
@@ -28,6 +28,7 @@ export interface IExamResultPage extends BaseView {
 
 interface ExamResultState {
   data: ExamResult | null,
+  recommend : Recommend | null
 }
 
 interface ExamResultProps extends RouteComponentProps <{
@@ -53,6 +54,7 @@ class ExamResultPage extends Component<ExamResultProps, ExamResultState>
     this.examResultViewModel = new ExamResultViewModel();
     this.state = {
       data: null,
+      recommend : null
     }
   }
   
@@ -67,6 +69,8 @@ class ExamResultPage extends Component<ExamResultProps, ExamResultState>
     const { data } = this.state;
     const exam_result_id = (this.props.match.params as any).id;
     if (data && exam_result_id && exam_result_id !== data.exam_result_id.toString()) {
+      console.log(data , exam_result_id , exam_result_id !== data.exam_result_id.toString())
+      console.log('reattach..')
       this.examResultViewModel.attachView(this);
     }
   }
@@ -97,17 +101,18 @@ class ExamResultPage extends Component<ExamResultProps, ExamResultState>
    */
   public onViewModelChanged(): void {
     this.setState({
-      data : this.examResultViewModel.getData()
+      data : this.examResultViewModel.getData(),
+      recommend : this.examResultViewModel.getRecommend()
     })
   }
 
   public render(): JSX.Element {
-    const { data } = this.state;
+    const { data, recommend } = this.state;
     const date = data ? new Date(data.created_timestamp) : ''
     const dateString = date ? +date.getDate() + " " + monthNamesThai[date.getMonth()] + "  " + date.getFullYear() : '';
     const timeString = date ? date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0') + ':' + date.getSeconds().toString().padStart(2, '0') : '';
     return (
-      <>{ data &&
+      <>{ data && !recommend &&
         <div className='w-full h-auto m-auto '>
           <div className='my-36 mx-auto text-center h-1/4'>
             <img src={data.is_passed ? SuccessIcon : Alerticon} alt='alert' className='m-auto my-auto h-72 py-10' />

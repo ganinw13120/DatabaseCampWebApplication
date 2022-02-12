@@ -6,7 +6,7 @@
 import axios from 'axios';
 import { API_BASE_URL } from '../../constant/constant';
 
-import {Overview, Lecture, RoadMap, Activity, Hint, Answer, ExaminationOverview, Exam, ExamAnswer, ExamResult, PeerAnswer} from '@model/Learning';
+import {Overview, Lecture, RoadMap, Activity, Hint, Answer, ExaminationOverview, Exam, ExamAnswer, ExamResult, PeerAnswer, Recommend} from '@model/Learning';
 
 import ILearningRepository from './ILearningRepository';
 
@@ -33,6 +33,21 @@ export default class LearningRepository implements ILearningRepository {
       }).then(res => {
         const { data } = res;
         resolve(data as ExamResult)
+      }).catch(res=>{
+        reject(res.message)
+      })
+    })
+  }
+  
+  public async fetchRecommend(token: string) : Promise<Recommend> {
+    return new Promise((resolve, reject) => {
+      axios.get(`${API_BASE_URL}/learning/recommend` , {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      }).then(res => {
+        const { data } = res;
+        resolve(data as Recommend)
       }).catch(res=>{
         reject(res.message)
       })

@@ -6,16 +6,18 @@
 import IProfileViewModel from './IExamResultViewModel';
 import {IExamResultPage} from '@root/view/exam-result/ExamResultPage';
 
-import { ExamResult } from '@model/Learning';
+import { ExamResult, Recommend } from '@model/Learning';
 
 export default class ExaminationResultViewModel implements IProfileViewModel {
   private data : ExamResult | null;
+  private recommend : Recommend | null;
 
   private baseView : IExamResultPage | null;
 
   constructor () {
     this.data = null;
     this.baseView = null;
+    this.recommend = null;
   }
 
   /**
@@ -34,6 +36,11 @@ export default class ExaminationResultViewModel implements IProfileViewModel {
     }
     baseView?.props.appStore?.setPercent(40)
     const res = await baseView?.props.examinationStore!.FetchResult(exam_id)
+    if (res?.exam_type==='PRE') {
+      baseView.props.history.push('/overview');
+      // const recommend = await baseView.props.examinationStore!.FetchRecommend();
+      // this.recommend = recommend;
+    }
     baseView?.props.appStore?.setPercent(100)
     this.data = res;
     baseView?.onViewModelChanged();
@@ -50,6 +57,9 @@ export default class ExaminationResultViewModel implements IProfileViewModel {
    */
   public getData () : ExamResult | null {
     return this.data;
+  }
+  public getRecommend () : Recommend | null {
+    return this.recommend;
   }
 
   /**

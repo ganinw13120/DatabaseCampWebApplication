@@ -9,7 +9,7 @@ import RootStore from '../../RootStore';
 import LearningRepository from '@repository/app/LearningRepository';
 import ILearningRepository from '@repository/app/ILearningRepository';
 
-import {Answer, Exam, ExamAnswer, ExamAnswerActivity, ExaminationOverview, ExamResult} from '@model/Learning';
+import {Answer, Exam, ExamAnswer, ExamAnswerActivity, ExaminationOverview, ExamResult, MultipleAnswer, Recommend} from '@model/Learning';
 
 import IExaminationStore, { Store } from './IExaminationStore';
 
@@ -69,6 +69,14 @@ export class ExaminationStore implements IExaminationStore {
   public async FetchResult(examId : number) : Promise<ExamResult | null> {
     const { token } = this.rootStore.authStore.store;
     const res : ExamResult | null = await this.learningRepository.fetchExamResult(token, examId).then((res)=> {return res}).catch((res) => {
+      return null
+    })
+    return res;
+  }
+  @action.bound
+  public async FetchRecommend() : Promise<Recommend | null> {
+    const { token } = this.rootStore.authStore.store;
+    const res : Recommend | null = await this.learningRepository.fetchRecommend(token).then((res)=> {return res}).catch((res) => {
       return null
     })
     return res;
@@ -136,7 +144,10 @@ export class ExaminationStore implements IExaminationStore {
             })
         })
         res = temp;
+      } else if (e.activity.activity_type_id===2) {
+        res = [res] as MultipleAnswer[];
       }
+      console.log(e.activity.activity_type_id)
       let examAnswer : ExamAnswerActivity = {
         activity_id : e.activity.activity_id,
         answer : res

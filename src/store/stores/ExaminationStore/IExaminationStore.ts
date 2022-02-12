@@ -2,7 +2,7 @@
 /**
  * This file used to be a interface of examination store.
 */
-import { Exam, ExamResult, Answer, ExaminationOverview } from "@model/Learning";
+import { Exam, ExamResult, Answer, ExaminationOverview, Recommend } from "@model/Learning";
 
 export default interface IExaminationStore {
 
@@ -29,6 +29,8 @@ export default interface IExaminationStore {
      * @return Examination result information
      */
     FetchResult(examId: number): Promise<ExamResult | null>
+    
+    FetchRecommend() : Promise<Recommend | null>
 
     /**
      * On user enter examination overview page, start fetching examination overview from repository

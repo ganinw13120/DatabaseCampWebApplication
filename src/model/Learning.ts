@@ -86,21 +86,21 @@ export type TableChoice = {
 };
 
 export type DrawerChoice = {
-  tables : TableChoiceDetail[];
-  relationships : DrawerRelationship[];
-}
+  tables: TableChoiceDetail[];
+  relationships: DrawerRelationship[];
+};
 
 export type DrawerRelationship = {
-  relationship_id : number
-  relationship_type : RelationShipType
-  table1_id : string  
-  table2_id : string
-}
+  relationship_id: number;
+  relationship_type: RelationShipType;
+  table1_id: string;
+  table2_id: string;
+};
 
-export type RelationShipType = "ONE_TO_MANY" | "ONE_TO_ONE" | "MANY_TO_MANY"
+export type RelationShipType = "ONE_TO_MANY" | "ONE_TO_ONE" | "MANY_TO_MANY";
 
 export type TableChoiceDetail = {
-  table_id : string;
+  table_id: string;
   attributes: TableChoiceAttribute[];
   attributes_count: number;
   title: string | null;
@@ -128,7 +128,7 @@ export type RelationProblem = {
 
 export type PeerChoice = DrawerChoice & {
   problems: PeerProblem;
-  er_answe_id : number
+  er_answe_id: number;
 };
 
 export type PeerProblem = {
@@ -136,9 +136,9 @@ export type PeerProblem = {
 };
 
 export type PeerChoiceGroup = {
-  name : string
-  choices : string[]
-}
+  name: string;
+  choices: string[];
+};
 
 /**
  * Store `Activity` infomation.
@@ -293,6 +293,7 @@ export type CompletionAnswer = {
 export type Answer =
   | CompletionAnswer[]
   | MultipleAnswer
+  | MultipleAnswer[]
   | MatchingAnswer
   | CheckboxMultipleAnswer
   | GroupAnswer
@@ -303,8 +304,8 @@ export type Answer =
   | null;
 
 export type PeerAnswer = {
-  selected : string[]
-}
+  selected: string[];
+};
 
 export type MultipleAnswer = number;
 export type MatchingAnswer = string[][];
@@ -317,13 +318,13 @@ export type GroupAnswerDetail = {
   vocabs: string[];
 };
 export type TableAnswer = {
-    tables : TableAnswerDetail[]
+  tables: TableAnswerDetail[];
 };
 
 export type TableAnswerDetail = {
-    title : string
-    attributes : Array<{value : string}>
-}
+  title: string;
+  attributes: Array<{ value: string }>;
+};
 
 export type RelationAnswer = {
   dependent: string;
@@ -331,26 +332,26 @@ export type RelationAnswer = {
 };
 
 export type DrawerTableAttributeAnswer = {
-  value : string
-  key : "PK" | "FK" | null
-}
+  value: string;
+  key: "PK" | "FK" | null;
+};
 
 export type DrawerTableAnswerDetail = {
-  table_id : string
-  title : string
-  attributes : TableChoiceAttribute[]
-}
+  table_id: string;
+  title: string;
+  attributes: TableChoiceAttribute[];
+};
 
 export type DrawerRelationshipAnswer = {
-  relationship_type : RelationShipType,
-  table1_id : string
-  table2_id : string
-}
+  relationship_type: RelationShipType;
+  table1_id: string;
+  table2_id: string;
+};
 
 export type DrawerAnswer = {
-  tables : DrawerTableAnswerDetail[],
-  relationships : DrawerRelationshipAnswer[]
-}
+  tables: DrawerTableAnswerDetail[];
+  relationships: DrawerRelationshipAnswer[];
+};
 
 /**
  * Store `Activity Result` for activity after checking.
@@ -587,5 +588,14 @@ export type Content = {
 export type Overview = {
   lasted_group: Content;
   content_group_overview: ContentGroup[];
-  pre_exam_id : number;
+  pre_exam_id: number;
 };
+
+export type Recommend = {
+  recommend_group : RecommendGroup[]
+}
+
+export type RecommendGroup = {
+  content_group_id : number
+  is_recommend : boolean
+}

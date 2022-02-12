@@ -2,7 +2,7 @@
 /**
  * This file used to be a interface of learning repository.
 */
-import { ExamResult, ExamAnswer, Exam, ExaminationOverview, Answer, Hint, RoadMap, Lecture, Activity, Overview, PeerAnswer } from "@model/Learning";
+import { ExamResult, ExamAnswer, Exam, ExaminationOverview, Answer, Hint, RoadMap, Lecture, Activity, Overview, PeerAnswer, Recommend } from "@model/Learning";
 
 export default interface ILearningRepository {
 
@@ -19,6 +19,7 @@ export default interface ILearningRepository {
      * @return ExamResult
      */
     fetchExamResult(token: string, exam_id: number): Promise<ExamResult>
+    fetchRecommend(token: string) : Promise<Recommend>
 
     /**
      * Submit `Examination` result.
