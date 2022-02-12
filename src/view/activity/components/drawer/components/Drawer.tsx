@@ -11,15 +11,26 @@ import '../drawer.css';
 type DrawerProps = {
     drawerStore?: IDrawerStore
     info: DrawerChoice
+    isEditable : boolean
 }
 
 @inject('drawerStore')
 @observer
-class Drawer extends Component<DrawerProps, {}> {
+class Drawer extends Component<DrawerProps, {isSetupLine : boolean}> {
+
+    constructor (props : DrawerProps) {
+        super(props);
+        this.state = {
+            isSetupLine : false
+        }
+    }
 
     public componentDidMount(): void {
-        const { info } = this.props;
-        this.props.drawerStore!.setupDrawer(info);
+        const { info, isEditable } = this.props;
+        this.props.drawerStore!.setupDrawer(info, isEditable);
+        setTimeout(()=>{
+            this.props.drawerStore!.setupLine(info);
+        }, 500)
     }
 
     private generateLineElement(): ReactElement[] {
@@ -35,7 +46,7 @@ class Drawer extends Component<DrawerProps, {}> {
         const { store, handleMouseDown, handleMouseMove, handleMouseUp, onBackgroundClick, handleMouseLeave } = this.props.drawerStore!;
         return <>
             {/* <Stat /> */}
-            <ControlPanel />
+            {this.props.isEditable &&  <ControlPanel />}
             <div ref={store.containerRef} onMouseLeave={handleMouseLeave} onMouseMove={handleMouseMove} className={`drawer-container`} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
                 {(() => {
                     let _boxes: Array<ReactElement> = [];

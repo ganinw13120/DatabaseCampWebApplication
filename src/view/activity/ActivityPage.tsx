@@ -207,7 +207,7 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
                     if ((activityInfo.choice as TableChoice).vocabs) {
                       return <Table info={activityInfo.choice as TableChoice} updateResult={this.activityViewModel.updateResult} />
                     } else {
-                      return <Drawer info={activityInfo.choice as DrawerChoice} />
+                      return <Drawer info={activityInfo.choice as DrawerChoice} isEditable={true}/>
                     }
                   }
                   else if (type === 7) return <Peer info={activityInfo.choice as PeerChoice} drawerInfo={activityInfo.choice as DrawerChoice} updateResult={this.activityViewModel.updateResult} />

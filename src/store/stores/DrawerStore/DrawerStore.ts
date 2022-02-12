@@ -14,7 +14,7 @@ import {
   Position,
 } from "@model/Drawer";
 import generateBox from "@root/view/activity/components/drawer/utils/generateBox";
-import { makeObservable, observable, action } from "mobx";
+import { makeObservable, observable, action, keys } from "mobx";
 import React from "react";
 
 import RootStore from "../../RootStore";
@@ -53,6 +53,8 @@ export class DrawerStore implements IDrawerStore {
     ];
   }
 
+  isEditable : boolean = true;
+
   @observable
   store: Store = {
     currentPosition: { x: 0, y: 0 },
@@ -65,15 +67,69 @@ export class DrawerStore implements IDrawerStore {
     svgRef: React.createRef<SVGSVGElement>(),
   };
 
+  private parseRelationshipTypeToLineType (target : RelationShipType) : {start : LineType, stop : LineType} {
+    if (target==='MANY_TO_MANY') {
+      return {
+        start : LineType.More,
+        stop : LineType.More,
+      }
+    } else if (target==='ONE_TO_MANY') {
+      return {
+        start : LineType.OnlyOne,
+        stop : LineType.More,
+      }
+    } else {
+      return {
+        start : LineType.OnlyOne,
+        stop : LineType.OnlyOne,
+      }
+    }
+  }
+
   @action.bound
-  public setupDrawer(info : DrawerChoice) : void {
+  public setupDrawer(info : DrawerChoice, isEditable : boolean) : void {
     let boxes : Box[] = [];
-    info.tables.forEach(e=>{
+    info.tables.forEach((e, key)=>{
       boxes.push(generateBox([
         e.title ? e.title : '', ...e.attributes.map(e=>e.value)
-      ]))
+      ], e.table_id, {x : key * 300, y : key * 100}, true))
     })
     this.store.boxes = boxes;
+    this.isEditable = isEditable;
+  }
+
+  @action.bound
+  public setupLine (info : DrawerChoice) : void {
+    const boxes = this.store.boxes;
+    let lines : Line[] = [];
+    info.relationships.forEach(e=>{
+      const lineType = this.parseRelationshipTypeToLineType(e.relationship_type);
+      const startBox = boxes.find(_e=>_e.uuid===e.table1_id)!;
+      const stopBox =  boxes.find(_e=>_e.uuid===e.table2_id)!;
+      lines.push({
+        uuid :uuidv4(),
+        startType : lineType.start,
+        stopType : lineType.stop,
+        startInfo : {
+          box : {
+            box : startBox,
+            level : 0,
+            pointPosition : PointPosition.Right
+          }
+        },
+        stopInfo : {
+          box : {
+            box : stopBox,
+            level : 0,
+            pointPosition : PointPosition.Left
+          }
+        },
+        isSelect : false,
+        startPosition : startBox.pos,
+        stopPosition : stopBox.pos
+      })
+    })
+    this.store.lines = lines;
   }
 
   private getRelationshipType (startType : LineType, stopType : LineType) : RelationShipType {
@@ -293,9 +349,13 @@ export class DrawerStore implements IDrawerStore {
 
     const focusLine = tmp.find((e) => e.isSelect)!;
     if (
-      focusLine.startInfo.box &&
-      focusLine.stopInfo.box &&
-      this.isSamePoint(focusLine.startInfo.box, focusLine.stopInfo.box)
+      (
+        focusLine.startInfo.box &&
+        focusLine.stopInfo.box &&
+        this.isSamePoint(focusLine.startInfo.box, focusLine.stopInfo.box)
+      ) || (
+        !focusLine.stopInfo.box
+      )
     ) {
       tmp = tmp.filter((e) => !e.isSelect);
     }
@@ -306,6 +366,7 @@ export class DrawerStore implements IDrawerStore {
     });
 
     this.store.lines = tmp;
+    this.store.focusEntity = null;
     this.store.actionType = ActionType.None;
   }
 
@@ -465,6 +526,7 @@ export class DrawerStore implements IDrawerStore {
   public handleMouseMove(
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ): void {
+    if (!this.isEditable) return;
     const { svgRef } = this.store;
     let current: Position = {
       x: e.clientX - svgRef.current!.getClientRects()[0].left,
@@ -493,6 +555,7 @@ export class DrawerStore implements IDrawerStore {
 
   @action.bound
   public handleMouseUp(e: React.MouseEvent<HTMLDivElement, MouseEvent>): void {
+    if (!this.isEditable) return;
     if (this.store.actionType === ActionType.Draw) {
       this.stopDrawing();
     } else if (this.store.actionType === ActionType.Drag) {
@@ -504,6 +567,7 @@ export class DrawerStore implements IDrawerStore {
   public handleMouseDown(
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ): void {
+    if (!this.isEditable) return;
     const currentAction = this.getCurrentAction();
     this.store.actionType = currentAction;
     if (currentAction === ActionType.DrawReady) {
@@ -586,6 +650,7 @@ export class DrawerStore implements IDrawerStore {
 
   @action.bound
   public deleteLine(id: string): void {
+    console.log('deleting line..')
     this.store.lines = this.store.lines.filter((e) => !(e.uuid === id));
   }
 

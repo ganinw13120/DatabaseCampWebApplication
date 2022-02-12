@@ -58,8 +58,8 @@ export default class Peer extends Component<PeerProps, PeerState> {
     // })
     return (
       <>
-        <div className='peer-drawer-container'>
-          <Drawer info={drawerInfo} />
+        <div className=''>
+          <Drawer info={drawerInfo} isEditable={false}/>
         </div>
         <div className='w-3/4 mx-auto'>
           {problemList}

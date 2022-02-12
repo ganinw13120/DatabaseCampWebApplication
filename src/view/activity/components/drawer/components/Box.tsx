@@ -11,7 +11,7 @@ type BoxProps = {
     drawerStore?: DrawerStore
 }
 
-const maxLength : number = 20;
+const maxLength: number = 20;
 
 @inject("drawerStore")
 @observer
@@ -54,7 +54,7 @@ class BoxComponent extends Component<BoxProps, {}> {
     }
     render(): JSX.Element {
         const { data } = this.props;
-        const { onHoverBox, onUnHoverBox, onFocusField } = this.props.drawerStore!;
+        const { onHoverBox, onUnHoverBox, onFocusField, isEditable } = this.props.drawerStore!;
         return (
 
             <>
@@ -83,12 +83,12 @@ class BoxComponent extends Component<BoxProps, {}> {
                                             return ' <Primary Key>'
                                     }
                                 })()}`}
-                                disabled={false}
-                                onChange={e => {this.onChangeEntityText(e, 0)}}
+                                disabled={!isEditable}
+                                onChange={e => { this.onChangeEntityText(e, 0) }}
                                 // onFocus={()=>{
                                 //     onFocusField(data, 0);
                                 // }}
-                                
+
                                 tagName='div'
                                 className={`inp-field ${data.entities[0].isFocus && data.isSelect ? 'inp-fiel-focus' : ''}`}
                             />
@@ -101,7 +101,7 @@ class BoxComponent extends Component<BoxProps, {}> {
                                         {/* {entity.text} */}
                                         <ContentEditable
                                             html={entity.text}
-                                            disabled={false}
+                                            disabled={!isEditable}
                                             onChange={(e) => { this.onChangeEntityText(e, key + 1) }}
                                             tagName='div'
                                             onFocus={() => {

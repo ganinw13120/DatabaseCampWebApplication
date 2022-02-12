@@ -14,8 +14,8 @@ import { DrawerAnswer, DrawerChoice } from "@model/Learning";
 export default interface IDrawerStore {
 
   getDrawerAnswer() : DrawerAnswer;
-  setupDrawer(info : DrawerChoice) : void;
-
+  setupDrawer(info : DrawerChoice, isEditable : boolean) : void;
+  setupLine (info : DrawerChoice) : void;
   clearSelection(): void;
   setCurrentMousePosition(newPosition: Position): void;
   deleteEntity(): void;

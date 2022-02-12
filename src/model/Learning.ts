@@ -87,7 +87,7 @@ export type TableChoice = {
 
 export type DrawerChoice = {
   tables : TableChoiceDetail[];
-  relationships : DrawerRelationship
+  relationships : DrawerRelationship[];
 }
 
 export type DrawerRelationship = {
@@ -100,6 +100,7 @@ export type DrawerRelationship = {
 export type RelationShipType = "ONE_TO_MANY" | "ONE_TO_ONE" | "MANY_TO_MANY"
 
 export type TableChoiceDetail = {
+  table_id : string;
   attributes: TableChoiceAttribute[];
   attributes_count: number;
   title: string | null;

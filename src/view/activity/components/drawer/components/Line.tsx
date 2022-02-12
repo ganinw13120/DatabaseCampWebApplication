@@ -87,24 +87,25 @@ export default class LineComponent extends Component<LineProps, {}> {
       element.push(this.generateSvgLine(linePathString));
       i++;
     }
+
     switch (data.startType) {
       case LineType.OnlyOne: {
-        element.push(...this.generateHeadOne(startAngle, startPos));
+        element.push(...this.generateHeadOne(startAngle, linePath.checkPoints[0]));
         break;
       }
       case LineType.More: {
-        element.push(...this.generateHeadMany(startAngle, startPos));
+        element.push(...this.generateHeadMany(startAngle, linePath.checkPoints[0]));
         break;
       }
     }
 
     switch (data.stopType) {
       case LineType.More: {
-        element.push(...this.generateHeadMany(stopAngle, stopPos));
+        element.push(...this.generateHeadMany(stopAngle, linePath.checkPoints[linePath.checkPoints.length-1]));
         break;
       }
       case LineType.OnlyOne: {
-        element.push(...this.generateHeadOne(stopAngle, stopPos));
+        element.push(...this.generateHeadOne(stopAngle, linePath.checkPoints[linePath.checkPoints.length-1]));
         break;
       }
     }
