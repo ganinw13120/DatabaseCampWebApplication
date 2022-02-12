@@ -25,6 +25,7 @@ import {
   RelationAnswer,
   TableAnswer,
   TableChoice,
+  DrawerAnswer,
 } from "@model/Learning";
 import ILearningStore, { Store } from "./ILearningStore";
 import {
@@ -214,6 +215,8 @@ export class LearningStore implements ILearningStore {
     } else if (activity.activity_type_id === 6) {
       if ((activityInfo.choice as TableChoice).vocabs) {
         this.checkTable(activity.activity_id, result as TableAnswer, cb);
+      } else {
+        this.checkDrawer(activity.activity_id, result as DrawerAnswer, cb);
       }
     }
   }
@@ -384,6 +387,29 @@ export class LearningStore implements ILearningStore {
   private async checkTable(
     activityID: number,
     result: TableAnswer,
+    cb: any
+  ): Promise<any> {
+    const { token } = this.rootStore.authStore.store;
+    this.learningRepository
+      .checkActiivty(token, activityID, 6, result)
+      .then((res: any) => {
+        const { is_correct } = res;
+        if (is_correct) {
+          this.updateRoadMapStatus(activityID);
+          this.rootStore.authStore.SetUserPoint(res.updated_point);
+          this.successAnswer(cb);
+          return;
+        } else {
+          this.rejectAnswer(cb);
+          return;
+        }
+      });
+  }
+
+  @action.bound
+  private async checkDrawer(
+    activityID: number,
+    result: DrawerAnswer,
     cb: any
   ): Promise<any> {
     const { token } = this.rootStore.authStore.store;

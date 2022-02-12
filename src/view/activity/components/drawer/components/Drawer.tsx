@@ -5,14 +5,22 @@ import Stat from './Stat';
 import ControlPanel from './ControlPanel';
 import IDrawerStore from '@store/stores/DrawerStore/IDrawerStore';
 import { inject, observer } from 'mobx-react';
+import { DrawerAnswer, DrawerChoice } from '@root/model/Learning';
+import '../drawer.css';
 
 type DrawerProps = {
     drawerStore?: IDrawerStore
+    info: DrawerChoice
 }
 
 @inject('drawerStore')
 @observer
 class Drawer extends Component<DrawerProps, {}> {
+
+    public componentDidMount(): void {
+        const { info } = this.props;
+        this.props.drawerStore!.setupDrawer(info);
+    }
 
     private generateLineElement(): ReactElement[] {
         let list: ReactElement[] = [];
@@ -22,17 +30,18 @@ class Drawer extends Component<DrawerProps, {}> {
         })
         return list;
     }
+
     render(): JSX.Element {
-        const { store, handleMouseDown, handleMouseMove, handleMouseUp, onBackgroundClick } = this.props.drawerStore!;
+        const { store, handleMouseDown, handleMouseMove, handleMouseUp, onBackgroundClick, handleMouseLeave } = this.props.drawerStore!;
         return <>
             {/* <Stat /> */}
             <ControlPanel />
-            <div ref={store.containerRef} onMouseMove={handleMouseMove} className={`drawer-container`} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
+            <div ref={store.containerRef} onMouseLeave={handleMouseLeave} onMouseMove={handleMouseMove} className={`drawer-container`} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
                 {(() => {
                     let _boxes: Array<ReactElement> = [];
                     store.boxes.forEach((e, key) => {
                         _boxes.push(<React.Fragment key={e.uuid}>
-                            <BoxComponent data={e} />
+                            <BoxComponent data={e} key={key} />
                         </React.Fragment>)
                     })
                     return _boxes;

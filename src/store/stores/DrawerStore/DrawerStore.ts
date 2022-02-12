@@ -21,6 +21,7 @@ import RootStore from "../../RootStore";
 
 import IDrawerStore, { Store } from "./IDrawerStore";
 import parseClientRectsToPosition from "@root/view/activity/components/drawer/utils/parseClientRectsToPosition";
+import { DrawerAnswer, DrawerChoice, DrawerRelationshipAnswer, DrawerTableAnswerDetail, RelationShipType } from "@root/model/Learning";
 
 const pointOffset: number = 15;
 
@@ -63,6 +64,58 @@ export class DrawerStore implements IDrawerStore {
     containerRef: React.createRef<HTMLDivElement>(),
     svgRef: React.createRef<SVGSVGElement>(),
   };
+
+  @action.bound
+  public setupDrawer(info : DrawerChoice) : void {
+    let boxes : Box[] = [];
+    info.tables.forEach(e=>{
+      boxes.push(generateBox([
+        e.title ? e.title : '', ...e.attributes.map(e=>e.value)
+      ]))
+    })
+    this.store.boxes = boxes;
+  }
+
+  private getRelationshipType (startType : LineType, stopType : LineType) : RelationShipType {
+    if (startType !== stopType) {
+      return "ONE_TO_MANY";
+    } else if (startType===LineType.More) {
+      return "MANY_TO_MANY";
+    } else {
+      return "ONE_TO_ONE";
+    }
+  }
+
+  private getKeyType (target : KeyType) : "PK" | "FK" | null {
+    if (target===KeyType.Foreign) return 'FK'
+    else if (target===KeyType.Primary) return 'PK'
+    else return null
+  }
+
+  @action.bound
+  public getDrawerAnswer() : DrawerAnswer {
+    const table : DrawerTableAnswerDetail[] = [];
+    this.store.boxes.forEach(e=>{
+      table.push({
+        table_id : e.uuid,
+        title : e.entities[0].text,
+        attributes : e.entities.slice(1).map(e=>{return {value: e.text, key : this.getKeyType(e.keyType)}})
+      })
+    })
+    const relationship : DrawerRelationshipAnswer[] = [];
+    this.store.lines.forEach(e=>{
+      relationship.push({
+        table1_id : e.startInfo.box!.box.uuid,
+        table2_id : e.stopInfo.box!.box.uuid,
+        relationship_type : this.getRelationshipType(e.startType, e.stopType)
+      })
+    })
+    let ans : DrawerAnswer = {
+      tables : table,
+      relationships : relationship
+    }
+    return ans;
+  }
 
   public getDrawerOffset(): Position {
     return {
@@ -279,8 +332,10 @@ export class DrawerStore implements IDrawerStore {
     if (!focusEntity) return;
     if (this.isBox(focusEntity)) {
       this.store.lines = this.store.lines.filter((e) => {
-        return !(e.startInfo.box?.box.uuid === focusEntity.uuid ||
-          e.stopInfo.box?.box.uuid === focusEntity.uuid);
+        return !(
+          e.startInfo.box?.box.uuid === focusEntity.uuid ||
+          e.stopInfo.box?.box.uuid === focusEntity.uuid
+        );
       });
       this.store.boxes = this.store.boxes.filter(
         (e) => !(e.uuid === focusEntity.uuid)
@@ -346,8 +401,8 @@ export class DrawerStore implements IDrawerStore {
           uuid: uuidv4(),
           text: "",
           ref: refEntity,
-          isFocus : false,
-          keyType : KeyType.None
+          isFocus: false,
+          keyType: KeyType.None,
         });
         break;
       case "Top":
@@ -356,10 +411,10 @@ export class DrawerStore implements IDrawerStore {
           uuid: uuidv4(),
           text: "",
           ref: refEntity,
-          isFocus : false,
-          keyType : KeyType.None
+          isFocus: false,
+          keyType: KeyType.None,
         });
-        target.entities = [target.entities[0], ...tmp]
+        target.entities = [target.entities[0], ...tmp];
         break;
     }
     this.generatePoint(target);
@@ -394,6 +449,19 @@ export class DrawerStore implements IDrawerStore {
   }
 
   @action.bound
+  public handleMouseLeave(e: React.MouseEvent<HTMLDivElement>): void {
+    this.handleMouseUp(e);
+  }
+
+  @action.bound
+  private checkValidPosition (target : Position) : boolean {
+    const ref = this.store.svgRef;
+    if (!ref || !ref.current) return false;
+    const rect = ref.current.getClientRects()[0];
+    return (target.x < rect.width && target.y < rect.height)
+  }
+
+  @action.bound
   public handleMouseMove(
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ): void {
@@ -402,6 +470,7 @@ export class DrawerStore implements IDrawerStore {
       x: e.clientX - svgRef.current!.getClientRects()[0].left,
       y: e.clientY - svgRef.current!.getClientRects()[0].top,
     };
+    if (!this.checkValidPosition(current)) return;
     this.setCurrentMousePosition(current);
     const { actionType } = this.store;
     if (actionType === ActionType.Drag) {
@@ -567,37 +636,40 @@ export class DrawerStore implements IDrawerStore {
   }
 
   @action.bound
-  public  onFocusField(box : Box, key : number) : void {
-    let tmp = [...this.store.boxes.find(e=>e.uuid===box.uuid)!.entities].map(e=>{
+  public onFocusField(box: Box, key: number): void {
+    let tmp = [
+      ...this.store.boxes.find((e) => e.uuid === box.uuid)!.entities,
+    ].map((e) => {
       e.isFocus = false;
       return e;
     });
     tmp[key].isFocus = true;
-    this.store.boxes.find(e=>e.uuid===box.uuid)!.entities = tmp;
+    this.store.boxes.find((e) => e.uuid === box.uuid)!.entities = tmp;
   }
 
   @action.bound
-  public onSetFieldKeyType(keyType : KeyType) : void {
-    const {focusEntity} = this.store;
+  public onSetFieldKeyType(keyType: KeyType): void {
+    const { focusEntity } = this.store;
     if (!focusEntity) return;
     if (!this.isBox(focusEntity)) return;
-    this.store.boxes = this.store.boxes.map(e=>{
-      if(e.isSelect && e.entities.some(e=>e.isFocus))e.entities.find(e=>e.isFocus)!.keyType = keyType; 
+    this.store.boxes = this.store.boxes.map((e) => {
+      if (e.isSelect && e.entities.some((e) => e.isFocus))
+        e.entities.find((e) => e.isFocus)!.keyType = keyType;
       return e;
-    })
+    });
   }
 
   @action.bound
-  public changeLineType (point : 'Start' | 'Stop', type : LineType) : void {
-    const {focusEntity} = this.store;
+  public changeLineType(point: "Start" | "Stop", type: LineType): void {
+    const { focusEntity } = this.store;
     if (!focusEntity) return;
     if (!this.isLine(focusEntity)) return;
     const target = focusEntity as Line;
     switch (point) {
-      case 'Start' :
-        target.startType = type; 
+      case "Start":
+        target.startType = type;
         break;
-      case 'Stop' :
+      case "Stop":
         target.stopType = type;
         break;
     }

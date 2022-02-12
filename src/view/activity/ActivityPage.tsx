@@ -18,11 +18,11 @@ import MultipleChoiceComponent from './components/MultipleChoice';
 import CheckboxMultipleChoiceComponent from './components/CheckboxMultipleChoice';
 import Group from './components/Group';
 import Table from './components/Table';
-import Drawer from './components/drawer';
+import Drawer from './components/drawer/components/Drawer';
 import { inject, observer } from 'mobx-react';
 import parse from 'html-react-parser';
 
-import { Activity, ActivityAlert, CompletionChoice, GroupChoice, MatchingChoice, MultipleChoice, PeerChoice, RelationChoice, TableChoice } from '@model/Learning';
+import { Activity, ActivityAlert, CompletionChoice, DrawerChoice, GroupChoice, MatchingChoice, MultipleChoice, PeerChoice, RelationChoice, TableChoice } from '@model/Learning';
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -41,6 +41,7 @@ import SkeletonActivity from './components/SkeletonActivity';
 import { ACTIVITY_NEXT, ACTIVITY_SUBMIT, ACTIVITY_TITLE, WARNING_HINT_TITLE, WARNING_HINT_DESCRIPTION, WARNING_HINT_ACCEPT, WARNING_HINT_CANCLE } from '@constant/text';
 import Relation from './components/Relation';
 import Peer from './components/Peer';
+import IDrawerStore from '@store/stores/DrawerStore/IDrawerStore';
 
 
 export interface IActivityPage extends BaseView {
@@ -58,11 +59,13 @@ interface ActivityProps extends RouteComponentProps<{
   learningStore?: ILearningStore,
   appStore?: IAppStore,
   authStore?: IAuthStore
+  drawerStore?: IDrawerStore
 }
 
 @inject('learningStore')
 @inject('authStore')
 @inject('appStore')
+@inject('drawerStore')
 @observer
 class ActivityPage extends React.Component<ActivityProps, ActivityState>
   implements IActivityPage {
@@ -204,12 +207,10 @@ class ActivityPage extends React.Component<ActivityProps, ActivityState>
                     if ((activityInfo.choice as TableChoice).vocabs) {
                       return <Table info={activityInfo.choice as TableChoice} updateResult={this.activityViewModel.updateResult} />
                     } else {
-                      return <Drawer />
+                      return <Drawer info={activityInfo.choice as DrawerChoice} />
                     }
                   }
-                  // else if (type === 6) return <Table info={activityInfo.choice as TableChoice} updateResult={this.activityViewModel.updateResult} />
-                  // else if (type === 7) return <Drawer />
-                  // else if (type === 9) return <Peer info={activityInfo.choice as PeerChoice} updateResult={this.activityViewModel.updateResult} />
+                  else if (type === 7) return <Peer info={activityInfo.choice as PeerChoice} drawerInfo={activityInfo.choice as DrawerChoice} updateResult={this.activityViewModel.updateResult} />
                 }
                 return <>
                   <div className='text-xl text-black font-sarabun tracking-wider mx-14 my-8'>

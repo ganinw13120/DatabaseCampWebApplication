@@ -8,7 +8,7 @@ import { notification } from 'antd';
 
 import { IActivityPage } from '@root/view/activity/ActivityPage';
 
-import { Activity, ActivityAlert, ActivityChoices, Answer, RoadMap } from '@model/Learning';
+import { Activity, ActivityAlert, ActivityChoices, Answer, RoadMap, TableChoice } from '@model/Learning';
 import generateStepper, { generateEmptyStepper } from '@util/generateStepper';
 
 export default class ActivityViewModel implements IActivityViewModel {
@@ -149,7 +149,15 @@ export default class ActivityViewModel implements IActivityViewModel {
     if (!this.baseView) return;
     const { isLoading } = this.baseView.props.learningStore!.store;
     if (isLoading) return;
-    this.baseView.props.learningStore!.SubmitActivity(this.result, (res: ActivityAlert) => {
+
+    let ans = this.result;
+
+    if (this.activityInfo?.activity.activity_type_id === 6 && !((this.activityInfo.choice as TableChoice).vocabs)) {
+      ans = this.baseView.props.drawerStore!.getDrawerAnswer();
+    }
+
+    console.log(ans)
+    this.baseView.props.learningStore!.SubmitActivity(ans, (res: ActivityAlert) => {
       this.generateStepperFromStore();
       this.alert = res;
       this.baseView?.onViewModelChanged();

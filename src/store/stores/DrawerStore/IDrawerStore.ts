@@ -10,7 +10,12 @@ import {
   Position,
 } from "@model/Drawer";
 import { KeyType } from "@model/Drawer";
+import { DrawerAnswer, DrawerChoice } from "@model/Learning";
 export default interface IDrawerStore {
+
+  getDrawerAnswer() : DrawerAnswer;
+  setupDrawer(info : DrawerChoice) : void;
+
   clearSelection(): void;
   setCurrentMousePosition(newPosition: Position): void;
   deleteEntity(): void;
@@ -28,7 +33,8 @@ export default interface IDrawerStore {
   handleMouseMove(e: React.MouseEvent<HTMLDivElement>): void;
   handleMouseUp(e: React.MouseEvent<HTMLDivElement>): void;
   handleMouseDown(e: React.MouseEvent<HTMLDivElement>): void;
-
+  handleMouseLeave(e: React.MouseEvent<HTMLDivElement>): void;
+  
   onBackgroundClick(): void;
 
   addBoxPoints(box: Box, points: Point[]): void;

@@ -5,11 +5,11 @@ import Drawer from './components/Drawer';
 const Index: React.FC = () => {
   return (
     <>
-      <div className='relative drawer-container'>
-        <div className='app'>
-          <Drawer />
-        </div>
-      </div>
+      {/* <div className='relative drawer-container'>
+        <div className='app'> */}
+          {/* <Drawer /> */}
+        {/* </div>
+      </div> */}
     </>
   );
 }

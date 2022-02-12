@@ -80,15 +80,24 @@ export type GroupChoice = {
   vocabs: string[];
 };
 
-export type DrawerChoice = {
-  tables: TableChoiceDetail[];
-  relationships: string[];
-};
-
 export type TableChoice = {
   tables: TableChoiceDetail[];
   vocabs: string[];
 };
+
+export type DrawerChoice = {
+  tables : TableChoiceDetail[];
+  relationships : DrawerRelationship
+}
+
+export type DrawerRelationship = {
+  relationship_id : number
+  relationship_type : RelationShipType
+  table1_id : string  
+  table2_id : string
+}
+
+export type RelationShipType = "ONE_TO_MANY" | "ONE_TO_ONE" | "MANY_TO_MANY"
 
 export type TableChoiceDetail = {
   attributes: TableChoiceAttribute[];
@@ -116,14 +125,18 @@ export type RelationProblem = {
   after: number;
 };
 
-export type PeerChoice = {
-  problems: PeerProblem[];
+export type PeerChoice = DrawerChoice & {
+  problems: PeerProblem;
 };
 
 export type PeerProblem = {
-  question: string;
-  choices: MultipleChoiceDetail[];
+  groups: PeerChoiceGroup[];
 };
+
+export type PeerChoiceGroup = {
+  name : string
+  choices : string[]
+}
 
 /**
  * Store `Activity` infomation.
@@ -282,8 +295,14 @@ export type Answer =
   | CheckboxMultipleAnswer
   | GroupAnswer
   | TableAnswer
+  | DrawerAnswer
   | RelationAnswer[]
+  | PeerAnswer
   | null;
+
+export type PeerAnswer = {
+  selected : string[]
+}
 
 export type MultipleAnswer = number;
 export type MatchingAnswer = string[][];
@@ -308,6 +327,28 @@ export type RelationAnswer = {
   dependent: string;
   determinants: Array<{ value: string }>;
 };
+
+export type DrawerTableAttributeAnswer = {
+  value : string
+  key : "PK" | "FK" | null
+}
+
+export type DrawerTableAnswerDetail = {
+  table_id : string
+  title : string
+  attributes : TableChoiceAttribute[]
+}
+
+export type DrawerRelationshipAnswer = {
+  relationship_type : RelationShipType,
+  table1_id : string
+  table2_id : string
+}
+
+export type DrawerAnswer = {
+  tables : DrawerTableAnswerDetail[],
+  relationships : DrawerRelationshipAnswer[]
+}
 
 /**
  * Store `Activity Result` for activity after checking.
