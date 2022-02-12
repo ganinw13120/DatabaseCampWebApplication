@@ -26,7 +26,7 @@ class Requirement extends React.Component<RequirementProps, {}> {
     const { onHint, activityInfo, roadMap, isHidden } = this.props;
     return (<>
       <div className={`${isHidden?'hidden':''} col-span-4 bg-white pt-10 h-auto flex flex-col w-full`} style={{ boxShadow: '0 0px 4px rgba(0, 0, 0, 0.25)' }}>
-        <div className='text-lg text-darkPrimary w-96 font-semibold tracking-wider pt-4 px-10'>
+        <div className='text-lg text-darkPrimary font-semibold tracking-wider pt-4 px-10'>
           {roadMap ? <span>{ACTIVITY_BREADCRUMBS} - {roadMap.content_name}</span> : <>
             <Skeleton variant='text' className='w-full' />
           </>}

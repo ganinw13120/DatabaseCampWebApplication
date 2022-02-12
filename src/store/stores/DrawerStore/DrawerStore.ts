@@ -102,7 +102,7 @@ export class DrawerStore implements IDrawerStore {
   public setupLine (info : DrawerChoice) : void {
     const boxes = this.store.boxes;
     let lines : Line[] = [];
-    info.relationships.forEach(e=>{
+    if (info.relationships) info.relationships.forEach(e=>{
       const lineType = this.parseRelationshipTypeToLineType(e.relationship_type);
       const startBox = boxes.find(_e=>_e.uuid===e.table1_id)!;
       const stopBox =  boxes.find(_e=>_e.uuid===e.table2_id)!;
