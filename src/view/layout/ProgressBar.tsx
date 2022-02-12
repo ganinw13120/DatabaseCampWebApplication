@@ -19,7 +19,7 @@ export default class ProgressBar extends Component<any, any>{
   
   /**
    * On component did mount, set waiting to delay loading indicator
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *

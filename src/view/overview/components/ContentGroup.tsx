@@ -11,17 +11,18 @@ import { Progress } from 'semantic-ui-react'
 import { ContentGroup as ContentGroupType, Content as ContentType } from '@model/Learning';
 
 type ContentGroupProps = {
-  data : ContentGroupType
+  data : ContentGroupType,
+  isRecommend : boolean
 }
 
 export default class ContentGroup extends React.Component<ContentGroupProps, {}> {
   public render(): JSX.Element {
-    const { contents, group_name, is_lasted, is_recommend, progress } = this.props.data;
+    const { contents, group_name, is_lasted, progress } = this.props.data;
     return (
       <>
         <div className='w-full h-auto text-center align-middle mt-10'>
             <div className='bg-primary w-full h-20 mx-auto flex align-middle' style={{ boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}>
-              { is_recommend &&
+              { this.props.isRecommend &&
               <div className='flex-none bg-white h-2/6 w-24 align-middle my-auto ml-7 rounded'>
                 <div className=' font-semibold text-blueSecondary' style={{ marginTop: 2 }}>
                   แนะนำ

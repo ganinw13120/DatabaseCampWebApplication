@@ -29,7 +29,7 @@ export default class LandingPage extends Component<LandingComponentProps, {}> {
 
   /**
    * On component did mount, set application store, and attach view-model
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *

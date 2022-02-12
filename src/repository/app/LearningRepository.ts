@@ -6,7 +6,7 @@
 import axios from 'axios';
 import { API_BASE_URL } from '../../constant/constant';
 
-import {Overview, Lecture, RoadMap, Activity, Hint, Answer, ExaminationOverview, Exam, ExamAnswer, ExamResult} from '@model/Learning';
+import {Overview, Lecture, RoadMap, Activity, Hint, Answer, ExaminationOverview, Exam, ExamAnswer, ExamResult, PeerAnswer, Recommend} from '@model/Learning';
 
 import ILearningRepository from './ILearningRepository';
 
@@ -33,6 +33,21 @@ export default class LearningRepository implements ILearningRepository {
       }).then(res => {
         const { data } = res;
         resolve(data as ExamResult)
+      }).catch(res=>{
+        reject(res.message)
+      })
+    })
+  }
+  
+  public async fetchRecommend(token: string) : Promise<Recommend> {
+    return new Promise((resolve, reject) => {
+      axios.get(`${API_BASE_URL}/learning/recommend` , {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      }).then(res => {
+        const { data } = res;
+        resolve(data as Recommend)
       }).catch(res=>{
         reject(res.message)
       })
@@ -117,7 +132,44 @@ export default class LearningRepository implements ILearningRepository {
       })
     })
   }
-  
+
+  public async checkActiivty(token: string, activityId : number, activityTypeId : number, result : Answer): Promise<object> {
+    return new Promise((resolve, reject) => {
+      axios.post(`${API_BASE_URL}/learning/activity/check-answer`, {
+        activity_id: activityId,
+        activity_type_id : activityTypeId,
+        answer : result
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      }).then(res => {
+        const { data } = res;
+        resolve(data)
+      }).catch(res=>{
+        reject(res?.response?.data?.th_message ? res?.response?.data?.th_message : res.message)
+      })
+    })
+  }
+
+  public async checkPeer(token: string, er_id : number, activityTypeId : number, result : PeerAnswer): Promise<object> {
+    return new Promise((resolve, reject) => {
+      axios.post(`${API_BASE_URL}/learning/activity/peer`, {
+        er_answer_id: er_id,
+        reviews : result.selected
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      }).then(res => {
+        const { data } = res;
+        resolve(data)
+      }).catch(res=>{
+        reject(res?.response?.data?.th_message ? res?.response?.data?.th_message : res.message)
+      })
+    })
+  }
+
   /**
    * Submit `Answer` of multiple choice activity and check for result.
    *

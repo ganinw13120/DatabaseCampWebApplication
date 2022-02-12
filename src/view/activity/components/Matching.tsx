@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ChoiceBox from './Choicebox';
 
 import Equal from '@assets/equal.svg';
-import { MatchingChoice } from '@model/Learning';
+import { MatchingAnswer, MatchingChoice } from '@model/Learning';
 
 type QuestionBox = {
   id : string,
@@ -26,7 +26,7 @@ interface MatchingPageState {
 
 interface MatchingProps {
   info : MatchingChoice,
-  updateResult(e : string[][]) : void
+  updateResult(e : MatchingAnswer) : void
 }
 
 export default class Matching extends Component<MatchingProps, MatchingPageState> {
@@ -46,10 +46,10 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
   
   /**
    * On user hovering question, update states.
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param id question's indentifire
   */
   public onHoverQuestionEnter(id: string): void {
@@ -58,10 +58,10 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
 
   /**
    * On user exit hovering question, update states.
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param id question's indentifire
   */
   public onHoverQuestionExit(): void {
@@ -70,12 +70,12 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
 
   /**
    * On user interact with question, update question state.
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param id id of choice
-   * 
+   *
    * @param isFilled is choice is filled
   */
   public updateQuestionState(id : string, isFilled : boolean): void {
@@ -92,12 +92,12 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
 
   /**
    * On user release question, check for snap points, return if any.
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param text text on dragable choice
-   * 
+   *
    * @return if there is any enabled snap point, move choice to snap
   */
   public snapPos(text : string): any | null {
@@ -125,12 +125,12 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
 
   /**
    * On user remove choice from snaping point
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param id choice identifier
-   * 
+   *
    * @param displayText text on removed choice
   */
   public removeSnap(id: string, displayText : string): void {
@@ -148,10 +148,10 @@ export default class Matching extends Component<MatchingProps, MatchingPageState
 
   /**
    * On component mount, append question snap point references.
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param quest question box information
   */
   public appendRef(quest: QuestionBox): void {

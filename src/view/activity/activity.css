@@ -73,3 +73,81 @@
 .star {
     width : 40px;
 }
+.z--10 {
+    z-index: 0;
+}
+
+.big-box {
+    padding-top : 20px;    
+}
+
+.back {
+    z-index: 1;
+}
+.box-plate {
+    z-index: 11;
+}
+
+.table-box {
+    min-width: 150px;
+}
+
+.cell {
+    color : white;
+    font-size : 20px;
+}
+
+.header {
+    background-color: #3766BA;
+    color : white;
+    font-size : 22px;
+}
+.even {
+    background-color: #AABEE2;
+    border-top : 3px solid white;
+    color : black;
+}
+.odd {
+  background-color: #D3DEF0;
+  border-top : 3px solid white;
+  color : black;
+}
+.choicebox {
+    max-width: 150px;
+}
+.questionbox {
+    width: 150px;
+    height: 50px;
+}
+
+.question img {
+    width: 30%;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.peer-drawer-container {
+    height : 400px;
+}
+
+.gap-table {
+    gap : 15px;
+}
+
+.bg-box {
+    background-color: 	rgb(255,255,255, 0.9);
+}
+
+.col-box {
+    /* padding-top: -10px; */
+    transform: translate(0, -15px);
+}
+.question-box  {
+    width : 150px;
+    height : 50px;
+}
+
+.question img {
+    width : 70%;
+}

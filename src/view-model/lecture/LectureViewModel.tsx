@@ -23,7 +23,7 @@ export default class LectureViewModel implements ILectureViewModel {
    *
    * @remarks
    * This method is part of view-model, application logic parts, manipulating view.
-   * 
+   *
    * @returns Lecture data
    */
   public getLectureInfo(): Lecture | null {

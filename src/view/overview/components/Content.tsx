@@ -17,7 +17,7 @@ class Content extends React.Component<ContentProps, any> {
 
   /**
    * On user select content, load content
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *

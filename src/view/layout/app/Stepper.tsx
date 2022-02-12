@@ -118,7 +118,7 @@ export default class ActivityStepper extends Component<StepperProps, any> {
   
   /**
    * Render stepper from stepper data pulled from application store
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *

@@ -12,7 +12,7 @@ import * as yup from 'yup';
  * This method is part of utility functions.
  *
  * @param val user's password
- * 
+ *
  * @param calllback callback function to return result
  */
 const checkPasswordFormat = (_: any, val: string, callback: any): void => {

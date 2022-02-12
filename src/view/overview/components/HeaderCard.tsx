@@ -17,7 +17,7 @@ class HeaderCard extends React.Component<HeaderCardProps, {}>{
 
   /**
    * On user click continue, load content
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *

@@ -17,7 +17,7 @@ import Requirement from '../activity/components/Requirement';
 import IAppStore from '@store/stores/AppStore/IAppStore';
 import IExaminationStore from '@store/stores/ExaminationStore/IExaminationStore';
 
-import { ActivityAlert, CompletionChoice, Exam, ExamActivity, ExamType, MatchingChoice, MultipleChoice, RoadMap } from '@model/Learning';
+import { ActivityAlert, CompletionChoice, Exam, ExamActivity, ExamType, MatchingChoice, MultipleChoice, MultipleChoiceDetail, RoadMap } from '@model/Learning';
 import Matching from '../activity/components/Matching';
 import MultipleChoiceComponent from '../activity/components/MultipleChoice';
 import Completion from '../activity/components/Completion';
@@ -72,7 +72,7 @@ class ExamPage
 
   /**
    * On view-model changes, update view states.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -88,7 +88,7 @@ class ExamPage
 
   /**
    * On component did mount, set application store, and attach view-model
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -103,7 +103,7 @@ class ExamPage
 
   /**
    * On component will unmount, detach view.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    *
@@ -114,14 +114,14 @@ class ExamPage
 
   /**
    * On user's enter examination, generating all activity.
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param act activity's identifier
-   * 
+   *
    * @param currentActivity current activity index
-   * 
+   *
    * @return Activity react element
    *
    */
@@ -140,11 +140,13 @@ class ExamPage
     }
     const isHidden = !(currentActivity === act);
     return (<Fragment key={act}>
-      <Requirement
-        activityInfo={data.activity}
-        roadMap={roadMap}
-        isHidden={isHidden}
-      />
+      {exam.exam.exam_type !== 'PRE' &&
+        <Requirement
+          activityInfo={data.activity}
+          roadMap={roadMap}
+          isHidden={isHidden}
+        />
+      }
       <div className={`${isHidden ? 'hidden' : ''} pt-20 pb-12 col-span-6`}>
         <div className='flex h-auto'>
           <div className='w-10 text-3xl text-darkPrimary font-semibold tracking-wider p-6 px-10'>
@@ -162,7 +164,7 @@ class ExamPage
             const { activity_type_id: type } = activity;
             const act = (type: number) => {
               if (type === 1) return <Matching info={data.choice as MatchingChoice} updateResult={updateActivityResult} />
-              else if (type === 2) return <MultipleChoiceComponent info={data.choice as MultipleChoice[]} updateResult={updateActivityResult} />
+              else if (type === 2) return <MultipleChoiceComponent info={(data.choice as MultipleChoice).choices as MultipleChoiceDetail[]} updateResult={updateActivityResult} />
               else if (type === 3) return <Completion info={data.choice as CompletionChoice} updateResult={updateActivityResult} />
             }
             return <>
@@ -201,7 +203,7 @@ class ExamPage
 
   /**
    * Return user to overview page.
-   * 
+   *
    * @remarks
    * This is a part of view component.
    */
@@ -214,7 +216,7 @@ class ExamPage
     if (!exam) return <></>
     return (
       <>
-        <div className='xl:grid xl:grid-cols-10 w-full h-full pt-12'>
+        <div className={` w-full h-full pt-12 ${exam.exam.exam_type==="PRE" ? '' : 'xl:grid xl:grid-cols-10'}`}>
           {currentActivity === -1 ? <Instruction displayTitle={exam?.exam.exam_type === ExamType.MINI ? exam.exam.content_group_name : exam?.exam.exam_type === ExamType.POST ? 'Final Examination' : 'แบบทดสอบก่อนเรียน'} returnOverview={this.returnOverview} displayText={exam.exam.instruction} onNext={this.examViewModel.moveNext} /> : (() => {
             const examList: ReactElement[] = [];
             let i = 0;
@@ -240,7 +242,7 @@ interface InstructionProps {
 
 /**
  * Examination's instruction shown to user before starting examination.
- * 
+ *
  * @remarks
  * This is a part of view component.
  */

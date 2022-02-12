@@ -9,7 +9,7 @@ import RootStore from '../../RootStore';
 import LearningRepository from '@repository/app/LearningRepository';
 import ILearningRepository from '@repository/app/ILearningRepository';
 
-import {Answer, Exam, ExamAnswer, ExamAnswerActivity, ExaminationOverview, ExamResult} from '@model/Learning';
+import {Answer, Exam, ExamAnswer, ExamAnswerActivity, ExaminationOverview, ExamResult, MultipleAnswer, Recommend} from '@model/Learning';
 
 import IExaminationStore, { Store } from './IExaminationStore';
 
@@ -73,6 +73,14 @@ export class ExaminationStore implements IExaminationStore {
     })
     return res;
   }
+  @action.bound
+  public async FetchRecommend() : Promise<Recommend | null> {
+    const { token } = this.rootStore.authStore.store;
+    const res : Recommend | null = await this.learningRepository.fetchRecommend(token).then((res)=> {return res}).catch((res) => {
+      return null
+    })
+    return res;
+  }
 
   /**
    * On user enter examination overview page, start fetching examination overview from repository
@@ -112,9 +120,9 @@ export class ExaminationStore implements IExaminationStore {
    * This method is part of examination store, manipulating examination and examination'data.
    *
    * @param result exam's result
-   * 
+   *
    * @param exam examination information
-   * 
+   *
    * @param cb callback function
    *
    * @return Examination information
@@ -136,7 +144,10 @@ export class ExaminationStore implements IExaminationStore {
             })
         })
         res = temp;
+      } else if (e.activity.activity_type_id===2) {
+        res = [res] as MultipleAnswer[];
       }
+      console.log(e.activity.activity_type_id)
       let examAnswer : ExamAnswerActivity = {
         activity_id : e.activity.activity_id,
         answer : res

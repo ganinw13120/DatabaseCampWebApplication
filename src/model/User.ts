@@ -55,6 +55,13 @@ export type User = {
     name: string
     point: number
     user_id: number
+    spider : Spider[]
+}
+
+export type Spider = {
+    content_group_id : number
+    content_group_name : string
+    stat : number
 }
 
 /**
@@ -84,8 +91,8 @@ export type AuthUser = User & {
  * `badge_name` : Badege's name
  */
 export type Badge = {
-    badge_id: number
-    icon_path: string
-    is_collect: boolean
-    name: string
+    ID: number
+    ImagePath: string
+    IsCollected: boolean
+    Name: string
 }

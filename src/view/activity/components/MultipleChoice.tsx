@@ -5,15 +5,16 @@
 
 import { Component, ReactElement } from 'react';
 import Radio from '@mui/material/Radio';
-import {MultipleChoice} from '@model/Learning';
+import {MultipleAnswer, MultipleChoice, MultipleChoiceDetail} from '@model/Learning';
+import parse from 'html-react-parser';
 
 interface MultipleChoiceState {
   selectedChoice : number | null,
 }
 
 interface MultipleChoiceProps {
-  info : MultipleChoice[],
-  updateResult(e : number) : void
+  info : MultipleChoiceDetail[],
+  updateResult(e : MultipleAnswer) : void
 }
 
 export default class MultipleChoiceComponent extends Component<MultipleChoiceProps, MultipleChoiceState> {
@@ -27,10 +28,10 @@ export default class MultipleChoiceComponent extends Component<MultipleChoicePro
   
   /**
    * On user select choice, update state and result.
-   * 
+   *
    * @remarks
    * This is a part of view component.
-   * 
+   *
    * @param quest question box information
   */
   handleSelect(e : number): void {
@@ -44,7 +45,7 @@ export default class MultipleChoiceComponent extends Component<MultipleChoicePro
     const { selectedChoice } = this.state;
     const {info} = this.props;
     let choiceList: ReactElement[] = [];
-    info.forEach((e:  MultipleChoice, key : number) => {
+    info.forEach((e:  MultipleChoiceDetail, key : number) => {
       choiceList.push(<Choice key={key} id={e.multiple_choice_id} displayText={e.content} handleSelect={this.handleSelect} selected={selectedChoice} />)
     })
     return (
@@ -83,7 +84,7 @@ class Choice extends Component<ChoiceProps, {}> {
                 },
               }} />
             <span className='my-auto'>
-              {displayText}
+              {parse(displayText)}
             </span>
           </div>
     

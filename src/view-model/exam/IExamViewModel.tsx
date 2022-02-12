@@ -48,9 +48,9 @@ export default interface IExamViewModel extends BaseViewModel {
      *
      * @remarks
      * This method is part of view-model, application logic parts, manipulating view.
-     * 
+     *
      * @param key target examination identifier
-     * 
+     *
      * @param result Answer of activity
      */
     updateResult(key: number, result: Answer | null): void
