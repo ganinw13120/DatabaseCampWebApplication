@@ -587,4 +587,5 @@ export type Content = {
 export type Overview = {
   lasted_group: Content;
   content_group_overview: ContentGroup[];
+  pre_exam_id : number;
 };

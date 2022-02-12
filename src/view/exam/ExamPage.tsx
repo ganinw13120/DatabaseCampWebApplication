@@ -140,11 +140,13 @@ class ExamPage
     }
     const isHidden = !(currentActivity === act);
     return (<Fragment key={act}>
-      <Requirement
-        activityInfo={data.activity}
-        roadMap={roadMap}
-        isHidden={isHidden}
-      />
+      {exam.exam.exam_type !== 'PRE' &&
+        <Requirement
+          activityInfo={data.activity}
+          roadMap={roadMap}
+          isHidden={isHidden}
+        />
+      }
       <div className={`${isHidden ? 'hidden' : ''} pt-20 pb-12 col-span-6`}>
         <div className='flex h-auto'>
           <div className='w-10 text-3xl text-darkPrimary font-semibold tracking-wider p-6 px-10'>
@@ -214,7 +216,7 @@ class ExamPage
     if (!exam) return <></>
     return (
       <>
-        <div className='xl:grid xl:grid-cols-10 w-full h-full pt-12'>
+        <div className={` w-full h-full pt-12 ${exam.exam.exam_type==="PRE" ? '' : 'xl:grid xl:grid-cols-10'}`}>
           {currentActivity === -1 ? <Instruction displayTitle={exam?.exam.exam_type === ExamType.MINI ? exam.exam.content_group_name : exam?.exam.exam_type === ExamType.POST ? 'Final Examination' : 'แบบทดสอบก่อนเรียน'} returnOverview={this.returnOverview} displayText={exam.exam.instruction} onNext={this.examViewModel.moveNext} /> : (() => {
             const examList: ReactElement[] = [];
             let i = 0;
