@@ -463,8 +463,15 @@ export class LearningStore implements ILearningStore {
     cb: any
   ): Promise<any> {
     const { token } = this.rootStore.authStore.store;
+    console.log(result.selected.map(e=>[...e]))
+    let tmp : string[] = [];
+    result.selected.forEach(e=>{
+      e.forEach(_e=>{
+        tmp.push(_e);
+      })
+    })
     this.learningRepository
-      .checkPeer(token, erAnswerId, 6, result)
+      .checkPeer(token, erAnswerId, tmp)
       .then((res: any) => {
         const { is_correct } = res;
         if (is_correct) {

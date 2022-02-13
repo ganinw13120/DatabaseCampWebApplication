@@ -152,11 +152,11 @@ export default class LearningRepository implements ILearningRepository {
     })
   }
 
-  public async checkPeer(token: string, er_id : number, activityTypeId : number, result : PeerAnswer): Promise<object> {
+  public async checkPeer(token: string, er_id : number, result : string[]): Promise<object> {
     return new Promise((resolve, reject) => {
       axios.post(`${API_BASE_URL}/learning/activity/peer`, {
         er_answer_id: er_id,
-        reviews : result.selected
+        reviews : result
       }, {
         headers: {
           'Authorization': `Bearer ${token}`,

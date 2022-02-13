@@ -304,7 +304,7 @@ export type Answer =
   | null;
 
 export type PeerAnswer = {
-  selected: string[];
+  selected: string[][];
 };
 
 export type MultipleAnswer = number;
