@@ -447,7 +447,7 @@ export class LearningStore implements ILearningStore {
           this.successAnswer(cb, res.err_message);
           return;
         } else {
-          this.rejectAnswer(cb);
+          this.rejectAnswer(cb, res.err_message);
           return;
         }
       }).catch((err : any) => {
