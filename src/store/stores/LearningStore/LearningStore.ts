@@ -616,13 +616,16 @@ export class LearningStore implements ILearningStore {
    * @returns message alert to user, null due to success action
    */
   @action.bound
-  private onGetHintSuccess(res: Hint): null {
+  private onGetHintSuccess(res: {hint : Hint}): null {
     const { hint } = this.store;
     let temp = [...hint];
-    temp.push(res);
+    console.log(hint)
+    console.log(res)
+    console.log(res.hint.point_reduce)
+    temp.push(res.hint);
     this.store.isLoading = false;
     this.store.hint = temp;
-    this.rootStore.authStore.DecreaseUserPoint(res.point_reduce);
+    this.rootStore.authStore.DecreaseUserPoint(res.hint.point_reduce);
     return null;
   }
 

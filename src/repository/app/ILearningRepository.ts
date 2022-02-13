@@ -125,7 +125,7 @@ export default interface ILearningRepository {
      *
      * @return Hint information
      */
-    getHint(token: string, activityId: number): Promise<Hint>
+    getHint(token: string, activityId: number): Promise<{hint : Hint}>
 
     /**
      * Fetch `Roadmap` information of target content.
