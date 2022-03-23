@@ -7,6 +7,7 @@ import { Component, ReactElement } from 'react';
 import Radio from '@mui/material/Radio';
 import { DrawerChoice, MultipleAnswer, MultipleChoice, PeerAnswer, PeerChoice, PeerChoiceGroup, PeerProblem } from '@model/Learning';
 import Drawer from './drawer/components/Drawer';
+import Checkbox from '@mui/material/Checkbox';
 
 interface PeerState {
   selectedChoice: PeerAnswer,
@@ -37,10 +38,15 @@ export default class Peer extends Component<PeerProps, PeerState> {
    *
    * @param quest question box information
   */
-  handleSelect(e: string, key: number): void {
+  handleSelect(e: string, key: number, val : boolean): void {
     const { updateResult } = this.props;
     let tmp = this.state.selectedChoice;
-    tmp.selected[key] = e;
+    if (!tmp.selected[key]) tmp.selected[key] = [];
+    if (val) {
+      tmp.selected[key].push(e);
+    } else {
+      tmp.selected[key] = tmp.selected[key].filter(_e=>(_e!==e))
+    }
     this.setState({
       selectedChoice: tmp
     })
@@ -73,8 +79,8 @@ export default class Peer extends Component<PeerProps, PeerState> {
 type ProblemProps = {
   info: PeerChoiceGroup
   group_id: number
-  handleSelect(e: string, key: number): void
-  answer: string
+  handleSelect(e: string, key: number, val : boolean): void
+  answer: string[]
 }
 
 class Problem extends Component<ProblemProps, {}> {
@@ -87,9 +93,9 @@ class Problem extends Component<ProblemProps, {}> {
         {(() => {
           const choiceList: ReactElement[] = [];
           this.props.info.choices.forEach((e, key) => {
-            choiceList.push(<Choice key={key} id={key} displayText={e} handleSelect={() => {
-              this.props.handleSelect(e, this.props.group_id)
-            }} selected={this.props.answer === e} />)
+            choiceList.push(<Choice key={key} id={key} displayText={e} handleSelect={(val : boolean) => {
+              this.props.handleSelect(e, this.props.group_id, val)
+            }} selected={this.props.answer?.includes(e)} />)
           })
           return choiceList;
         })()}
@@ -100,7 +106,7 @@ class Problem extends Component<ProblemProps, {}> {
 
 type ChoiceProps = {
   selected: boolean
-  handleSelect(): void
+  handleSelect(val : boolean): void
   id: number
   displayText: string
 }
@@ -111,11 +117,11 @@ class Choice extends Component<ChoiceProps, {}> {
     return (<>
 
       <div className='w-full flex'>
-        <Radio name='choices' size='medium'
+        <Checkbox name='choices' size='medium'
           value={id}
           checked={selected}
-          onChange={() => {
-            handleSelect();
+          onChange={(e) => {
+            handleSelect(e.target.checked);
           }}
           sx={{
             '& .MuiSvgIcon-root': {

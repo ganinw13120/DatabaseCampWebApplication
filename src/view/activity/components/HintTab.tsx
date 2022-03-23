@@ -64,6 +64,7 @@ export default class HintTab extends Component<HintProps, HintState> {
       if (e.level > maximumLevel) maximumLevel = e.level;
       HintTabList.push(<HintHeader isSelect={key === currentTab} key={key} id={key} onSelect={this.selectTab} />)
     })
+    console.log(hint)
     const nextHint: HintRoadMap | undefined = hintRoadMap.find(e => e.level === maximumLevel + 1);
     return (<>
       <div>
@@ -129,7 +130,7 @@ class HintText extends Component<HintTextProps, {}> {
   public render(): JSX.Element {
     return (<>
       <div className='block py-16  mx-auto font-sarabun text-base text-wrap tracking-wider font-semibold text-xl hinttext requirementtext'>
-        {parse(this.props.text)}
+        {parse(this.props.text ? this.props.text : '')}
       </div>
     </>)
   }

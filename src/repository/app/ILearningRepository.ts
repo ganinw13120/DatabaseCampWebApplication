@@ -63,7 +63,7 @@ export default interface ILearningRepository {
 
     checkActiivty(token: string, activityId : number, activityTypeId : number, result : Answer): Promise<object>
 
-    checkPeer(token: string, er_id : number, activityTypeId : number, result : PeerAnswer): Promise<object>
+    checkPeer(token: string, er_id : number, result : string[]): Promise<object>
 
     /**
      * Submit `Answer` of multiple choice activity and check for result.
@@ -125,7 +125,7 @@ export default interface ILearningRepository {
      *
      * @return Hint information
      */
-    getHint(token: string, activityId: number): Promise<Hint>
+    getHint(token: string, activityId: number): Promise<{hint : Hint}>
 
     /**
      * Fetch `Roadmap` information of target content.

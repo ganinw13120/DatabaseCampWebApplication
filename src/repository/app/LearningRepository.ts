@@ -152,11 +152,11 @@ export default class LearningRepository implements ILearningRepository {
     })
   }
 
-  public async checkPeer(token: string, er_id : number, activityTypeId : number, result : PeerAnswer): Promise<object> {
+  public async checkPeer(token: string, er_id : number, result : string[]): Promise<object> {
     return new Promise((resolve, reject) => {
       axios.post(`${API_BASE_URL}/learning/activity/peer`, {
         er_answer_id: er_id,
-        reviews : result.selected
+        reviews : result
       }, {
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -278,7 +278,7 @@ export default class LearningRepository implements ILearningRepository {
    *
    * @return Hint information
    */
-  public async getHint(token: string, activityId : number): Promise<Hint> {
+  public async getHint(token: string, activityId : number): Promise<{hint : Hint}> {
     return new Promise((resolve, reject) => {
       axios.post(`${API_BASE_URL}/learning/activity/hint/${activityId}`, {} ,{
         headers: {
@@ -286,7 +286,7 @@ export default class LearningRepository implements ILearningRepository {
         },
       }).then(res => {
         const { data } = res;
-        resolve(data as Hint)
+        resolve(data as {hint : Hint})
       }).catch(res => {
         reject(new Error(res.response?.data?.th_message))
       })

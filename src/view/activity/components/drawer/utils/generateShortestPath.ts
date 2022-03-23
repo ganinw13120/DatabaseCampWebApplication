@@ -178,8 +178,14 @@ const getRoundBottomLeft = (param: LinePathParameters): Position[] => {
         pointOffset
     } = param;
     const stopBox = stopInfo.box!.box;
+    let boxPos : Position;
+    try {
+        boxPos = parseClientRectsToPosition(stopBox!.ref.current!.getClientRects()[0], 0, offset);
+    }
+    catch (err) {
+        return [{x : 0, y : 0}];
+    }
     let checkPoints: Position[] = [];
-    const boxPos = parseClientRectsToPosition(stopBox!.ref.current!.getClientRects()[0], 0, offset);
     const boxRect = stopBox!.ref.current!.getClientRects()[0];
     
     let startPos : Position;
@@ -189,9 +195,9 @@ const getRoundBottomLeft = (param: LinePathParameters): Position[] => {
         startPos = startInfo.box ? parseClientRectsToPosition(getPointFromInfo(startInfo.box).ref.current!.getClientRects()[0], pointOffset, offset) : startInfo.position!;
         stopPos = stopInfo.box ? parseClientRectsToPosition(getPointFromInfo(stopInfo.box).ref.current!.getClientRects()[0], pointOffset, offset) : stopInfo.position!;
     } catch (e) {
-        console.log(e)
         startPos = {x : 0, y : 0};
         stopPos = {x : 0, y : 0};
+        return [startPos, stopPos];
     }
 
     /// 1.
@@ -240,7 +246,13 @@ const getRoundTopRight = (param: LinePathParameters): Position[] => {
     }
 
     const stopBox = stopInfo.box!.box;
-    const boxPos = parseClientRectsToPosition(stopBox!.ref.current!.getClientRects()[0], 0, offset);
+    let boxPos : Position;
+    try {
+        boxPos = parseClientRectsToPosition(stopBox!.ref.current!.getClientRects()[0], 0, offset);
+    }
+    catch (err) {
+        return [startPos, stopPos];
+    }
     /// 1.
     checkPoints.push({ x: startPos.x, y: startPos.y });
     if (startPos.x + lineStartTickDistance >= boxPos!.x - pathReservX) {
@@ -278,14 +290,20 @@ const getRoundBottomRight = (param: LinePathParameters): Position[] => {
         startPos = startInfo.box ? parseClientRectsToPosition(getPointFromInfo(startInfo.box).ref.current!.getClientRects()[0], pointOffset, offset) : startInfo.position!;
         stopPos = stopInfo.box ? parseClientRectsToPosition(getPointFromInfo(stopInfo.box).ref.current!.getClientRects()[0], pointOffset, offset) : stopInfo.position!;
     } catch (e) {
-        console.log(e)
         startPos = {x : 0, y : 0};
         stopPos = {x : 0, y : 0};
+        return [startPos, stopPos];
     }
 
     const stopBox = stopInfo.box!.box;
     let checkPoints: Position[] = [];
-    const boxPos = parseClientRectsToPosition(stopBox!.ref.current!.getClientRects()[0], 0, offset);
+    let boxPos : Position;
+    try {
+        boxPos = parseClientRectsToPosition(stopBox!.ref.current!.getClientRects()[0], 0, offset);
+    }
+    catch (err) {
+        return [startPos, stopPos];
+    }
     const boxRect = stopBox?.ref.current?.getClientRects()[0];
     /// 1.
     checkPoints.push({ x: startPos.x, y: startPos.y });
@@ -325,13 +343,19 @@ const getRountUp = (param: LinePathParameters): Position[] => {
         startPos = startInfo.box ? parseClientRectsToPosition(getPointFromInfo(startInfo.box).ref.current!.getClientRects()[0], pointOffset, offset) : startInfo.position!;
         stopPos = stopInfo.box ? parseClientRectsToPosition(getPointFromInfo(stopInfo.box).ref.current!.getClientRects()[0], pointOffset, offset) : stopInfo.position!;
     } catch (e) {
-        console.log(e)
         startPos = {x : 0, y : 0};
         stopPos = {x : 0, y : 0};
+        return [startPos, stopPos];
     }
 
     const startBox = startInfo.box!.box;
-    const boxPos = parseClientRectsToPosition(startBox!.ref.current!.getClientRects()[0], 0, offset);
+    let boxPos : Position;
+    try {
+        boxPos = parseClientRectsToPosition(startBox!.ref.current!.getClientRects()[0], 0, offset);
+    }
+    catch (err) {
+        return [startPos, stopPos];
+    }
     const startBoxRect = startBox?.ref.current?.getClientRects()[0];
     let checkPoints: Position[] = [];
 

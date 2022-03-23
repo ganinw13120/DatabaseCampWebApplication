@@ -447,7 +447,7 @@ export class LearningStore implements ILearningStore {
           this.successAnswer(cb, res.err_message);
           return;
         } else {
-          this.rejectAnswer(cb);
+          this.rejectAnswer(cb, res.err_message);
           return;
         }
       }).catch((err : any) => {
@@ -463,8 +463,15 @@ export class LearningStore implements ILearningStore {
     cb: any
   ): Promise<any> {
     const { token } = this.rootStore.authStore.store;
+    console.log(result.selected.map(e=>[...e]))
+    let tmp : string[] = [];
+    result.selected.forEach(e=>{
+      e.forEach(_e=>{
+        tmp.push(_e);
+      })
+    })
     this.learningRepository
-      .checkPeer(token, erAnswerId, 6, result)
+      .checkPeer(token, erAnswerId, tmp)
       .then((res: any) => {
         const { is_correct } = res;
         if (is_correct) {
@@ -616,13 +623,16 @@ export class LearningStore implements ILearningStore {
    * @returns message alert to user, null due to success action
    */
   @action.bound
-  private onGetHintSuccess(res: Hint): null {
+  private onGetHintSuccess(res: {hint : Hint}): null {
     const { hint } = this.store;
     let temp = [...hint];
-    temp.push(res);
+    console.log(hint)
+    console.log(res)
+    console.log(res.hint.point_reduce)
+    temp.push(res.hint);
     this.store.isLoading = false;
     this.store.hint = temp;
-    this.rootStore.authStore.DecreaseUserPoint(res.point_reduce);
+    this.rootStore.authStore.DecreaseUserPoint(res.hint.point_reduce);
     return null;
   }
 
